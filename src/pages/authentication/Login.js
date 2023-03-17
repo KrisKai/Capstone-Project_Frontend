@@ -4,9 +4,8 @@ import { Card, Stack, Container, Typography } from '@mui/material';
 
 // components
 import Page from '../../components/Page';
-import { MHidden } from '../../components/@material-extend';
 import { LoginForm } from '../../components/authentication/login';
-import { motion } from 'framer-motion';
+import { React } from "react";
 
 const RootStyle = styled(Page)(({ theme }) => ({
   backgroundImage: 'url(/static/overlay.svg), url(/static/logo-image-login.jpg)',
@@ -23,25 +22,7 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   justifyContent: 'center',
   margin: theme.spacing(2, 0, 2, 2)
 }));
-const HeroImgStyle = styled(motion.iframe)(({ theme }) => ({
-  top: 0,
-  right: 10,
-  bottom: 0,
-  zIndex: 9,
-  width: '100%',
-  height: '100%',
-  margin: 'auto',
-  position: 'absolute',
-  objectFit: 'cover',
-  opacity: 0.8,
-  [theme.breakpoints.up('md')]: {
-    width: 'auto',
-    height: '48vh'
-  },
-  [theme.breakpoints.down('md')]: {
-    display: 'none'
-  }
-}));
+
 const ContentStyle = styled('div')(({ theme }) => ({
   maxWidth: 480,
   margin: 'auto',
@@ -55,17 +36,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Login() {
   return (
     <RootStyle title="Login | Krowd">
-      <MHidden width="mdDown">
-        <SectionStyle>
-          <Typography variant="h3" sx={{ p: 5, mt: 10, mb: 5 }}>
-            Dành cho Admin <br />
-            
-          </Typography>
-          <Typography variant="h3" sx={{ p: 25 }}>
-            <HeroImgStyle src="https://embed.lottiefiles.com/animation/38435" />
-          </Typography>
-        </SectionStyle>
-      </MHidden>
+      
 
       <Container maxWidth="sm">
         <ContentStyle>
