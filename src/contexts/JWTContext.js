@@ -4,6 +4,7 @@ import { isValidToken, setSession } from '../utils/jwt';
 import { REACT_APP_API_URL } from '../config';
 import axios from 'axios';
 import React from 'react';
+import axiosInstance from '../utils/axios';
 
 // ----------------------------------------------------------------------
 
@@ -113,49 +114,61 @@ function AuthProvider({ children }) {
     initialize();
   }, []);
 
-  // const login = async () => {
-  //   const firebaseLogin = await FirebaseService.loginWithGoogle();
-  //   const firebaseUser = await firebaseLogin.user?.getIdTokenResult();
-  //   if (!firebaseUser) return;
-  //   const firebaseToken = firebaseUser.token;
-  //   console.log(firebaseToken);
-  //   const response = await axios.post(
-  //     REACT_APP_API_URL + `authenticate/admin?token=${firebaseToken}`
-  //   );
-  //   const {
-  //     id,
-  //     token,
-  //     email,
-  //     image,
-  //     phoneNum,
-  //     idCard,
-  //     city,
-  //     district,
-  //     address,
-  //     fullName,
-  //     bankName
-  //   } = response.data;
-  //   const user = {
-  //     id: id,
-  //     phoneNum: phoneNum,
-  //     idCard: idCard,
-  //     city: city,
-  //     district: district,
-  //     address: address,
-  //     bankName: bankName,
-  //     fullName: fullName,
-  //     email: email,
-  //     image: image
-  //   };
-  //   setSession(token);
-  //   window.localStorage.setItem('userId', id);
-  //   dispatch({
-  //     type: Types.Login,
-  //     payload: {
-  //       user
-  //     }
-  //   });
-  // };
+  const login = async (user, password) => {
+    var url = '/login';
+    const userLogin = await axiosInstance.get(url, {
+      params: {
+        Username: user,
+        Password: password
+      },
+    });
+    //const firebaseUser = await firebaseLogin.user?.getIdTokenResult();
+    if (!userLogin) return;
+    else {
+      const userToken = userLogin.data.token;
+    }
+    //const firebaseToken = firebaseUser.token;
+    console.log(userToken);
+    url = "/admin";
+    const response = await axiosInstance.get(url, {
+      params: {
+        token: userToken
+      },
+    });
+    const {
+      id,
+      token,
+      email,
+      image,
+      phoneNum,
+      idCard,
+      city,
+      district,
+      address,
+      fullName,
+      bankName
+    } = response.data;
+    const user = {
+      id: id,
+      phoneNum: phoneNum,
+      idCard: idCard,
+      city: city,
+      district: district,
+      address: address,
+      bankName: bankName,
+      fullName: fullName,
+      email: email,
+      image: image
+    };
+    setSession(token);
+    window.localStorage.setItem('userId', id);
+    dispatch({
+      type: Types.Login,
+      payload: {
+        user
+      }
+    });
+  };
 
   // const logout = async () => {
   //   setSession(null);
@@ -170,7 +183,7 @@ function AuthProvider({ children }) {
       value={{
         ...state,
         method: 'jwt',
-        // login,
+        login,
         // logout,
         updateProfile
       }}
