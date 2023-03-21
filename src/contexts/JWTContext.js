@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from 'react';
+import { createContext, useEffect, useReducer, useMemo } from 'react';
 // utils
 import { isValidToken, setSession } from '../utils/jwt';
 import { REACT_APP_API_URL } from '../config';
@@ -114,18 +114,19 @@ function AuthProvider({ children }) {
     initialize();
   }, []);
 
-  const login = async (user, password) => {
+  const login = async (username, password) => {
     var url = '/login';
     const userLogin = await axiosInstance.get(url, {
       params: {
-        Username: user,
+        Username: username,
         Password: password
       },
     });
     //const firebaseUser = await firebaseLogin.user?.getIdTokenResult();
+    const userToken = null;
     if (!userLogin) return;
     else {
-      const userToken = userLogin.data.token;
+      userToken = userLogin.data.token;
     }
     //const firebaseToken = firebaseUser.token;
     console.log(userToken);
@@ -170,13 +171,23 @@ function AuthProvider({ children }) {
     });
   };
 
-  // const logout = async () => {
-  //   setSession(null);
-  //   window.localStorage.removeItem('firebaseToken');
-  //   dispatch({ type: Types.Logout });
-  // };
+  const logout = async () => {
+    setSession(null);
+    window.localStorage.removeItem('userId');
+    dispatch({ type: Types.Logout });
+  };
 
   const updateProfile = () => {};
+
+  const authContextValue = useMemo(() => {
+    return {
+      data: {
+        username,
+        password
+      },
+      setState: login
+    }
+  }, [])
 
   return (
     <AuthContext.Provider
@@ -184,7 +195,7 @@ function AuthProvider({ children }) {
         ...state,
         method: 'jwt',
         login,
-        // logout,
+        logout,
         updateProfile
       }}
     >

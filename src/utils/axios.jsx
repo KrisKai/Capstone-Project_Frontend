@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import REACT_APP_API_URL from '../config';
+import {REACT_APP_API_URL} from '../config';
 const axiosInstance = axios.create({
   baseURL: REACT_APP_API_URL,
   headers: {

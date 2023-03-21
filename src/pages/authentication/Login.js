@@ -12,13 +12,19 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+// routes
+import { PATH_DASHBOARD, PATH_PAGE } from '../../routes/path';
+// hooks
+import useAuth from '../../hooks/useAuth';
+//
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Journey Sick
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -29,9 +35,19 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    //AuthContext.login(data.get('email'),data.get('password'));
+    debugger;
+    try {
+      await login();
+      navigate(PATH_DASHBOARD.root);
+    } catch (error) {
+      navigate(PATH_PAGE.page500);
+    }
     console.log({
       email: data.get('email'),
       password: data.get('password'),

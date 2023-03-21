@@ -18,8 +18,8 @@ export const store = configureStore({
 
 sagaMiddleware.run(rootSaga);
 
-export const  AppDispatch = typeof store.dispatch;
-// export const  RootState = typeof store.getState;
+export const  AppDispatch = store.dispatch;
+export const  RootState = store.getState;
 // export const  AppThunk = ThunkAction<
 //   ReturnType,
 //   RootState,
