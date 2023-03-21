@@ -14,10 +14,8 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // routes
 import { PATH_DASHBOARD, PATH_PAGE } from '../../routes/path';
-// hooks
-import useAuth from '../../hooks/useAuth';
-//
-import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { authActions } from '../../redux/modules/authSlice';
 
 function Copyright(props) {
   return (
@@ -35,24 +33,24 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     //AuthContext.login(data.get('email'),data.get('password'));
-    debugger;
-    try {
-      await login();
-      navigate(PATH_DASHBOARD.root);
-    } catch (error) {
-      navigate(PATH_PAGE.page500);
-    }
+    dispatch(
+      authActions.login({
+        username: data.get('email'),
+        password: data.get('password'),
+      })
+    );
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
   };
+
 
   return (
     <ThemeProvider theme={theme}>

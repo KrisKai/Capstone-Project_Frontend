@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer, useMemo } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 // utils
 import { isValidToken, setSession } from '../utils/jwt';
 import { REACT_APP_API_URL } from '../config';
@@ -123,11 +123,9 @@ function AuthProvider({ children }) {
       },
     });
     //const firebaseUser = await firebaseLogin.user?.getIdTokenResult();
-    const userToken = null;
     if (!userLogin) return;
-    else {
-      userToken = userLogin.data.token;
-    }
+      const userToken = userLogin.data.token;
+    
     //const firebaseToken = firebaseUser.token;
     console.log(userToken);
     url = "/admin";
@@ -178,16 +176,6 @@ function AuthProvider({ children }) {
   };
 
   const updateProfile = () => {};
-
-  const authContextValue = useMemo(() => {
-    return {
-      data: {
-        username,
-        password
-      },
-      setState: login
-    }
-  }, [])
 
   return (
     <AuthContext.Provider

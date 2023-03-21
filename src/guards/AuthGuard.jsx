@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-// hooks
-import useAuth from '../hooks/useAuth';
 // pages
 import Login from '../pages/authentication/Login';
 import { React } from "react";
+import { selectIsAuthenticated } from '../redux/modules/authSlice';
+import authSaga from '../redux/modules/authSaga';
 
 // ----------------------------------------------------------------------
 
 
 export default function AuthGuard({ children }) {
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated } = authSaga;
     const { pathname } = useLocation();
     const [requestedLocation, setRequestedLocation] = useState (null);
 
