@@ -7,10 +7,12 @@ import axiosInstance from '../../../utils/axios'
 function* handleLogin(payload) {
   try {
     yield delay(1000);
-    var url = '/login';
-    const userLogin = axiosInstance.get(url, payload);
+    console.log(payload);
+    var url = '/authenticate/login';
+    const userLogin = axiosInstance.post(url, payload);
     //const firebaseUser = await firebaseLogin.user?.getIdTokenResult();
     const userToken = null;
+    console.log(userLogin)
     if (!userLogin) return;
     else {
       userToken = userLogin.data.token;
