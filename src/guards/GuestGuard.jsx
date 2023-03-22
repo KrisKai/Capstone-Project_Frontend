@@ -8,10 +8,11 @@ import { PATH_DASHBOARD } from "../routes/path";
 // ----------------------------------------------------------------------
 
 export default function GuestGuard({ children }) {
-  const { isAuthenticated } = authSaga;
+  const isAuthenticated = Boolean(localStorage.getItem('access_token'));
+  console.log(isAuthenticated)
 
   if (isAuthenticated) {
-    return <Navigate to={PATH_DASHBOARD.root} />;
+    return <Navigate to={PATH_DASHBOARD.general.dashboard} />;
   }
 
   return <>{children}</>;

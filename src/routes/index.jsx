@@ -69,9 +69,9 @@ export default function Router() {
         {
           path: 'dashboard',
           element: (
-            <GuestGuard>
+            <AuthGuard>
               <DashboardDefault />
-            </GuestGuard>
+            </AuthGuard>
           )
         }
         // { path: 'register-unprotected', element: <Register /> },

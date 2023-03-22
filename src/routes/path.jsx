@@ -5,7 +5,7 @@ function path(root, sublink) {
   }
   
   const ROOTS_AUTH = '/auth';
-  const ROOTS_DASHBOARD = '/dashboard';
+  const ROOTS_DASHBOARD = '/admin';
   
   // ----------------------------------------------------------------------
   
@@ -39,7 +39,7 @@ function path(root, sublink) {
     general: {
       trip: path(ROOTS_DASHBOARD, '/trip'),
       plan: path(ROOTS_DASHBOARD, '/plan'),
-      analytics: path(ROOTS_DASHBOARD, '/analytics'),
+      dashboard: path(ROOTS_DASHBOARD, '/dashboard'),
       banking: path(ROOTS_DASHBOARD, '/banking'),
       booking: path(ROOTS_DASHBOARD, '/booking')
     },
