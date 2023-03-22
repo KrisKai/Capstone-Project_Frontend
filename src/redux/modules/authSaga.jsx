@@ -4,18 +4,15 @@ import { call, delay, fork, put, take } from 'redux-saga/effects';
 import { authActions, LoginPayload } from './authSlice';
 import axiosInstance from '../../utils/axios'
 
-async function* handleLogin(payload) {
+function* handleLogin(payload) {
   try {
     yield delay(1000);
-    var url = '/login';
-    const userLogin = await axiosInstance.get(url, {
-      params: {
-        Username: payload.get('email'),
-        Password: payload.get('password')
-      },
-    });
+    console.log(payload);
+    var url = '/authenticate/login';
+    const userLogin = axiosInstance.post(url, payload);
     //const firebaseUser = await firebaseLogin.user?.getIdTokenResult();
     const userToken = null;
+    console.log(userLogin)
     if (!userLogin) return;
     else {
       userToken = userLogin.data.token;
@@ -23,7 +20,7 @@ async function* handleLogin(payload) {
     //const firebaseToken = firebaseUser.token;
     console.log(userToken);
     url = "/admin";
-    const response = await axiosInstance.get(url, {
+    const response = axiosInstance.get(url, {
       params: {
         token: userToken
       },

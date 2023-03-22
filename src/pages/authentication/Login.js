@@ -35,20 +35,17 @@ const theme = createTheme();
 export default function SignInSide() {
   const dispatch = useAppDispatch();
   
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     //AuthContext.login(data.get('email'),data.get('password'));
     dispatch(
       authActions.login({
-        username: data.get('email'),
-        password: data.get('password'),
+        Username: data.get('email'),
+        Password: data.get('password'),
       })
     );
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    
   };
 
 
