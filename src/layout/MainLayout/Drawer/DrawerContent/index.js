@@ -1,3 +1,4 @@
+import React from 'react';
 // project import
 import NavCard from './NavCard';
 import Navigation from './Navigation';

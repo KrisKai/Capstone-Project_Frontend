@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 // material-ui
@@ -34,13 +34,12 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
     };
 
     useEffect(() => {
-        navigation?.items?.map((menu) => {
-            if (menu.type && menu.type === 'group') {
-                getCollapse(menu);
-            }
-            return false;
+        navigation?.items?.forEach((menu) => {
+          if (menu.type && menu.type === 'group') {
+            getCollapse(menu);
+          }
         });
-    });
+      }, []);
 
     // only used for component demo breadcrumbs
     if (location.pathname === '/breadcrumbs') {

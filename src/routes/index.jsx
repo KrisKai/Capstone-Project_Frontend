@@ -9,33 +9,37 @@ import AuthGuard from '../guards/AuthGuard';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 
+// project import
+import Loadable from '../components/Loadable';
+import MainLayout from '../layout/MainLayout/index'
+
 // ----------------------------------------------------------------------
 
-const Loadable = (Component) => (props) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { pathname } = useLocation();
-  const isDashboard = pathname.includes('/dashboard');
-  console.log(pathname)
-  return (
-    <Suspense
-      fallback={
-        <LoadingScreen
-          sx={{
-            ...(!isDashboard && {
-              top: 0,
-              left: 0,
-              width: 1,
-              zIndex: 9999,
-              position: 'fixed'
-            })
-          }}
-        />
-      }
-    >
-      <Component {...props} />
-    </Suspense>
-  );
-};
+// const Loadable = (Component) => (props) => {
+//   // eslint-disable-next-line react-hooks/rules-of-hooks
+//   const { pathname } = useLocation();
+//   const isDashboard = pathname.includes('/dashboard');
+//   console.log(pathname)
+//   return (
+//     <Suspense
+//       fallback={
+//         <LoadingScreen
+//           sx={{
+//             ...(!isDashboard && {
+//               top: 0,
+//               left: 0,
+//               width: 1,
+//               zIndex: 9999,
+//               position: 'fixed'
+//             })
+//           }}
+//         />
+//       }
+//     >
+//       <Component {...props} />
+//     </Suspense>
+//   );
+// };
 
 export default function Router() {
   return useRoutes([
@@ -65,6 +69,7 @@ export default function Router() {
     },
     {
       path: 'admin',
+      element: <MainLayout />,
       children: [
         {
           path: 'dashboard',
