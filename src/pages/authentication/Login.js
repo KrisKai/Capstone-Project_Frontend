@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // routes
 import { PATH_DASHBOARD, PATH_PAGE } from '../../routes/path';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { authActions } from '../../redux/modules/authSlice';
+import { authActions } from '../../redux/modules/authenticate/authSlice';
 
 function Copyright(props) {
   return (

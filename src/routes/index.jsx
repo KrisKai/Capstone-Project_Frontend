@@ -15,7 +15,7 @@ const Loadable = (Component) => (props) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { pathname } = useLocation();
   const isDashboard = pathname.includes('/dashboard');
-
+  console.log(pathname)
   return (
     <Suspense
       fallback={
@@ -63,7 +63,21 @@ export default function Router() {
         // { path: 'verify', element: <VerifyCode /> }
       ]
     },
-
+    {
+      path: 'admin',
+      children: [
+        {
+          path: 'dashboard',
+          element: (
+            <GuestGuard>
+              <DashboardDefault />
+            </GuestGuard>
+          )
+        }
+        // { path: 'register-unprotected', element: <Register /> },
+        // { path: 'verify', element: <VerifyCode /> }
+      ]
+    },
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }
@@ -75,7 +89,7 @@ const Login = Loadable(lazy(() => import('../pages/authentication/Login')));
 // const Register = Loadable(lazy(() => import('../pages/authentication/Register')));
 // const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
-// const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
+const DashboardDefault = Loadable(lazy(() => import('../pages/dashboard/Dashboard')));
 // //Learn
 // const DealTerm = Loadable(lazy(() => import('../pages/learn/DealTerm')));
 // const LearnHowItWork = Loadable(lazy(() => import('../pages/learn/LearnHowItWork')));

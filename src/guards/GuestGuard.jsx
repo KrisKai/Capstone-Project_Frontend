@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from "react-router-dom";
-import authSaga from '../redux/modules/authSaga';
-import { selectIsAuthenticated } from '../redux/modules/authSlice';
+import authSaga from '../redux/modules/authenticate/authSaga';
+import { selectIsAuthenticated } from '../redux/modules/authenticate/authSlice';
 // routes
 import { PATH_DASHBOARD } from "../routes/path";
 
