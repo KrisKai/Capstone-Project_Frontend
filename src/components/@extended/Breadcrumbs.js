@@ -34,7 +34,7 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
     };
 
     useEffect(() => {
-        navigation?.items?.forEach((menu) => {
+        navigation.items.forEach((menu) => {
           if (menu.type && menu.type === 'group') {
             getCollapse(menu);
           }

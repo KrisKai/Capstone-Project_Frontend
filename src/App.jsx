@@ -1,22 +1,18 @@
-import React from 'react';
+import React from "react";
 // routes
 import Router from "./routes";
-import RtlLayout from "./components/RtlLayout";
-import NotistackProvider from "./components/NotistackProvider";
-import LoadingScreen, { ProgressBarStyle } from "./components/LoadingScreen";
-
+import ThemeCustomization from "./themes";
+import ScrollTop from "./components/ScrollTop";
 
 function App() {
   // const { isInitialized } = useAuth();
 
   return (
-    <RtlLayout>
-      <NotistackProvider>
-        <ProgressBarStyle />
-        {/* <Settings /> */}
+    <ThemeCustomization>
+      <ScrollTop>
         <Router />
-      </NotistackProvider>
-    </RtlLayout>
+      </ScrollTop>
+    </ThemeCustomization>
   );
 }
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { openDrawer } from '../../redux/modules/menu/menuSlice';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -9,20 +10,19 @@ import { Box, Toolbar, useMediaQuery } from '@mui/material';
 // project import
 import Drawer from './Drawer';
 import Header from './Header';
-import navigation from 'menu-items';
+import navigation from '../../menu-items';
 import Breadcrumbs from '../../components/@extended/Breadcrumbs';
-// types
-import { openDrawer } from 'store/reducers/menu';
+
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
 const MainLayout = () => {
     const theme = useTheme();
     const matchDownLG = useMediaQuery(theme.breakpoints.down('xl'));
-    const dispatch = useDispatch();
-
-    const { drawerOpen } = useSelector((state) => state.menu);
-
+    const dispatch = useAppDispatch();
+    const test = useAppSelector((state) => state.menu.drawerOpen);
+    const { drawerOpen } = useAppSelector((state) => state.menu);
+   
     // drawer toggler
     const [open, setOpen] = useState(drawerOpen);
     const handleDrawerToggle = () => {

@@ -10,7 +10,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login(state, action) {
+    login(state) {
       state.isInitialized = true;
     },
     loginSuccess(state, action) {
@@ -18,7 +18,7 @@ const authSlice = createSlice({
       state.isInitialized = false;
       state.currentUser = action.payload;
     },
-    loginFailed(state, action) {
+    loginFailed(state) {
       state.isInitialized = false;
     },
 

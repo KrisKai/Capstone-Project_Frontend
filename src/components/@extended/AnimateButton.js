@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // third-party
-import { motion } from 'framer-motion';
+import {AnimatePresence, motion} from "framer-motion";
 
 // ==============================|| ANIMATION BUTTON ||============================== //
 

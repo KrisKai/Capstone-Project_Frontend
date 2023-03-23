@@ -3,10 +3,13 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import createSagaMiddleware from 'redux-saga';
 import { history } from '../utils/history';
 import rootSaga from './rootSage';
+// project import
+import {menuReducer} from './modules/menu/menuSlice';
 
 // ----------------------------------------------------------------------
 const rootReducer = combineReducers({
-  router: connectRouter(history)
+  router: connectRouter(history),
+  menu:  menuReducer 
 });
 
 const sagaMiddleware = createSagaMiddleware();

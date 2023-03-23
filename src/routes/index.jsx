@@ -15,32 +15,6 @@ import MainLayout from '../layout/MainLayout/index'
 
 // ----------------------------------------------------------------------
 
-// const Loadable = (Component) => (props) => {
-//   // eslint-disable-next-line react-hooks/rules-of-hooks
-//   const { pathname } = useLocation();
-//   const isDashboard = pathname.includes('/dashboard');
-//   console.log(pathname)
-//   return (
-//     <Suspense
-//       fallback={
-//         <LoadingScreen
-//           sx={{
-//             ...(!isDashboard && {
-//               top: 0,
-//               left: 0,
-//               width: 1,
-//               zIndex: 9999,
-//               position: 'fixed'
-//             })
-//           }}
-//         />
-//       }
-//     >
-//       <Component {...props} />
-//     </Suspense>
-//   );
-// };
-
 export default function Router() {
   return useRoutes([
     {
@@ -95,28 +69,6 @@ const Login = Loadable(lazy(() => import('../pages/authentication/Login')));
 // const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
 const DashboardDefault = Loadable(lazy(() => import('../pages/dashboard/Dashboard')));
-// //Learn
-// const DealTerm = Loadable(lazy(() => import('../pages/learn/DealTerm')));
-// const LearnHowItWork = Loadable(lazy(() => import('../pages/learn/LearnHowItWork')));
-// const WhatIGetInvest = Loadable(lazy(() => import('../pages/learn/WhatIGetInvest')));
-// const RiskInvest = Loadable(lazy(() => import('../pages/learn/RiskInvest')));
-// const RiskFranchise = Loadable(lazy(() => import('../pages/learn/RiskFranchise')));
-// const RiskManager = Loadable(lazy(() => import('../pages/learn/RiskManager')));
-// const RiskForField = Loadable(lazy(() => import('../pages/learn/RiskForField')));
-// const HowReturnWork = Loadable(lazy(() => import('../pages/learn/HowReturnWork')));
-// const HowToInvest = Loadable(lazy(() => import('../pages/learn/HowToInvest')));
-// const HowToCallInvest = Loadable(lazy(() => import('../pages/learn/HowToCallInvest')));
-// const HowToJoinKrowdEco = Loadable(lazy(() => import('../pages/learn/HowToJoinKrowdEco')));
-// const HowToContact = Loadable(lazy(() => import('../pages/learn/HowToContact')));
-// const PrivaryPolicy = Loadable(lazy(() => import('../pages/learn/PrivaryPolicy')));
-// const TermOfService = Loadable(lazy(() => import('../pages/learn/TermOfService')));
-// const Communication = Loadable(lazy(() => import('../pages/learn/Communication')));
-// //
-// const GeneralEcommerce = Loadable(lazy(() => import('../pages/dashboard/GeneralEcommerce')));
-// const GeneralAnalytics = Loadable(lazy(() => import('../pages/dashboard/GeneralAnalytics')));
-// const WalletBanking = Loadable(lazy(() => import('../pages/dashboard/WalletBanking')));
-// const GeneralBooking = Loadable(lazy(() => import('../pages/dashboard/GeneralBooking')));
-// const EcommerceShop = Loadable(lazy(() => import('../pages/dashboard/EcommerceShop')));
 
 // const EcommerceProductDetails = Loadable(
 //   lazy(() => import('../pages/dashboard/EcommerceProductDetails'))

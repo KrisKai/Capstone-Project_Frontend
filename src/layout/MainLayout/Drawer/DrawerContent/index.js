@@ -2,7 +2,7 @@ import React from 'react';
 // project import
 import NavCard from './NavCard';
 import Navigation from './Navigation';
-import SimpleBar from 'components/third-party/SimpleBar';
+import SimpleBar from '../../../../components/third-party/SimpleBar';
 
 // ==============================|| DRAWER CONTENT ||============================== //
 
