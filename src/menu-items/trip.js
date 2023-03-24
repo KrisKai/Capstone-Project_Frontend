@@ -7,30 +7,28 @@ const icons = {
     QuestionOutlined
 };
 
-// ==============================|| MENU ITEMS - SAMPLE PAGE & DOCUMENTATION ||============================== //
+// ==============================|| MENU ITEMS  ||============================== //
 
-const support = {
-    id: 'support',
-    title: 'Support',
+const trip = {
+    id: 'trip',
+    title: 'Trip',
     type: 'group',
     children: [
         {
-            id: 'sample-page',
-            title: 'Sample Page',
+            id: 'trip-list',
+            title: 'List Trip',
             type: 'item',
             url: '/sample-page',
             icon: icons.ChromeOutlined
         },
         {
-            id: 'documentation',
-            title: 'Documentation',
+            id: 'trip-create',
+            title: 'Create Trip',
             type: 'item',
             url: 'https://codedthemes.gitbook.io/mantis-react/',
-            icon: icons.QuestionOutlined,
-            external: true,
-            target: true
+            icon: icons.QuestionOutlined
         }
     ]
 };
 
-export default support;
+export default trip;
