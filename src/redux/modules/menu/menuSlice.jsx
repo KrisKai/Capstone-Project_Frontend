@@ -7,6 +7,7 @@ const initialState = {
   drawerOpen: false,
   componentDrawerOpen: true,
 };
+
 // ==============================|| SLICE - MENU ||============================== //
 const menuSlice = createSlice({
   name: "menu",

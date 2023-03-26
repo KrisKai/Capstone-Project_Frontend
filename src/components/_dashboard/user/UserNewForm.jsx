@@ -30,12 +30,8 @@ import countries from './countries';
 
 // ----------------------------------------------------------------------
 
-type UserNewFormProps = {
-  isEdit: boolean;
-  currentUser?: UserManager;
-};
 
-export default function UserNewForm({ isEdit, currentUser }: UserNewFormProps) {
+export default function UserNewForm({ isEdit, currentUser }) {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 

@@ -37,11 +37,7 @@ function path(root, sublink) {
   export const PATH_DASHBOARD = {
     root: ROOTS_DASHBOARD,
     general: {
-      trip: path(ROOTS_DASHBOARD, '/trip'),
-      plan: path(ROOTS_DASHBOARD, '/plan'),
-      dashboard: path(ROOTS_DASHBOARD, '/dashboard'),
-      banking: path(ROOTS_DASHBOARD, '/banking'),
-      booking: path(ROOTS_DASHBOARD, '/booking')
+      dashboard: path(ROOTS_DASHBOARD, '/dashboard')
     },
     trip: {
       root: path(ROOTS_DASHBOARD, '/trip'),

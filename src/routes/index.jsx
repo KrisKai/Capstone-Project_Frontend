@@ -1,32 +1,32 @@
-import React from 'react';
-import { Suspense, lazy } from 'react';
-import { Navigate, useRoutes, useLocation } from 'react-router-dom';
-import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
+import React from "react";
+import { Suspense, lazy } from "react";
+import { Navigate, useRoutes, useLocation } from "react-router-dom";
+import LogoOnlyLayout from "../layouts/LogoOnlyLayout";
 // guards
-import GuestGuard from '../guards/GuestGuard';
-import AuthGuard from '../guards/AuthGuard';
+import GuestGuard from "../guards/GuestGuard";
+import AuthGuard from "../guards/AuthGuard";
 // import RoleBasedGuard from '../guards/RoleBasedGuard';
 // components
-import LoadingScreen from '../components/LoadingScreen';
+import LoadingScreen from "../components/LoadingScreen";
 
 // project import
-import Loadable from '../components/Loadable';
-import MainLayout from '../layout/MainLayout/index'
+import Loadable from "../components/Loadable";
+import MainLayout from "../layout/MainLayout/index";
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   return useRoutes([
     {
-      path: 'auth',
+      path: "auth",
       children: [
         {
-          path: 'login',
+          path: "login",
           element: (
             <GuestGuard>
-              <Login />
+              <AuthLogin/>
             </GuestGuard>
-          )
+          ),
         },
         // {
         //   path: 'register',
@@ -36,46 +36,78 @@ export default function Router() {
         //     </GuestGuard>
         //   )
         // },
-        { path: 'login-unprotected', element: <Login /> },
+        { path: "login-unprotected", element: <AuthLogin /> },
         // { path: 'register-unprotected', element: <Register /> },
         // { path: 'verify', element: <VerifyCode /> }
-      ]
+      ],
     },
     {
-      path: 'admin',
-      element: <MainLayout />,
+      path: "admin",
+      element: (
+        <AuthGuard>
+          <MainLayout />
+        </AuthGuard>
+      ),
       children: [
         {
-          path: 'dashboard',
+          path: "dashboard",
           element: (
-            <GuestGuard>
+            <AuthGuard>
               <DashboardDefault />
-            </GuestGuard>
-          )
-        }
-        // { path: 'register-unprotected', element: <Register /> },
+            </AuthGuard>
+          ),
+        },
+        {
+          path: "userList",
+          element: (
+            <AuthGuard>
+              <UserList />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: "userCreate",
+          element: (
+            <AuthGuard>
+              <UserCreate />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: "tripList",
+          element: (
+            <AuthGuard>
+              <TripList />
+            </AuthGuard>
+          ),
+        },
         // { path: 'verify', element: <VerifyCode /> }
-      ]
+      ],
     },
-    { path: '*', element: <Navigate to="/404" replace /> }
+    { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 }
 
 // IMPORT COMPONENTS
 
 // Authentication
-const Login = Loadable(lazy(() => import('../pages/authentication/Login')));
+const AuthLogin  = Loadable(lazy(() => import("../pages/authentication/Login")));
 // const Register = Loadable(lazy(() => import('../pages/authentication/Register')));
 // const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
-const DashboardDefault = Loadable(lazy(() => import('../pages/dashboard/Dashboard')));
+const DashboardDefault = Loadable(
+  lazy(() => import("../pages/dashboard/Dashboard"))
+);
 
-// const EcommerceProductDetails = Loadable(
-//   lazy(() => import('../pages/dashboard/EcommerceProductDetails'))
-// );
-// const EcommerceProductList = Loadable(
-//   lazy(() => import('../pages/dashboard/EcommerceProductList'))
-// );
+const UserList = Loadable(
+  lazy(() => import("../pages/userManagement/userList"))
+);
+const UserCreate = Loadable(
+  lazy(() => import("../pages/userManagement/userCreate"))
+);
+const TripList = Loadable(
+  lazy(() => import("../pages/tripManagement/tripList"))
+);
 // const EcommerceProductCreate = Loadable(
 //   lazy(() => import('../pages/dashboard/EcommerceProductCreate'))
 // );
@@ -151,9 +183,9 @@ const DashboardDefault = Loadable(lazy(() => import('../pages/dashboard/Dashboar
 //Page
 // const Projects = Loadable(lazy(() => import('../pages/project/Project')));
 // const SearchPage = Loadable(lazy(() => import('../pages/SearchPage')));
-const Maintenance = Loadable(lazy(() => import('../pages/Maintenance')));
-const Page500 = Loadable(lazy(() => import('../pages/Page500')));
-const NotFound = Loadable(lazy(() => import('../pages/Page404')));
+const Maintenance = Loadable(lazy(() => import("../pages/Maintenance")));
+const Page500 = Loadable(lazy(() => import("../pages/Page500")));
+const NotFound = Loadable(lazy(() => import("../pages/Page404")));
 // Components
 // const ComponentsOverview = Loadable(lazy(() => import('../pages/ComponentsOverview')));
 ///

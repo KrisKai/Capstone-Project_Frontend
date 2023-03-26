@@ -18,14 +18,14 @@ const trip = {
             id: 'trip-list',
             title: 'List Trip',
             type: 'item',
-            url: '/sample-page',
+            url: '/admin/tripList',
             icon: icons.ChromeOutlined
         },
         {
             id: 'trip-create',
             title: 'Create Trip',
             type: 'item',
-            url: 'https://codedthemes.gitbook.io/mantis-react/',
+            url: '/admin/tripCreate',
             icon: icons.QuestionOutlined
         }
     ]

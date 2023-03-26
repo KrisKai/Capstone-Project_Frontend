@@ -3,19 +3,21 @@ import {
     AppstoreAddOutlined,
     AntDesignOutlined,
     BarcodeOutlined,
-    BgColorsOutlined,
     FontSizeOutlined,
-    LoadingOutlined
+    UserAddOutlined,
+    LoadingOutlined,
+    UserOutlined
 } from '@ant-design/icons';
 
 // icons
 const icons = {
     FontSizeOutlined,
-    BgColorsOutlined,
+    UserAddOutlined,
     BarcodeOutlined,
     AntDesignOutlined,
     LoadingOutlined,
-    AppstoreAddOutlined
+    AppstoreAddOutlined,
+    UserOutlined
 };
 
 // ==============================|| MENU ITEMS - UTILITIES ||============================== //
@@ -29,15 +31,15 @@ const user = {
             id: 'user-list',
             title: 'List User',
             type: 'item',
-            url: '/typography',
-            icon: icons.FontSizeOutlined
+            url: '/admin/userList',
+            icon: icons.UserOutlined
         },
         {
             id: 'user-create',
             title: 'Create User',
             type: 'item',
-            url: '/color',
-            icon: icons.BgColorsOutlined
+            url: '/admin/userCreate',
+            icon: icons.UserAddOutlined
         }
     ]
 };

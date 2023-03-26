@@ -4,6 +4,7 @@ import { call, delay, fork, put, take } from "redux-saga/effects";
 import { authActions, LoginPayload } from "./authSlice";
 import axiosInstance from "../../../utils/axios";
 import authApi from "../../../api/authApi";
+import { Navigate, useLocation } from 'react-router-dom';
 
 function* handleLogin(payload) {
   try {
@@ -32,7 +33,7 @@ function* handleLogout() {
   yield delay(500);
   localStorage.removeItem("access_token");
   // redirect to login page
-  yield put(push("/login"));
+  yield put(push("/auth/login"));
 }
 
 function* watchLoginFlow() {
