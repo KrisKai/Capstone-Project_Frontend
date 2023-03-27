@@ -17,6 +17,7 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.isInitialized = false;
       state.currentUser = action.payload;
+      console.log(state.currentUser)
     },
     loginFailed(state) {
       state.isInitialized = false;

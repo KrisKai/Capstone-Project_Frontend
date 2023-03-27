@@ -25,14 +25,10 @@ import { Formik } from "formik";
 // project import
 import FirebaseSocial from "./FirebaseSocial";
 import AnimateButton from "../../../components/@extended/AnimateButton";
-
-// assets
-import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
-
-// routes
-import { PATH_DASHBOARD, PATH_PAGE } from "../../../routes/path";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { authActions } from "../../../redux/modules/authenticate/authSlice";
+// assets
+import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -40,6 +36,8 @@ const AuthLogin = () => {
   const [checked, setChecked] = React.useState(false);
 
   const [showPassword, setShowPassword] = React.useState(false);
+
+  const dispatch = useAppDispatch();
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -47,18 +45,17 @@ const AuthLogin = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const dispatch = useAppDispatch();
-
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
-  //     const data = new FormData(event.currentTarget);
-  //     dispatch(
-  //       authActions.login({
-  //         Username: data.get("email-login"),
-  //         Password: data.get("password-login"),
-  //       })
-  //     );
-  //   };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    //AuthContext.login(data.get('email'),data.get('password'));
+    dispatch(
+      authActions.login({
+        Username: data.get("email"),
+        Password: data.get("password"),
+      })
+    );
+  };
   return (
     <>
       <Formik
@@ -89,7 +86,6 @@ const AuthLogin = () => {
           errors,
           handleBlur,
           handleChange,
-          handleSubmit,
           isSubmitting,
           touched,
           values,

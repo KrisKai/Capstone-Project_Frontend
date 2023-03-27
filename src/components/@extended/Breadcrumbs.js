@@ -16,8 +16,11 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
     const [main, setMain] = useState();
     const [item, setItem] = useState();
 
+    console.log(navigation.items)
+
     // set active item state
     const getCollapse = (menu) => {
+        console.log(menu)
         if (menu.children) {
             menu.children.filter((collapse) => {
                 if (collapse.type && collapse.type === 'collapse') {
@@ -50,6 +53,8 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
     let itemContent;
     let breadcrumbContent = <Typography />;
     let itemTitle = '';
+    // console.log(main)
+    // console.log(item)
 
     // collapse item
     if (main && main.type === 'collapse') {
@@ -74,7 +79,7 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
             breadcrumbContent = (
                 <MainCard border={false} sx={{ mb: 3, bgcolor: 'transparent' }} {...others} content={false}>
                     <Grid container direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={1}>
-                        <Grid item>
+                        {/* <Grid item>
                             <MuiBreadcrumbs aria-label="breadcrumb">
                                 <Typography component={Link} to="/" color="textSecondary" variant="h6" sx={{ textDecoration: 'none' }}>
                                     Home
@@ -82,7 +87,7 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
                                 {mainContent}
                                 {itemContent}
                             </MuiBreadcrumbs>
-                        </Grid>
+                        </Grid> */}
                         {title && (
                             <Grid item sx={{ mt: 2 }}>
                                 <Typography variant="h5">{item.title}</Typography>
