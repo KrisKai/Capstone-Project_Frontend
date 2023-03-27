@@ -1,3 +1,4 @@
+import React from 'react';
 // material-ui
 import { useMediaQuery, Container, Link, Typography, Stack } from '@mui/material';
 

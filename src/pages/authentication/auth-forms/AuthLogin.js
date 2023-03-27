@@ -49,16 +49,16 @@ const AuthLogin = () => {
   };
   const dispatch = useAppDispatch();
 
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
-  //     const data = new FormData(event.currentTarget);
-  //     dispatch(
-  //       authActions.login({
-  //         Username: data.get("email-login"),
-  //         Password: data.get("password-login"),
-  //       })
-  //     );
-  //   };
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      dispatch(
+        authActions.login({
+          Username: data.get("email"),
+          Password: data.get("password"),
+        })
+      );
+    };
   return (
     <>
       <Formik
@@ -89,7 +89,6 @@ const AuthLogin = () => {
           errors,
           handleBlur,
           handleChange,
-          handleSubmit,
           isSubmitting,
           touched,
           values,
