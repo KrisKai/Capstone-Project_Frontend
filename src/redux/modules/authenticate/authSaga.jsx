@@ -3,8 +3,7 @@ import { push } from "connected-react-router";
 import { call, delay, fork, put, take } from "redux-saga/effects";
 import { authActions, LoginPayload } from "./authSlice";
 import axiosInstance from "../../../utils/axios";
-import authApi from "../../../api/authApi";
-import { Navigate, useLocation } from 'react-router-dom';
+import authApi from "../../../api/authenticate/authApi";
 
 function* handleLogin(payload) {
   try {
