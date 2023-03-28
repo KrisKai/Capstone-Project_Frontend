@@ -45,6 +45,7 @@ export default function TripList() {
   const filter = useAppSelector(selectTripFilter);
   const loading = useAppSelector(selectTripLoading);
   const tripList = useAppSelector(selectTripList);
+  console.log(tripList)
 
   useEffect(() => {
     dispatch(tripActions.getTripList(filter));
@@ -91,7 +92,7 @@ export default function TripList() {
     <Box className={classes.root}>
       {loading && <LinearProgress className={classes.loading} />}
 
-      <Box className={classes.titleContainer}>
+      {/* <Box className={classes.titleContainer}>
         <Typography variant="h4">Trips</Typography>
 
         <Link to={`trips/add`} style={{ textDecoration: 'none' }}>
@@ -107,7 +108,7 @@ export default function TripList() {
           onChange={handleFilterChange}
           onSearchChange={handleSearchChange}
         />
-      </Box>
+      </Box> */}
 
       <TripTable
         tripList={tripList}
@@ -115,14 +116,14 @@ export default function TripList() {
         onRemove={handleRemoveTrip}
       />
 
-      <Box my={2} display="flex" justifyContent="center">
+      {/* <Box my={2} display="flex" justifyContent="center">
         <Pagination
           color="primary"
           count={Math.ceil(pagination._totalRows / pagination._limit)}
           page={pagination?._page}
           onChange={handlePageChange}
         />
-      </Box>
+      </Box> */}
     </Box>
   );
 }

@@ -96,12 +96,6 @@ export default function StudentFilters({
               <MenuItem value="">
                 <em>All</em>
               </MenuItem>
-
-              {cityList.map((city) => (
-                <MenuItem key={city.code} value={city.code}>
-                  {city.name}
-                </MenuItem>
-              ))}
             </Select>
           </FormControl>
         </Grid>

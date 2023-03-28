@@ -8,12 +8,10 @@ import authApi from "../../../api/authenticate/authApi";
 function* handleLogin(payload) {
   try {
     yield delay(1000);
-    console.log(payload);
 
     // call api login
     var url = "/authenticate/login";
     const response = yield call(authApi.login, payload);
-    console.log(response.result);
     if (!response.result) return;
     const userToken = response.result.token;
 

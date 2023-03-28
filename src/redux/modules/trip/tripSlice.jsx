@@ -4,13 +4,13 @@ const initialState = {
   loading: false,
   list: [],
   filter: {
-    _page: 1,
-    _limit: 15,
+    pageIndex: 1,
+    pageSize: 15,
   },
   pagination: {
-    _page: 1,
-    _limit: 15,
-    _totalRows: 15,
+    pageIndex: 1,
+    pageSize: 15,
+    totalRows: 15,
   },
 };
 

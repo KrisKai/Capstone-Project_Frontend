@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import React, { useState } from 'react';
-import { capitalizeString, getMarkColor } from 'utils';
+// import { capitalizeString, getMarkColor } from 'utils';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TripTable({
   tripList,
-  cityMap,
   onEdit,
   onRemove,
 }) {
@@ -61,17 +60,17 @@ export default function TripTable({
           </TableHead>
 
           <TableBody>
-            {tripList.map((trip) => (
+            {tripList.length > 0 && tripList?.map((trip) => (
               <TableRow key={trip.id}>
                 <TableCell width={310}>{trip.id}</TableCell>
                 <TableCell>{trip.name}</TableCell>
-                <TableCell>{capitalizeString(trip.gender)}</TableCell>
+                <TableCell>{trip.gender}</TableCell>
                 <TableCell>
-                  <Box color={getMarkColor(trip.mark)} fontWeight="bold">
+                  <Box color={trip.mark} fontWeight="bold">
                     {trip.mark}
                   </Box>
                 </TableCell>
-                <TableCell>{cityMap[trip.city]?.name}</TableCell>
+                <TableCell>{trip.city}</TableCell>
                 <TableCell align="right">
                   <Button
                     size="small"

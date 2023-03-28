@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import {REACT_APP_API_URL} from '../config';
+
 const axiosInstance = axios.create({
   baseURL: REACT_APP_API_URL,
   headers: {
@@ -9,14 +10,19 @@ const axiosInstance = axios.create({
 
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
-  function (config) {
-    // Do something before request is sent
+  config => {
+    console.log(1)
+    if (!config.headers.Authorization) {
+      const token = JSON.parse(localStorage.getItem("access_token")).token;
+      console.log(2)
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+
     return config;
   },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
+  error => Promise.reject(error)
 );
 
 // Add a response interceptor

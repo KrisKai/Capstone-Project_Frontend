@@ -12,7 +12,6 @@ export default function AuthGuard({ children }) {
     const isAuthenticated = Boolean(localStorage.getItem('access_token'));
     const { pathname } = useLocation();
     const [requestedLocation, setRequestedLocation] = useState (null);
-    console.log(isAuthenticated, pathname)
 
     if (!isAuthenticated) {
         if (pathname !== requestedLocation) {
