@@ -1,27 +1,16 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-import { push } from "connected-react-router";
 import { call, delay, put, takeLatest, debounce } from "redux-saga/effects";
 import { tripActions, LoginPayload } from "./tripSlice";
-import axiosInstance from "../../../utils/axios";
 import tripApi from "../../../api/trip/tripApi";
 
-function* getTripList(payload) {
+function* getTripList(action) {
   try {
-    yield delay(1000);
-    console.log(payload);
     // call api select list
     var url = "/trips";
-    const response = yield call(tripApi.getAll, payload);
-    console.log(response);
-    //   console.log(response.result);
-    //   if (!response.result) return;
-    //   const userToken = response.result.token;
-
-    //   // save token in localStorage
-    //   localStorage.setItem("access_token", userToken);
-    yield put(tripActions.getTripListSuccess(response.result));
+    const response = yield call(tripApi.getAll, action.payload);
+    yield put(tripActions.getTripListSuccess(response));
   } catch (error) {
-    yield put(tripActions.getTripListFailed(error.message));
+    console.log('Failed to fetch trip list', error);
+    yield put(tripActions.getTripListFailed());
   }
 }
 

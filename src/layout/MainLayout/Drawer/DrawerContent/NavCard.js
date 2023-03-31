@@ -29,6 +29,6 @@ const NavCard = () => (
     //     </Stack>
     // </MainCard>
     <></>
-);
+) ;
 
 export default NavCard;

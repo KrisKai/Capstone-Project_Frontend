@@ -2,14 +2,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
   loading: false,
-  list: [],
+  allTrip: {
+    listOfTrip: [],
+    numOfTrip: 0
+  },
   filter: {
-    pageIndex: 1,
-    pageSize: 15,
+    pageIndex: 0,
+    pageSize: 10,
   },
   pagination: {
-    pageIndex: 1,
-    pageSize: 15,
+    pageIndex: 0,
+    pageSize: 10,
     totalRows: 15,
   },
 };
@@ -22,19 +25,17 @@ const tripSlice = createSlice({
       state.loading = true;
     },
     getTripListSuccess(state, action) {
-      state.list = action.payload.data;
+      state.allTrip = action.payload;
       state.pagination = action.payload.pagination;
       state.loading = false;
+      console.log(action.payload)
     },
     getTripListFailed(state) {
       state.loading = false;
     },
-
     setFilter(state, action) {
       state.filter = action.payload;
     },
-
-
     setFilterWithDebounce(state, action) {},
   },
 });
@@ -43,7 +44,7 @@ const tripSlice = createSlice({
 export const tripActions = tripSlice.actions;
 
 // Selectors
-export const selectTripList = (state) => state.trip.list;
+export const selectAllTripList = (state) => state.trip.allTrip;
 export const selectTripLoading = (state) => state.trip.loading;
 export const selectTripFilter = (state) => state.trip.filter;
 export const selectTripPagination = (state) => state.trip.pagination;
