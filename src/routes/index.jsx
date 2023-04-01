@@ -119,22 +119,22 @@ export default function Router() {
 // IMPORT COMPONENTS
 
 // Authentication
-const AuthLogin  = Loadable(lazy(() => import("../pages/authentication/Login")));
+const AuthLogin  = Loadable(lazy(() => import("../pages/admin/authentication/Login")));
 // const Register = Loadable(lazy(() => import('../pages/authentication/Register')));
 // const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
 const DashboardDefault = Loadable(
-  lazy(() => import("../pages/dashboard/Dashboard"))
+  lazy(() => import("../pages/admin/dashboard/Dashboard"))
 );
 
 const UserList = Loadable(
-  lazy(() => import("../pages/userManagement/userList"))
+  lazy(() => import("../pages/admin/userManagement/userList"))
 );
 const UserCreate = Loadable(
-  lazy(() => import("../pages/userManagement/userCreate"))
+  lazy(() => import("../pages/admin/userManagement/userCreate"))
 );
 const TripList = Loadable(
-  lazy(() => import("../pages/tripManagement/tripList"))
+  lazy(() => import("../pages/admin/tripManagement/tripList"))
 );
 // const EcommerceProductCreate = Loadable(
 //   lazy(() => import('../pages/dashboard/EcommerceProductCreate'))
