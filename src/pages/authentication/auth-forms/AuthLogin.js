@@ -164,7 +164,7 @@ const AuthLogin = () => {
                   alignItems="center"
                   spacing={2}
                 >
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     control={
                       <Checkbox
                         checked={checked}
@@ -177,7 +177,7 @@ const AuthLogin = () => {
                     label={
                       <Typography variant="h6">Keep me sign in</Typography>
                     }
-                  />
+                  /> */}
                   <Link
                     variant="h6"
                     component={RouterLink}
@@ -208,14 +208,14 @@ const AuthLogin = () => {
                   </Button>
                 </AnimateButton>
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <Divider>
                   <Typography variant="caption"> Login with</Typography>
                 </Divider>
               </Grid>
               <Grid item xs={12}>
                 <FirebaseSocial />
-              </Grid>
+              </Grid> */}
             </Grid>
           </form>
         )}

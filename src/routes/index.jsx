@@ -3,20 +3,48 @@ import { Suspense, lazy } from "react";
 import { Navigate, useRoutes, useLocation } from "react-router-dom";
 import LogoOnlyLayout from "../layouts/LogoOnlyLayout";
 // guards
-import GuestGuard from "../guards/GuestGuard";
-import AuthGuard from "../guards/AuthGuard";
-// import RoleBasedGuard from '../guards/RoleBasedGuard';
+import GuestGuard from "../guards/admin/GuestGuard";
+import AuthGuard from "../guards/admin/AuthGuard";
+// import RoleBasedGuard from '../guards/admin/RoleBasedGuard';
 // components
 import LoadingScreen from "../components/LoadingScreen";
 
 // project import
 import Loadable from "../components/Loadable";
 import MainLayout from "../layout/MainLayout/index";
+import GuestGuardUser from "../guards/user/GuestGuardUser";
+import AuthGuardUser from "../guards/user/AuthGuardUser";
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   return useRoutes([
+    {
+      path: "/",
+      element: (
+        <GuestGuard>
+          <AuthLogin/>
+        </GuestGuard>
+      ),
+      children: [
+        {
+          path: "login",
+          element: (
+            <GuestGuardUser>
+              <AuthLogin/>
+            </GuestGuardUser>
+          ),
+        },
+        {
+          path: "dashboard",
+          element: (
+            <AuthGuardUser>
+              <AuthLogin/>
+            </AuthGuardUser>
+          ),
+        },
+      ]
+    },
     {
       path: "auth",
       children: [
