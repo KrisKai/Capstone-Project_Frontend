@@ -12,12 +12,11 @@ function* handleLogin(payload) {
     // call api login
     var url = "/authenticate/login";
     const response = yield call(authApi.login, payload);
-    if (!response.result) return;
-    const userToken = response.result.token;
+    const userToken = response.token;
 
     // save token in localStorage
     localStorage.setItem("access_token", userToken);
-    yield put(authActions.loginSuccess(response.result));
+    yield put(authActions.loginSuccess(response));
 
     // redirect to admin page
     yield put(push("/admin/dashboard"));
