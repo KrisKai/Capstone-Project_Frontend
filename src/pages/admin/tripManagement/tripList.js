@@ -10,6 +10,8 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import {
+  tripActions,
+  getTripList,
   selectAllTripList,
   selectTripFilter,
 } from "redux/modules/trip/tripSlice";
@@ -68,6 +70,7 @@ export default function StickyHeadTableTrip() {
   const filter = useAppSelector(selectTripFilter);
   const tripList = allTrips.listOfTrip;
   const numberOfTrip = allTrips.numOfTrip;
+  console.log(allTrips)
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -113,7 +116,7 @@ export default function StickyHeadTableTrip() {
   }
 
   useEffect(() => {
-    dispatch(tripActions.getTripList(filter));
+    dispatch(getTripList(filter));
   }, [dispatch, filter]);
 
   return (
