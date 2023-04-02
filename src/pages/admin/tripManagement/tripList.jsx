@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Box, Button, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,8 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { TextField, Button, Box } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import {
   tripActions,
   getTripList,
@@ -19,7 +19,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 // assets
-import { SearchOutlined } from "@ant-design/icons";
 
 const columns = [
   { id: "fldTripName", label: "Trip Name", minWidth: 100 },
@@ -72,7 +71,6 @@ export default function StickyHeadTableTrip() {
   const filter = useAppSelector(selectTripFilter);
   const tripList = allTrips.listOfTrip;
   const numberOfTrip = allTrips.numOfTrip;
-  console.log(filter.pageIndex+1)
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);

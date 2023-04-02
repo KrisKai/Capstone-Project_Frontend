@@ -1,19 +1,15 @@
-import React from "react";
-import { Suspense, lazy } from "react";
-import { Navigate, useRoutes, useLocation } from "react-router-dom";
-import LogoOnlyLayout from "../layouts/LogoOnlyLayout";
+import { lazy } from "react";
+import { Navigate, useRoutes } from "react-router-dom";
 // guards
-import GuestGuard from "../guards/admin/GuestGuard";
-import AuthGuard from "../guards/admin/AuthGuard";
+import { AuthGuard, GuestGuard } from "guards/admin";
+
 // import RoleBasedGuard from '../guards/admin/RoleBasedGuard';
-// components
-import LoadingScreen from "../components/LoadingScreen";
 
 // project import
-import Loadable from "../components/Loadable";
-import MainLayout from "../layout/MainLayout/index";
-import GuestGuardUser from "../guards/user/GuestGuardUser";
-import AuthGuardUser from "../guards/user/AuthGuardUser";
+import Loadable from "components/Loadable";
+import MainLayout from "layout/MainLayout/index";
+
+import { AuthGuardUser, GuestGuardUser } from "guards/user";
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +19,7 @@ export default function Router() {
       path: "/",
       element: (
         <GuestGuard>
-          <AuthLoginUser/>
+          <AuthLoginUser />
         </GuestGuard>
       ),
       children: [
@@ -31,7 +27,7 @@ export default function Router() {
           path: "login",
           element: (
             <GuestGuardUser>
-              <AuthLoginUser/>
+              <AuthLoginUser />
             </GuestGuardUser>
           ),
         },
@@ -39,11 +35,11 @@ export default function Router() {
           path: "dashboard",
           element: (
             <AuthGuardUser>
-              <AuthLoginUser/>
+              <AuthLoginUser />
             </AuthGuardUser>
           ),
         },
-      ]
+      ],
     },
     {
       path: "auth",
@@ -52,7 +48,7 @@ export default function Router() {
           path: "login",
           element: (
             <GuestGuard>
-              <AuthLogin/>
+              <AuthLogin />
             </GuestGuard>
           ),
         },
@@ -133,7 +129,9 @@ const AuthLoginUser  = Loadable(lazy(() => import("../pages/user/authentication/
 
 //     --------------ADMIN------------------
 // Authentication
-const AuthLogin  = Loadable(lazy(() => import("../pages/admin/authentication/Login")));
+const AuthLogin = Loadable(
+  lazy(() => import("../pages/admin/authentication/Login"))
+);
 // const Register = Loadable(lazy(() => import('../pages/authentication/Register')));
 // const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
