@@ -30,8 +30,7 @@ import avatar1 from "../../../../../assets/images/users/avatar-1.png";
 import { SettingOutlined, UserOutlined } from "@ant-design/icons";
 
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
-import { authActions } from "../../../../../redux/modules/authenticate/authSlice";
-
+import { useNavigate } from "react-router-dom";
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -64,11 +63,14 @@ function a11yProps(index) {
 
 const Profile = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const theme = useTheme();
 
   const handleLogout = async () => {
+    console.log('logout')
     // logout
-    dispatch(authActions.logout());
+    localStorage.removeItem("access_token");
+    navigate("/auth/login")
   };
 
   const anchorRef = useRef(null);

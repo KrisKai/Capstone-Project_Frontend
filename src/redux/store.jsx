@@ -1,31 +1,26 @@
-import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import { connectRouter, routerMiddleware } from 'connected-react-router';
-import createSagaMiddleware from 'redux-saga';
-import { history } from '../utils/history';
-import rootSaga from './rootSage';
-// project import
-import {menuReducer} from './modules/menu/menuSlice';
-import authReducer from './modules/authenticate/authSlice';
-import tripReducer from './modules/trip/tripSlice';
-import userReducer from './modules/user/userSlice';
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import {
+  useDispatch as useReduxDispatch,
+  useSelector as useReduxSelector,
+} from "react-redux";
+import { persistReducer, persistStore } from "redux-persist";
+import { rootPersistConfig, rootReducer } from "./rootReducer";
 
 // ----------------------------------------------------------------------
-const rootReducer = combineReducers({
-  router: connectRouter(history),
-  auth: authReducer,
-  menu:  menuReducer,
-  user: userReducer,
-  trip: tripReducer
+
+const store = configureStore({
+  reducer: persistReducer(rootPersistConfig, rootReducer),
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+    immutableCheck: false,
+  }),
 });
 
-const sagaMiddleware = createSagaMiddleware();
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware, routerMiddleware(history)),
-});
+const persistor = persistStore(store);
 
-sagaMiddleware.run(rootSaga);
+const { dispatch } = store;
 
-export const  AppDispatch = store.dispatch;
-export const  RootState = store.getState;
+const useSelector = useReduxSelector;
+const useDispatch = () => useReduxDispatch();
+
+export { store, persistor, dispatch, useSelector, useDispatch };

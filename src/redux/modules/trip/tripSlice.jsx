@@ -1,10 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { dispatch } from "../../store";
+import tripApi from "../../../api/trip/tripApi";
 
 const initialState = {
   loading: false,
   allTrip: {
     listOfTrip: [],
-    numOfTrip: 0
+    numOfTrip: 0,
   },
   filter: {
     pageIndex: 0,
@@ -18,7 +20,7 @@ const initialState = {
 };
 
 const tripSlice = createSlice({
-  name: 'trip',
+  name: "trip",
   initialState,
   reducers: {
     getTripList(state, action) {
@@ -28,7 +30,7 @@ const tripSlice = createSlice({
       state.allTrip = action.payload;
       state.pagination = action.payload.pagination;
       state.loading = false;
-      console.log(action.payload)
+      console.log(action.payload);
     },
     getTripListFailed(state) {
       state.loading = false;
@@ -51,3 +53,24 @@ export const selectTripPagination = (state) => state.trip.pagination;
 // Reducer
 const tripReducer = tripSlice.reducer;
 export default tripReducer;
+
+export function getTripList(action) {
+  return async () => {
+    try {
+      // call api select list
+      var url = "/trips";
+      const response = dispatch(tripApi.getAll, action.payload);
+      console.log(response)
+      dispatch(tripSlice.actions.getTripListSuccess(response));
+    } catch (error) {
+      console.log("Failed to fetch trip list", error);
+      dispatch(tripSlice.actions.getTripListFailed());
+    }
+  };
+}
+
+export function handleSearchDebounce(action) {
+  return async () => {
+    dispatch(tripSlice.actions.setFilter(action.payload));
+  };
+}
