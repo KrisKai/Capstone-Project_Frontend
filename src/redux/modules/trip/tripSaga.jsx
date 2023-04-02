@@ -1,6 +1,6 @@
-import { call, delay, put, takeLatest, debounce } from "redux-saga/effects";
-import { tripActions, LoginPayload } from "./tripSlice";
-import tripApi from "../../../api/trip/tripApi";
+import { tripApi } from "api";
+import { call, debounce, put, takeLatest } from "redux-saga/effects";
+import { tripActions } from "./tripSlice";
 
 function* getTripList(action) {
   try {
@@ -9,7 +9,7 @@ function* getTripList(action) {
     const response = yield call(tripApi.getAll, action.payload);
     yield put(tripActions.getTripListSuccess(response));
   } catch (error) {
-    console.log('Failed to fetch trip list', error);
+    console.log("Failed to fetch trip list", error);
     yield put(tripActions.getTripListFailed());
   }
 }
