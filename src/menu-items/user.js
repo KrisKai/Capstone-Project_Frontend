@@ -33,13 +33,6 @@ const user = {
             type: 'item',
             url: '/admin/userList',
             icon: icons.UserOutlined
-        },
-        {
-            id: 'user-create',
-            title: 'Create User',
-            type: 'item',
-            url: '/admin/userCreate',
-            icon: icons.UserAddOutlined
         }
     ]
 };

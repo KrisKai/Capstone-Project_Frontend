@@ -30,7 +30,6 @@ const tripSlice = createSlice({
       state.allTrip = action.payload;
       state.pagination = action.payload.pagination;
       state.loading = false;
-      console.log(action.payload);
     },
     getTripListFailed(state) {
       state.loading = false;
@@ -59,8 +58,7 @@ export function getTripList(action) {
     try {
       // call api select list
       var url = "/trips";
-      const response = dispatch(tripApi.getAll, action.payload);
-      console.log(response)
+      const response = await tripApi.getAll(action);
       dispatch(tripSlice.actions.getTripListSuccess(response));
     } catch (error) {
       console.log("Failed to fetch trip list", error);

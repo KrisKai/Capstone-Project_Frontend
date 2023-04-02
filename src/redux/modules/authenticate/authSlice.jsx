@@ -14,14 +14,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     login(state) {
-      console.log(1);
       state.isInitialized = true;
     },
     loginSuccess(state, action) {
       state.isAuthenticated = true;
       state.isInitialized = false;
       state.currentUser = action.payload;
-      console.log(action);
     },
     loginFailed(state) {
       state.isInitialized = false;
@@ -58,10 +56,8 @@ export function handleLogin(payload) {
       // save token in localStorage
       localStorage.setItem("access_token", userToken);
       dispatch(authSlice.actions.loginSuccess(response));
-      window.location.replace("/admin/dashboard")
       // redirect to admin page
-      //dispatch(push("/admin/dashboard"))
-      //yield put(push("/admin/dashboard"));
+      window.location.replace("/admin/dashboard")
     } catch (error) {
       dispatch(authSlice.actions.loginFailed(error.message));
     }

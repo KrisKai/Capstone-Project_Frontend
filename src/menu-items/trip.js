@@ -20,13 +20,6 @@ const trip = {
             type: 'item',
             url: '/admin/tripList',
             icon: icons.ChromeOutlined
-        },
-        {
-            id: 'trip-create',
-            title: 'Create Trip',
-            type: 'item',
-            url: '/admin/tripCreate',
-            icon: icons.QuestionOutlined
         }
     ]
 };

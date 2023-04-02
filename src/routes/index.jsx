@@ -109,6 +109,15 @@ export default function Router() {
             </AuthGuard>
           ),
         },
+        
+        {
+          path: "tripCreate",
+          element: (
+            <AuthGuard>
+              <TripCreate />
+            </AuthGuard>
+          ),
+        },
         // { path: 'verify', element: <VerifyCode /> }
       ],
     },
@@ -120,7 +129,7 @@ export default function Router() {
 //     --------------USER------------------
 // Authentication
 const AuthLoginUser  = Loadable(lazy(() => import("../pages/user/authentication/LoginUser")));
-
+// const Register = Loadable(lazy(() => import('../pages/user/authentication/Register')));
 
 //     --------------ADMIN------------------
 // Authentication
@@ -140,6 +149,9 @@ const UserCreate = Loadable(
 );
 const TripList = Loadable(
   lazy(() => import("../pages/admin/tripManagement/tripList"))
+);
+const TripCreate = Loadable(
+  lazy(() => import("../pages/admin/tripManagement/tripCreate"))
 );
 // const EcommerceProductCreate = Loadable(
 //   lazy(() => import('../pages/dashboard/EcommerceProductCreate'))

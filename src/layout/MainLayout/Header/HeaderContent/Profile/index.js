@@ -67,7 +67,6 @@ const Profile = () => {
   const theme = useTheme();
 
   const handleLogout = async () => {
-    console.log('logout')
     // logout
     localStorage.removeItem("access_token");
     navigate("/auth/login")

@@ -16,6 +16,7 @@ import {
   selectTripFilter,
   selectTripPagination,
 } from "../../../redux/modules/trip/tripSlice";
+import { useNavigate } from 'react-router-dom';
 
 // assets
 import { SearchOutlined } from "@ant-design/icons";
@@ -26,52 +27,52 @@ const columns = [
     id: "fldTripBudget",
     label: "Trip Budget",
     minWidth: 100,
+    align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "fldTripDescription",
     label: "Trip Description",
+    minWidth: 170,
+    align: "center",
   },
   {
     id: "fldEstimateStartTime",
     label: "Estimate Start Time",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    minWidth: 130,
+    align: "center",
   },
   {
     id: "fldEstimateArrivalTime",
     label: "Estimate Arrival Time",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toFixed(2),
+    minWidth: 130,
+    align: "center",
   },
   {
     id: "fldTripStatus",
     label: "Trip Status",
     minWidth: 170,
-    align: "right",
+    align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "fldTripMember",
     label: "Trip Member",
     minWidth: 170,
-    align: "right",
+    align: "center",
     format: (value) => value.toFixed(2),
   },
 ];
 
 export default function StickyHeadTableTrip() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  let navigate = useNavigate();
   const [searchTerm, setSearchTerm] = React.useState("");
   const dispatch = useAppDispatch();
   const allTrips = useAppSelector(selectAllTripList);
   const filter = useAppSelector(selectTripFilter);
   const tripList = allTrips.listOfTrip;
   const numberOfTrip = allTrips.numOfTrip;
-  console.log(allTrips)
+  console.log(filter.pageIndex+1)
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -83,7 +84,6 @@ export default function StickyHeadTableTrip() {
   };
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
     dispatch(
       tripActions.setFilter({
         ...filter,
@@ -93,13 +93,11 @@ export default function StickyHeadTableTrip() {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
     dispatch(
       tripActions.setFilter({
         ...filter,
         pageIndex: 0,
-        pageSize: +event.target.value
+        pageSize: +event.target.value,
       })
     );
   };
@@ -113,10 +111,12 @@ export default function StickyHeadTableTrip() {
   };
 
   function gotoCreate() {
-    //go to create
+    navigate('/admin/tripCreate');
   }
 
   useEffect(() => {
+    //filter = { pageIndex: 0, pageSize: 10 };
+    console.log(filter);
     dispatch(getTripList(filter));
   }, [dispatch, filter]);
 
@@ -132,7 +132,7 @@ export default function StickyHeadTableTrip() {
             onChange={handleChange}
             sx={{ width: 400 }}
           />
-          <Button variant="outlined" onClick={handleSearch} right>
+          <Button variant="outlined" onClick={handleSearch} sx={{ height: 42 }}>
             Search
           </Button>
         </Box>
@@ -195,8 +195,8 @@ export default function StickyHeadTableTrip() {
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
           count={numberOfTrip}
-          rowsPerPage={rowsPerPage}
-          page={page}
+          rowsPerPage={filter.pageSize}
+          page={filter.pageIndex}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
