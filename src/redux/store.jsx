@@ -3,7 +3,7 @@ import {
   useDispatch as useReduxDispatch,
   useSelector as useReduxSelector,
 } from "react-redux";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistReducer, persistStore } from "redux-persist";
 import { rootPersistConfig, rootReducer } from "./rootReducer";
 
 // ----------------------------------------------------------------------

@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Box, Button, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,18 +8,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { TextField, Button, Box } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import {
   tripActions,
   getTripList,
   selectAllTripList,
   selectTripFilter,
-  selectTripPagination,
-} from "../../../redux/modules/trip/tripSlice";
+} from "redux/modules/trip/tripSlice";
 
 // assets
-import { SearchOutlined } from "@ant-design/icons";
 
 const columns = [
   { id: "fldTripName", label: "Trip Name", minWidth: 100 },
@@ -63,15 +61,15 @@ const columns = [
 ];
 
 export default function StickyHeadTableTrip() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useAppDispatch();
   const allTrips = useAppSelector(selectAllTripList);
   const filter = useAppSelector(selectTripFilter);
   const tripList = allTrips.listOfTrip;
   const numberOfTrip = allTrips.numOfTrip;
-  console.log(allTrips)
+  console.log(allTrips);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -99,7 +97,7 @@ export default function StickyHeadTableTrip() {
       tripActions.setFilter({
         ...filter,
         pageIndex: 0,
-        pageSize: +event.target.value
+        pageSize: +event.target.value,
       })
     );
   };
