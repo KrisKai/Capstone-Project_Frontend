@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 // material-ui
 import { useTheme } from "@mui/material/styles";
@@ -65,6 +65,11 @@ const Profile = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
+
+  useEffect(() => {
+    //filter = { pageIndex: 0, pageSize: 10 };
+    console.log(localStorage.getItem("access_token"));
+  }, []);
 
   const handleLogout = async () => {
     // logout
