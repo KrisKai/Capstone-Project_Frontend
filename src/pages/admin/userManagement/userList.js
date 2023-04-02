@@ -82,11 +82,11 @@ export default function StickyHeadTable() {
   const handleUpdate = () => {
     // update
   };
-  
+
   const handleDelete = () => {
     // delete
   };
-  
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -155,14 +155,14 @@ export default function StickyHeadTable() {
                       <TableCell key="edit" align="center">
                         <Button
                           variant="outlined"
-                          onClick={()=>handleUpdate(row.code)}
+                          onClick={() => handleUpdate(row.code)}
                           color="primary"
                         >
                           Edit
                         </Button>
                         <Button
                           variant="outlined"
-                          onClick={()=>handleDelete(row.code)}
+                          onClick={() => handleDelete(row.code)}
                           color="secondary"
                         >
                           Delete
