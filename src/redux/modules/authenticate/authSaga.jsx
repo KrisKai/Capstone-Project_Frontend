@@ -1,9 +1,7 @@
-import { PayloadAction } from "@reduxjs/toolkit";
 import { push } from "connected-react-router";
 import { call, delay, fork, put, take } from "redux-saga/effects";
-import { authActions, LoginPayload } from "./authSlice";
-import axiosInstance from "../../../utils/axios";
-import authApi from "../../../api/authenticate/authApi";
+import { authApi } from "api";
+import { authActions } from "./authSlice";
 
 function* handleLogin(payload) {
   try {
