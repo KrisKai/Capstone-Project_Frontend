@@ -23,7 +23,7 @@ export default function Router() {
       path: "/",
       element: (
         <GuestGuard>
-          <AuthLogin/>
+          <AuthLoginUser/>
         </GuestGuard>
       ),
       children: [
@@ -31,7 +31,7 @@ export default function Router() {
           path: "login",
           element: (
             <GuestGuardUser>
-              <AuthLogin/>
+              <AuthLoginUser/>
             </GuestGuardUser>
           ),
         },
@@ -39,7 +39,7 @@ export default function Router() {
           path: "dashboard",
           element: (
             <AuthGuardUser>
-              <AuthLogin/>
+              <AuthLoginUser/>
             </AuthGuardUser>
           ),
         },
@@ -117,7 +117,12 @@ export default function Router() {
 }
 
 // IMPORT COMPONENTS
+//     --------------USER------------------
+// Authentication
+const AuthLoginUser  = Loadable(lazy(() => import("../pages/user/authentication/LoginUser")));
 
+
+//     --------------ADMIN------------------
 // Authentication
 const AuthLogin  = Loadable(lazy(() => import("../pages/admin/authentication/Login")));
 // const Register = Loadable(lazy(() => import('../pages/authentication/Register')));

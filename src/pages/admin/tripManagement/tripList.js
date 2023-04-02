@@ -8,13 +8,13 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { TextField, Button, Box } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
   tripActions,
   selectAllTripList,
   selectTripFilter,
   selectTripPagination,
-} from "../../redux/modules/trip/tripSlice";
+} from "../../../redux/modules/trip/tripSlice";
 
 // assets
 import { SearchOutlined } from "@ant-design/icons";

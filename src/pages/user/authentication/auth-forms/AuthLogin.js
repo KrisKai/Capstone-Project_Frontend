@@ -24,9 +24,9 @@ import { Formik } from "formik";
 
 // project import
 import FirebaseSocial from "./FirebaseSocial";
-import AnimateButton from "../../../components/@extended/AnimateButton";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { authActions } from "../../../redux/modules/authenticate/authSlice";
+import AnimateButton from "../../../../components/@extended/AnimateButton";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { authActions } from "../../../../redux/modules/authenticate/authSlice";
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 

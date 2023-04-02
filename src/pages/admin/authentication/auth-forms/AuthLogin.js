@@ -24,9 +24,9 @@ import { Formik } from "formik";
 
 // project import
 import FirebaseSocial from "./FirebaseSocial";
-import AnimateButton from "../../../components/@extended/AnimateButton";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { authActions } from "../../../redux/modules/authenticate/authSlice";
+import AnimateButton from "../../../../components/@extended/AnimateButton";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { authActions } from "../../../../redux/modules/authenticate/authSlice";
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 
@@ -93,7 +93,7 @@ const AuthLogin = () => {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="email-login">Email Address</InputLabel>
+                  <InputLabel htmlFor="email-login">Username</InputLabel>
                   <OutlinedInput
                     id="email-login"
                     type="email"
