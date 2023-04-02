@@ -26,7 +26,7 @@ import { Formik } from "formik";
 import FirebaseSocial from "./FirebaseSocial";
 import AnimateButton from "../../../../components/@extended/AnimateButton";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { authActions } from "../../../../redux/modules/authenticate/authSlice";
+import { handleLogin } from "../../../../redux/modules/authenticate/authSlice";
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 
@@ -50,7 +50,7 @@ const AuthLogin = () => {
     const data = new FormData(event.currentTarget);
     //AuthContext.login(data.get('email'),data.get('password'));
     dispatch(
-      authActions.login({
+      handleLogin({
         Username: data.get("email"),
         Password: data.get("password"),
       })
