@@ -1,12 +1,15 @@
-import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import { Formik } from "formik";
-import * as yup from "yup";
 import { Button, FormHelperText } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { tripApi } from "api";
+import { Formik } from "formik";
+import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
 
 export default function UserCreate() {
   let navigate = useNavigate();
@@ -19,9 +22,7 @@ export default function UserCreate() {
     fldTripName: yup
       .string("Enter Trip Name")
       .required("Trip Name is required"),
-    fldTripBudget: yup
-      .string("Enter Trip Budget")
-      .required("Trip Budget is required"),
+    fldTripBudget: yup.number().required("Trip Budget is required"),
     fldTripDescription: yup
       .string("Enter Trip Description")
       .required("Trip Description is required"),
@@ -35,24 +36,24 @@ export default function UserCreate() {
   });
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant="h6" gutterBottom>
         Đăng ký chuyến đi
       </Typography>
       <Formik
         initialValues={{
           fldTripName: "",
-          fldTripBudget: "",
+          fldTripBudget: null,
           fldTripDescription: "",
-          fldEstimateStartTime: "",
-          fldEstimateArrivalTime: "",
-          fldTripMember: "",
+          fldEstimateStartTime: null,
+          fldEstimateArrivalTime: null,
+          fldTripMember: null,
         }}
         validationSchema={validationSchema}
         onSubmit={async (values, { setErrors, setStatus }) => {
           try {
             setStatus({ success: false });
-            alert(JSON.stringify(values, null, 2))
+            alert(JSON.stringify(values, null, 2));
             await tripApi.create(values);
           } catch (err) {
             setStatus({ success: false });
@@ -60,7 +61,14 @@ export default function UserCreate() {
           }
         }}
       >
-        {({ errors, touched, handleChange, handleSubmit, values }) => (
+        {({
+          errors,
+          touched,
+          handleChange,
+          handleSubmit,
+          values,
+          setFieldValue,
+        }) => (
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
@@ -89,9 +97,13 @@ export default function UserCreate() {
                   required
                   id="fldTripBudget"
                   name="fldTripBudget"
-                  label="Kinh phí chuyến đi"
-                  type="number"
+                  label="Tên chuyến đi"
                   fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">VND</InputAdornment>
+                    ),
+                  }}
                   variant="standard"
                   value={values.fldTripBudget}
                   onChange={handleChange}
@@ -100,7 +112,7 @@ export default function UserCreate() {
                 {touched.fldTripBudget && errors.fldTripBudget && (
                   <FormHelperText
                     error
-                    id="standard-weight-helper-fldTripBudget"
+                    id="standard-weight-helper-text-fldTripName"
                   >
                     {errors.fldTripBudget}
                   </FormHelperText>
@@ -132,53 +144,78 @@ export default function UserCreate() {
                 )}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="fldEstimateStartTime"
-                  name="fldEstimateStartTime"
-                  label="Thời gian bắt đầu dự tính"
-                  fullWidth
-                  autoComplete=""
-                  variant="standard"
-                  value={values.fldEstimateStartTime}
-                  onChange={handleChange}
-                  error={Boolean(
-                    touched.fldEstimateStartTime && errors.fldEstimateStartTime
-                  )}
-                />
-                {touched.fldEstimateStartTime && errors.fldEstimateStartTime && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldEstimateStartTime"
-                  >
-                    {errors.fldEstimateStartTime}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="fldEstimateArrivalTime"
-                  name="fldEstimateArrivalTime"
-                  label="Thời gian đến dự tính"
-                  fullWidth
-                  variant="standard"
-                  value={values.fldEstimateArrivalTime}
-                  onChange={handleChange}
-                  error={Boolean(
-                    touched.fldEstimateArrivalTime &&
-                      errors.fldEstimateArrivalTime
-                  )}
-                />
-                {touched.fldEstimateArrivalTime &&
-                  errors.fldEstimateArrivalTime && (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    required
+                    sx={{
+                      "& .MuiInputBase-root": {
+                        paddingY: 1,
+                        paddingX: 3,
+                      },
+                      "& .MuiFormLabel-root": {
+                        paddingY: 1,
+                      },
+                    }}
+                    label="Thời gian bắt đầu dự tính"
+                    id="fldEstimateStartTime"
+                    name="fldEstimateStartTime"
+                    fullWidth
+                    value={values.fldEstimateStartTime}
+                    onChange={(value) =>
+                      setFieldValue("fldEstimateStartTime", value)
+                    }
+                    error={Boolean(
+                      touched.fldEstimateStartTime &&
+                        errors.fldEstimateStartTime
+                    )}
+                  />
+                </LocalizationProvider>
+                {touched.fldEstimateStartTime &&
+                  errors.fldEstimateStartTime && (
                     <FormHelperText
                       error
-                      id="standard-weight-helper-fldEstimateArrivalTime"
+                      id="standard-weight-helper-fldEstimateStartTime"
                     >
-                      {errors.fldEstimateArrivalTime}
+                      {errors.fldEstimateStartTime}
                     </FormHelperText>
                   )}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    required
+                    sx={{
+                      "& .MuiInputBase-root": {
+                        paddingY: 1,
+                        paddingX: 3,
+                      },
+                      "& .MuiFormLabel-root": {
+                        paddingY: 1,
+                      },
+                    }}
+                    id="fldEstimateArrivalTime"
+                    name="fldEstimateArrivalTime"
+                    label="Thời gian đến dự tính"
+                    fullWidth
+                    value={values.fldEstimateArrivalTime}
+                    onChange={(value) =>
+                      setFieldValue("fldEstimateArrivalTime", value)
+                    }
+                    error={Boolean(
+                      touched.fldEstimateArrivalTime &&
+                        errors.fldEstimateArrivalTime
+                    )}
+                  />
+                  {touched.fldEstimateArrivalTime &&
+                    errors.fldEstimateArrivalTime && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-fldEstimateArrivalTime"
+                      >
+                        {errors.fldEstimateArrivalTime}
+                      </FormHelperText>
+                    )}
+                </LocalizationProvider>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -217,6 +254,6 @@ export default function UserCreate() {
           </form>
         )}
       </Formik>
-    </React.Fragment>
+    </>
   );
 }
