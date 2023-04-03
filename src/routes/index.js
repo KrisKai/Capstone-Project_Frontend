@@ -2,14 +2,13 @@ import { lazy } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 // guards
 import { AuthGuard, GuestGuard } from "guards/admin";
+import { AuthGuardUser, GuestGuardUser } from "guards/user";
 
 // import RoleBasedGuard from '../guards/admin/RoleBasedGuard';
 
 // project import
 import Loadable from "components/Loadable";
 import MainLayout from "layout/MainLayout/index";
-
-import { AuthGuardUser, GuestGuardUser } from "guards/user";
 
 // ----------------------------------------------------------------------
 

@@ -9,18 +9,15 @@ function* selectUser(payload) {
   // try {
   //   yield delay(1000);
   //   console.log(payload);
-
   //   // call api login
   //   var url = "/authenticate/login";
   //   const response = yield call(authApi.login, payload);
   //   console.log(response.result);
   //   if (!response.result) return;
   //   const userToken = response.result.token;
-
   //   // save token in localStorage
   //   localStorage.setItem("access_token", userToken);
   //   yield put(authActions.loginSuccess(response.result));
-
   //   // redirect to admin page
   //   yield put(push("/admin/dashboard"));
   // } catch (error) {
@@ -28,13 +25,10 @@ function* selectUser(payload) {
   // }
 }
 
-function* insertUser(payload) {
-}
+function* insertUser(payload) {}
 
-function* updateUser(payload) {
-}
+function* updateUser(payload) {}
 
-function* deleteUser(payload) {
-}
+function* deleteUser(payload) {}
 
-export default function* userSaga(){};
+export default function* userSaga() {}
