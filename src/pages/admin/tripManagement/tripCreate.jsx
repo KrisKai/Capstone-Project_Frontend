@@ -90,6 +90,7 @@ export default function UserCreate() {
                   id="fldTripBudget"
                   name="fldTripBudget"
                   label="Kinh phí chuyến đi"
+                  type="number"
                   fullWidth
                   variant="standard"
                   value={values.fldTripBudget}
@@ -185,6 +186,7 @@ export default function UserCreate() {
                   id="fldTripMember"
                   name="fldTripMember"
                   label="Số lượng thành viên"
+                  type="number"
                   fullWidth
                   variant="standard"
                   value={values.fldTripMember}

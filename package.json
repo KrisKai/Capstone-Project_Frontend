@@ -13,6 +13,7 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.13",
+    "@mui/x-date-pickers": "^6.0.4",
     "@react-google-maps/api": "^2.18.1",
     "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.5",
