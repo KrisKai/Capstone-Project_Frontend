@@ -4,9 +4,6 @@ import { Link as RouterLink } from "react-router-dom";
 // material-ui
 import {
   Button,
-  Checkbox,
-  Divider,
-  FormControlLabel,
   FormHelperText,
   Grid,
   Link,
@@ -94,7 +91,7 @@ const AuthLogin = () => {
                   <InputLabel htmlFor="email-login">Username</InputLabel>
                   <OutlinedInput
                     id="email-login"
-                    type="email"
+                    type="text"
                     value={values.email}
                     name="email"
                     onBlur={handleBlur}
