@@ -6,6 +6,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { Button, FormHelperText } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { tripApi } from "api";
 
 export default function UserCreate() {
   let navigate = useNavigate();
@@ -51,6 +52,8 @@ export default function UserCreate() {
         onSubmit={async (values, { setErrors, setStatus }) => {
           try {
             setStatus({ success: false });
+            alert(JSON.stringify(values, null, 2))
+            await tripApi.create(values);
           } catch (err) {
             setStatus({ success: false });
             setErrors({ submit: err.message });
