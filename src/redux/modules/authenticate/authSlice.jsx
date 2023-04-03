@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import authApi from "../../../api/authenticate/authApi";
-import { push } from "react-router-redux";
 import { dispatch } from "../../store";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const initialState = {
   isAuthenticated: false,
@@ -21,7 +22,7 @@ const authSlice = createSlice({
       state.isInitialized = false;
       state.currentUser = action.payload;
     },
-    loginFailed(state) {
+    loginFailed(state, action) {
       state.isInitialized = false;
     },
 
@@ -52,14 +53,15 @@ export function handleLogin(payload) {
       var url = "/authenticate/login";
       const response = await authApi.login(payload);
       const userToken = response.token;
-
+      dispatch(authSlice.actions.loginSuccess(response));
       // save token in localStorage
       localStorage.setItem("access_token", userToken);
-      dispatch(authSlice.actions.loginSuccess(response));
-      // redirect to admin page
       window.location.replace("/admin/dashboard")
     } catch (error) {
-      dispatch(authSlice.actions.loginFailed(error.message));
+      dispatch(authSlice.actions.loginFailed(error.response.data));
+      toast.error(error.response.data, {
+        position: toast.POSITION.TOP_CENTER
+    });
     }
   };
 }

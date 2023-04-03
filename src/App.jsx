@@ -3,6 +3,8 @@ import React from "react";
 import Router from "./routes";
 import ThemeCustomization from "./themes";
 import ScrollTop from "./components/ScrollTop";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   // const { isInitialized } = useAuth();
@@ -10,6 +12,7 @@ function App() {
   return (
     <ThemeCustomization>
       <ScrollTop>
+      <ToastContainer />
         <Router />
       </ScrollTop>
     </ThemeCustomization>

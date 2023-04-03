@@ -8,6 +8,14 @@ import { Grid, Typography } from "@mui/material";
 
 // project imports
 import MainCard from "../MainCard";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { closeAlert } from "redux/modules/menu/menuSlice";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 // ==============================|| BREADCRUMBS ||============================== //
 
@@ -15,6 +23,17 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
   const location = useLocation();
   const [main, setMain] = useState();
   const [item, setItem] = useState();
+  const menu = useAppSelector((state) => state.menu);
+  const { errorMsg, open } = menu;
+  const dispatch = useAppDispatch();
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    dispatch(closeAlert({ open: false }));
+  };
 
   // set active item state
   const getCollapse = (menu) => {
@@ -105,6 +124,19 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
                 <Typography variant="h5">{item.title}</Typography>
               </Grid>
             )} */}
+            <Snackbar
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+              open={open}
+              autoHideDuration={2000}
+              onClose={handleClose}
+            >
+              <Alert
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                {errorMsg}
+              </Alert>
+            </Snackbar>
           </Grid>
         </MainCard>
       );

@@ -7,12 +7,20 @@ import * as yup from "yup";
 import { Button, FormHelperText } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { tripApi } from "api";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { openAlert } from "redux/modules/menu/menuSlice";
 
 export default function UserCreate() {
   let navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const menu = useAppSelector((state) => state.menu);
+  const { errorMsg, open } = menu;
 
   function gotoList() {
     navigate("/admin/tripList");
+    dispatch(
+      openAlert({ errorMsg: "Create Trip Successed!", open: true })
+    );
   }
 
   const validationSchema = yup.object().shape({
@@ -52,8 +60,14 @@ export default function UserCreate() {
         onSubmit={async (values, { setErrors, setStatus }) => {
           try {
             setStatus({ success: false });
-            alert(JSON.stringify(values, null, 2))
-            await tripApi.create(values);
+            alert(JSON.stringify(values, null, 2));
+            const reponse = await tripApi.create(values);
+            if (reponse > 0) {
+              navigate("/admin/tripList");
+              dispatch(
+                openAlert({ errorMsg: "Create Trip Successed!", open: true })
+              );
+            }
           } catch (err) {
             setStatus({ success: false });
             setErrors({ submit: err.message });
@@ -146,14 +160,15 @@ export default function UserCreate() {
                     touched.fldEstimateStartTime && errors.fldEstimateStartTime
                   )}
                 />
-                {touched.fldEstimateStartTime && errors.fldEstimateStartTime && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldEstimateStartTime"
-                  >
-                    {errors.fldEstimateStartTime}
-                  </FormHelperText>
-                )}
+                {touched.fldEstimateStartTime &&
+                  errors.fldEstimateStartTime && (
+                    <FormHelperText
+                      error
+                      id="standard-weight-helper-fldEstimateStartTime"
+                    >
+                      {errors.fldEstimateStartTime}
+                    </FormHelperText>
+                  )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField

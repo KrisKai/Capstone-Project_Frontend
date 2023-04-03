@@ -20,20 +20,21 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 
 // project import
-import FirebaseSocial from "./FirebaseSocial";
 import AnimateButton from "../../../../components/@extended/AnimateButton";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { handleLogin } from "../../../../redux/modules/authenticate/authSlice";
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const AuthLogin = () => {
+  let navigate = useNavigate();
   const [checked, setChecked] = React.useState(false);
-
   const [showPassword, setShowPassword] = React.useState(false);
-
   const dispatch = useAppDispatch();
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -52,6 +53,7 @@ const AuthLogin = () => {
         Password: data.get("password"),
       })
     );
+    navigate("/admin/dashboard");
   };
   return (
     <>
