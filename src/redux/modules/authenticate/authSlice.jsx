@@ -53,15 +53,20 @@ export function handleLogin(payload) {
       var url = "/authenticate/login";
       const response = await authApi.login(payload);
       const userToken = response.token;
-      dispatch(authSlice.actions.loginSuccess(response));
-      // save token in localStorage
-      localStorage.setItem("access_token", userToken);
-      window.location.replace("/admin/dashboard")
+      console.log(response);
+      if (response.code != "L001") {
+        dispatch(authSlice.actions.loginSuccess(response));
+        // save token in localStorage
+        localStorage.setItem("access_token", userToken);
+        //window.location.replace("/admin/dashboard")
+      } else {
+        dispatch(authSlice.actions.loginFailed(response));
+        toast.error(response.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
     } catch (error) {
-      dispatch(authSlice.actions.loginFailed(error.response.data));
-      toast.error(error.response.data, {
-        position: toast.POSITION.TOP_CENTER
-    });
+      dispatch(authSlice.actions.loginFailed(error));
     }
   };
 }
