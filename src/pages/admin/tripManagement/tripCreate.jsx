@@ -53,8 +53,8 @@ export default function UserCreate() {
           fldTripName: "",
           fldTripBudget: null,
           fldTripDescription: "",
-          fldEstimateStartTime: dayjs(Date.now()),
-          fldEstimateArrivalTime: dayjs(Date.now()),
+          fldEstimateStartTime: dayjs("2023-04-07T00:00:00.000Z"),
+          fldEstimateArrivalTime: null,
           fldTripMember: null,
         }}
         validationSchema={validationSchema}
