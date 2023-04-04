@@ -54,14 +54,14 @@ export function handleLogin(payload) {
       const response = await authApi.login(payload);
       const userToken = response.token;
       console.log(response);
-      if (response.code != "L001") {
+      if (response.Code != "L001") {
         dispatch(authSlice.actions.loginSuccess(response));
         // save token in localStorage
         localStorage.setItem("access_token", userToken);
-        //window.location.replace("/admin/dashboard")
+        window.location.replace("/admin/dashboard")
       } else {
         dispatch(authSlice.actions.loginFailed(response));
-        toast.error(response.message, {
+        toast.error(response.Message, {
           position: toast.POSITION.TOP_CENTER,
         });
       }
