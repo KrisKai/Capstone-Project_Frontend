@@ -9,14 +9,15 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { tripApi } from "api";
 import {
   tripActions,
   getTripList,
   selectAllTripList,
   selectTripFilter,
-  selectTripPagination,
 } from "../../../redux/modules/trip/tripSlice";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 // assets
 
@@ -71,6 +72,7 @@ export default function StickyHeadTableTrip() {
   const filter = useAppSelector(selectTripFilter);
   const tripList = allTrips.listOfTrip;
   const numberOfTrip = allTrips.numOfTrip;
+  console.log(tripList);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -104,12 +106,25 @@ export default function StickyHeadTableTrip() {
     // update
   };
 
-  const handleDelete = () => {
-    // delete
+  const handleDelete = async (id) => {
+    try {
+      console.log(id)
+      // Remove trip API
+      await tripApi.delete(id || "");
+
+      toast.success('Remove trip successfully!');
+
+      // Trigger to re-fetch student list with current filter
+      const newFilter = { ...filter };
+      dispatch(tripActions.setFilter(newFilter));
+    } catch (error) {
+      // Toast error
+      console.log("Failed to fetch trip", error);
+    }
   };
 
   function gotoCreate() {
-    navigate('/admin/tripCreate');
+    navigate("/admin/tripCreate");
   }
 
   useEffect(() => {
@@ -156,7 +171,12 @@ export default function StickyHeadTableTrip() {
             <TableBody>
               {tripList.map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    tabIndex={row.fldTripId}
+                    key={row.fldTripId}
+                  >
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
@@ -170,14 +190,15 @@ export default function StickyHeadTableTrip() {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        onClick={handleSearch}
+                        onClick={handleUpdate}
                         color="primary"
                       >
                         Edit
                       </Button>
                       <Button
                         variant="outlined"
-                        onClick={handleSearch}
+                        value={row.fldTripId}
+                        onClick={(e) => handleDelete(e.target.value)}
                         color="secondary"
                       >
                         Delete
