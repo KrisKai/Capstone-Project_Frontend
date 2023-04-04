@@ -5,7 +5,10 @@ const tripApi = {
     const url = "/trips";
     return axiosInstance.get(url, { params });
   },
-  getOne(params) {},
+  getById(id) {
+    const url = `/trips/${id}`;
+    return axiosInstance.get(url);
+  },
   create(data) {
     const url = "/trips";
     return axiosInstance.post(url, data);

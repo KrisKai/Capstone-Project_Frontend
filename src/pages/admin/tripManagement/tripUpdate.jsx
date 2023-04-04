@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Button, FormHelperText } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -10,7 +11,7 @@ import { tripApi } from "api";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { openAlert } from "redux/modules/menu/menuSlice";
 import { Formik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 
 export default function UserCreate() {
@@ -18,10 +19,37 @@ export default function UserCreate() {
   const dispatch = useAppDispatch();
   const menu = useAppSelector((state) => state.menu);
   const { errorMsg, open } = menu;
+  const { tripId } = useParams();
+  const isEdit = Boolean(tripId);
+  const [trip, setTrip] = useState(
+    {
+      fldTripName: "",
+      fldTripBudget: null,
+      fldTripDescription: "",
+      fldEstimateStartTime: null,
+      fldEstimateArrivalTime: null,
+      fldTripMember: null,
+    }
+  )
+  console.log(trip)
+
+  useEffect(() => {
+    if (!tripId) return;
+     // IFFE
+     (async () => {
+      try {
+        const data = await tripApi.getById(tripId);
+        setTrip(data);
+      } catch (error) {
+        console.log('Failed to fetch trip details', error);
+      }
+    })();
+
+  }, [tripId]);
 
   function gotoList() {
     navigate("/admin/tripList");
-    dispatch(openAlert({ errorMsg: "Create Trip Successed!", open: true }));
+    //dispatch(openAlert({ errorMsg: "Create Trip Successed!", open: true }));
   }
 
   const validationSchema = yup.object().shape({
@@ -47,14 +75,8 @@ export default function UserCreate() {
         Đăng ký chuyến đi
       </Typography>
       <Formik
-        initialValues={{
-          fldTripName: "",
-          fldTripBudget: null,
-          fldTripDescription: "",
-          fldEstimateStartTime: null,
-          fldEstimateArrivalTime: null,
-          fldTripMember: null,
-        }}
+        initialValues={trip}
+        enableReinitialize={true}
         validationSchema={validationSchema}
         onSubmit={async (values, { setErrors, setStatus }) => {
           try {
@@ -168,7 +190,6 @@ export default function UserCreate() {
                         paddingY: 1,
                       },
                     }}
-                    inputFormat="DD/MM/YYYY"
                     label="Thời gian bắt đầu dự tính"
                     id="fldEstimateStartTime"
                     name="fldEstimateStartTime"
@@ -176,7 +197,6 @@ export default function UserCreate() {
                     value={values.fldEstimateStartTime}
                     onChange={(value) => {
                       setFieldValue("fldEstimateStartTime", value);
-                      console.log(value);
                     }}
                     error={Boolean(
                       touched.fldEstimateStartTime &&
@@ -207,7 +227,6 @@ export default function UserCreate() {
                         paddingY: 1,
                       },
                     }}
-                    inputFormat="DD/MM/YYYY"
                     id="fldEstimateArrivalTime"
                     name="fldEstimateArrivalTime"
                     label="Thời gian đến dự tính"

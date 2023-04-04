@@ -72,7 +72,6 @@ export default function StickyHeadTableTrip() {
   const filter = useAppSelector(selectTripFilter);
   const tripList = allTrips.listOfTrip;
   const numberOfTrip = allTrips.numOfTrip;
-  console.log(tripList);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -102,8 +101,9 @@ export default function StickyHeadTableTrip() {
     );
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = (id) => {
     // update
+    navigate(`/admin/tripUpdate/${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -190,7 +190,8 @@ export default function StickyHeadTableTrip() {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        onClick={handleUpdate}
+                        value={row.fldTripId}
+                        onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
                         Edit

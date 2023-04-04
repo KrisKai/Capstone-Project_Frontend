@@ -104,12 +104,19 @@ export default function Router() {
             </AuthGuard>
           ),
         },
-        
         {
           path: "tripCreate",
           element: (
             <AuthGuard>
               <TripCreate />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: `tripUpdate/:tripId`,
+          element: (
+            <AuthGuard>
+              <TripUpdate />
             </AuthGuard>
           ),
         },
@@ -150,84 +157,9 @@ const TripList = Loadable(
 const TripCreate = Loadable(
   lazy(() => import("../pages/admin/tripManagement/tripCreate"))
 );
-// const EcommerceProductCreate = Loadable(
-//   lazy(() => import('../pages/dashboard/EcommerceProductCreate'))
-// );
-// const EcommerceCheckout = Loadable(lazy(() => import('../pages/dashboard/PackageVoucherCheckout')));
-// const EcommerceInvoice = Loadable(lazy(() => import('../pages/dashboard/EcommerceInvoice')));
-// const BlogPost = Loadable(lazy(() => import('../pages/dashboard/BlogPost')));
-// const KrowdNewProject = Loadable(lazy(() => import('../pages/dashboard/KrowdNewProject')));
-// //project Entity
-// const KrowdNewProjectEntity = Loadable(
-//   lazy(() => import('../pages/dashboard/KrowdNewProjectEntity'))
-// );
-
-// const KrowdNewProjectMedia = Loadable(
-//   lazy(() => import('../pages/dashboard/KrowdNewProjectMedia'))
-// );
-// const KrowdNewProjectOwner = Loadable(
-//   lazy(() => import('../pages/dashboard/KrowdNewProjectOwner'))
-// );
-// const UserProfile = Loadable(lazy(() => import('../pages/dashboard/UserProfile')));
-// const UserCards = Loadable(lazy(() => import('../pages/dashboard/UserCards')));
-// const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
-// const UserAccount = Loadable(lazy(() => import('../pages/dashboard/AccountManager/UserAccount')));
-// const UserAccountTransaction = Loadable(
-//   lazy(() => import('../pages/dashboard/AccountManager/UserAccountTransaction'))
-// );
-// const UserWithDrawTransaction = Loadable(
-//   lazy(() => import('../pages/dashboard/AccountManager/UserWithDrawTransaction'))
-// );
-// const UserWalletTransaction = Loadable(
-//   lazy(() => import('../pages/dashboard/AccountManager/UserWalletTransaction'))
-// );
-// const UserPaymentProject = Loadable(
-//   lazy(() => import('../pages/dashboard/AccountManager/UserPaymentProject'))
-// );
-// const UserPeriodRevenueHistory = Loadable(
-//   lazy(() => import('../pages/dashboard/AccountManager/UserPeriodRevenueHistory'))
-// );
-// const UserInvestment = Loadable(
-//   lazy(() => import('../pages/dashboard/AccountManager/UserInvestment'))
-// );
-// const UserInvestmentAll = Loadable(
-//   lazy(() => import('../pages/dashboard/AccountManager/UserInvestmentAll'))
-// );
-// //===========================SIDEBAR PROJECT===================================
-// const ProjectListInvested = Loadable(
-//   lazy(() => import('../pages/dashboard/ProjectKrowdManager/ProjectListInvested'))
-// );
-// const ReportDailyProject = Loadable(
-//   lazy(() => import('../pages/dashboard/ProjectKrowdManager/ReportDailyProject'))
-// );
-// const PaymentHistory = Loadable(
-//   lazy(() => import('../pages/dashboard/ProjectKrowdManager/PaymentHistory'))
-// );
-// const BillReportDailyProject = Loadable(
-//   lazy(() => import('../pages/dashboard/ProjectKrowdManager/BillReportDailyProject'))
-// );
-// const ProjectStageReport = Loadable(
-//   lazy(() => import('../pages/dashboard/ProjectKrowdManager/ProjectStageReport'))
-// );
-
-// //==============================================================================
-// const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));
-// const Chat = Loadable(lazy(() => import('../pages/dashboard/Chat')));
-// const Mail = Loadable(lazy(() => import('../pages/dashboard/Mail')));
-// // Main
-// const LandingPage = Loadable(lazy(() => import('../pages/LandingPage')));
-// const About = Loadable(lazy(() => import('../pages/About')));
-// const Contact = Loadable(lazy(() => import('../pages/Contact')));
-// const Faqs = Loadable(lazy(() => import('../pages/Faqs')));
-// const ComingSoon = Loadable(lazy(() => import('../pages/ComingSoon')));
-
-// const Details = Loadable(lazy(() => import('../pages/Details')));
-//Page
-// const Projects = Loadable(lazy(() => import('../pages/project/Project')));
-// const SearchPage = Loadable(lazy(() => import('../pages/SearchPage')));
+const TripUpdate = Loadable(
+  lazy(() => import("../pages/admin/tripManagement/tripUpdate"))
+);
 const Maintenance = Loadable(lazy(() => import("../pages/Maintenance")));
 const Page500 = Loadable(lazy(() => import("../pages/Page500")));
 const NotFound = Loadable(lazy(() => import("../pages/Page404")));
-// Components
-// const ComponentsOverview = Loadable(lazy(() => import('../pages/ComponentsOverview')));
-///

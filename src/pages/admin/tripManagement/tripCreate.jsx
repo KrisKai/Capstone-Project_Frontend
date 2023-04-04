@@ -12,12 +12,14 @@ import { openAlert } from "redux/modules/menu/menuSlice";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import dayjs, { Dayjs } from 'dayjs';
 
 export default function UserCreate() {
   let navigate = useNavigate();
   const dispatch = useAppDispatch();
   const menu = useAppSelector((state) => state.menu);
   const { errorMsg, open } = menu;
+  console.log(dayjs(Date.now()))
 
   function gotoList() {
     navigate("/admin/tripList");
@@ -51,8 +53,8 @@ export default function UserCreate() {
           fldTripName: "",
           fldTripBudget: null,
           fldTripDescription: "",
-          fldEstimateStartTime: null,
-          fldEstimateArrivalTime: null,
+          fldEstimateStartTime: dayjs(Date.now()),
+          fldEstimateArrivalTime: dayjs(Date.now()),
           fldTripMember: null,
         }}
         validationSchema={validationSchema}
