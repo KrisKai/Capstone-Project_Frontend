@@ -7,17 +7,19 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { tripApi } from "api";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { openAlert } from "redux/modules/menu/menuSlice";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "redux/hooks";
+import { openAlert } from "redux/modules/menu/menuSlice";
 import * as yup from "yup";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 export default function UserCreate() {
   let navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const menu = useAppSelector((state) => state.menu);
-  const { errorMsg, open } = menu;
 
   function gotoList() {
     navigate("/admin/tripList");
@@ -59,7 +61,6 @@ export default function UserCreate() {
         onSubmit={async (values, { setErrors, setStatus }) => {
           try {
             setStatus({ success: false });
-            alert(JSON.stringify(values, null, 2));
             const reponse = await tripApi.create(values);
             if (reponse > 0) {
               navigate("/admin/tripList");
@@ -156,7 +157,10 @@ export default function UserCreate() {
                 )}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  dateLibInstance={dayjs.utc}
+                >
                   <DatePicker
                     required
                     sx={{
@@ -176,7 +180,6 @@ export default function UserCreate() {
                     value={values.fldEstimateStartTime}
                     onChange={(value) => {
                       setFieldValue("fldEstimateStartTime", value);
-                      console.log(value);
                     }}
                     error={Boolean(
                       touched.fldEstimateStartTime &&
@@ -195,7 +198,10 @@ export default function UserCreate() {
                   )}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  dateLibInstance={dayjs.utc}
+                >
                   <DatePicker
                     required
                     sx={{
