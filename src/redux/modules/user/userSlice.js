@@ -1,39 +1,43 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { dispatch } from "../../store";
+import userApi from "../../../api/user/userApi";
 
 const initialState = {
   loading: false,
-  list: [],
+  allUser: {
+    listOfUser: [],
+    numOfUser: 0,
+  },
   filter: {
-    _page: 1,
-    _limit: 15,
+    pageIndex: 0,
+    pageSize: 10,
   },
   pagination: {
-    _page: 1,
-    _limit: 15,
-    _totalRows: 15,
+    pageIndex: 0,
+    pageSize: 10,
+    totalRows: 15,
   },
 };
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
-    login(state) {
-      state.isInitialized = true;
+    getUserList(state, action) {
+      state.loading = true;
     },
-    loginSuccess(state, action) {
-      state.isAuthenticated = true;
-      state.isInitialized = false;
-      state.currentUser = action.payload;
+    getUserListSuccess(state, action) {
+      state.allUser = action.payload;
+      state.pagination = action.payload.pagination;
+      state.loading = false;
     },
-    loginFailed(state) {
-      state.isInitialized = false;
+    getUserListFailed(state) {
+      state.loading = false;
     },
-
-    logout(state) {
-      state.isAuthenticated = false;
-      state.currentUser = undefined;
+    setFilter(state, action) {
+      state.filter = action.payload;
     },
+    setFilterWithDebounce(state, action) {},
   },
 });
 
@@ -41,9 +45,30 @@ const userSlice = createSlice({
 export const userActions = userSlice.actions;
 
 // Selectors
-// export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
-// export const selectIsInitialized = (state) => state.auth.isInitialized;
-
+export const selectAllUserList = (state) => state.user.allUser;
+export const selectUserLoading = (state) => state.user.loading;
+export const selectUserFilter = (state) => state.user.filter;
+export const selectUserPagination = (state) => state.user.pagination;
 // Reducer
 const userReducer = userSlice.reducer;
 export default userReducer;
+
+export function getUserList(action) {
+  return async () => {
+    try {
+      // call api select list
+      var url = "/users";
+      const response = await userApi.getAll(action);
+      dispatch(userSlice.actions.getUserListSuccess(response));
+    } catch (error) {
+      console.log("Failed to fetch user list", error);
+      dispatch(userSlice.actions.getUserListFailed());
+    }
+  };
+}
+
+export function handleSearchDebounce(action) {
+  return async () => {
+    dispatch(userSlice.actions.setFilter(action.payload));
+  };
+}

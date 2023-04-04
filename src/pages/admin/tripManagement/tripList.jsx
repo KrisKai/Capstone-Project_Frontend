@@ -108,7 +108,6 @@ export default function StickyHeadTableTrip() {
 
   const handleDelete = async (id) => {
     try {
-      console.log(id)
       // Remove trip API
       await tripApi.delete(id || "");
 

@@ -13,6 +13,7 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@material-ui/styles": "^4.11.5",
     "@mui/icons-material": "^5.11.11",
+    "@mui/lab": "^5.0.0-alpha.125",
     "@mui/material": "^5.11.13",
     "@mui/x-date-pickers": "^6.0.4",
     "@react-google-maps/api": "^2.18.1",

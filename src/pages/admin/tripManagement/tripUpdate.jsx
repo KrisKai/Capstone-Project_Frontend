@@ -177,7 +177,7 @@ export default function UserCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     required
@@ -250,7 +250,7 @@ export default function UserCreate() {
                       </FormHelperText>
                     )}
                 </LocalizationProvider>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
