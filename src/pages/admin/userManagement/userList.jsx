@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Box, Button, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,10 +7,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { TextField, Button, Box } from "@mui/material";
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
 
 // assets
-import { SearchOutlined } from "@ant-design/icons";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 170 },
@@ -43,10 +43,6 @@ function createData(name, code, population, size) {
   return { name, code, population, size, density };
 }
 
-function gotoCreate() {
-  //go to create
-}
-
 const rows = [
   createData("India", "IN", 1324171354, 3287263),
   createData("China", "CN", 1403500365, 9596961),
@@ -69,6 +65,8 @@ export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [searchTerm, setSearchTerm] = React.useState("");
+
+  const naviagte = useNavigate();
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -95,6 +93,10 @@ export default function StickyHeadTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  function gotoCreate() {
+    naviagte("/admin/userCreate");
+  }
 
   return (
     <>
