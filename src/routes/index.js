@@ -92,7 +92,15 @@ export default function Router() {
           path: "userCreate",
           element: (
             <AuthGuard>
-              <UserCreate />
+              <UserCreateUpdate />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: `userUpdate/:userId`,
+          element: (
+            <AuthGuard>
+              <UserCreateUpdate />
             </AuthGuard>
           ),
         },
@@ -148,8 +156,8 @@ const DashboardDefault = Loadable(
 const UserList = Loadable(
   lazy(() => import("../pages/admin/userManagement/userList"))
 );
-const UserCreate = Loadable(
-  lazy(() => import("../pages/admin/userManagement/userCreate"))
+const UserCreateUpdate = Loadable(
+  lazy(() => import("../pages/admin/userManagement/userCreateUpdate"))
 );
 const TripList = Loadable(
   lazy(() => import("../pages/admin/tripManagement/tripList"))

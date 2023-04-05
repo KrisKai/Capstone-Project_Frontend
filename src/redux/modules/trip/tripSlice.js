@@ -11,6 +11,7 @@ const initialState = {
   filter: {
     pageIndex: 0,
     pageSize: 10,
+    tripName: "",
   },
   pagination: {
     pageIndex: 0,
@@ -59,6 +60,10 @@ export function getTripList(action) {
       // call api select list
       var url = "/trips";
       const response = await tripApi.getAll(action);
+      response.listOfTrip.forEach(trip => {
+        trip.fldEstimateArrivalTime = trip.fldEstimateArrivalTime.substring(0, 10)
+        trip.fldEstimateStartTime = trip.fldEstimateStartTime.substring(0, 10)
+      });
       dispatch(tripSlice.actions.getTripListSuccess(response));
     } catch (error) {
       console.log("Failed to fetch trip list", error);

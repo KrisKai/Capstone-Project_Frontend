@@ -17,7 +17,7 @@ import {
   selectUserFilter,
 } from "../../../redux/modules/user/userSlice";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 // assets
 
@@ -81,7 +81,6 @@ const columns = [
 
 export default function StickyHeadTableUser() {
   let navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = React.useState("");
   const dispatch = useAppDispatch();
   const allUsers = useAppSelector(selectAllUserList);
   const filter = useAppSelector(selectUserFilter);
@@ -89,12 +88,22 @@ export default function StickyHeadTableUser() {
   const numOfUser = allUsers.numOfUser;
 
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    // call api
+    dispatch(
+      userActions.setFilter({
+        ...filter,
+        tripName: event.target.value,
+      })
+    );
   };
 
   const handleChange = (event) => {
-    setSearchTerm(event.target.value);
+    dispatch(
+      userActions.setFilter({
+        ...filter,
+        tripName: event.target.value,
+      })
+    );
+    console.log(event.target.value)
   };
 
   const handleChangePage = (event, newPage) => {
@@ -126,7 +135,7 @@ export default function StickyHeadTableUser() {
       // Remove user API
       await userApi.delete(id || "");
 
-      toast.success('Remove user successfully!');
+      toast.success("Remove user successfully!");
 
       // Trigger to re-fetch student list with current filter
       const newFilter = { ...filter };
@@ -153,7 +162,7 @@ export default function StickyHeadTableUser() {
             id="search"
             type="search"
             label="Search"
-            value={searchTerm}
+            value={filter.tripName}
             onChange={handleChange}
             sx={{ width: 400 }}
           />
