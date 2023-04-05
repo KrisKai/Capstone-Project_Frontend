@@ -33,7 +33,7 @@ export default function UserCreate() {
   return (
     <>
       <Typography variant="h6" gutterBottom>
-        Đăng ký người dùng
+        Create User
       </Typography>
       <Formik
         initialValues={initialValueForm}
@@ -58,12 +58,12 @@ export default function UserCreate() {
         {({ errors, touched, handleChange, handleSubmit, values }) => (
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="nickName"
-                  name="nickName"
-                  label="Tên người dùng"
+                  id="username"
+                  name="username"
+                  label="Username"
                   fullWidth
                   variant="standard"
                   onChange={handleChange}
@@ -74,11 +74,11 @@ export default function UserCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="email"
-                  name="email"
+                  id="fullname"
+                  name="fullname"
                   label="Email"
                   fullWidth
                   variant="standard"

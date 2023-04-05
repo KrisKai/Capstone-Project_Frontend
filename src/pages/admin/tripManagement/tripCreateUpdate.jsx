@@ -22,6 +22,7 @@ export default function UserCreate() {
   let navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { tripId } = useParams();
+  const isEdit = Boolean(tripId);
   const [trip, setTrip] = useState({
     fldTripName: "",
     fldTripBudget: null,
@@ -44,7 +45,7 @@ export default function UserCreate() {
         console.log("Failed to fetch trip details", error);
       }
     })();
-  }, []);
+  }, [tripId]);
 
   function gotoList() {
     navigate("/admin/tripList");
@@ -71,7 +72,7 @@ export default function UserCreate() {
   return (
     <>
       <Typography variant="h6" gutterBottom>
-        Đăng ký chuyến đi
+        {isEdit ? "Update Trip" : "Create Trip"}
       </Typography>
       <Formik
         initialValues={trip}
@@ -81,12 +82,24 @@ export default function UserCreate() {
           try {
             setStatus({ success: false });
             alert(JSON.stringify(values, null, 2));
-            const reponse = await tripApi.create(values);
+            let reponse;
+            if (isEdit) {
+              reponse = await tripApi.create(values);
+            } else {
+              reponse = await tripApi.create(values);
+            }
+
             if (reponse > 0) {
               navigate("/admin/tripList");
-              dispatch(
-                openAlert({ errorMsg: "Create Trip Successed!", open: true })
-              );
+              if (isEdit) {
+                dispatch(
+                  openAlert({ errorMsg: "Update Trip Successed!", open: true })
+                );
+              } else {
+                dispatch(
+                  openAlert({ errorMsg: "Create Trip Successed!", open: true })
+                );
+              }
             }
           } catch (err) {
             setStatus({ success: false });
@@ -109,7 +122,7 @@ export default function UserCreate() {
                   required
                   id="fldTripName"
                   name="fldTripName"
-                  label="Tên chuyến đi"
+                  label="Trip Name"
                   fullWidth
                   variant="standard"
                   value={values.fldTripName}
@@ -130,7 +143,7 @@ export default function UserCreate() {
                   required
                   id="fldTripBudget"
                   name="fldTripBudget"
-                  label="Tên chuyến đi"
+                  label="Trip Budget"
                   fullWidth
                   InputProps={{
                     startAdornment: (
@@ -157,7 +170,7 @@ export default function UserCreate() {
                   required
                   id="fldTripDescription"
                   name="fldTripDescription"
-                  label="Mô tả chuyến đi"
+                  label="Trip Description"
                   fullWidth
                   autoComplete=""
                   variant="standard"
@@ -192,7 +205,7 @@ export default function UserCreate() {
                         paddingY: 1,
                       },
                     }}
-                    label="Thời gian bắt đầu dự tính"
+                    label="Estimate Start Time"
                     id="fldEstimateStartTime"
                     name="fldEstimateStartTime"
                     fullWidth
@@ -234,7 +247,7 @@ export default function UserCreate() {
                     }}
                     id="fldEstimateArrivalTime"
                     name="fldEstimateArrivalTime"
-                    label="Thời gian đến dự tính"
+                    label="Estimate Arrival Time"
                     fullWidth
                     value={values.fldEstimateArrivalTime}
                     onChange={(value) =>
@@ -261,7 +274,7 @@ export default function UserCreate() {
                   required
                   id="fldTripMember"
                   name="fldTripMember"
-                  label="Số lượng thành viên"
+                  label="Trip Member"
                   type="number"
                   fullWidth
                   variant="standard"
@@ -281,12 +294,12 @@ export default function UserCreate() {
               <Grid item xs={12} sm={6}></Grid>
               <Grid item xs={12} sm={6}>
                 <Button variant="outlined" onClick={gotoList}>
-                  Trở về danh sách
+                  Return to List
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6} textAlign="right">
                 <Button type="submit" variant="outlined">
-                  Đăng kí
+                  {isEdit ? "Update" : "Create"}
                 </Button>
               </Grid>
             </Grid>

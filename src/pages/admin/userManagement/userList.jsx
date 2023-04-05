@@ -142,8 +142,6 @@ export default function StickyHeadTableUser() {
   }
 
   useEffect(() => {
-    //filter = { pageIndex: 0, pageSize: 10 };
-    console.log(filter);
     dispatch(getUserList(filter));
   }, [dispatch, filter]);
 
