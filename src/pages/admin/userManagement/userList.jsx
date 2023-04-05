@@ -22,45 +22,60 @@ import { toast } from 'react-toastify';
 // assets
 
 const columns = [
-  { id: "fldTripName", label: "Trip Name", minWidth: 100 },
+  { id: "fldUsername", label: "UserName", minWidth: 100 },
   {
-    id: "fldTripBudget",
-    label: "Trip Budget",
+    id: "fldFullname",
+    label: "Full Name",
+    minWidth: 150,
+    align: "center",
+  },
+  {
+    id: "fldRole",
+    label: "Role",
     minWidth: 100,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "fldTripDescription",
-    label: "Trip Description",
-    minWidth: 170,
-    align: "center",
-  },
-  {
-    id: "fldEstimateStartTime",
-    label: "Estimate Start Time",
+    id: "fldBirthday",
+    label: "Birthday",
     minWidth: 130,
     align: "center",
   },
   {
-    id: "fldEstimateArrivalTime",
-    label: "Estimate Arrival Time",
+    id: "fldPhone",
+    label: "Phone Number",
     minWidth: 130,
     align: "center",
   },
   {
-    id: "fldTripStatus",
-    label: "Trip Status",
+    id: "fldEmail",
+    label: "Email",
     minWidth: 170,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "fldTripMember",
-    label: "Trip Member",
+    id: "fldAddress",
+    label: "Address",
     minWidth: 170,
     align: "center",
-    format: (value) => value.toFixed(2),
+  },
+  {
+    id: "fldActiveStatus",
+    label: "Active Status",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: "fldCreateDate",
+    label: "Create Date",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: "fldCreateBy",
+    label: "Create By",
+    minWidth: 100,
+    align: "center",
   },
 ];
 

@@ -1,9 +1,25 @@
 import axiosInstance from "../../utils/axios";
 
 const userApi = {
-  userSelect(params) {
+  getAll(params) {
     const url = "/users";
-    return axiosInstance.get(url, params);
+    return axiosInstance.get(url, { params });
+  },
+  getById(id) {
+    const url = `/users/${id}`;
+    return axiosInstance.get(url);
+  },
+  create(data) {
+    const url = "/users";
+    return axiosInstance.post(url, data);
+  },
+  update(data) {
+    const url = "/users";
+    return axiosInstance.patch(url, data);
+  },
+  delete(id) {
+    const url = `/users/${id}`;
+    return axiosInstance.delete(url);
   },
 };
 
