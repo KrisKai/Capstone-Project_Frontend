@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Button, FormHelperText } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -8,44 +7,44 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { tripApi } from "api";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { openAlert } from "redux/modules/menu/menuSlice";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch } from "redux/hooks";
+import { openAlert } from "redux/modules/menu/menuSlice";
 import * as yup from "yup";
+
+dayjs.extend(utc);
 
 export default function UserCreate() {
   let navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const menu = useAppSelector((state) => state.menu);
-  const { errorMsg, open } = menu;
   const { tripId } = useParams();
-  const isEdit = Boolean(tripId);
-  const [trip, setTrip] = useState(
-    {
-      fldTripName: "",
-      fldTripBudget: null,
-      fldTripDescription: "",
-      fldEstimateStartTime: null,
-      fldEstimateArrivalTime: null,
-      fldTripMember: null,
-    }
-  )
-  console.log(trip)
+  const [trip, setTrip] = useState({
+    fldTripName: "",
+    fldTripBudget: null,
+    fldTripDescription: "",
+    fldEstimateStartTime: null,
+    fldEstimateArrivalTime: null,
+    fldTripMember: 0,
+  });
 
   useEffect(() => {
     if (!tripId) return;
-     // IFFE
-     (async () => {
+    // IFFE
+    (async () => {
       try {
         const data = await tripApi.getById(tripId);
+        data.fldEstimateArrivalTime = dayjs.utc(data.fldEstimateArrivalTime);
+        data.fldEstimateStartTime = dayjs.utc(data.fldEstimateStartTime);
         setTrip(data);
       } catch (error) {
-        console.log('Failed to fetch trip details', error);
+        console.log("Failed to fetch trip details", error);
       }
     })();
-
-  }, [tripId]);
+  }, []);
 
   function gotoList() {
     navigate("/admin/tripList");
@@ -177,8 +176,11 @@ export default function UserCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Grid item xs={12} sm={6}>
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  dateLibInstance={dayjs.utc}
+                >
                   <DatePicker
                     required
                     sx={{
@@ -215,7 +217,10 @@ export default function UserCreate() {
                   )}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  dateLibInstance={dayjs.utc}
+                >
                   <DatePicker
                     required
                     sx={{
@@ -250,7 +255,7 @@ export default function UserCreate() {
                       </FormHelperText>
                     )}
                 </LocalizationProvider>
-              </Grid> */}
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required

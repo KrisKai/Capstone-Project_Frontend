@@ -4,7 +4,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/lab";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { tripApi } from "api";
 import { Formik } from "formik";
@@ -198,32 +198,37 @@ export default function UserCreate() {
                   )}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <DatePicker
-                  required
-                  sx={{
-                    "& .MuiInputBase-root": {
-                      paddingY: 1,
-                      paddingX: 3,
-                    },
-                    "& .MuiFormLabel-root": {
-                      paddingY: 1,
-                    },
-                  }}
-                  inputFormat="DD/MM/YYYY"
-                  id="fldEstimateArrivalTime"
-                  name="fldEstimateArrivalTime"
-                  label="Thời gian đến dự tính"
-                  fullWidth
-                  value={values.fldEstimateArrivalTime}
-                  onChange={(value) => {
-                    setFieldValue("fldEstimateArrivalTime", value);
-                    console.log(value);
-                  }}
-                  error={Boolean(
-                    touched.fldEstimateArrivalTime &&
-                      errors.fldEstimateArrivalTime
-                  )}
-                />
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  dateLibInstance={dayjs.utc}
+                >
+                  <DatePicker
+                    required
+                    sx={{
+                      "& .MuiInputBase-root": {
+                        paddingY: 1,
+                        paddingX: 3,
+                      },
+                      "& .MuiFormLabel-root": {
+                        paddingY: 1,
+                      },
+                    }}
+                    inputFormat="DD/MM/YYYY"
+                    id="fldEstimateArrivalTime"
+                    name="fldEstimateArrivalTime"
+                    label="Thời gian đến dự tính"
+                    fullWidth
+                    value={values.fldEstimateArrivalTime}
+                    onChange={(value) => {
+                      setFieldValue("fldEstimateArrivalTime", value);
+                      console.log(value);
+                    }}
+                    error={Boolean(
+                      touched.fldEstimateArrivalTime &&
+                        errors.fldEstimateArrivalTime
+                    )}
+                  />
+                </LocalizationProvider>
                 {touched.fldEstimateArrivalTime &&
                   errors.fldEstimateArrivalTime && (
                     <FormHelperText
