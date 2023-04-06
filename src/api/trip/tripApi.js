@@ -15,7 +15,7 @@ const tripApi = {
   },
   update(data) {
     const url = "/trips";
-    return axiosInstance.patch(url, data);
+    return axiosInstance.put(url, data);
   },
   delete(id) {
     const url = `/trips/${id}`;

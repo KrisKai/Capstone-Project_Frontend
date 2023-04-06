@@ -10,12 +10,13 @@ const userApi = {
     return axiosInstance.get(url);
   },
   create(data) {
+    console.log(12)
     const url = "/users";
     return axiosInstance.post(url, data);
   },
   update(data) {
     const url = "/users";
-    return axiosInstance.patch(url, data);
+    return axiosInstance.put(url, data);
   },
   delete(id) {
     const url = `/users/${id}`;
