@@ -13,6 +13,13 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+dayjs.extend(utc);
 
 export default function UserCreate() {
   const navigate = useNavigate();
@@ -23,7 +30,7 @@ export default function UserCreate() {
     fldUsername: "",
     fldPassword: "",
     fldRetypePassword: "",
-    fldRole: "ADMIN",
+    fldRole: "",
     fldBirthday: "",
     fldEmail: "",
     fldFullname: "",
@@ -45,8 +52,9 @@ export default function UserCreate() {
   }, [userId]);
 
   function handleChangeSelect(event) {
-    setUser((prevState) => {
-      return { ...prevState, fldRole: event.target.value };
+    console.log(Formik.values)
+    setUser((user) => {
+      return { ...user, fldRole: event.target.value };
     });
   }
 
@@ -64,7 +72,7 @@ export default function UserCreate() {
       .required("Email is required"),
     fldPhone: yup.number().required("Phone is required"),
     fldAddress: yup.string("Enter Address").required("Address is required"),
-    // fldBirthday: yup.string("Enter Birthday").required("Birthday is required"),
+    fldBirthday: yup.string("Enter Birthday").required("Birthday is required"),
     fldRole: yup.string("Enter Role").required("Role is required"),
     fldPassword: yup
       .string("Enter Password")
@@ -118,7 +126,14 @@ export default function UserCreate() {
           }
         }}
       >
-        {({ errors, touched, handleChange, handleSubmit, values }) => (
+        {({
+          errors,
+          touched,
+          handleChange,
+          handleSubmit,
+          values,
+          setFieldValue,
+        }) => (
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
@@ -268,9 +283,44 @@ export default function UserCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-
               <Grid item xs={12} sm={6}>
-                <Button variant="outlined" onClick={gotoList}>Return to List</Button>
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  dateLibInstance={dayjs.utc}
+                >
+                  <DatePicker
+                    required
+                    sx={{
+                      "& .MuiInputBase-root": {
+                        paddingY: 1,
+                        paddingX: 3,
+                      },
+                      "& .MuiFormLabel-root": {
+                        paddingY: 1,
+                      },
+                    }}
+                    label="Birthday"
+                    id="fldBirthday"
+                    name="fldBirthday"
+                    fullWidth
+                    value={values.fldBirthday}
+                    onChange={(value) => {
+                      setFieldValue("fldBirthday", value);
+                    }}
+                    error={Boolean(touched.fldBirthday && errors.fldBirthday)}
+                  />
+                </LocalizationProvider>
+                {touched.fldBirthday && errors.fldBirthday && (
+                  <FormHelperText error id="standard-weight-helper-fldBirthday">
+                    {errors.fldBirthday}
+                  </FormHelperText>
+                )}
+              </Grid>
+              <Grid item xs={12} sm={6}></Grid>
+              <Grid item xs={12} sm={6}>
+                <Button variant="outlined" onClick={gotoList}>
+                  Return to List
+                </Button>
               </Grid>
               <Grid item xs={12} sm={6} textAlign="right">
                 <Button type="submit" variant="outlined">

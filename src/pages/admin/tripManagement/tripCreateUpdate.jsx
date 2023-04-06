@@ -218,15 +218,14 @@ export default function UserCreate() {
                     )}
                   />
                 </LocalizationProvider>
-                {touched.fldEstimateStartTime &&
-                  errors.fldEstimateStartTime && (
-                    <FormHelperText
-                      error
-                      id="standard-weight-helper-fldEstimateStartTime"
-                    >
-                      {errors.fldEstimateStartTime}
-                    </FormHelperText>
-                  )}
+                {touched.fldEstimateStartTime && errors.fldEstimateStartTime && (
+                  <FormHelperText
+                    error
+                    id="standard-weight-helper-fldEstimateStartTime"
+                  >
+                    {errors.fldEstimateStartTime}
+                  </FormHelperText>
+                )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider
