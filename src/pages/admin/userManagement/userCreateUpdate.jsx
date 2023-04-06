@@ -47,6 +47,7 @@ export default function UserCreate() {
   const validationSchema = yup.object().shape({
     fldUsername: yup
       .string("Enter User Name")
+      .matches(/^-\s/,"User Name is invalid")
       .required("User Name is required"),
     fldFullname: yup
       .string("Enter Full Name")
@@ -55,7 +56,7 @@ export default function UserCreate() {
       .string()
       .email("Enter Valid Email")
       .required("Email is required"),
-    fldPhone: yup.string("Enter Phone").required("Phone is required"),
+    fldPhone: yup.number().required("Phone is required"),
     fldAddress: yup.string("Enter Address").required("Address is required"),
     fldBirthday: yup.string("Enter Birthday").required("Birthday is required"),
     fldRole: yup.string("Enter Role").required("Role is required"),
@@ -123,7 +124,7 @@ export default function UserCreate() {
                   onChange={handleChange}
                 />
                 {touched.fldFullname && errors.fldFullname && (
-                  <FormHelperText error id="standard-weight-helper-email">
+                  <FormHelperText error id="standard-weight-helper-name">
                     {errors.fldFullname}
                   </FormHelperText>
                 )}
@@ -141,7 +142,7 @@ export default function UserCreate() {
                   onChange={handleChange}
                 />
                 {touched.fldPassword && errors.fldPassword && (
-                  <FormHelperText error id="standard-weight-helper-address">
+                  <FormHelperText error id="standard-weight-helper-password">
                     {errors.fldPassword}
                   </FormHelperText>
                 )}
@@ -159,7 +160,7 @@ export default function UserCreate() {
                   onChange={handleChange}
                 />
                 {touched.fldRetypePassword && errors.fldRetypePassword && (
-                  <FormHelperText error id="standard-weight-helper-address">
+                  <FormHelperText error id="standard-weight-helper-repass">
                     {errors.fldRetypePassword}
                   </FormHelperText>
                 )}
@@ -176,7 +177,7 @@ export default function UserCreate() {
                   onChange={handleChange}
                 />
                 {touched.fldAddress && errors.fldAddress && (
-                  <FormHelperText error id="standard-weight-helper-phone">
+                  <FormHelperText error id="standard-weight-helper-address">
                     {errors.fldAddress}
                   </FormHelperText>
                 )}
@@ -189,7 +190,7 @@ export default function UserCreate() {
                   label="Phone Number"
                   fullWidth
                   variant="standard"
-                  value={values.fldRetypePassword}
+                  value={values.fldPhone}
                   onChange={handleChange}
                 />
                 {touched.fldPhone && errors.fldPhone && (
@@ -216,9 +217,9 @@ export default function UserCreate() {
                     <MenuItem value="EMPL">Employee</MenuItem>
                   </Select>
 
-                  {touched.fldPhone && errors.fldPhone && (
-                    <FormHelperText error id="standard-weight-helper-phone">
-                      {errors.fldPhone}
+                  {touched.fldRole && errors.fldRole && (
+                    <FormHelperText error id="standard-weight-helper-role">
+                      {errors.fldRole}
                     </FormHelperText>
                   )}
                 </FormControl>
@@ -236,7 +237,7 @@ export default function UserCreate() {
                   onChange={handleChange}
                 />
                 {touched.fldEmail && errors.fldEmail && (
-                  <FormHelperText error id="standard-weight-helper-phone">
+                  <FormHelperText error id="standard-weight-helper-email">
                     {errors.fldEmail}
                   </FormHelperText>
                 )}
