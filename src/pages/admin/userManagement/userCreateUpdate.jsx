@@ -53,7 +53,7 @@ export default function UserCreate() {
   const validationSchema = yup.object().shape({
     fldUsername: yup
       .string("Enter User Name")
-      .matches(/^-\s/,"User Name is invalid")
+      .matches(/\S/,"User Name is invalid")
       .required("User Name is required"),
     fldFullname: yup
       .string("Enter Full Name")
@@ -86,12 +86,23 @@ export default function UserCreate() {
           try {
             setStatus({ success: false });
             console.log(values);
-            const reponse = await userApi.create(values);
+            let reponse;
+            if (isEdit) {
+              reponse = await userApi.update(values);
+            } else {
+              reponse = await userApi.create(values);
+            }
             if (reponse > 0) {
               navigate("/admin/userList");
-              dispatch(
-                openAlert({ errorMsg: "Create User Successed!", open: true })
-              );
+              if (isEdit) {
+                dispatch(
+                  openAlert({ errorMsg: "Update User Successed!", open: true })
+                );
+              } else {
+                dispatch(
+                  openAlert({ errorMsg: "Create User Successed!", open: true })
+                );
+              }
             }
           } catch (err) {
             setStatus({ success: false });

@@ -81,10 +81,9 @@ export default function UserCreate() {
         onSubmit={async (values, { setErrors, setStatus }) => {
           try {
             setStatus({ success: false });
-            alert(JSON.stringify(values, null, 2));
             let reponse;
             if (isEdit) {
-              reponse = await tripApi.create(values);
+              reponse = await tripApi.update(values);
             } else {
               reponse = await tripApi.create(values);
             }
