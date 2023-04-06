@@ -73,6 +73,11 @@ export default function UserCreate() {
       .required("Retype Password is required"),
   });
 
+  function gotoList() {
+    navigate("/admin/userList");
+    //dispatch(openAlert({ errorMsg: "Create Trip Successed!", open: true }));
+  }
+
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -262,7 +267,7 @@ export default function UserCreate() {
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <Button variant="outlined">Return to List</Button>
+                <Button variant="outlined" onClick={gotoList}>Return to List</Button>
               </Grid>
               <Grid item xs={12} sm={6} textAlign="right">
                 <Button type="submit" variant="outlined">
