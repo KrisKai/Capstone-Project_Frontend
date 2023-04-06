@@ -23,7 +23,7 @@ export default function UserCreate() {
     fldUsername: "",
     fldPassword: "",
     fldRetypePassword: "",
-    fldRole: "",
+    fldRole: "ADMIN",
     fldBirthday: "",
     fldEmail: "",
     fldFullname: "",
@@ -43,6 +43,12 @@ export default function UserCreate() {
       }
     })();
   }, [userId]);
+
+  function handleChangeSelect(role) {
+    user.fldRole = role;
+    console.log(user);
+    setUser(user);
+  }
 
   const validationSchema = yup.object().shape({
     fldUsername: yup
@@ -207,13 +213,13 @@ export default function UserCreate() {
                     id="fldRole"
                     value={values.fldRole}
                     label="Role"
-                    onChange={handleChange}
+                    onChange={(e) => handleChangeSelect(e.target.value)}
                   >
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
                     <MenuItem value="USER">User</MenuItem>
-                    <MenuItem value="ADMIN">Admin</MenuItem>
+                    <MenuItem value="ADMIN" >Admin</MenuItem>
                     <MenuItem value="EMPL">Employee</MenuItem>
                   </Select>
 
