@@ -10,7 +10,6 @@ const userApi = {
     return axiosInstance.get(url);
   },
   create(data) {
-    console.log(12)
     const url = "/users";
     return axiosInstance.post(url, data);
   },
