@@ -44,12 +44,6 @@ export default function UserCreate() {
     })();
   }, [userId]);
 
-  function handleChangeSelect(event) {
-    setUser((prevState) => {
-      return { ...prevState, fldRole: event.target.value };
-    });
-  }
-
   const validationSchema = yup.object().shape({
     fldUsername: yup
       .string("Enter User Name")
@@ -228,7 +222,8 @@ export default function UserCreate() {
                     id="fldRole"
                     value={values.fldRole}
                     label="Role"
-                    onChange={handleChangeSelect}
+                    onChange={handleChange}
+                    name="fldRole"
                   >
                     <MenuItem value="">
                       <em>None</em>
