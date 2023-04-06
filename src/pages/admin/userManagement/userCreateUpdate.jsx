@@ -66,9 +66,10 @@ export default function UserCreate() {
     fldAddress: yup.string("Enter Address").required("Address is required"),
     fldBirthday: yup.string("Enter Birthday").required("Birthday is required"),
     fldRole: yup.string("Enter Role").required("Role is required"),
-    fldPassword: yup.string("Enter Password").required("Password is required"),
+    fldPassword: yup.string("Enter Password").min(8, 'Must be atleast 8 digits').required("Password is required"),
     fldRetypePassword: yup
       .string("Enter Retype Password")
+      .oneOf([yup.ref('fldPassword'), null], "Passwords don't match!")
       .required("Retype Password is required"),
   });
 
