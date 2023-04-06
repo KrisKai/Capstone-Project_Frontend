@@ -44,16 +44,16 @@ export default function UserCreate() {
     })();
   }, [userId]);
 
-  function handleChangeSelect(role) {
-    user.fldRole = role;
-    console.log(user);
-    setUser(user);
+  function handleChangeSelect(event) {
+    setUser((prevState) => {
+      return { ...prevState, fldRole: event.target.value };
+    });
   }
 
   const validationSchema = yup.object().shape({
     fldUsername: yup
       .string("Enter User Name")
-      .matches(/\S/,"User Name is invalid")
+      .matches(/\S/, "User Name is invalid")
       .required("User Name is required"),
     fldFullname: yup
       .string("Enter Full Name")
@@ -64,12 +64,15 @@ export default function UserCreate() {
       .required("Email is required"),
     fldPhone: yup.number().required("Phone is required"),
     fldAddress: yup.string("Enter Address").required("Address is required"),
-    fldBirthday: yup.string("Enter Birthday").required("Birthday is required"),
+    // fldBirthday: yup.string("Enter Birthday").required("Birthday is required"),
     fldRole: yup.string("Enter Role").required("Role is required"),
-    fldPassword: yup.string("Enter Password").min(8, 'Must be atleast 8 digits').required("Password is required"),
+    fldPassword: yup
+      .string("Enter Password")
+      .min(8, "Must be atleast 8 digits")
+      .required("Password is required"),
     fldRetypePassword: yup
       .string("Enter Retype Password")
-      .oneOf([yup.ref('fldPassword'), null], "Passwords don't match!")
+      .oneOf([yup.ref("fldPassword"), null], "Passwords don't match!")
       .required("Retype Password is required"),
   });
 
@@ -225,13 +228,13 @@ export default function UserCreate() {
                     id="fldRole"
                     value={values.fldRole}
                     label="Role"
-                    onChange={(e) => handleChangeSelect(e.target.value)}
+                    onChange={handleChangeSelect}
                   >
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
                     <MenuItem value="USER">User</MenuItem>
-                    <MenuItem value="ADMIN" >Admin</MenuItem>
+                    <MenuItem value="ADMIN">Admin</MenuItem>
                     <MenuItem value="EMPL">Employee</MenuItem>
                   </Select>
 
