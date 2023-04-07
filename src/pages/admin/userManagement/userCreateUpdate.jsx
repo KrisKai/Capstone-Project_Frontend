@@ -44,6 +44,8 @@ export default function UserCreate() {
     (async () => {
       try {
         const data = await userApi.getById(userId);
+        data.fldBirthday = dayjs.utc(data.fldBirthday);
+        data.fldRetypePassword = data.fldPassword;
         setUser(data);
       } catch (error) {
         console.log("Failed to fetch user details", error);
@@ -94,7 +96,6 @@ export default function UserCreate() {
         onSubmit={async (values, { setErrors, setStatus }) => {
           try {
             setStatus({ success: false });
-            console.log(values);
             let reponse;
             if (isEdit) {
               reponse = await userApi.update(values);
@@ -163,42 +164,50 @@ export default function UserCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="fldPassword"
-                  name="fldPassword"
-                  label="Password"
-                  fullWidth
-                  type="password"
-                  value={values.fldPassword}
-                  variant="standard"
-                  onChange={handleChange}
-                />
-                {touched.fldPassword && errors.fldPassword && (
-                  <FormHelperText error id="standard-weight-helper-password">
-                    {errors.fldPassword}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="fldRetypePassword"
-                  name="fldRetypePassword"
-                  label="Retype Password"
-                  fullWidth
-                  type="password"
-                  value={values.fldRetypePassword}
-                  variant="standard"
-                  onChange={handleChange}
-                />
-                {touched.fldRetypePassword && errors.fldRetypePassword && (
-                  <FormHelperText error id="standard-weight-helper-repass">
-                    {errors.fldRetypePassword}
-                  </FormHelperText>
-                )}
-              </Grid>
+              {!isEdit && (
+                <>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      id="fldPassword"
+                      name="fldPassword"
+                      label="Password"
+                      fullWidth
+                      type="password"
+                      value={values.fldPassword}
+                      variant="standard"
+                      onChange={handleChange}
+                    />
+                    {touched.fldPassword && errors.fldPassword && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-password"
+                      >
+                        {errors.fldPassword}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      id="fldRetypePassword"
+                      name="fldRetypePassword"
+                      label="Retype Password"
+                      fullWidth
+                      type="password"
+                      value={values.fldRetypePassword}
+                      variant="standard"
+                      onChange={handleChange}
+                    />
+                    {touched.fldRetypePassword && errors.fldRetypePassword && (
+                      <FormHelperText error id="standard-weight-helper-repass">
+                        {errors.fldRetypePassword}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                </>
+              )}
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
