@@ -38,9 +38,13 @@ export default function UserCreate() {
     (async () => {
       try {
         const data = await tripApi.getById(tripId);
-        data.fldEstimateArrivalTime = dayjs.utc(data.fldEstimateArrivalTime);
+        if (data != null && data != "") {
+          data.fldEstimateArrivalTime = dayjs.utc(data.fldEstimateArrivalTime);
         data.fldEstimateStartTime = dayjs.utc(data.fldEstimateStartTime);
         setTrip(data);
+        } else {
+            navigate("/admin/tripList");
+        }
       } catch (error) {
         console.log("Failed to fetch trip details", error);
       }

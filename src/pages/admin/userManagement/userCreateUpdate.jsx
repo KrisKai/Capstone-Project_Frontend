@@ -44,9 +44,13 @@ export default function UserCreate() {
     (async () => {
       try {
         const data = await userApi.getById(userId);
-        data.fldBirthday = dayjs.utc(data.fldBirthday);
-        data.fldRetypePassword = data.fldPassword;
-        setUser(data);
+        if (data != null && data != "") {
+          data.fldBirthday = dayjs.utc(data.fldBirthday);
+          data.fldRetypePassword = data.fldPassword;
+          setUser(data);
+        } else {
+            navigate("/admin/userList");
+        }
       } catch (error) {
         console.log("Failed to fetch user details", error);
       }
@@ -140,6 +144,7 @@ export default function UserCreate() {
                   value={values.fldUsername}
                   variant="standard"
                   onChange={handleChange}
+                  disabled={isEdit}
                 />
                 {touched.fldUsername && errors.fldUsername && (
                   <FormHelperText error id="standard-weight-helper-nickName">
