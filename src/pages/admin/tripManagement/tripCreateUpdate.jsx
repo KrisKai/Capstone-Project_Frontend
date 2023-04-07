@@ -15,6 +15,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "redux/hooks";
 import { openAlert } from "redux/modules/menu/menuSlice";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 
 dayjs.extend(utc);
 
@@ -40,10 +41,10 @@ export default function UserCreate() {
         const data = await tripApi.getById(tripId);
         if (data != null && data != "") {
           data.fldEstimateArrivalTime = dayjs.utc(data.fldEstimateArrivalTime);
-        data.fldEstimateStartTime = dayjs.utc(data.fldEstimateStartTime);
-        setTrip(data);
+          data.fldEstimateStartTime = dayjs.utc(data.fldEstimateStartTime);
+          setTrip(data);
         } else {
-            navigate("/admin/tripList");
+          navigate("/admin/tripList");
         }
       } catch (error) {
         console.log("Failed to fetch trip details", error);
@@ -92,16 +93,32 @@ export default function UserCreate() {
               reponse = await tripApi.create(values);
             }
 
-            if (reponse > 0) {
-              navigate("/admin/tripList");
-              if (isEdit) {
-                dispatch(
-                  openAlert({ errorMsg: "Update Trip Successed!", open: true })
-                );
-              } else {
-                dispatch(
-                  openAlert({ errorMsg: "Create Trip Successed!", open: true })
-                );
+            switch (reponse.Code) {
+              case "G001":
+                return toast.error(reponse.Message);
+              case "U001":
+                return toast.error(reponse.Message);
+              case "I001":
+                return toast.error(reponse.Message);
+              default: {
+                if (reponse > 0) {
+                  navigate("/admin/tripList");
+                  if (isEdit) {
+                    dispatch(
+                      openAlert({
+                        errorMsg: "Update Trip Successed!",
+                        open: true,
+                      })
+                    );
+                  } else {
+                    dispatch(
+                      openAlert({
+                        errorMsg: "Create Trip Successed!",
+                        open: true,
+                      })
+                    );
+                  }
+                }
               }
             }
           } catch (err) {
@@ -222,14 +239,15 @@ export default function UserCreate() {
                     )}
                   />
                 </LocalizationProvider>
-                {touched.fldEstimateStartTime && errors.fldEstimateStartTime && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldEstimateStartTime"
-                  >
-                    {errors.fldEstimateStartTime}
-                  </FormHelperText>
-                )}
+                {touched.fldEstimateStartTime &&
+                  errors.fldEstimateStartTime && (
+                    <FormHelperText
+                      error
+                      id="standard-weight-helper-fldEstimateStartTime"
+                    >
+                      {errors.fldEstimateStartTime}
+                    </FormHelperText>
+                  )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider
