@@ -76,10 +76,22 @@ export default function StickyHeadTableTrip() {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     // call api
+    dispatch(
+      tripActions.setFilter({
+        ...filter,
+        tripName: event.target.value,
+      })
+    );
   };
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
+    dispatch(
+      tripActions.setFilter({
+        ...filter,
+        tripName: event.target.value,
+      })
+    );
   };
 
   const handleChangePage = (event, newPage) => {

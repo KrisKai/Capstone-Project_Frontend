@@ -18,6 +18,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { toast } from "react-toastify";
 
 dayjs.extend(utc);
 
@@ -49,7 +50,7 @@ export default function UserCreate() {
           data.fldRetypePassword = data.fldPassword;
           setUser(data);
         } else {
-            navigate("/admin/userList");
+          navigate("/admin/userList");
         }
       } catch (error) {
         console.log("Failed to fetch user details", error);
@@ -102,20 +103,37 @@ export default function UserCreate() {
             setStatus({ success: false });
             let reponse;
             if (isEdit) {
+              console.log(values);
               reponse = await userApi.update(values);
             } else {
               reponse = await userApi.create(values);
             }
-            if (reponse > 0) {
-              navigate("/admin/userList");
-              if (isEdit) {
-                dispatch(
-                  openAlert({ errorMsg: "Update User Successed!", open: true })
-                );
-              } else {
-                dispatch(
-                  openAlert({ errorMsg: "Create User Successed!", open: true })
-                );
+            switch (reponse.Code) {
+              case 'G001':
+                return toast.error(reponse.Message);
+              case 'U001':
+                return toast.error(reponse.Message);
+              case 'I001':
+                return toast.error(reponse.Message);
+              default: {
+                if (reponse > 0) {
+                  navigate("/admin/userList");
+                  if (isEdit) {
+                    dispatch(
+                      openAlert({
+                        errorMsg: "Update User Successed!",
+                        open: true,
+                      })
+                    );
+                  } else {
+                    dispatch(
+                      openAlert({
+                        errorMsg: "Create User Successed!",
+                        open: true,
+                      })
+                    );
+                  }
+                }
               }
             }
           } catch (err) {
