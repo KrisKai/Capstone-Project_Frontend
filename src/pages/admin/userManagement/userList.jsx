@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 // assets
 
 const columns = [
-  { id: "fldUsername", label: "UserName", minWidth: 100 },
+  { id: "fldUsername", label: "UserName", minWidth: 100, onclick: true },
   {
     id: "fldFullname",
     label: "Full Name",
@@ -36,26 +36,8 @@ const columns = [
     align: "center",
   },
   {
-    id: "fldBirthday",
-    label: "Birthday",
-    minWidth: 130,
-    align: "center",
-  },
-  {
-    id: "fldPhone",
-    label: "Phone Number",
-    minWidth: 130,
-    align: "center",
-  },
-  {
     id: "fldEmail",
     label: "Email",
-    minWidth: 170,
-    align: "center",
-  },
-  {
-    id: "fldAddress",
-    label: "Address",
     minWidth: 170,
     align: "center",
   },
@@ -150,6 +132,10 @@ export default function StickyHeadTableUser() {
     navigate("/admin/userCreate");
   }
 
+  function gotoView(id) {
+    navigate(`/admin/userView/${id}`);
+  }
+
   useEffect(() => {
     dispatch(getUserList(filter));
   }, [dispatch, filter]);
@@ -201,11 +187,22 @@ export default function StickyHeadTableUser() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
+                        <>
+                          {column.onclick ? (
+                            <TableCell key={column.id} align={column.align} style={{textDecoration : 'underline'}} onClick={() => gotoView(row.fldUserId)}>
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          ) : (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          )
+                        }
+                        </>
                       );
                     })}
                     <TableCell key="edit" align="center">

@@ -105,6 +105,14 @@ export default function Router() {
           ),
         },
         {
+          path: `userView/:userId`,
+          element: (
+            <AuthGuard>
+              <UserView />
+            </AuthGuard>
+          ),
+        },
+        {
           path: "tripList",
           element: (
             <AuthGuard>
@@ -125,6 +133,14 @@ export default function Router() {
           element: (
             <AuthGuard>
               <TripCreateUpdate />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: `tripView/:tripId`,
+          element: (
+            <AuthGuard>
+              <TripView />
             </AuthGuard>
           ),
         },
@@ -159,11 +175,17 @@ const UserList = Loadable(
 const UserCreateUpdate = Loadable(
   lazy(() => import("../pages/admin/userManagement/userCreateUpdate"))
 );
+const UserView = Loadable(
+  lazy(() => import("../pages/admin/userManagement/userView"))
+);
 const TripList = Loadable(
   lazy(() => import("../pages/admin/tripManagement/tripList"))
 );
 const TripCreateUpdate = Loadable(
   lazy(() => import("../pages/admin/tripManagement/tripCreateUpdate"))
+);
+const TripView = Loadable(
+  lazy(() => import("../pages/admin/tripManagement/tripView"))
 );
 const Maintenance = Loadable(lazy(() => import("../pages/Maintenance")));
 const Page500 = Loadable(lazy(() => import("../pages/Page500")));

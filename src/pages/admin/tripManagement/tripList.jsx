@@ -17,24 +17,18 @@ import {
   selectTripFilter,
 } from "../../../redux/modules/trip/tripSlice";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 // assets
 
 const columns = [
-  { id: "fldTripName", label: "Trip Name", minWidth: 100 },
+  { id: "fldTripName", label: "Trip Name", minWidth: 100, onclick: true },
   {
     id: "fldTripBudget",
     label: "Trip Budget",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "fldTripDescription",
-    label: "Trip Description",
-    minWidth: 170,
-    align: "center",
   },
   {
     id: "fldEstimateStartTime",
@@ -123,7 +117,7 @@ export default function StickyHeadTableTrip() {
       // Remove trip API
       await tripApi.delete(id || "");
 
-      toast.success('Remove trip successfully!');
+      toast.success("Remove trip successfully!");
 
       // Trigger to re-fetch student list with current filter
       const newFilter = { ...filter };
@@ -138,9 +132,12 @@ export default function StickyHeadTableTrip() {
     navigate("/admin/tripCreate");
   }
 
+  function gotoView(id) {
+    navigate(`/admin/tripView/${id}`);
+  }
+
   useEffect(() => {
     //filter = { pageIndex: 0, pageSize: 10 };
-    console.log(filter);
     dispatch(getTripList(filter));
   }, [dispatch, filter]);
 
@@ -191,11 +188,22 @@ export default function StickyHeadTableTrip() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
+                        <>
+                          {column.onclick ? (
+                            <TableCell key={column.id} align={column.align} onClick={() => gotoView(row.fldTripId)}>
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          ) : (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          )
+                        }
+                        </>
                       );
                     })}
                     <TableCell key="edit" align="center">
