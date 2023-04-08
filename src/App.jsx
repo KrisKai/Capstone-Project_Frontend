@@ -12,7 +12,11 @@ function App() {
   return (
     <ThemeCustomization>
       <ScrollTop>
-      <ToastContainer />
+        <ToastContainer
+          pauseOnFocusLoss={false}
+          pauseOnHover={false}
+          autoClose={3000}
+        />
         <Router />
       </ScrollTop>
     </ThemeCustomization>

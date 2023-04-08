@@ -6,34 +6,30 @@ import {
   Button,
   FormHelperText,
   Grid,
-  Link,
   IconButton,
   InputAdornment,
   InputLabel,
+  Link,
   OutlinedInput,
   Stack,
-  Typography,
 } from "@mui/material";
 
 // third party
-import * as Yup from "yup";
 import { Formik } from "formik";
+import * as Yup from "yup";
 
 // project import
-import AnimateButton from "../../../../components/@extended/AnimateButton";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { handleLogin } from "../../../../redux/modules/authenticate/authSlice";
+import AnimateButton from "components/@extended/AnimateButton";
+import { useAppDispatch } from "redux/hooks";
+import { handleLogin } from "redux/modules/authenticate/authSlice";
 // assets
-import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const AuthLogin = () => {
   let navigate = useNavigate();
-  const [checked, setChecked] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const dispatch = useAppDispatch();
   const handleClickShowPassword = () => {

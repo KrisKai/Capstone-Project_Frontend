@@ -104,19 +104,9 @@ export default function UserCreate() {
                 if (reponse > 0) {
                   navigate("/admin/tripList");
                   if (isEdit) {
-                    dispatch(
-                      openAlert({
-                        errorMsg: "Update Trip Successed!",
-                        open: true,
-                      })
-                    );
+                    toast.success("Update Trip Successed!");
                   } else {
-                    dispatch(
-                      openAlert({
-                        errorMsg: "Create Trip Successed!",
-                        open: true,
-                      })
-                    );
+                    toast.success("Create Trip Successed!");
                   }
                 }
               }

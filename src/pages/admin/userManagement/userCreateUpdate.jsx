@@ -109,29 +109,19 @@ export default function UserCreate() {
               reponse = await userApi.create(values);
             }
             switch (reponse.Code) {
-              case 'G001':
+              case "G001":
                 return toast.error(reponse.Message);
-              case 'U001':
+              case "U001":
                 return toast.error(reponse.Message);
-              case 'I001':
+              case "I001":
                 return toast.error(reponse.Message);
               default: {
                 if (reponse > 0) {
                   navigate("/admin/userList");
                   if (isEdit) {
-                    dispatch(
-                      openAlert({
-                        errorMsg: "Update User Successed!",
-                        open: true,
-                      })
-                    );
+                    toast.success("Update User Successed!");
                   } else {
-                    dispatch(
-                      openAlert({
-                        errorMsg: "Create User Successed!",
-                        open: true,
-                      })
-                    );
+                    toast.success("Create User Successed!");
                   }
                 }
               }
