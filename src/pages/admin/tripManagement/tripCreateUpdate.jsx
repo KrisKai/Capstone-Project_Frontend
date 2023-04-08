@@ -13,9 +13,12 @@ import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "redux/hooks";
-import { openAlert } from "redux/modules/menu/menuSlice";
 import * as yup from "yup";
 import { toast } from "react-toastify";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
 
 dayjs.extend(utc);
 
@@ -30,7 +33,13 @@ export default function UserCreate() {
     fldTripDescription: "",
     fldEstimateStartTime: null,
     fldEstimateArrivalTime: null,
-    fldTripMember: 0,
+    fldTripMember: "",
+    fldTripType: "",
+    fldTripPresenter: "",
+    fldTripStartLocationName: "",
+    fldTripStartLocationAddress: "",
+    fldTripDestinationLocationName: "",
+    fldTripDestinationLocationAddress: "",
   });
 
   useEffect(() => {
@@ -174,7 +183,80 @@ export default function UserCreate() {
                   </FormHelperText>
                 )}
               </Grid>
+              <Grid item xs={12} sm={4}>
+                <FormControl sx={{ mt: 1, minWidth: 200 }}>
+                  <InputLabel id="fldTripPresenter">Trip Presenter</InputLabel>
+                  <Select
+                    labelId="fldTripPresenter"
+                    id="fldTripPresenter"
+                    value={values.fldTripPresenter}
+                    label="Role"
+                    onChange={handleChange}
+                    name="fldTripPresenter"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="USER">User</MenuItem>
+                    <MenuItem value="ADMIN">Admin</MenuItem>
+                    <MenuItem value="EMPL">Employee</MenuItem>
+                  </Select>
 
+                  {touched.fldTripPresenter && errors.fldTripPresenter && (
+                    <FormHelperText error id="standard-weight-helper-role">
+                      {errors.fldTripPresenter}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <FormControl sx={{ mt: 1, minWidth: 200 }}>
+                  <InputLabel id="fldTripType">Trip Type</InputLabel>
+                  <Select
+                    labelId="fldTripType"
+                    id="fldTripType"
+                    value={values.fldTripType}
+                    label="Role"
+                    onChange={handleChange}
+                    name="fldTripType"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="USER">User</MenuItem>
+                    <MenuItem value="ADMIN">Admin</MenuItem>
+                    <MenuItem value="EMPL">Employee</MenuItem>
+                  </Select>
+
+                  {touched.fldTripType && errors.fldTripType && (
+                    <FormHelperText error id="standard-weight-helper-role">
+                      {errors.fldTripType}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+              <TextField
+                  required
+                  id="fldTripMember"
+                  name="fldTripMember"
+                  label="Trip Member"
+                  type="number"
+                  fullWidth
+                  variant="standard"
+                  value={values.fldTripMember}
+                  onChange={handleChange}
+                  error={Boolean(touched.fldTripMember && errors.fldTripMember)}
+                />
+                {touched.fldTripMember && errors.fldTripMember && (
+                  <FormHelperText
+                    error
+                    id="standard-weight-helper-fldTripMember"
+                  >
+                    {errors.fldTripMember}
+                  </FormHelperText>
+                )}
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -282,26 +364,87 @@ export default function UserCreate() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="fldTripMember"
-                  name="fldTripMember"
-                  label="Trip Member"
-                  type="number"
+                  id="fldTripStartLocationName"
+                  name="fldTripStartLocationName"
+                  label="Trip Start Location Name"
                   fullWidth
                   variant="standard"
-                  value={values.fldTripMember}
+                  value={values.fldTripStartLocationName}
                   onChange={handleChange}
-                  error={Boolean(touched.fldTripMember && errors.fldTripMember)}
+                  error={Boolean(touched.fldTripStartLocationName && errors.fldTripStartLocationName)}
                 />
-                {touched.fldTripMember && errors.fldTripMember && (
+                {touched.fldTripStartLocationName && errors.fldTripStartLocationName && (
                   <FormHelperText
                     error
-                    id="standard-weight-helper-fldTripMember"
+                    id="standard-weight-helper-fldTripStartLocationName"
                   >
-                    {errors.fldTripMember}
+                    {errors.fldTripStartLocationName}
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}></Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="fldTripStartLocationAddress"
+                  name="fldTripStartLocationAddress"
+                  label="Trip Satrt Location Address"
+                  fullWidth
+                  variant="standard"
+                  value={values.fldTripStartLocationAddress}
+                  onChange={handleChange}
+                  error={Boolean(touched.fldTripStartLocationAddress && errors.fldTripStartLocationAddress)}
+                />
+                {touched.fldTripStartLocationAddress && errors.fldTripStartLocationAddress && (
+                  <FormHelperText
+                    error
+                    id="standard-weight-helper-fldTripStartLocationAddress"
+                  >
+                    {errors.fldTripStartLocationAddress}
+                  </FormHelperText>
+                )}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="fldTripDestinationLocationName"
+                  name="fldTripDestinationLocationName"
+                  label="Trip Destination Location Name"
+                  fullWidth
+                  variant="standard"
+                  value={values.fldTripDestinationLocationName}
+                  onChange={handleChange}
+                  error={Boolean(touched.fldTripDestinationLocationName && errors.fldTripDestinationLocationName)}
+                />
+                {touched.fldTripDestinationLocationName && errors.fldTripDestinationLocationName && (
+                  <FormHelperText
+                    error
+                    id="standard-weight-helper-fldTripDestinationLocationName"
+                  >
+                    {errors.fldTripDestinationLocationName}
+                  </FormHelperText>
+                )}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="fldTripDestinationLocationAddress"
+                  name="fldTripDestinationLocationAddress"
+                  label="Trip Destination Location Address"
+                  fullWidth
+                  variant="standard"
+                  value={values.fldTripDestinationLocationAddress}
+                  onChange={handleChange}
+                  error={Boolean(touched.fldTripDestinationLocationAddress && errors.fldTripDestinationLocationAddress)}
+                />
+                {touched.fldTripDestinationLocationAddress && errors.fldTripDestinationLocationAddress && (
+                  <FormHelperText
+                    error
+                    id="standard-weight-helper-fldTripDestinationLocationAddress"
+                  >
+                    {errors.fldTripDestinationLocationAddress}
+                  </FormHelperText>
+                )}
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <Button variant="outlined" onClick={gotoList}>
                   Return to List

@@ -6,7 +6,6 @@ import { userApi } from "api";
 import { Formik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "redux/hooks";
-import { openAlert } from "redux/modules/menu/menuSlice";
 import * as yup from "yup";
 import { useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl";
