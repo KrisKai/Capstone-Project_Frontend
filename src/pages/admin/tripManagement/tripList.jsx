@@ -33,28 +33,27 @@ const columns = [
   {
     id: "fldEstimateStartTime",
     label: "Estimate Start Time",
-    minWidth: 130,
+    minWidth: 170,
     align: "center",
   },
   {
     id: "fldEstimateArrivalTime",
     label: "Estimate Arrival Time",
-    minWidth: 130,
+    minWidth: 170,
     align: "center",
   },
   {
     id: "fldTripStatus",
     label: "Trip Status",
-    minWidth: 170,
+    minWidth: 130,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "fldTripMember",
     label: "Trip Member",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
-    format: (value) => value.toFixed(2),
   },
 ];
 
