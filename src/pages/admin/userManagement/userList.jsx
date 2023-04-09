@@ -164,7 +164,7 @@ export default function StickyHeadTableUser() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {userList.map((row) => {
+              {userList?.map((row) => {
                 return (
                   <TableRow
                     hover

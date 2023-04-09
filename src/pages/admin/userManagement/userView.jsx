@@ -43,7 +43,6 @@ export default function UserCreate() {
     async function getUserDetail() {
       try {
         const data = await userApi.getById(userId);
-        console.log(data);
         if (data !== null && data !== "") {
           data.fldBirthday = dayjs.utc(data.fldBirthday);
           data.fldRetypePassword = data.fldPassword;
