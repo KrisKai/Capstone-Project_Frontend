@@ -28,6 +28,7 @@ import SettingTab from "./SettingTab";
 // assets
 import avatar1 from "../../../../../assets/images/users/avatar-1.png";
 import { SettingOutlined, UserOutlined } from "@ant-design/icons";
+import { getCurrentUser } from "redux/modules/menu/menuSlice";
 
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import { useNavigate } from "react-router-dom";
@@ -68,7 +69,9 @@ const Profile = () => {
 
   useEffect(() => {
     //filter = { pageIndex: 0, pageSize: 10 };
-    console.log(localStorage.getItem("access_token"));
+    dispatch(
+      getCurrentUser()
+    );
   }, []);
 
   const handleLogout = async () => {
