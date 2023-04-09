@@ -1,6 +1,10 @@
 import { Button, FormHelperText } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -12,19 +16,13 @@ import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch } from "redux/hooks";
-import * as yup from "yup";
 import { toast } from "react-toastify";
-import FormControl from "@mui/material/FormControl";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
+import * as yup from "yup";
 
 dayjs.extend(utc);
 
 export default function UserCreate() {
   let navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { tripId } = useParams();
   const isEdit = Boolean(tripId);
   const [trip, setTrip] = useState({
@@ -48,7 +46,7 @@ export default function UserCreate() {
     (async () => {
       try {
         const data = await tripApi.getById(tripId);
-        if (data != null && data != "") {
+        if (data !== null && data !== "") {
           data.fldEstimateArrivalTime = dayjs.utc(data.fldEstimateArrivalTime);
           data.fldEstimateStartTime = dayjs.utc(data.fldEstimateStartTime);
           setTrip(data);

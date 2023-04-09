@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Box, Button, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -15,7 +15,7 @@ import {
   getUserList,
   selectAllUserList,
   selectUserFilter,
-} from "../../../redux/modules/user/userSlice";
+} from "redux/modules/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -69,23 +69,22 @@ export default function StickyHeadTableUser() {
   const userList = allUsers.listOfUser;
   const numOfUser = allUsers.numOfUser;
 
-  const handleSearch = (event) => {
-    dispatch(
-      userActions.setFilter({
-        ...filter,
-        tripName: event.target.value,
-      })
-    );
+  const [search, setSearch] = useState("");
+
+  const onSearchChange = (e) => {
+    setSearch(e.target.value);
   };
 
   const handleChange = (event) => {
-    dispatch(
-      userActions.setFilter({
-        ...filter,
-        tripName: event.target.value,
-      })
-    );
-    console.log(event.target.value)
+    console.log(event);
+    if ((event.code && event.code === "Enter") || !event) {
+      dispatch(
+        userActions.setFilter({
+          ...filter,
+          userName: search,
+        })
+      );
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -148,11 +147,12 @@ export default function StickyHeadTableUser() {
             id="search"
             type="search"
             label="Search"
-            value={filter.tripName}
-            onChange={handleChange}
+            value={search}
+            onKeyDown={handleChange}
+            onChange={onSearchChange}
             sx={{ width: 400 }}
           />
-          <Button variant="outlined" onClick={handleSearch} sx={{ height: 42 }}>
+          <Button variant="outlined" onClick={handleChange} sx={{ height: 42 }}>
             Search
           </Button>
         </Box>
@@ -189,7 +189,12 @@ export default function StickyHeadTableUser() {
                       return (
                         <>
                           {column.onclick ? (
-                            <TableCell key={column.id} align={column.align} style={{textDecoration : 'underline'}} onClick={() => gotoView(row.fldUserId)}>
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              style={{ textDecoration: "underline" }}
+                              onClick={() => gotoView(row.fldUserId)}
+                            >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
                                 : value}
@@ -200,8 +205,7 @@ export default function StickyHeadTableUser() {
                                 ? column.format(value)
                                 : value}
                             </TableCell>
-                          )
-                        }
+                          )}
                         </>
                       );
                     })}

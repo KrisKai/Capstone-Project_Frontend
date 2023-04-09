@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { Box, Button, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -8,16 +7,17 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { tripApi } from "api";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import {
-  tripActions,
   getTripList,
   selectAllTripList,
   selectTripFilter,
+  tripActions,
 } from "../../../redux/modules/trip/tripSlice";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 // assets
 
@@ -189,7 +189,11 @@ export default function StickyHeadTableTrip() {
                       return (
                         <>
                           {column.onclick ? (
-                            <TableCell key={column.id} align={column.align} onClick={() => gotoView(row.fldTripId)}>
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              onClick={() => gotoView(row.fldTripId)}
+                            >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
                                 : value}
@@ -200,8 +204,7 @@ export default function StickyHeadTableTrip() {
                                 ? column.format(value)
                                 : value}
                             </TableCell>
-                          )
-                        }
+                          )}
                         </>
                       );
                     })}
