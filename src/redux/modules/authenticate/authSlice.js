@@ -30,6 +30,10 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.currentUser = undefined;
     },
+
+    setInfo(state, action) {
+      state.currentUser = action.payload;
+    }
   },
 });
 
@@ -45,6 +49,8 @@ const authReducer = authSlice.reducer;
 export default authReducer;
 
 // Action
+
+
 export function handleLogin(payload) {
   return async () => {
     try {
@@ -52,7 +58,6 @@ export function handleLogin(payload) {
       // call api login
       const response = await authApi.login(payload);
       const userToken = response.token;
-      console.log(response);
       if (response.Code != "L001") {
         dispatch(authSlice.actions.loginSuccess(response));
         // save token in localStorage
@@ -66,6 +71,32 @@ export function handleLogin(payload) {
       }
     } catch (error) {
       dispatch(authSlice.actions.loginFailed(error));
+    }
+  };
+}
+
+export function getCurrentUser() {
+  return async () => {
+    try {
+      // call api login
+      const response = await authApi.getCurrentUser();
+      console.log(response);
+      if(response) {
+        dispatch(authSlice.actions.setInfo(response));
+      }
+      // if (response.Code != "L001") {
+      //   dispatch(authSlice.actions.loginSuccess(response));
+      //   // save token in localStorage
+      //   localStorage.setItem("access_token", userToken);
+      //   window.location.replace("/admin/dashboard")
+      // } else {
+      //   dispatch(authSlice.actions.loginFailed(response));
+      //   toast.error(response.Message, {
+      //     position: toast.POSITION.TOP_CENTER,
+      //   });
+      // }
+    } catch (error) {
+      //dispatch(authSlice.actions.loginFailed(error));
     }
   };
 }

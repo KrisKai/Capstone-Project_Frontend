@@ -27,10 +27,11 @@ import SettingTab from "./SettingTab";
 // assets
 import { SettingOutlined, UserOutlined } from "@ant-design/icons";
 import avatar1 from "../../../../../assets/images/users/avatar-1.png";
-import { getCurrentUser } from "redux/modules/menu/menuSlice";
+
 
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../../../redux/hooks";
+
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -66,12 +67,12 @@ const Profile = () => {
   const navigate = useNavigate();
   const theme = useTheme();
 
-  useEffect(() => {
-    //filter = { pageIndex: 0, pageSize: 10 };
-    dispatch(
-      getCurrentUser()
-    );
-  }, []);
+  // useEffect(() => {
+  //   //filter = { pageIndex: 0, pageSize: 10 };
+  //   dispatch(
+  //     getCurrentUser()
+  //   );
+  // }, []);
 
   const handleLogout = async () => {
     // logout

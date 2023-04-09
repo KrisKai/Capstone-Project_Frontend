@@ -24,6 +24,9 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 
+
+import { getCurrentUser } from "redux/modules/authenticate/authSlice";
+
 // avatar style
 const avatarSX = {
   width: 36,
