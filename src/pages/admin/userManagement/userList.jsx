@@ -47,18 +47,6 @@ const columns = [
     minWidth: 100,
     align: "center",
   },
-  {
-    id: "fldCreateDate",
-    label: "Create Date",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "fldCreateBy",
-    label: "Create By",
-    minWidth: 100,
-    align: "center",
-  },
 ];
 
 export default function StickyHeadTableUser() {
@@ -66,8 +54,8 @@ export default function StickyHeadTableUser() {
   const dispatch = useAppDispatch();
   const allUsers = useAppSelector(selectAllUserList);
   const filter = useAppSelector(selectUserFilter);
-  const userList = allUsers.listOfUser;
-  const numOfUser = allUsers.numOfUser;
+  const userList = allUsers.listOfTrip;
+  const numOfUser = allUsers.numOfTrip;
 
   const handleSearch = (event) => {
     dispatch(

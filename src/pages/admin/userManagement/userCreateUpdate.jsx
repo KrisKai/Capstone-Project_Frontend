@@ -44,10 +44,10 @@ export default function UserCreate() {
     (async () => {
       try {
         const data = await userApi.getById(userId);
-        if (data != null && data != "") {
-          data.fldBirthday = dayjs.utc(data.fldBirthday);
-          data.fldRetypePassword = data.fldPassword;
-          setUser(data);
+        if (data.UserVO != null && data.UserVO != "") {
+          data.UserVO.fldBirthday = dayjs.utc(data.UserVO.fldBirthday);
+          data.UserVO.fldRetypePassword = data.UserVO.fldPassword;
+          setUser(data.UserVO);
         } else {
           navigate("/admin/userList");
         }
