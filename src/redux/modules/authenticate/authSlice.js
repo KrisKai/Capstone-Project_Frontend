@@ -50,7 +50,6 @@ export function handleLogin(payload) {
     try {
       //yield delay(1000);
       // call api login
-      var url = "/authenticate/login";
       const response = await authApi.login(payload);
       const userToken = response.token;
       console.log(response);

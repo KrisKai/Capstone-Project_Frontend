@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { authApi } from "api";
 
 // initial state
 const initialState = {
@@ -59,6 +60,32 @@ export const {
   closeAlert,
   setInfo,
 } = menuSlice.actions;
+
+export function getCurrentUser() {
+  return async () => {
+    try {
+      //yield delay(1000);
+      // call api login
+      const response = await authApi.getCurrentUser();
+      const userToken = response;
+      console.log(response);
+      // if (response.Code != "L001") {
+      //   dispatch(authSlice.actions.loginSuccess(response));
+      //   // save token in localStorage
+      //   localStorage.setItem("access_token", userToken);
+      //   window.location.replace("/admin/dashboard")
+      // } else {
+      //   dispatch(authSlice.actions.loginFailed(response));
+      //   toast.error(response.Message, {
+      //     position: toast.POSITION.TOP_CENTER,
+      //   });
+      // }
+    } catch (error) {
+      //dispatch(authSlice.actions.loginFailed(error));
+    }
+  };
+}
+
 
 // Reducer
 export const menuReducer = menuSlice.reducer;
