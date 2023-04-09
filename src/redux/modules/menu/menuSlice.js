@@ -8,6 +8,8 @@ const initialState = {
   componentDrawerOpen: true,
   errorMsg: "",
   open: false,
+  name: "",
+  role: ""
 };
 
 // ==============================|| SLICE - MENU ||============================== //
@@ -39,6 +41,11 @@ const menuSlice = createSlice({
     closeAlert(state, action) {
       state.open = action.payload.open;
     },
+
+    setInfo(state, action) {
+      state.name = action.payload.name;
+      state.role = action.payload.role;
+    }
   },
 });
 
@@ -50,6 +57,7 @@ export const {
   openComponentDrawer,
   openAlert,
   closeAlert,
+  setInfo,
 } = menuSlice.actions;
 
 // Reducer

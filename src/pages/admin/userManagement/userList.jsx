@@ -54,8 +54,8 @@ export default function StickyHeadTableUser() {
   const dispatch = useAppDispatch();
   const allUsers = useAppSelector(selectAllUserList);
   const filter = useAppSelector(selectUserFilter);
-  const userList = allUsers.listOfTrip;
-  const numOfUser = allUsers.numOfTrip;
+  const userList = allUsers.listOfUser;
+  const numOfUser = allUsers.numOfUser;
 
   const [search, setSearch] = useState("");
 
