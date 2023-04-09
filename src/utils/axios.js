@@ -1,16 +1,16 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import {REACT_APP_API_URL} from '../config';
+import axios from "axios";
+import { REACT_APP_API_URL } from "../config";
 
 const axiosInstance = axios.create({
   baseURL: REACT_APP_API_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
-  config => {
+  (config) => {
     const token = localStorage.getItem("access_token");
     if (token) {
       if (token) {
@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(
 
     return config;
   },
-  error => Promise.reject(error)
+  (error) => Promise.reject(error)
 );
 
 // Add a response interceptor

@@ -7,7 +7,7 @@ import { AuthGuardUser, GuestGuardUser } from "guards/user";
 // import RoleBasedGuard from '../guards/admin/RoleBasedGuard';
 
 // project import
-import Loadable from "components/Loadable";
+import { Loadable } from "components/Loadable";
 import MainLayout from "layout/MainLayout/index";
 
 // ----------------------------------------------------------------------
@@ -154,7 +154,9 @@ export default function Router() {
 // IMPORT COMPONENTS
 //     --------------USER------------------
 // Authentication
-const AuthLoginUser  = Loadable(lazy(() => import("../pages/user/authentication/LoginUser")));
+const AuthLoginUser = Loadable(
+  lazy(() => import("../pages/user/authentication/LoginUser"))
+);
 // const Register = Loadable(lazy(() => import('../pages/user/authentication/Register')));
 
 //     --------------ADMIN------------------

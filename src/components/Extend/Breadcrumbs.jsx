@@ -7,7 +7,7 @@ import MuiBreadcrumbs from "@mui/material/Breadcrumbs";
 import { Grid, Typography } from "@mui/material";
 
 // project imports
-import MainCard from "../MainCard";
+import MainCard from "../Layout/MainCard.jsx";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
@@ -130,10 +130,7 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
               autoHideDuration={2000}
               onClose={handleClose}
             >
-              <Alert
-                severity="success"
-                sx={{ width: "100%" }}
-              >
+              <Alert severity="success" sx={{ width: "100%" }}>
                 {errorMsg}
               </Alert>
             </Snackbar>

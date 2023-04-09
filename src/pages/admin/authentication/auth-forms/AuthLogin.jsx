@@ -19,7 +19,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 
 // project import
-import AnimateButton from "components/@extended/AnimateButton";
+import { AnimateButton } from "components/Extend";
 import { useAppDispatch } from "redux/hooks";
 import { handleLogin } from "redux/modules/authenticate/authSlice";
 // assets

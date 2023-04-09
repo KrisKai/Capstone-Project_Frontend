@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
-import React, { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // material-ui
-import { useTheme } from "@mui/material/styles";
 import {
   Avatar,
   Box,
@@ -10,7 +9,6 @@ import {
   CardContent,
   ClickAwayListener,
   Grid,
-  IconButton,
   Paper,
   Popper,
   Stack,
@@ -18,19 +16,20 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 // project import
-import MainCard from "../../../../../components/MainCard";
-import Transitions from "../../../../../components/@extended/Transitions";
+import { Transitions } from "components/Extend";
+import { MainCard } from "components/Layout";
 import ProfileTab from "./ProfileTab";
 import SettingTab from "./SettingTab";
 
 // assets
-import avatar1 from "../../../../../assets/images/users/avatar-1.png";
 import { SettingOutlined, UserOutlined } from "@ant-design/icons";
+import avatar1 from "../../../../../assets/images/users/avatar-1.png";
 
-import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../../../redux/hooks";
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -74,7 +73,7 @@ const Profile = () => {
   const handleLogout = async () => {
     // logout
     localStorage.removeItem("access_token");
-    navigate("/auth/login")
+    navigate("/auth/login");
   };
 
   const anchorRef = useRef(null);

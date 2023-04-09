@@ -2,7 +2,7 @@ import React from "react";
 // routes
 import Router from "./routes";
 import ThemeCustomization from "./themes";
-import ScrollTop from "./components/ScrollTop";
+import { ScrollTop } from "components/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
