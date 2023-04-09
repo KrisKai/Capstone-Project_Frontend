@@ -1,30 +1,25 @@
 import { Button, FormHelperText } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { userApi } from "api";
-import { Formik } from "formik";
-import { useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch } from "redux/hooks";
-import { openAlert } from "redux/modules/menu/menuSlice";
-import * as yup from "yup";
-import { useEffect, useState } from "react";
-import FormControl from "@mui/material/FormControl";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { toast } from "react-toastify";
+import { Formik } from "formik";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 dayjs.extend(utc);
 
 export default function UserCreate() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { userId } = useParams();
   const isEdit = Boolean(userId);
   const [user, setUser] = useState({
@@ -38,26 +33,29 @@ export default function UserCreate() {
     fldPhone: "",
     fldAddress: "",
     fldCreateDate: "",
-    fldCreateBy: ""
+    fldCreateBy: "",
   });
 
   useEffect(() => {
     if (!userId) return;
+    console.log(userId);
     // IFFE
-    (async () => {
+    async function getUserDetail() {
       try {
         const data = await userApi.getById(userId);
-        if (data != null && data != "") {
+        console.log(data);
+        if (data !== null && data !== "") {
           data.fldBirthday = dayjs.utc(data.fldBirthday);
           data.fldRetypePassword = data.fldPassword;
           setUser(data);
         } else {
-          navigate("/admin/userList");
+          // navigate("/admin/userList");
         }
       } catch (error) {
         console.log("Failed to fetch user details", error);
       }
-    })();
+    }
+    getUserDetail();
   }, [userId]);
 
   function gotoList() {
@@ -70,11 +68,7 @@ export default function UserCreate() {
       <Typography variant="h6" gutterBottom>
         View User
       </Typography>
-      <Formik
-        initialValues={user}
-        enableReinitialize={true}
-        
-      >
+      <Formik initialValues={user} enableReinitialize={true}>
         {({
           errors,
           touched,
