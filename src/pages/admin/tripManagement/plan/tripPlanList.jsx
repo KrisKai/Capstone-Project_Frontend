@@ -83,11 +83,6 @@ export default function StickyHeadTableTrip() {
     );
   };
 
-  const handleDetail = (id) => {
-    // detail
-    navigate(`/admin/tripDetail/${id}`);
-  };
-
   const handleUpdate = (id) => {
     // update
     navigate(`/admin/tripUpdate/${id}`);
@@ -161,9 +156,6 @@ export default function StickyHeadTableTrip() {
                     {column.label}
                   </TableCell>
                 ))}
-                <TableCell key="detail" align="center">
-                  Show Detail
-                </TableCell>
                 <TableCell key="edit" align="center">
                   Edit || Delete
                 </TableCell>
@@ -202,16 +194,6 @@ export default function StickyHeadTableTrip() {
                         </>
                       );
                     })}
-                    <TableCell key="detail" align="center">
-                      <Button
-                        variant="outlined"
-                        value={row.fldTripId}
-                        onClick={(e) => handleDetail(e.target.value)}
-                        color="primary"
-                      >
-                        About Trip
-                      </Button>
-                    </TableCell>
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"

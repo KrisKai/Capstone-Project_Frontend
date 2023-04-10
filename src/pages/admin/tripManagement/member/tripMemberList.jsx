@@ -60,7 +60,6 @@ const columns = [
     label: "Status",
     minWidth: 130,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
   },
 ];
 
@@ -112,11 +111,6 @@ export default function StickyHeadTableTrip() {
         pageSize: +event.target.value,
       })
     );
-  };
-
-  const handleDetail = (id) => {
-    // detail
-    navigate(`/admin/tripDetail/${id}`);
   };
 
   const handleUpdate = (id) => {
@@ -192,9 +186,6 @@ export default function StickyHeadTableTrip() {
                     {column.label}
                   </TableCell>
                 ))}
-                <TableCell key="detail" align="center">
-                  Show Detail
-                </TableCell>
                 <TableCell key="edit" align="center">
                   Edit || Delete
                 </TableCell>
@@ -233,16 +224,6 @@ export default function StickyHeadTableTrip() {
                         </>
                       );
                     })}
-                    <TableCell key="detail" align="center">
-                      <Button
-                        variant="outlined"
-                        value={row.fldTripId}
-                        onClick={(e) => handleDetail(e.target.value)}
-                        color="primary"
-                      >
-                        About Trip
-                      </Button>
-                    </TableCell>
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
