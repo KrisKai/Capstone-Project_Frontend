@@ -17,6 +17,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import { dispatch } from "redux/store";
+import { setInfo } from "redux/modules/menu/menuSlice";
 
 dayjs.extend(utc);
 
@@ -46,11 +48,16 @@ export default function UserCreate() {
           data.UserVO.fldBirthday = dayjs.utc(data.UserVO.fldBirthday);
           data.UserVO.fldRetypePassword = data.UserVO.fldPassword;
           setUser(data.UserVO);
+          dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/userList");
         }
       } catch (error) {
         console.log("Failed to fetch user details", error);
+        if (error.response.status == 401) {
+          localStorage.removeItem("access_token");
+          navigate("/auth/login");
+        }
       }
     })();
   }, [userId]);

@@ -9,6 +9,7 @@ const initialState = {
   componentDrawerOpen: true,
   errorMsg: "",
   open: false,
+  currentUser: null,
 };
 
 // ==============================|| SLICE - MENU ||============================== //
@@ -41,6 +42,9 @@ const menuSlice = createSlice({
       state.open = action.payload.open;
     },
 
+    setInfo(state, action) {
+      state.currentUser = action.payload;
+    },
   },
 });
 
@@ -52,7 +56,11 @@ export const {
   openComponentDrawer,
   openAlert,
   closeAlert,
+  setInfo
 } = menuSlice.actions;
 
 // Reducer
 export const menuReducer = menuSlice.reducer;
+
+// Selectors
+export const selectCurrentUser = (state) => state.menu.currentUser;

@@ -30,7 +30,7 @@ export default function UserCreate() {
     fldEstimateStartTime: null,
     fldEstimateArrivalTime: null,
     fldTripMember: 0,
-    fldTripStatus: ""
+    fldTripStatus: "",
   });
 
   useEffect(() => {
@@ -40,7 +40,6 @@ export default function UserCreate() {
       try {
         const data = await tripApi.getById(tripId);
         if (data != null && data != "") {
-          console.log(data)
           data.fldEstimateArrivalTime = dayjs.utc(data.fldEstimateArrivalTime);
           data.fldEstimateStartTime = dayjs.utc(data.fldEstimateStartTime);
           setTrip(data);
@@ -49,6 +48,10 @@ export default function UserCreate() {
         }
       } catch (error) {
         console.log("Failed to fetch trip details", error);
+        if (error.response.status == 401) {
+          localStorage.removeItem("access_token");
+          navigate("/auth/login");
+        }
       }
     })();
   }, [tripId]);
@@ -63,13 +66,8 @@ export default function UserCreate() {
       <Typography variant="h6" gutterBottom>
         View Trip
       </Typography>
-      <Formik
-        initialValues={trip}
-        enableReinitialize={true}
-      >
-        {({
-          values,
-        }) => (
+      <Formik initialValues={trip} enableReinitialize={true}>
+        {({ values }) => (
           <form>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>

@@ -18,6 +18,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import { dispatch } from "redux/store";
+import { setInfo } from "redux/modules/menu/menuSlice";
 
 dayjs.extend(utc);
 
@@ -46,16 +48,24 @@ export default function UserCreate() {
     (async () => {
       try {
         const data = await tripApi.getById(tripId);
-        console.log(data)
         if (data.TripVO != null && data.TripVO != "") {
-          data.TripVO.fldEstimateArrivalTime = dayjs.utc(data.TripVO.fldEstimateArrivalTime);
-          data.TripVO.fldEstimateStartTime = dayjs.utc(data.TripVO.fldEstimateStartTime);
+          data.TripVO.fldEstimateArrivalTime = dayjs.utc(
+            data.TripVO.fldEstimateArrivalTime
+          );
+          data.TripVO.fldEstimateStartTime = dayjs.utc(
+            data.TripVO.fldEstimateStartTime
+          );
           setTrip(data.TripVO);
+          dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/tripList");
         }
       } catch (error) {
         console.log("Failed to fetch trip details", error);
+        if (error.response.status == 401) {
+          localStorage.removeItem("access_token");
+          navigate("/auth/login");
+        }
       }
     })();
   }, [tripId]);

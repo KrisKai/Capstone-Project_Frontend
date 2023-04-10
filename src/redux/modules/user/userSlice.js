@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { dispatch } from "../../store";
 import userApi from "../../../api/user/userApi";
+import { setInfo } from "../menu/menuSlice";
 
 const initialState = {
   loading: false,
@@ -11,11 +12,6 @@ const initialState = {
   filter: {
     pageIndex: 0,
     pageSize: 10,
-  },
-  pagination: {
-    pageIndex: 0,
-    pageSize: 10,
-    totalRows: 15,
   },
 };
 
@@ -28,7 +24,6 @@ const userSlice = createSlice({
     },
     getUserListSuccess(state, action) {
       state.allUser = action.payload;
-      state.pagination = action.payload.pagination;
       state.loading = false;
     },
     getUserListFailed(state) {
@@ -48,7 +43,7 @@ export const userActions = userSlice.actions;
 export const selectAllUserList = (state) => state.user.allUser;
 export const selectUserLoading = (state) => state.user.loading;
 export const selectUserFilter = (state) => state.user.filter;
-export const selectUserPagination = (state) => state.user.pagination;
+
 // Reducer
 const userReducer = userSlice.reducer;
 export default userReducer;
@@ -57,14 +52,16 @@ export function getUserList(action) {
   return async () => {
     try {
       // call api select list
-      var url = "/users";
       const response = await userApi.getAll(action);
       dispatch(userSlice.actions.getUserListSuccess(response));
-      console.log(response)
-      //dispatch(setInfo(response.currentUserObj));
+      dispatch(setInfo(response.currentUserObj));
     } catch (error) {
       console.log("Failed to fetch user list", error);
       dispatch(userSlice.actions.getUserListFailed());
+      if (error.response.status == 401) {
+        localStorage.removeItem("access_token");
+        window.location.replace("/auth/login");
+      }
     }
   };
 }

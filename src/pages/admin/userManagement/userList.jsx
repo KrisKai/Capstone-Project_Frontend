@@ -16,6 +16,7 @@ import {
   selectAllUserList,
   selectUserFilter,
 } from "redux/modules/user/userSlice";
+import { setInfo } from "redux/modules/menu/menuSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -112,6 +113,10 @@ export default function StickyHeadTableUser() {
     } catch (error) {
       // Toast error
       console.log("Failed to fetch user", error);
+      if (error.response.status == 401) {
+        localStorage.removeItem("access_token");
+        navigate("/auth/login");
+      }
     }
   };
 

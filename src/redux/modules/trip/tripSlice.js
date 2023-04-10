@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { dispatch } from "../../store";
 import tripApi from "../../../api/trip/tripApi";
+import { setInfo } from "redux/modules/menu/menuSlice";
 
 const initialState = {
   loading: false,
@@ -58,16 +59,23 @@ export function getTripList(action) {
   return async () => {
     try {
       // call api select list
-      var url = "/trips";
       const response = await tripApi.getAll(action);
-      response.listOfTrip.forEach(trip => {
-        trip.fldEstimateArrivalTime = trip.fldEstimateArrivalTime.substring(0, 10)
-        trip.fldEstimateStartTime = trip.fldEstimateStartTime.substring(0, 10)
+      response.listOfTrip.forEach((trip) => {
+        trip.fldEstimateArrivalTime = trip.fldEstimateArrivalTime.substring(
+          0,
+          10
+        );
+        trip.fldEstimateStartTime = trip.fldEstimateStartTime.substring(0, 10);
       });
       dispatch(tripSlice.actions.getTripListSuccess(response));
+      dispatch(setInfo(response.currentUserObj));
     } catch (error) {
       console.log("Failed to fetch trip list", error);
       dispatch(tripSlice.actions.getTripListFailed());
+      if (error.response.status == 401) {
+        localStorage.removeItem("access_token");
+        window.location.replace("/auth/login");
+      }
     }
   };
 }
