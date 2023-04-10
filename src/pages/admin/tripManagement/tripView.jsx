@@ -21,7 +21,6 @@ export default function UserCreate() {
   let navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { tripId } = useParams();
-  const isEdit = Boolean(tripId);
   const [trip, setTrip] = useState({
     fldTripName: "",
     fldTripBudget: null,
