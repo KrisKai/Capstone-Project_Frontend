@@ -52,7 +52,6 @@ export const {
   openComponentDrawer,
   openAlert,
   closeAlert,
-  setInfo,
 } = menuSlice.actions;
 
 // Reducer

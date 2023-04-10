@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { dispatch } from "../../store";
 import userApi from "../../../api/user/userApi";
-import { setInfo } from "../menu/menuSlice";
 
 const initialState = {
   loading: false,
@@ -62,7 +61,7 @@ export function getUserList(action) {
       const response = await userApi.getAll(action);
       dispatch(userSlice.actions.getUserListSuccess(response));
       console.log(response)
-      dispatch(setInfo(response.currentUserObj));
+      //dispatch(setInfo(response.currentUserObj));
     } catch (error) {
       console.log("Failed to fetch user list", error);
       dispatch(userSlice.actions.getUserListFailed());
