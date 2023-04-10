@@ -5,56 +5,69 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import { tripApi } from "api";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
-import {
-  getTripList,
-  selectAllTripList,
-  selectTripFilter,
-  tripActions,
-} from "../../../redux/modules/trip/tripSlice";
-
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
+import { dispatch } from "redux/store";
+import { setInfo } from "redux/modules/menu/menuSlice";
 
 export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const filter = useAppSelector(selectTripFilter);
+  const { tripId } = useParams();
 
-  function gotoCreate() {
-    navigate("/admin/tripCreate");
+  function gotoPlan() {
+    navigate(`/admin/tripPlanList/${tripId}`);
   }
 
-  function gotoView(id) {
-    navigate(`/admin/tripView/${id}`);
+  function gotoMember() {
+    navigate(`/admin/tripMemberList/${tripId}`);
+  }
+
+  function gotoRole() {
+    navigate(`/admin/tripRoleList/${tripId}`);
   }
 
   useEffect(() => {
-    //filter = { pageIndex: 0, pageSize: 10 };
-    dispatch(getTripList(filter));
-  }, [dispatch, filter]);
+    if (!tripId) return;
+    // IFFE
+    (async () => {
+      try {
+        const data = await tripApi.getById(tripId);
+        if (data.tripVO != null && data.tripVO != "") {
+          // data.tripVO.fldEstimateArrivalTime = dayjs.utc(
+          //   data.tripVO.fldEstimateArrivalTime
+          // );
+          // data.tripVO.fldEstimateStartTime = dayjs.utc(
+          //   data.tripVO.fldEstimateStartTime
+          // );
+          // setTrip(data.tripVO);
+          dispatch(setInfo(data.currentUserObj));
+        } else {
+          navigate("/admin/tripList");
+        }
+      } catch (error) {
+        console.log("Failed to fetch trip details", error);
+        if (error.response.status == 401) {
+          localStorage.removeItem("access_token");
+          navigate("/auth/login");
+        }
+      }
+    })();
+  }, [tripId]);
 
   return (
     <>
-        <Card sx={{ minWidth: 275, maxWidth: 400 }} >
+      <Box
+        component="ul"
+        sx={{ display: "flex", gap: 2, flexWrap: "wrap", p: 0, m: 0 }}
+      >
+        <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
           <CardContent>
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
               gutterBottom
             >
-              Word of the Day
-            </Typography>
-            <Typography variant="h5" component="div">
-              be{bull}nev{bull}o{bull}lent
+              Trip Plan
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               adjective
@@ -66,20 +79,17 @@ export default function StickyHeadTableTrip() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">Learn More</Button>
+            <Button size="small" onClick={gotoPlan}>More Details</Button>
           </CardActions>
         </Card>
-        <Card sx={{ minWidth: 275 }}>
+        <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
           <CardContent>
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
               gutterBottom
             >
-              Word of the Day
-            </Typography>
-            <Typography variant="h5" component="div">
-              be{bull}nev{bull}o{bull}lent
+              Trip Member
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
               adjective
@@ -91,9 +101,32 @@ export default function StickyHeadTableTrip() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">Learn More</Button>
+            <Button size="small" onClick={gotoMember}>More Details</Button>
           </CardActions>
         </Card>
+        <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
+          <CardContent>
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              Trip Role
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              adjective
+            </Typography>
+            <Typography variant="body2">
+              well meaning and kindly.
+              <br />
+              {'"a benevolent smile"'}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" onClick={gotoRole}>More Details</Button>
+          </CardActions>
+        </Card>
+      </Box>
     </>
   );
 }
