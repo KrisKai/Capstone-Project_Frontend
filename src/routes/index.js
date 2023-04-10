@@ -144,6 +144,15 @@ export default function Router() {
             </AuthGuard>
           ),
         },
+        
+        {
+          path: `tripDetail/:tripId`,
+          element: (
+            <AuthGuard>
+              <TripDetail />
+            </AuthGuard>
+          ),
+        },
         // { path: 'verify', element: <VerifyCode /> }
       ],
     },
@@ -188,6 +197,10 @@ const TripCreateUpdate = Loadable(
 );
 const TripView = Loadable(
   lazy(() => import("../pages/admin/tripManagement/tripView"))
+);
+
+const TripDetail = Loadable(
+  lazy(() => import("../pages/admin/tripManagement/tripDetail"))
 );
 const Maintenance = Loadable(lazy(() => import("../pages/Maintenance")));
 const Page500 = Loadable(lazy(() => import("../pages/Page500")));

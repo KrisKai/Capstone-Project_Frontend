@@ -77,7 +77,6 @@ const Profile = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const currentUser = useAppSelector(selectCurrentUser);
-  console.log(currentUser);
 
   useEffect(() => {
     //filter = { pageIndex: 0, pageSize: 10 };

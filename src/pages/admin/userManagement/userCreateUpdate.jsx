@@ -44,10 +44,10 @@ export default function UserCreate() {
     (async () => {
       try {
         const data = await userApi.getById(userId);
-        if (data.UserVO != null && data.UserVO != "") {
-          data.UserVO.fldBirthday = dayjs.utc(data.UserVO.fldBirthday);
-          data.UserVO.fldRetypePassword = data.UserVO.fldPassword;
-          setUser(data.UserVO);
+        if (data.userVO != null && data.userVO != "") {
+          data.userVO.fldBirthday = dayjs.utc(data.userVO.fldBirthday);
+          data.userVO.fldRetypePassword = data.userVO.fldPassword;
+          setUser(data.userVO);
           dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/userList");
@@ -120,14 +120,14 @@ export default function UserCreate() {
               case "I001":
                 return toast.error(reponse.Message);
               default: {
-                if (reponse > 0) {
-                  navigate("/admin/userList");
-                  if (isEdit) {
-                    toast.success("Update User Successed!");
-                  } else {
-                    toast.success("Create User Successed!");
-                  }
+                // if (reponse > 0) {
+                navigate("/admin/userList");
+                if (isEdit) {
+                  toast.success("Update User Successed!");
+                } else {
+                  toast.success("Create User Successed!");
                 }
+                // }
               }
             }
           } catch (err) {

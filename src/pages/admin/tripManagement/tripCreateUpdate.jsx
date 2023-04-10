@@ -48,14 +48,14 @@ export default function UserCreate() {
     (async () => {
       try {
         const data = await tripApi.getById(tripId);
-        if (data.TripVO != null && data.TripVO != "") {
-          data.TripVO.fldEstimateArrivalTime = dayjs.utc(
-            data.TripVO.fldEstimateArrivalTime
+        if (data.tripVO != null && data.tripVO != "") {
+          data.tripVO.fldEstimateArrivalTime = dayjs.utc(
+            data.tripVO.fldEstimateArrivalTime
           );
-          data.TripVO.fldEstimateStartTime = dayjs.utc(
-            data.TripVO.fldEstimateStartTime
+          data.tripVO.fldEstimateStartTime = dayjs.utc(
+            data.tripVO.fldEstimateStartTime
           );
-          setTrip(data.TripVO);
+          setTrip(data.tripVO);
           dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/tripList");
