@@ -3,6 +3,7 @@ import authApi from "../../../api/authenticate/authApi";
 import { dispatch } from "../../store";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { setInfo } from "redux/modules/menu/menuSlice";
 
 const initialState = {
   isAuthenticated: false,
@@ -63,6 +64,7 @@ export function handleLogin(payload) {
         // save token in localStorage
         localStorage.setItem("access_token", userToken);
         window.location.replace("/admin/dashboard");
+        dispatch(setInfo(response.currentUserObj));
       } else {
         dispatch(authSlice.actions.loginFailed(response));
         toast.error(response.Message, {

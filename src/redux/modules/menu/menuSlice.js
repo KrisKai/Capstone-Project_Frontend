@@ -9,7 +9,11 @@ const initialState = {
   componentDrawerOpen: true,
   errorMsg: "",
   open: false,
-  currentUser: null,
+  currentUser: {
+    name: "",
+    role: "",
+    userId: ""
+  },
 };
 
 // ==============================|| SLICE - MENU ||============================== //
