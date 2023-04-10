@@ -1,4 +1,4 @@
-import { Button, FormHelperText } from "@mui/material";
+import { Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
@@ -13,7 +13,6 @@ import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "redux/hooks";
-import { openAlert } from "redux/modules/menu/menuSlice";
 import { toast } from "react-toastify";
 
 dayjs.extend(utc);
@@ -58,7 +57,6 @@ export default function UserCreate() {
 
   function gotoList() {
     navigate("/admin/tripList");
-    //dispatch(openAlert({ errorMsg: "Create Trip Successed!", open: true }));
   }
 
   return (

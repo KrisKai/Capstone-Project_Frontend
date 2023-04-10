@@ -37,8 +37,6 @@ import {
   activeComponent,
   openDrawer,
   openComponentDrawer,
-  openAlert,
-  closeAlert,
 } from "redux/modules/menu/menuSlice";
 import { selectCurrentUser } from "redux/modules/menu/menuSlice";
 

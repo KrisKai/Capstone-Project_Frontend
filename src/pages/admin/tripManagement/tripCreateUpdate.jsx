@@ -72,7 +72,6 @@ export default function UserCreate() {
 
   function gotoList() {
     navigate("/admin/tripList");
-    //dispatch(openAlert({ errorMsg: "Create Trip Successed!", open: true }));
   }
 
   const validationSchema = yup.object().shape({

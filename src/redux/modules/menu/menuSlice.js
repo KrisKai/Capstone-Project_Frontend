@@ -7,8 +7,6 @@ const initialState = {
   openComponent: "buttons",
   drawerOpen: false,
   componentDrawerOpen: true,
-  errorMsg: "",
-  open: false,
   currentUser: {
     name: "",
     role: "",
@@ -37,15 +35,6 @@ const menuSlice = createSlice({
       state.componentDrawerOpen = action.payload.componentDrawerOpen;
     },
 
-    openAlert(state, action) {
-      state.open = action.payload.open;
-      state.errorMsg = action.payload.errorMsg;
-    },
-
-    closeAlert(state, action) {
-      state.open = action.payload.open;
-    },
-
     setInfo(state, action) {
       state.currentUser = action.payload;
     },
@@ -58,8 +47,6 @@ export const {
   activeComponent,
   openDrawer,
   openComponentDrawer,
-  openAlert,
-  closeAlert,
   setInfo
 } = menuSlice.actions;
 

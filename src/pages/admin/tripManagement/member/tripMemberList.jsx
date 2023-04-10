@@ -144,7 +144,6 @@ export default function StickyHeadTableTrip() {
 
   function gotoList() {
     navigate(`/admin/tripDetail/${tripId}`);
-    //dispatch(openAlert({ errorMsg: "Create Trip Successed!", open: true }));
   }
 
   function gotoView(id) {

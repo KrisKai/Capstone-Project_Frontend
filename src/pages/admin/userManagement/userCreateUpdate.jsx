@@ -90,7 +90,6 @@ export default function UserCreate() {
 
   function gotoList() {
     navigate("/admin/userList");
-    //dispatch(openAlert({ errorMsg: "Create Trip Successed!", open: true }));
   }
 
   return (
