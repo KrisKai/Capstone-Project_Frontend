@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { dispatch } from "redux/store";
 import { tripPlanApi } from "api";
 import { setInfo } from "redux/modules/menu/menuSlice";
@@ -16,6 +16,15 @@ const initialState = {
   },
 };
 
+//thunks
+export const getTripPlanList = createAsyncThunk(
+  "tripPlan/getTripPlanList",
+  async (payload, thunkApi) => {
+    const response = await tripPlanApi.getAll(payload);
+    return response;
+  }
+);
+
 const tripPlanSlice = createSlice({
   name: "tripPlan",
   initialState,
@@ -23,10 +32,7 @@ const tripPlanSlice = createSlice({
     getTripPlanList(state, action) {
       state.loading = true;
     },
-    getTripPlanListSuccess(state, action) {
-      state.allPlan = action.payload;
-      state.loading = false;
-    },
+
     getTripPlanListFailed(state) {
       state.loading = false;
     },
@@ -34,6 +40,12 @@ const tripPlanSlice = createSlice({
       state.filter = action.payload;
     },
     setFilterWithDebounce(state, action) {},
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getTripPlanList.fulfilled, (state, action) => {
+      state.allPlan = action.payload;
+      state.loading = false;
+    });
   },
 });
 
@@ -48,34 +60,8 @@ export const selectTripPlanFilter = (state) => state.tripPlan.filter;
 const tripPlanReducer = tripPlanSlice.reducer;
 export default tripPlanReducer;
 
-export function getTripPlanList(action) {
-  return async () => {
-    try {
-      // call api select list
-      const response = await tripPlanApi.getAll(action);
-      console.log(response)
-      // response.listOfTrip.forEach((trip) => {
-      //   // trip.fldEstimateArrivalTime = trip.fldEstimateArrivalTime.substring(
-      //   //   0,
-      //   //   10
-      //   // );
-      //   // trip.fldEstimateStartTime = trip.fldEstimateStartTime.substring(0, 10);
-      // });
-      dispatch(tripPlanSlice.actions.getTripPlanListSuccess(response));
-      dispatch(setInfo(response.currentUserObj));
-    } catch (error) {
-      console.log("Failed to fetch trip plan list", error);
-      dispatch(tripPlanSlice.actions.getTripPlanListFailed());
-      if (error.response.status == 401) {
-        localStorage.removeItem("access_token");
-        window.location.replace("/auth/login");
-      }
-    }
-  };
-}
-
 export function handleSearchDebounce(action) {
   return async () => {
-    dispatch(tripPlanSlice.actions.setFilter(action.payload));
+    // dispatch(tripPlanSlice.actions.setFilter(action.payload));
   };
 }

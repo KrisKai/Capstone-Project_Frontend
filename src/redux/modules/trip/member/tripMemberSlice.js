@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { dispatch } from "redux/store";
 import { tripMemberApi } from "api";
 import { setInfo } from "redux/modules/menu/menuSlice";
@@ -16,6 +16,15 @@ const initialState = {
   },
 };
 
+//thunks
+export const getTripMemberList = createAsyncThunk(
+  "tripMember/getTripMemberList",
+  async (payload, thunkAPi) => {
+    const response = await tripMemberApi.getAll(payload);
+    return response;
+  }
+);
+
 const tripMemberSlice = createSlice({
   name: "tripMember",
   initialState,
@@ -23,10 +32,7 @@ const tripMemberSlice = createSlice({
     getTripMemberList(state, action) {
       state.loading = true;
     },
-    getTripMemberListSuccess(state, action) {
-      state.allMember = action.payload;
-      state.loading = false;
-    },
+
     getTripMemberListFailed(state) {
       state.loading = false;
     },
@@ -34,6 +40,12 @@ const tripMemberSlice = createSlice({
       state.filter = action.payload;
     },
     setFilterWithDebounce(state, action) {},
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getTripMemberList.fulfilled, (state, action) => {
+      state.allMember = action.payload;
+      state.loading = false;
+    });
   },
 });
 
@@ -48,33 +60,8 @@ export const selectTripMemberFilter = (state) => state.tripMember.filter;
 const tripMemberReducer = tripMemberSlice.reducer;
 export default tripMemberReducer;
 
-export function getTripMemberList(action) {
-  return async () => {
-    try {
-      // call api select list
-      const response = await tripMemberApi.getAll(action);
-      // response.listOfTrip.forEach((trip) => {
-      //   trip.fldEstimateArrivalTime = trip.fldEstimateArrivalTime.substring(
-      //     0,
-      //     10
-      //   );
-      //   trip.fldEstimateStartTime = trip.fldEstimateStartTime.substring(0, 10);
-      // });
-      dispatch(tripMemberSlice.actions.getTripMemberListSuccess(response));
-      dispatch(setInfo(response.currentUserObj));
-    } catch (error) {
-      console.log("Failed to fetch trip list", error);
-      dispatch(tripMemberSlice.actions.getTripMemberListFailed());
-      if (error.response.status == 401) {
-        localStorage.removeItem("access_token");
-        window.location.replace("/auth/login");
-      }
-    }
-  };
-}
-
 export function handleSearchDebounce(action) {
   return async () => {
-    dispatch(tripMemberSlice.actions.setFilter(action.payload));
+    // dispatch(tripMemberSlice.actions.setFilter(action.payload));
   };
 }

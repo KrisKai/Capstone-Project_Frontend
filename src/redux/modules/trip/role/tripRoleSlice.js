@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { dispatch } from "redux/store";
 import { tripRoleApi } from "api";
 import { setInfo } from "redux/modules/menu/menuSlice";
@@ -16,16 +16,21 @@ const initialState = {
   },
 };
 
+//thunks
+export const getTripRoleList = createAsyncThunk(
+  "tripRole/gettripRoleList",
+  async (payload, thunkApi) => {
+    const response = await tripRoleApi.getAll(payload);
+    return response;
+  }
+);
+
 const tripRoleSlice = createSlice({
   name: "tripRole",
   initialState,
   reducers: {
     getTripRoleList(state, action) {
       state.loading = true;
-    },
-    getTripRoleListSuccess(state, action) {
-      state.allRole = action.payload;
-      state.loading = false;
     },
     getTripRoleListFailed(state) {
       state.loading = false;
@@ -34,6 +39,12 @@ const tripRoleSlice = createSlice({
       state.filter = action.payload;
     },
     setFilterWithDebounce(state, action) {},
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getTripRoleList.fulfilled, (state, action) => {
+      state.allRole = action.payload;
+      state.loading = false;
+    });
   },
 });
 
@@ -48,33 +59,8 @@ export const selectTripRoleFilter = (state) => state.tripRole.filter;
 const tripRoleReducer = tripRoleSlice.reducer;
 export default tripRoleReducer;
 
-export function getTripRoleList(action) {
-  return async () => {
-    try {
-      // call api select list
-      const response = await tripRoleApi.getAll(action);
-      // response.listOfTrip.forEach((trip) => {
-      //   trip.fldEstimateArrivalTime = trip.fldEstimateArrivalTime.substring(
-      //     0,
-      //     10
-      //   );
-      //   trip.fldEstimateStartTime = trip.fldEstimateStartTime.substring(0, 10);
-      // });
-      dispatch(tripRoleSlice.actions.getTripRoleListSuccess(response));
-      dispatch(setInfo(response.currentUserObj));
-    } catch (error) {
-      console.log("Failed to fetch trip role list", error);
-      dispatch(tripRoleSlice.actions.getTripRoleListFailed());
-      if (error.response.status == 401) {
-        localStorage.removeItem("access_token");
-        window.location.replace("/auth/login");
-      }
-    }
-  };
-}
-
 export function handleSearchDebounce(action) {
   return async () => {
-    dispatch(tripRoleSlice.actions.setFilter(action.payload));
+    // dispatch(tripRoleSlice.actions.setFilter(action.payload));
   };
 }
