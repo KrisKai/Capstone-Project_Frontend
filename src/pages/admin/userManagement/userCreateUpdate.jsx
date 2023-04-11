@@ -17,8 +17,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { dispatch } from "redux/store";
-import { setInfo } from "redux/modules/menu/menuSlice";
 
 dayjs.extend(utc);
 
@@ -45,7 +43,6 @@ export default function UserCreate() {
         if (data.userVO != null && data.userVO != "") {
           data.userVO.fldBirthday = dayjs.utc(data.userVO.fldBirthday);
           setUser(data.userVO);
-          // dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/userList");
         }

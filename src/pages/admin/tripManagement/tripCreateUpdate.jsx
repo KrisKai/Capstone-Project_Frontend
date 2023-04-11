@@ -18,8 +18,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import { dispatch } from "redux/store";
-import { setInfo } from "redux/modules/menu/menuSlice";
 
 dayjs.extend(utc);
 
@@ -74,7 +72,6 @@ export default function UserCreate() {
             data.tripVO.fldEstimateStartTime
           );
           setTrip(data.tripVO);
-          // dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/tripList");
         }

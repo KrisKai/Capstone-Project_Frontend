@@ -16,7 +16,6 @@ import {
   selectAllUserList,
   selectUserFilter,
 } from "redux/modules/user/userSlice";
-import { setInfo } from "redux/modules/menu/menuSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 

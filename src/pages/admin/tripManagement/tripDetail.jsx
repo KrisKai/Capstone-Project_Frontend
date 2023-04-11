@@ -7,8 +7,6 @@ import { tripApi } from "api";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { dispatch } from "redux/store";
-import { setInfo } from "redux/modules/menu/menuSlice";
 
 export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
@@ -40,7 +38,6 @@ export default function StickyHeadTableTrip() {
           //   data.tripVO.fldEstimateStartTime
           // );
           // setTrip(data.tripVO);
-          // dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/tripList");
         }

@@ -49,10 +49,6 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.currentUser = undefined;
     },
-
-    setInfo(state, action) {
-      state.currentUser = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(handleLogin.fulfilled, (state, action) => {
@@ -74,7 +70,6 @@ const authSlice = createSlice({
 export const authActions = authSlice.actions;
 
 // Selectors
-export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
 export const selectIsInitialized = (state) => state.auth.isInitialized;
 export const selectCurrentUser = (state) => state.auth.currentUser;
 
