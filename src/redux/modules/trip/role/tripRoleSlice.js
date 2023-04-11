@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { dispatch } from "redux/store";
 import { tripRoleApi } from "api";
-import { setInfo } from "redux/modules/menu/menuSlice";
 
 const initialState = {
   loading: false,
