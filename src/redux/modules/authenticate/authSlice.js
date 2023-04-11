@@ -1,6 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import authApi from "../../../api/authenticate/authApi";
+import { dispatch } from "../../store";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { setInfo } from "redux/modules/menu/menuSlice";
-import authApi from "api/authenticate/authApi";
 
 const initialState = {
   isAuthenticated: false,
@@ -8,16 +11,6 @@ const initialState = {
   currentUser: null,
 };
 
-//thunk
-export const handleLogin = createAsyncThunk(
-  "auth/handleLogin",
-  async (payload, thunkApi) => {
-    const response = await authApi.login(payload);
-    return response;
-  }
-);
-
-//slice
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -43,12 +36,6 @@ const authSlice = createSlice({
       state.currentUser = action.payload;
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(handleLogin.fulfilled, (state, action) => {
-      state.currentUser = action.payload.currentUserObj;
-      state.isAuthenticated = true;
-    });
-  },
 });
 
 // Actions
@@ -58,5 +45,35 @@ export const authActions = authSlice.actions;
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
 export const selectIsInitialized = (state) => state.auth.isInitialized;
 
+
 // Reducer
-export default authSlice.reducer;
+const authReducer = authSlice.reducer;
+export default authReducer;
+
+// Action
+
+export function handleLogin(payload) {
+  return async () => {
+    try {
+      //yield delay(1000);
+      // call api login
+      const response = await authApi.login(payload);
+      const userToken = response.token;
+      if (response.Code != "L001") {
+        dispatch(authSlice.actions.loginSuccess(response));
+        // save token in localStorage
+        localStorage.setItem("access_token", userToken);
+        window.location.replace("/admin/dashboard");
+        dispatch(setInfo(response.currentUserObj));
+      } else {
+        dispatch(authSlice.actions.loginFailed(response));
+        toast.error(response.Message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+    } catch (error) {
+      dispatch(authSlice.actions.loginFailed(error));
+    }
+  };
+}
+

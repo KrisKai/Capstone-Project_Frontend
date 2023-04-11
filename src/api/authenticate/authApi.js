@@ -1,4 +1,4 @@
-import axiosInstance from "utils/axios";
+import axiosInstance from "../../utils/axios";
 
 const authApi = {
   login(params) {

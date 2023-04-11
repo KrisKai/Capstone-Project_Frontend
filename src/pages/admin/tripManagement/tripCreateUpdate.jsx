@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { tripApi, userApi } from "api";
+import { tripApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
@@ -41,29 +41,11 @@ export default function UserCreate() {
     fldTripDestinationLocationName: "",
     fldTripDestinationLocationAddress: "",
   });
-  const [user, setUser] = useState([{
-    fldUserId: "",
-    fldUsername: "",
-    fldRole: "",
-    fldBirthday: "",
-    fldEmail: "",
-    fldFullname: "",
-    fldPhone: "",
-    fldAddress: "",
-  }]);
-
-  console.log(user);
 
   useEffect(() => {
+    if (!tripId) return;
     // IFFE
     (async () => {
-      const response = await userApi.getAll({
-        pageIndex: 0,
-        pageSize: 99999999,
-        userName: "",
-      });
-      setUser(response.listOfUser);
-      if (!tripId) return;
       try {
         const data = await tripApi.getById(tripId);
         if (data.tripVO != null && data.tripVO != "") {
@@ -74,7 +56,7 @@ export default function UserCreate() {
             data.tripVO.fldEstimateStartTime
           );
           setTrip(data.tripVO);
-          // dispatch(setInfo(data.currentUserObj));
+          dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/tripList");
         }
@@ -228,7 +210,7 @@ export default function UserCreate() {
                 )}
               </Grid>
               <Grid item xs={12} sm={4}>
-                <FormControl sx={{ mt: 1, minWidth: 400 }}>
+                <FormControl sx={{ mt: 1, minWidth: 200 }}>
                   <InputLabel id="fldTripPresenter">Trip Presenter</InputLabel>
                   <Select
                     labelId="fldTripPresenter"
@@ -238,9 +220,12 @@ export default function UserCreate() {
                     onChange={handleChange}
                     name="fldTripPresenter"
                   >
-                    {user.map((item) => (
-                      <MenuItem value={item.fldUserId}>{item.fldFullname} ({item.fldEmail})</MenuItem>
-                    ))}
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="USER">User</MenuItem>
+                    <MenuItem value="ADMIN">Admin</MenuItem>
+                    <MenuItem value="EMPL">Employee</MenuItem>
                   </Select>
 
                   {touched.fldTripPresenter && errors.fldTripPresenter && (
@@ -251,20 +236,20 @@ export default function UserCreate() {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={4}>
-                <FormControl sx={{ mt: 1, minWidth: 300 }}>
+                <FormControl sx={{ mt: 1, minWidth: 200 }}>
                   <InputLabel id="fldTripType">Trip Type</InputLabel>
                   <Select
                     labelId="fldTripType"
                     id="fldTripType"
                     value={values.fldTripType}
-                    label="TripTupe"
+                    label="Role"
                     onChange={handleChange}
                     name="fldTripType"
                   >
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value="TRAVEL">Traveling</MenuItem>
+                    <MenuItem value="USER">User</MenuItem>
                     <MenuItem value="ADMIN">Admin</MenuItem>
                     <MenuItem value="EMPL">Employee</MenuItem>
                   </Select>
@@ -352,14 +337,15 @@ export default function UserCreate() {
                     )}
                   />
                 </LocalizationProvider>
-                {touched.fldEstimateStartTime && errors.fldEstimateStartTime && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldEstimateStartTime"
-                  >
-                    {errors.fldEstimateStartTime}
-                  </FormHelperText>
-                )}
+                {touched.fldEstimateStartTime &&
+                  errors.fldEstimateStartTime && (
+                    <FormHelperText
+                      error
+                      id="standard-weight-helper-fldEstimateStartTime"
+                    >
+                      {errors.fldEstimateStartTime}
+                    </FormHelperText>
+                  )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider
@@ -431,7 +417,7 @@ export default function UserCreate() {
                   required
                   id="fldTripStartLocationAddress"
                   name="fldTripStartLocationAddress"
-                  label="Trip Start Location Address"
+                  label="Trip Satrt Location Address"
                   fullWidth
                   variant="standard"
                   value={values.fldTripStartLocationAddress}

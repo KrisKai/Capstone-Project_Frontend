@@ -40,7 +40,7 @@ export default function StickyHeadTableTrip() {
           //   data.tripVO.fldEstimateStartTime
           // );
           // setTrip(data.tripVO);
-          // dispatch(setInfo(data.currentUserObj));
+          dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/tripList");
         }
@@ -79,9 +79,7 @@ export default function StickyHeadTableTrip() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" onClick={gotoPlan}>
-              More Details
-            </Button>
+            <Button size="small" onClick={gotoPlan}>More Details</Button>
           </CardActions>
         </Card>
         <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
@@ -103,9 +101,7 @@ export default function StickyHeadTableTrip() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" onClick={gotoMember}>
-              More Details
-            </Button>
+            <Button size="small" onClick={gotoMember}>More Details</Button>
           </CardActions>
         </Card>
         <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
@@ -127,9 +123,7 @@ export default function StickyHeadTableTrip() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" onClick={gotoRole}>
-              More Details
-            </Button>
+            <Button size="small" onClick={gotoRole}>More Details</Button>
           </CardActions>
         </Card>
       </Box>

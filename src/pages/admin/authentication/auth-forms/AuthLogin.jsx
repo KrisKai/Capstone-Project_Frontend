@@ -22,7 +22,6 @@ import * as Yup from "yup";
 import { AnimateButton } from "components/Extend";
 import { useAppDispatch } from "redux/hooks";
 import { handleLogin } from "redux/modules/authenticate/authSlice";
-
 // assets
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -49,12 +48,8 @@ const AuthLogin = () => {
         Username: data.get("email"),
         Password: data.get("password"),
       })
-    )
-      .unwrap()
-      .then((data) => {
-        localStorage.setItem("access_token", data.token);
-        navigate("/admin/dashboard");
-      });
+    );
+    navigate("/admin/dashboard");
   };
   return (
     <>

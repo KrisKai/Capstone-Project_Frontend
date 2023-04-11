@@ -1,5 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import userApi from "api/user/userApi";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { dispatch } from "../../store";
+import userApi from "../../../api/user/userApi";
+import { setInfo } from "../menu/menuSlice";
 
 const initialState = {
   loading: false,
@@ -10,18 +12,8 @@ const initialState = {
   filter: {
     pageIndex: 0,
     pageSize: 10,
-    userName: ""
   },
 };
-
-//thunk
-export const getUserList = createAsyncThunk(
-  "user/getUserList",
-  async (payload, thunkApi) => {
-    const response = await userApi.getAll(payload);
-    return response;
-  }
-);
 
 const userSlice = createSlice({
   name: "user",
@@ -30,7 +22,10 @@ const userSlice = createSlice({
     getUserList(state, action) {
       state.loading = true;
     },
-
+    getUserListSuccess(state, action) {
+      state.allUser = action.payload;
+      state.loading = false;
+    },
     getUserListFailed(state) {
       state.loading = false;
     },
@@ -38,12 +33,6 @@ const userSlice = createSlice({
       state.filter = action.payload;
     },
     setFilterWithDebounce(state, action) {},
-  },
-  extraReducers: (builder) => {
-    builder.addCase(getUserList.fulfilled, (state, action) => {
-      state.allUser = action.payload;
-      state.loading = false;
-    });
   },
 });
 
@@ -59,8 +48,26 @@ export const selectUserFilter = (state) => state.user.filter;
 const userReducer = userSlice.reducer;
 export default userReducer;
 
+export function getUserList(action) {
+  return async () => {
+    try {
+      // call api select list
+      const response = await userApi.getAll(action);
+      dispatch(userSlice.actions.getUserListSuccess(response));
+      dispatch(setInfo(response.currentUserObj));
+    } catch (error) {
+      console.log("Failed to fetch user list", error);
+      dispatch(userSlice.actions.getUserListFailed());
+      if (error.response.status == 401) {
+        localStorage.removeItem("access_token");
+        window.location.replace("/auth/login");
+      }
+    }
+  };
+}
+
 export function handleSearchDebounce(action) {
   return async () => {
-    // dispatch(userSlice.actions.setFilter(action.payload));
+    dispatch(userSlice.actions.setFilter(action.payload));
   };
 }
