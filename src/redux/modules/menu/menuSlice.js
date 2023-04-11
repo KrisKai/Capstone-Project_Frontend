@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { authApi } from "api";
 
 // initial state
 const initialState = {

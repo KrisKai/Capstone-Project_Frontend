@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import authApi from "../../../api/authenticate/authApi";
-import { dispatch } from "../../store";
+import { authApi } from "api";
+import { dispatch } from "redux/store";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setInfo } from "redux/modules/menu/menuSlice";

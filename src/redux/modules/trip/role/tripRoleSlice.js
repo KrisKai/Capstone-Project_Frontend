@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { dispatch } from "../../store";
+import { createSlice } from "@reduxjs/toolkit";
+import { dispatch } from "redux/store";
 import { tripRoleApi } from "api";
 import { setInfo } from "redux/modules/menu/menuSlice";
 
@@ -41,7 +41,7 @@ const tripRoleSlice = createSlice({
 export const tripRoleActions = tripRoleSlice.actions;
 
 // Selectors
-export const selectAllTripRoleList = (state) => state.tripRole.allTrip;
+export const selectAllTripRoleList = (state) => state.tripRole.allRole;
 export const selectTripRoleLoading = (state) => state.tripRole.loading;
 export const selectTripRoleFilter = (state) => state.tripRole.filter;
 // Reducer

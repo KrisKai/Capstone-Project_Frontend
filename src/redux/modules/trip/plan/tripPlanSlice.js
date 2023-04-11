@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { dispatch } from "../../store";
+import { createSlice } from "@reduxjs/toolkit";
+import { dispatch } from "redux/store";
 import { tripPlanApi } from "api";
 import { setInfo } from "redux/modules/menu/menuSlice";
 
@@ -41,7 +41,7 @@ const tripPlanSlice = createSlice({
 export const tripPlanActions = tripPlanSlice.actions;
 
 // Selectors
-export const selectAllTripPlanList = (state) => state.tripPlan.allTrip;
+export const selectAllTripPlanList = (state) => state.tripPlan.allPlan;
 export const selectTripPlanLoading = (state) => state.tripPlan.loading;
 export const selectTripPlanFilter = (state) => state.tripPlan.filter;
 // Reducer
@@ -53,6 +53,7 @@ export function getTripPlanList(action) {
     try {
       // call api select list
       const response = await tripPlanApi.getAll(action);
+      console.log(response)
       // response.listOfTrip.forEach((trip) => {
       //   // trip.fldEstimateArrivalTime = trip.fldEstimateArrivalTime.substring(
       //   //   0,

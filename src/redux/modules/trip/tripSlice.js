@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { dispatch } from "../../store";
+import { createSlice } from "@reduxjs/toolkit";
+import { dispatch } from "redux/store";
 import { tripApi } from "api";
 import { setInfo } from "redux/modules/menu/menuSlice";
 

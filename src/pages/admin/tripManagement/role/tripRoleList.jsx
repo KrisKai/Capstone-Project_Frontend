@@ -232,16 +232,16 @@ export default function StickyHeadTableTrip() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <Grid container  sx={{ mt: 2 }}>
+      <Grid container sx={{ mt: 2 }}>
         <Grid xs={6}>
-        <Button variant="outlined" onClick={gotoList} right>
-        Return to List
-        </Button>
+          <Button variant="outlined" onClick={gotoList} right>
+            Return to Detail
+          </Button>
         </Grid>
         <Grid xs={6} textAlign="right">
-        <Button variant="outlined" onClick={gotoCreate} right>
-          Create
-        </Button>
+          <Button variant="outlined" onClick={gotoCreate} right>
+            Create
+          </Button>
         </Grid>
       </Grid>
     </>

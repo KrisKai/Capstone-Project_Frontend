@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { dispatch } from "../../store";
+import { dispatch } from "redux/store";
 import { tripMemberApi } from "api";
 import { setInfo } from "redux/modules/menu/menuSlice";
 
@@ -24,7 +24,7 @@ const tripMemberSlice = createSlice({
       state.loading = true;
     },
     getTripMemberListSuccess(state, action) {
-      state.allTrip = action.payload;
+      state.allMember = action.payload;
       state.loading = false;
     },
     getTripMemberListFailed(state) {
@@ -41,7 +41,7 @@ const tripMemberSlice = createSlice({
 export const tripMemberActions = tripMemberSlice.actions;
 
 // Selectors
-export const selectAllTripMemberList = (state) => state.tripMember.allTrip;
+export const selectAllTripMemberList = (state) => state.tripMember.allMember;
 export const selectTripMemberLoading = (state) => state.tripMember.loading;
 export const selectTripMemberFilter = (state) => state.tripMember.filter;
 // Reducer
