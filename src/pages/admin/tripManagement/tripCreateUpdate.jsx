@@ -32,7 +32,6 @@ export default function UserCreate() {
     fldEstimateStartTime: null,
     fldEstimateArrivalTime: null,
     fldTripMember: "",
-    fldTripType: "",
     fldTripPresenter: "",
     fldTripStartLocationName: "",
     fldTripStartLocationAddress: "",
@@ -104,9 +103,6 @@ export default function UserCreate() {
       .string("Enter Estimate Arrival Time")
       .required("Estimate Arrival Time is required"),
     fldTripMember: yup.number().min(1).required("Trip Member is required"),
-    fldTripType: yup
-      .string("Enter Trip Type")
-      .required("Trip Type is required"),
     fldTripPresenter: yup
       .string("Enter Trip Presenter")
       .required("Trip Presenter is required"),
@@ -243,32 +239,6 @@ export default function UserCreate() {
                   {touched.fldTripPresenter && errors.fldTripPresenter && (
                     <FormHelperText error id="standard-weight-helper-role">
                       {errors.fldTripPresenter}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <FormControl sx={{ mt: 1, minWidth: 300 }}>
-                  <InputLabel id="fldTripType">Trip Type</InputLabel>
-                  <Select
-                    labelId="fldTripType"
-                    id="fldTripType"
-                    value={values.fldTripType}
-                    label="TripTupe"
-                    onChange={handleChange}
-                    name="fldTripType"
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value="TRAVEL">Traveling</MenuItem>
-                    <MenuItem value="ADMIN">Admin</MenuItem>
-                    <MenuItem value="EMPL">Employee</MenuItem>
-                  </Select>
-
-                  {touched.fldTripType && errors.fldTripType && (
-                    <FormHelperText error id="standard-weight-helper-role">
-                      {errors.fldTripType}
                     </FormHelperText>
                   )}
                 </FormControl>
