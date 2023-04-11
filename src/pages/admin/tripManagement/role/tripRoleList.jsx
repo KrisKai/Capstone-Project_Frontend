@@ -81,7 +81,7 @@ export default function StickyHeadTableTrip() {
 
   const handleUpdate = (id) => {
     // update
-    navigate(`/admin/tripUpdate/${id}`);
+    navigate(`/admin/tripRoleUpdate/${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -105,7 +105,7 @@ export default function StickyHeadTableTrip() {
   };
 
   function gotoCreate() {
-    navigate("/admin/tripCreate");
+    navigate("/admin/tripRoleCreate");
   }
 
   function gotoList() {
@@ -113,7 +113,7 @@ export default function StickyHeadTableTrip() {
   }
 
   function gotoView(id) {
-    navigate(`/admin/tripView/${id}`);
+    navigate(`/admin/tripRoleView/${id}`);
   }
 
   useEffect(() => {

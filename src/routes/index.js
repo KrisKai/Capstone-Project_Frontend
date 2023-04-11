@@ -161,6 +161,22 @@ export default function Router() {
           ),
         },
         {
+          path: `tripPlanCreate/:tripId`,
+          element: (
+            <AuthGuard>
+              <TripPlanCreateUpdate />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: `tripPlanUpdate/:tripId/:planId`,
+          element: (
+            <AuthGuard>
+              <TripPlanCreateUpdate />
+            </AuthGuard>
+          ),
+        },
+        {
           path: `tripMemberList/:tripId`,
           element: (
             <AuthGuard>
@@ -169,10 +185,42 @@ export default function Router() {
           ),
         },
         {
+          path: `tripMemberCreate/:tripId`,
+          element: (
+            <AuthGuard>
+              <TripMemberCreateUpdate />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: `tripMemberUpdate/:tripId/:memberId`,
+          element: (
+            <AuthGuard>
+              <TripMemberCreateUpdate />
+            </AuthGuard>
+          ),
+        },
+        {
           path: `tripRoleList/:tripId`,
           element: (
             <AuthGuard>
               <TripRoleList />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: `tripRoleCreate/:tripId`,
+          element: (
+            <AuthGuard>
+              <TripRoleCreateUpdate />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: `tripRoleUpdate/:tripId/:roleId`,
+          element: (
+            <AuthGuard>
+              <TripRoleCreateUpdate />
             </AuthGuard>
           ),
         },
@@ -227,11 +275,20 @@ const TripDetail = Loadable(
 const TripPlanList = Loadable(
   lazy(() => import("../pages/admin/tripManagement/plan/tripPlanList"))
 );
+const TripPlanCreateUpdate = Loadable(
+  lazy(() => import("../pages/admin/tripManagement/plan/tripPlanCreateUpdate"))
+);
 const TripMemberList = Loadable(
   lazy(() => import("../pages/admin/tripManagement/member/tripMemberList"))
 );
+const TripMemberCreateUpdate = Loadable(
+  lazy(() => import("../pages/admin/tripManagement/member/tripMemberCreateUpdate"))
+);
 const TripRoleList = Loadable(
   lazy(() => import("../pages/admin/tripManagement/role/tripRoleList"))
+);
+const TripRoleCreateUpdate = Loadable(
+  lazy(() => import("../pages/admin/tripManagement/role/tripRoleCreateUpdate"))
 );
 const Maintenance = Loadable(lazy(() => import("../pages/Maintenance")));
 const Page500 = Loadable(lazy(() => import("../pages/Page500")));

@@ -100,7 +100,7 @@ export default function StickyHeadTableTrip() {
   };
 
   function gotoCreate() {
-    navigate("/admin/tripCreate");
+    navigate(`/admin/tripPlanCreate/${tripId}`);
   }
 
   function gotoList() {
@@ -108,7 +108,7 @@ export default function StickyHeadTableTrip() {
   }
 
   function gotoView(id) {
-    navigate(`/admin/tripView/${id}`);
+    navigate(`/admin/tripPlanView/${id}`);
   }
 
   useEffect(() => {
