@@ -7,49 +7,49 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { tripApi } from "api";
+import { tripPlanApi } from "api";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import Grid from "@mui/material/Grid";
 import {
-  getTripList,
-  selectAllTripList,
-  selectTripFilter,
-  tripActions,
-} from "../../../../redux/modules/trip/tripSlice";
+  getTripPlanList,
+  selectAllTripPlanList,
+  selectTripPlanFilter,
+  tripPlanActions,
+} from "redux/modules/trip/plan/tripPlanSlice";
 
 // assets
 
 const columns = [
-    { id: "fldPlanId", label: "Plan Id", minWidth: 100, onclick: true },
-    {
-      id: "fldPlanDescription",
-      label: "Plan Description",
-      minWidth: 100,
-      align: "center",
-      format: (value) => value.toLocaleString("en-US"),
-    }
+  { id: "fldPlanId", label: "Plan Id", minWidth: 100, onclick: true },
+  {
+    id: "fldPlanDescription",
+    label: "Plan Description",
+    minWidth: 100,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
 ];
 
 export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
   const [searchTerm, setSearchTerm] = React.useState("");
   const dispatch = useAppDispatch();
-  const allTrips = useAppSelector(selectAllTripList);
-  const filter = useAppSelector(selectTripFilter);
-  const tripList = allTrips.listOfTrip;
-  const numberOfTrip = allTrips.numOfTrip;
+  const allTripPlans = useAppSelector(selectAllTripPlanList);
+  const filter = useAppSelector(selectTripPlanFilter);
+  const planList = allTripPlans.listOfPlan;
+  const numberOfPlan = allTripPlans.numOfPlan;
   const { tripId } = useParams();
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     // call api
     dispatch(
-      tripActions.setFilter({
+      tripPlanActions.setFilter({
         ...filter,
-        tripName: event.target.value,
+        planName: event.target.value,
       })
     );
   };
@@ -57,16 +57,16 @@ export default function StickyHeadTableTrip() {
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
     dispatch(
-      tripActions.setFilter({
+      tripPlanActions.setFilter({
         ...filter,
-        tripName: event.target.value,
+        planName: event.target.value,
       })
     );
   };
 
   const handleChangePage = (event, newPage) => {
     dispatch(
-      tripActions.setFilter({
+      tripPlanActions.setFilter({
         ...filter,
         pageIndex: newPage,
       })
@@ -75,7 +75,7 @@ export default function StickyHeadTableTrip() {
 
   const handleChangeRowsPerPage = (event) => {
     dispatch(
-      tripActions.setFilter({
+      tripPlanActions.setFilter({
         ...filter,
         pageIndex: 0,
         pageSize: +event.target.value,
@@ -85,19 +85,19 @@ export default function StickyHeadTableTrip() {
 
   const handleUpdate = (id) => {
     // update
-    navigate(`/admin/tripUpdate/${id}`);
+    navigate(`/admin/tripPlanUpdate/${id}`);
   };
 
   const handleDelete = async (id) => {
     try {
       // Remove trip API
-      await tripApi.delete(id || "");
+      await tripPlanApi.delete(id || "");
 
-      toast.success("Remove trip successfully!");
+      toast.success("Remove trip plan successfully!");
 
       // Trigger to re-fetch student list with current filter
       const newFilter = { ...filter };
-      dispatch(tripActions.setFilter(newFilter));
+      dispatch(tripPlanActions.setFilter(newFilter));
     } catch (error) {
       // Toast error
       console.log("Failed to fetch trip", error);
@@ -122,7 +122,7 @@ export default function StickyHeadTableTrip() {
 
   useEffect(() => {
     //filter = { pageIndex: 0, pageSize: 10 };
-    dispatch(getTripList(filter));
+    dispatch(getTripPlanList(filter));
   }, [dispatch, filter]);
 
   return (
@@ -161,7 +161,7 @@ export default function StickyHeadTableTrip() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {tripList.map((row) => {
+              {planList.map((row) => {
                 return (
                   <TableRow
                     hover
@@ -220,23 +220,23 @@ export default function StickyHeadTableTrip() {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={numberOfTrip}
+          count={numberOfPlan}
           rowsPerPage={filter.pageSize}
           page={filter.pageIndex}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <Grid container  sx={{ mt: 2 }}>
+      <Grid container sx={{ mt: 2 }}>
         <Grid xs={6}>
-        <Button variant="outlined" onClick={gotoList} right>
-        Return to List
-        </Button>
+          <Button variant="outlined" onClick={gotoList} right>
+            Return to Detail
+          </Button>
         </Grid>
         <Grid xs={6} textAlign="right">
-        <Button variant="outlined" onClick={gotoCreate} right>
-          Create
-        </Button>
+          <Button variant="outlined" onClick={gotoCreate} right>
+            Create
+          </Button>
         </Grid>
       </Grid>
     </>
