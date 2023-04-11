@@ -7,18 +7,18 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { tripApi } from "api";
+import { tripRoleApi } from "api";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import Grid from "@mui/material/Grid";
 import {
-  getTripList,
-  selectAllTripList,
-  selectTripFilter,
-  tripActions,
-} from "../../../../redux/modules/trip/tripSlice";
+  getTripRoleList,
+  selectAllTripRoleList,
+  selectTripRoleFilter,
+  tripRoleActions,
+} from "redux/modules/trip/role/tripRoleSlice";
 
 // assets
 
@@ -42,17 +42,17 @@ export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
   const [searchTerm, setSearchTerm] = React.useState("");
   const dispatch = useAppDispatch();
-  const allTrips = useAppSelector(selectAllTripList);
-  const filter = useAppSelector(selectTripFilter);
-  const tripList = allTrips.listOfTrip;
-  const numberOfTrip = allTrips.numOfTrip;
+  const allRoles = useAppSelector(selectAllTripRoleList);
+  const filter = useAppSelector(selectTripRoleFilter);
+  const roleList = allRoles.listOfRole;
+  const numOfRole = allRoles.numOfRole;
   const { tripId } = useParams();
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     // call api
     dispatch(
-      tripActions.setFilter({
+      tripRoleActions.setFilter({
         ...filter,
         tripName: event.target.value,
       })
@@ -62,7 +62,7 @@ export default function StickyHeadTableTrip() {
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
     dispatch(
-      tripActions.setFilter({
+      tripRoleActions.setFilter({
         ...filter,
         tripName: event.target.value,
       })
@@ -71,7 +71,7 @@ export default function StickyHeadTableTrip() {
 
   const handleChangePage = (event, newPage) => {
     dispatch(
-      tripActions.setFilter({
+      tripRoleActions.setFilter({
         ...filter,
         pageIndex: newPage,
       })
@@ -80,7 +80,7 @@ export default function StickyHeadTableTrip() {
 
   const handleChangeRowsPerPage = (event) => {
     dispatch(
-      tripActions.setFilter({
+      tripRoleActions.setFilter({
         ...filter,
         pageIndex: 0,
         pageSize: +event.target.value,
@@ -96,13 +96,13 @@ export default function StickyHeadTableTrip() {
   const handleDelete = async (id) => {
     try {
       // Remove trip API
-      await tripApi.delete(id || "");
+      await tripRoleApi.delete(id || "");
 
       toast.success("Remove trip successfully!");
 
       // Trigger to re-fetch student list with current filter
       const newFilter = { ...filter };
-      dispatch(tripActions.setFilter(newFilter));
+      dispatch(tripRoleActions.setFilter(newFilter));
     } catch (error) {
       // Toast error
       console.log("Failed to fetch trip", error);
@@ -127,7 +127,7 @@ export default function StickyHeadTableTrip() {
 
   useEffect(() => {
     //filter = { pageIndex: 0, pageSize: 10 };
-    dispatch(getTripList(filter));
+    dispatch(getTripRoleList(filter));
   }, [dispatch, filter]);
 
   return (
@@ -166,7 +166,7 @@ export default function StickyHeadTableTrip() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {tripList.map((row) => {
+              {roleList.map((row) => {
                 return (
                   <TableRow
                     hover
@@ -225,7 +225,7 @@ export default function StickyHeadTableTrip() {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={numberOfTrip}
+          count={numOfRole}
           rowsPerPage={filter.pageSize}
           page={filter.pageIndex}
           onPageChange={handleChangePage}
