@@ -3,6 +3,9 @@ import authReducer from './modules/authenticate/authSlice';
 import {menuReducer} from './modules/menu/menuSlice';
 import tripReducer from './modules/trip/tripSlice';
 import userReducer from './modules/user/userSlice';
+import tripMemberReducer from './modules/trip/member/tripMemberSlice';
+import tripPlanReducer from './modules/trip/plan/tripPlanSlice';
+import tripRoleReducer from './modules/trip/role/tripRoleSlice';
 import storage from 'redux-persist/lib/storage';
 
 // ----------------------------------------------------------------------
@@ -18,7 +21,10 @@ const rootReducer = combineReducers({
   auth: authReducer,
   menu: menuReducer,
   user: userReducer,
-  trip: tripReducer
+  trip: tripReducer,
+  tripMember: tripMemberReducer,
+  tripPlan: tripPlanReducer,
+  tripRole: tripRoleReducer,
 });
 
 export { rootPersistConfig, rootReducer };

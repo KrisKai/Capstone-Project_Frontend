@@ -28,8 +28,6 @@ export default function UserCreate() {
   const isEdit = Boolean(userId);
   const [user, setUser] = useState({
     fldUsername: "",
-    fldPassword: "",
-    fldRetypePassword: "",
     fldRole: "",
     fldBirthday: "",
     fldEmail: "",
@@ -46,9 +44,8 @@ export default function UserCreate() {
         const data = await userApi.getById(userId);
         if (data.userVO != null && data.userVO != "") {
           data.userVO.fldBirthday = dayjs.utc(data.userVO.fldBirthday);
-          data.userVO.fldRetypePassword = data.userVO.fldPassword;
           setUser(data.userVO);
-          dispatch(setInfo(data.currentUserObj));
+          // dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/userList");
         }
