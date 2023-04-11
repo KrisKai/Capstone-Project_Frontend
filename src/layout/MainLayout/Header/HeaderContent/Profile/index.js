@@ -26,18 +26,12 @@ import SettingTab from "./SettingTab";
 
 // assets
 import { SettingOutlined, UserOutlined } from "@ant-design/icons";
-import avatar1 from "../../../../../assets/images/users/avatar-1.png";
-
+import avatar1 from "assets/images/users/avatar-1.png";
 
 import { useNavigate } from "react-router-dom";
-//import { handleLogin } from "redux/modules/authenticate/authSlice";
+// import { handleLogin } from "redux/modules/authenticate/authSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import {
-  activeItem,
-  activeComponent,
-  openDrawer,
-  openComponentDrawer,
-} from "redux/modules/menu/menuSlice";
+import { getCurrentUser } from "redux/modules/authenticate/authSlice";
 import { selectCurrentUser } from "redux/modules/menu/menuSlice";
 
 // tab panel wrapper
@@ -77,10 +71,7 @@ const Profile = () => {
   const currentUser = useAppSelector(selectCurrentUser);
 
   useEffect(() => {
-    //filter = { pageIndex: 0, pageSize: 10 };
-    // dispatch(
-    //   getCurrentUser()
-    // );
+    dispatch(getCurrentUser());
   }, []);
 
   const handleLogout = async () => {
@@ -186,7 +177,9 @@ const Profile = () => {
                               sx={{ width: 32, height: 32 }}
                             />
                             <Stack>
-                              <Typography variant="h6">{currentUser.name}</Typography>
+                              <Typography variant="h6">
+                                {currentUser.name}
+                              </Typography>
                               <Typography variant="body2" color="textSecondary">
                                 {currentUser.role}
                               </Typography>

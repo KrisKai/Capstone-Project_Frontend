@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { setInfo } from "redux/modules/menu/menuSlice";
 import authApi from "api/authenticate/authApi";
 
 const initialState = {
@@ -13,6 +12,14 @@ export const handleLogin = createAsyncThunk(
   "auth/handleLogin",
   async (payload, thunkApi) => {
     const response = await authApi.login(payload);
+    return response;
+  }
+);
+
+export const getCurrentUser = createAsyncThunk(
+  "auth/getCurrentUser",
+  async (payload, thunkApi) => {
+    const response = await authApi.getCurrentUser();
     return response;
   }
 );
@@ -47,6 +54,14 @@ const authSlice = createSlice({
     builder.addCase(handleLogin.fulfilled, (state, action) => {
       state.currentUser = action.payload.currentUserObj;
       state.isAuthenticated = true;
+    });
+    builder.addCase(getCurrentUser.fulfilled, (state, action) => {
+      console.log(action);
+      if (!action.payload) {
+        localStorage.removeItem("access_token");
+        window.location.replace("/auth/login");
+      }
+      state.currentUser = action.payload;
     });
   },
 });
