@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 // material-ui
 import {
@@ -33,8 +33,9 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const AuthLogin = () => {
-  const [checked, setChecked] = React.useState(false);
+  const navigate = useNavigate();
 
+  const [checked, setChecked] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const dispatch = useAppDispatch();
@@ -54,7 +55,12 @@ const AuthLogin = () => {
         Username: data.get("email"),
         Password: data.get("password"),
       })
-    );
+    )
+      .unwrap()
+      .then((data) => {
+        localStorage.setItem("access_token", data.token);
+        navigate("/admin/dashboard");
+      });
   };
   return (
     <>

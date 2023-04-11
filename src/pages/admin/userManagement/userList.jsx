@@ -65,8 +65,7 @@ export default function StickyHeadTableUser() {
   };
 
   const handleChange = (event) => {
-    console.log(event);
-    if ((event.code && event.code === "Enter") || !event) {
+    if ((event.type && event.type === "click") || !event) {
       dispatch(
         userActions.setFilter({
           ...filter,
