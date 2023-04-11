@@ -8,19 +8,10 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { tripMemberApi } from "api";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
 import Grid from "@mui/material/Grid";
-import {
-  getTripMemberList,
-  selectAllTripMemberList,
-  selectTripMemberFilter,
-  tripMemberActions,
-} from "redux/modules/trip/member/tripMemberSlice";
-
-// assets
 
 const columns = [
   { id: "fldNickName", label: "Nick Name", minWidth: 100, onclick: true },
@@ -66,9 +57,15 @@ const columns = [
 export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
   const [searchTerm, setSearchTerm] = React.useState("");
-  const dispatch = useAppDispatch();
-  const allMembers = useAppSelector(selectAllTripMemberList);
-  const filter = useAppSelector(selectTripMemberFilter);
+  const [allMembers,setAllMembers] = useState({
+    listOfMember: [],
+    numOfMember: 0,
+  });
+  const [filter, setFilter] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+    memberName: "",
+  });
   const memberList = allMembers.listOfMember;
   const numOfMember = allMembers.numOfMember;
   const { tripId } = useParams();
@@ -76,41 +73,33 @@ export default function StickyHeadTableTrip() {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     // call api
-    dispatch(
-      tripMemberActions.setFilter({
-        ...filter,
-        tripName: event.target.value,
-      })
-    );
+    setFilter({
+      ...filter,
+      tripName: event.target.value,
+    });
   };
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
-    dispatch(
-      tripMemberActions.setFilter({
-        ...filter,
-        tripName: event.target.value,
-      })
-    );
+    setFilter({
+      ...filter,
+      tripName: event.target.value,
+    });
   };
 
   const handleChangePage = (event, newPage) => {
-    dispatch(
-      tripMemberActions.setFilter({
-        ...filter,
-        pageIndex: newPage,
-      })
-    );
+    setFilter({
+      ...filter,
+      pageIndex: newPage,
+    });
   };
 
   const handleChangeRowsPerPage = (event) => {
-    dispatch(
-      tripMemberActions.setFilter({
-        ...filter,
-        pageIndex: 0,
-        pageSize: +event.target.value,
-      })
-    );
+    setFilter({
+      ...filter,
+      pageIndex: 0,
+      pageSize: +event.target.value,
+    });
   };
 
   const handleUpdate = (id) => {
@@ -127,7 +116,7 @@ export default function StickyHeadTableTrip() {
 
       // Trigger to re-fetch student list with current filter
       const newFilter = { ...filter };
-      dispatch(tripMemberActions.setFilter(newFilter));
+      setFilter(newFilter);
     } catch (error) {
       // Toast error
       console.log("Failed to fetch trip", error);
@@ -151,9 +140,12 @@ export default function StickyHeadTableTrip() {
   }
 
   useEffect(() => {
-    //filter = { pageIndex: 0, pageSize: 10 };
-    dispatch(getTripMemberList(filter));
-  }, [dispatch, filter]);
+    async function getAllMembers() {
+      const response = await tripMemberApi.getAll(filter);
+      setAllMembers(response);
+    }
+    getAllMembers()
+  }, [filter]);
 
   return (
     <>

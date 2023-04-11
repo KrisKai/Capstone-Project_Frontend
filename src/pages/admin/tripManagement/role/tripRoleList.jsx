@@ -8,17 +8,10 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { tripRoleApi } from "api";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
 import Grid from "@mui/material/Grid";
-import {
-  getTripRoleList,
-  selectAllTripRoleList,
-  selectTripRoleFilter,
-  tripRoleActions,
-} from "redux/modules/trip/role/tripRoleSlice";
 
 // assets
 
@@ -40,10 +33,16 @@ const columns = [
 
 export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const dispatch = useAppDispatch();
-  const allRoles = useAppSelector(selectAllTripRoleList);
-  const filter = useAppSelector(selectTripRoleFilter);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [allRoles, setAllRoles] = useState({
+    listOfRole: [],
+    numOfRole: 0,
+  });
+  const [filter, setFilter] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+    roleName: "",
+  });
   const roleList = allRoles.listOfRole;
   const numOfRole = allRoles.numOfRole;
   const { tripId } = useParams();
@@ -51,41 +50,33 @@ export default function StickyHeadTableTrip() {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     // call api
-    dispatch(
-      tripRoleActions.setFilter({
-        ...filter,
-        tripName: event.target.value,
-      })
-    );
+    setFilter({
+      ...filter,
+      tripName: event.target.value,
+    });
   };
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
-    dispatch(
-      tripRoleActions.setFilter({
-        ...filter,
-        tripName: event.target.value,
-      })
-    );
+    setFilter({
+      ...filter,
+      tripName: event.target.value,
+    });
   };
 
   const handleChangePage = (event, newPage) => {
-    dispatch(
-      tripRoleActions.setFilter({
-        ...filter,
-        pageIndex: newPage,
-      })
-    );
+    setFilter({
+      ...filter,
+      pageIndex: newPage,
+    });
   };
 
   const handleChangeRowsPerPage = (event) => {
-    dispatch(
-      tripRoleActions.setFilter({
-        ...filter,
-        pageIndex: 0,
-        pageSize: +event.target.value,
-      })
-    );
+    setFilter({
+      ...filter,
+      pageIndex: 0,
+      pageSize: +event.target.value,
+    });
   };
 
   const handleUpdate = (id) => {
@@ -102,7 +93,7 @@ export default function StickyHeadTableTrip() {
 
       // Trigger to re-fetch student list with current filter
       const newFilter = { ...filter };
-      dispatch(tripRoleActions.setFilter(newFilter));
+      setFilter(newFilter);
     } catch (error) {
       // Toast error
       console.log("Failed to fetch trip", error);
@@ -126,9 +117,12 @@ export default function StickyHeadTableTrip() {
   }
 
   useEffect(() => {
-    //filter = { pageIndex: 0, pageSize: 10 };
-    dispatch(getTripRoleList(filter));
-  }, [dispatch, filter]);
+    async function getAllRoles() {
+      const response = await tripRoleApi.getAll(filter);
+      setAllRoles(response);
+    }
+    getAllRoles();
+  }, [filter]);
 
   return (
     <>

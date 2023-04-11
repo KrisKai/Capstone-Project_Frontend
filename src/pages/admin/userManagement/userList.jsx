@@ -12,8 +12,6 @@ import { userApi } from "api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-// assets
-
 const columns = [
   { id: "fldUsername", label: "UserName", minWidth: 100, onclick: true },
   {
@@ -122,7 +120,6 @@ export default function StickyHeadTableUser() {
   useEffect(() => {
     async function getAllUsers() {
       const response = await userApi.getAll(filter);
-      console.log(response)
       setAllUsers(response);
     }
     getAllUsers()
