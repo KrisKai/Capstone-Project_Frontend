@@ -56,11 +56,13 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
     });
     builder.addCase(getCurrentUser.fulfilled, (state, action) => {
-      console.log(action);
-      if (!action.payload) {
+      console.log(action.payload);
+      if (action.payload === null) {
+        console.log(1);
         localStorage.removeItem("access_token");
-        window.location.replace("/auth/login");
+        // window.location.replace("/auth/login");
       }
+      state.isAuthenticated = true;
       state.currentUser = action.payload;
     });
   },

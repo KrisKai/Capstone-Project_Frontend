@@ -31,7 +31,10 @@ import avatar1 from "assets/images/users/avatar-1.png";
 import { useNavigate } from "react-router-dom";
 // import { handleLogin } from "redux/modules/authenticate/authSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { getCurrentUser } from "redux/modules/authenticate/authSlice";
+import {
+  getCurrentUser,
+  selectIsAuthenticated,
+} from "redux/modules/authenticate/authSlice";
 import { selectCurrentUser } from "redux/modules/menu/menuSlice";
 
 // tab panel wrapper
@@ -68,10 +71,13 @@ const Profile = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const currentUser = useAppSelector(selectCurrentUser);
 
   useEffect(() => {
-    dispatch(getCurrentUser());
+    if (!isAuthenticated) {
+      dispatch(getCurrentUser());
+    }
   }, []);
 
   const handleLogout = async () => {
