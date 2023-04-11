@@ -42,6 +42,7 @@ export default function UserCreate() {
     fldTripDestinationLocationAddress: "",
   });
   const [user, setUser] = useState([{
+    fldUserId: "",
     fldUsername: "",
     fldRole: "",
     fldBirthday: "",
@@ -61,10 +62,8 @@ export default function UserCreate() {
         pageSize: 99999999,
         userName: "",
       });
-      console.log(response);
       setUser(response.listOfUser);
       if (!tripId) return;
-
       try {
         const data = await tripApi.getById(tripId);
         if (data.tripVO != null && data.tripVO != "") {
@@ -229,7 +228,7 @@ export default function UserCreate() {
                 )}
               </Grid>
               <Grid item xs={12} sm={4}>
-                <FormControl sx={{ mt: 1, minWidth: 200 }}>
+                <FormControl sx={{ mt: 1, minWidth: 400 }}>
                   <InputLabel id="fldTripPresenter">Trip Presenter</InputLabel>
                   <Select
                     labelId="fldTripPresenter"
@@ -239,12 +238,9 @@ export default function UserCreate() {
                     onChange={handleChange}
                     name="fldTripPresenter"
                   >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value="USER">User</MenuItem>
-                    <MenuItem value="ADMIN">Admin</MenuItem>
-                    <MenuItem value="EMPL">Employee</MenuItem>
+                    {user.map((item) => (
+                      <MenuItem value={item.fldUserId}>{item.fldFullname} ({item.fldEmail})</MenuItem>
+                    ))}
                   </Select>
 
                   {touched.fldTripPresenter && errors.fldTripPresenter && (
@@ -255,20 +251,20 @@ export default function UserCreate() {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={4}>
-                <FormControl sx={{ mt: 1, minWidth: 200 }}>
+                <FormControl sx={{ mt: 1, minWidth: 300 }}>
                   <InputLabel id="fldTripType">Trip Type</InputLabel>
                   <Select
                     labelId="fldTripType"
                     id="fldTripType"
                     value={values.fldTripType}
-                    label="Role"
+                    label="TripTupe"
                     onChange={handleChange}
                     name="fldTripType"
                   >
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value="USER">User</MenuItem>
+                    <MenuItem value="TRAVEL">Traveling</MenuItem>
                     <MenuItem value="ADMIN">Admin</MenuItem>
                     <MenuItem value="EMPL">Employee</MenuItem>
                   </Select>
@@ -435,7 +431,7 @@ export default function UserCreate() {
                   required
                   id="fldTripStartLocationAddress"
                   name="fldTripStartLocationAddress"
-                  label="Trip Satrt Location Address"
+                  label="Trip Start Location Address"
                   fullWidth
                   variant="standard"
                   value={values.fldTripStartLocationAddress}

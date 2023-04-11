@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { dispatch } from "../../store";
-import tripApi from "../../../api/trip/tripApi";
+import { tripApi } from "api";
 import { setInfo } from "redux/modules/menu/menuSlice";
 
 const initialState = {
@@ -14,11 +14,6 @@ const initialState = {
     pageSize: 10,
     tripName: "",
   },
-  pagination: {
-    pageIndex: 0,
-    pageSize: 10,
-    totalRows: 15,
-  },
 };
 
 const tripSlice = createSlice({
@@ -30,7 +25,6 @@ const tripSlice = createSlice({
     },
     getTripListSuccess(state, action) {
       state.allTrip = action.payload;
-      state.pagination = action.payload.pagination;
       state.loading = false;
     },
     getTripListFailed(state) {
@@ -50,7 +44,6 @@ export const tripActions = tripSlice.actions;
 export const selectAllTripList = (state) => state.trip.allTrip;
 export const selectTripLoading = (state) => state.trip.loading;
 export const selectTripFilter = (state) => state.trip.filter;
-export const selectTripPagination = (state) => state.trip.pagination;
 // Reducer
 const tripReducer = tripSlice.reducer;
 export default tripReducer;
