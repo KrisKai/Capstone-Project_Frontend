@@ -35,7 +35,7 @@ import {
   getCurrentUser,
   selectIsAuthenticated,
 } from "redux/modules/authenticate/authSlice";
-import { selectCurrentUser } from "redux/modules/menu/menuSlice";
+import { selectCurrentUser } from "redux/modules/authenticate/authSlice";
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -75,7 +75,8 @@ const Profile = () => {
   const currentUser = useAppSelector(selectCurrentUser);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    console.log(localStorage.getItem("access_token"))
+    if (localStorage.getItem("access_token")) {
       dispatch(getCurrentUser());
     }
   }, []);

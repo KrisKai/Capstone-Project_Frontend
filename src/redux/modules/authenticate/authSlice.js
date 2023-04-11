@@ -4,7 +4,11 @@ import authApi from "api/authenticate/authApi";
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
-  currentUser: null,
+  currentUser: {
+    name: "",
+    role: "",
+    userId: "",
+  },
 };
 
 //thunk
@@ -56,11 +60,9 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
     });
     builder.addCase(getCurrentUser.fulfilled, (state, action) => {
-      console.log(action.payload);
       if (action.payload === null) {
-        console.log(1);
         localStorage.removeItem("access_token");
-        // window.location.replace("/auth/login");
+        window.location.replace("/auth/login");
       }
       state.isAuthenticated = true;
       state.currentUser = action.payload;
@@ -74,6 +76,7 @@ export const authActions = authSlice.actions;
 // Selectors
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
 export const selectIsInitialized = (state) => state.auth.isInitialized;
+export const selectCurrentUser = (state) => state.auth.currentUser;
 
 // Reducer
 export default authSlice.reducer;

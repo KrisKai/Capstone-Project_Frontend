@@ -6,11 +6,6 @@ const initialState = {
   openComponent: "buttons",
   drawerOpen: false,
   componentDrawerOpen: true,
-  currentUser: {
-    name: "",
-    role: "",
-    userId: "",
-  },
 };
 
 // ==============================|| SLICE - MENU ||============================== //
@@ -33,10 +28,6 @@ const menuSlice = createSlice({
     openComponentDrawer(state, action) {
       state.componentDrawerOpen = action.payload.componentDrawerOpen;
     },
-
-    setInfo(state, action) {
-      state.currentUser = action.payload;
-    },
   },
 });
 
@@ -46,11 +37,8 @@ export const {
   activeComponent,
   openDrawer,
   openComponentDrawer,
-  setInfo,
 } = menuSlice.actions;
 
 // Reducer
 export const menuReducer = menuSlice.reducer;
 
-// Selectors
-export const selectCurrentUser = (state) => state.menu.currentUser;
