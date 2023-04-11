@@ -9,45 +9,57 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { tripApi } from "api";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
+import Grid from "@mui/material/Grid";
 import {
   getTripList,
   selectAllTripList,
   selectTripFilter,
   tripActions,
-} from "../../../redux/modules/trip/tripSlice";
+} from "../../../../redux/modules/trip/tripSlice";
 
 // assets
 
 const columns = [
-  { id: "fldTripName", label: "Trip Name", minWidth: 100, onclick: true },
+  { id: "fldNickName", label: "Nick Name", minWidth: 100, onclick: true },
   {
-    id: "fldTripBudget",
-    label: "Trip Budget",
+    id: "fldFullname",
+    label: "Fullname",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "fldEstimateStartTime",
-    label: "Estimate Start Time",
+    id: "fldEmail",
+    label: "Email",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "fldEstimateArrivalTime",
-    label: "Estimate Arrival Time",
+    id: "fldPhone",
+    label: "Phone",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "fldTripStatus",
-    label: "Trip Status",
+    id: "fldAddress",
+    label: "Address",
     minWidth: 130,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "fldRole",
+    label: "Role",
+    minWidth: 130,
+    align: "center",
+  },
+  {
+    id: "fldStatus",
+    label: "Status",
+    minWidth: 130,
+    align: "center",
   },
 ];
 
@@ -59,6 +71,7 @@ export default function StickyHeadTableTrip() {
   const filter = useAppSelector(selectTripFilter);
   const tripList = allTrips.listOfTrip;
   const numberOfTrip = allTrips.numOfTrip;
+  const { tripId } = useParams();
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -100,11 +113,6 @@ export default function StickyHeadTableTrip() {
     );
   };
 
-  const handleDetail = (id) => {
-    // detail
-    navigate(`/admin/tripDetail/${id}`);
-  };
-  
   const handleUpdate = (id) => {
     // update
     navigate(`/admin/tripUpdate/${id}`);
@@ -132,6 +140,10 @@ export default function StickyHeadTableTrip() {
 
   function gotoCreate() {
     navigate("/admin/tripCreate");
+  }
+
+  function gotoList() {
+    navigate(`/admin/tripDetail/${tripId}`);
   }
 
   function gotoView(id) {
@@ -173,9 +185,6 @@ export default function StickyHeadTableTrip() {
                     {column.label}
                   </TableCell>
                 ))}
-                <TableCell key="detail" align="center">
-                  Show Detail
-                </TableCell>
                 <TableCell key="edit" align="center">
                   Edit || Delete
                 </TableCell>
@@ -214,16 +223,6 @@ export default function StickyHeadTableTrip() {
                         </>
                       );
                     })}
-                    <TableCell key="detail" align="center">
-                      <Button
-                        variant="outlined"
-                        value={row.fldTripId}
-                        onClick={(e) => handleDetail(e.target.value)}
-                        color="primary"
-                      >
-                        About Trip
-                      </Button>
-                    </TableCell>
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
@@ -258,11 +257,18 @@ export default function StickyHeadTableTrip() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <Box sx={{ mt: 2 }} textAlign="right">
+      <Grid container  sx={{ mt: 2 }}>
+        <Grid xs={6}>
+        <Button variant="outlined" onClick={gotoList} right>
+        Return to List
+        </Button>
+        </Grid>
+        <Grid xs={6} textAlign="right">
         <Button variant="outlined" onClick={gotoCreate} right>
           Create
         </Button>
-      </Box>
+        </Grid>
+      </Grid>
     </>
   );
 }

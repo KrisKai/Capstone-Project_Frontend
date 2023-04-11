@@ -11,7 +11,6 @@ import MainCard from "../Layout/MainCard.jsx";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { closeAlert } from "redux/modules/menu/menuSlice";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -31,8 +30,6 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
     if (reason === "clickaway") {
       return;
     }
-
-    dispatch(closeAlert({ open: false }));
   };
 
   // set active item state

@@ -3,6 +3,7 @@ import authApi from "../../../api/authenticate/authApi";
 import { dispatch } from "../../store";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { setInfo } from "redux/modules/menu/menuSlice";
 
 const initialState = {
   isAuthenticated: false,
@@ -33,7 +34,7 @@ const authSlice = createSlice({
 
     setInfo(state, action) {
       state.currentUser = action.payload;
-    }
+    },
   },
 });
 
@@ -44,12 +45,12 @@ export const authActions = authSlice.actions;
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
 export const selectIsInitialized = (state) => state.auth.isInitialized;
 
+
 // Reducer
 const authReducer = authSlice.reducer;
 export default authReducer;
 
 // Action
-
 
 export function handleLogin(payload) {
   return async () => {
@@ -62,7 +63,8 @@ export function handleLogin(payload) {
         dispatch(authSlice.actions.loginSuccess(response));
         // save token in localStorage
         localStorage.setItem("access_token", userToken);
-        window.location.replace("/admin/dashboard")
+        window.location.replace("/admin/dashboard");
+        dispatch(setInfo(response.currentUserObj));
       } else {
         dispatch(authSlice.actions.loginFailed(response));
         toast.error(response.Message, {
@@ -75,28 +77,3 @@ export function handleLogin(payload) {
   };
 }
 
-export function getCurrentUser() {
-  return async () => {
-    try {
-      // call api login
-      const response = await authApi.getCurrentUser();
-      console.log(response);
-      if(response) {
-        dispatch(authSlice.actions.setInfo(response));
-      }
-      // if (response.Code != "L001") {
-      //   dispatch(authSlice.actions.loginSuccess(response));
-      //   // save token in localStorage
-      //   localStorage.setItem("access_token", userToken);
-      //   window.location.replace("/admin/dashboard")
-      // } else {
-      //   dispatch(authSlice.actions.loginFailed(response));
-      //   toast.error(response.Message, {
-      //     position: toast.POSITION.TOP_CENTER,
-      //   });
-      // }
-    } catch (error) {
-      //dispatch(authSlice.actions.loginFailed(error));
-    }
-  };
-}

@@ -17,6 +17,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import { dispatch } from "redux/store";
+import { setInfo } from "redux/modules/menu/menuSlice";
 
 dayjs.extend(utc);
 
@@ -42,15 +44,20 @@ export default function UserCreate() {
     (async () => {
       try {
         const data = await userApi.getById(userId);
-        if (data.UserVO != null && data.UserVO != "") {
-          data.UserVO.fldBirthday = dayjs.utc(data.UserVO.fldBirthday);
-          data.UserVO.fldRetypePassword = data.UserVO.fldPassword;
-          setUser(data.UserVO);
+        if (data.userVO != null && data.userVO != "") {
+          data.userVO.fldBirthday = dayjs.utc(data.userVO.fldBirthday);
+          data.userVO.fldRetypePassword = data.userVO.fldPassword;
+          setUser(data.userVO);
+          dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/userList");
         }
       } catch (error) {
         console.log("Failed to fetch user details", error);
+        if (error.response.status == 401) {
+          localStorage.removeItem("access_token");
+          navigate("/auth/login");
+        }
       }
     })();
   }, [userId]);
@@ -83,7 +90,6 @@ export default function UserCreate() {
 
   function gotoList() {
     navigate("/admin/userList");
-    //dispatch(openAlert({ errorMsg: "Create Trip Successed!", open: true }));
   }
 
   return (
@@ -113,14 +119,14 @@ export default function UserCreate() {
               case "I001":
                 return toast.error(reponse.Message);
               default: {
-                if (reponse > 0) {
-                  navigate("/admin/userList");
-                  if (isEdit) {
-                    toast.success("Update User Successed!");
-                  } else {
-                    toast.success("Create User Successed!");
-                  }
+                // if (reponse > 0) {
+                navigate("/admin/userList");
+                if (isEdit) {
+                  toast.success("Update User Successed!");
+                } else {
+                  toast.success("Create User Successed!");
                 }
+                // }
               }
             }
           } catch (err) {

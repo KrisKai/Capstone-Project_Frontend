@@ -48,10 +48,14 @@ export default function UserCreate() {
           data.fldRetypePassword = data.fldPassword;
           setUser(data);
         } else {
-          // navigate("/admin/userList");
+          navigate("/admin/userList");
         }
       } catch (error) {
         console.log("Failed to fetch user details", error);
+        if (error.response.status === 401) {
+          localStorage.removeItem("access_token");
+          navigate("/auth/login");
+        }
       }
     }
     getUserDetail();
@@ -59,7 +63,6 @@ export default function UserCreate() {
 
   function gotoList() {
     navigate("/admin/userList");
-    //dispatch(openAlert({ errorMsg: "Create Trip Successed!", open: true }));
   }
 
   return (

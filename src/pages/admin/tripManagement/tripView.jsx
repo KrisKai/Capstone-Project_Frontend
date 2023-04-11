@@ -1,4 +1,4 @@
-import { Button, FormHelperText } from "@mui/material";
+import { Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
@@ -13,7 +13,6 @@ import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "redux/hooks";
-import { openAlert } from "redux/modules/menu/menuSlice";
 import { toast } from "react-toastify";
 
 dayjs.extend(utc);
@@ -22,7 +21,6 @@ export default function UserCreate() {
   let navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { tripId } = useParams();
-  const isEdit = Boolean(tripId);
   const [trip, setTrip] = useState({
     fldTripName: "",
     fldTripBudget: null,
@@ -30,7 +28,7 @@ export default function UserCreate() {
     fldEstimateStartTime: null,
     fldEstimateArrivalTime: null,
     fldTripMember: 0,
-    fldTripStatus: ""
+    fldTripStatus: "",
   });
 
   useEffect(() => {
@@ -40,7 +38,6 @@ export default function UserCreate() {
       try {
         const data = await tripApi.getById(tripId);
         if (data != null && data != "") {
-          console.log(data)
           data.fldEstimateArrivalTime = dayjs.utc(data.fldEstimateArrivalTime);
           data.fldEstimateStartTime = dayjs.utc(data.fldEstimateStartTime);
           setTrip(data);
@@ -49,13 +46,16 @@ export default function UserCreate() {
         }
       } catch (error) {
         console.log("Failed to fetch trip details", error);
+        if (error.response.status == 401) {
+          localStorage.removeItem("access_token");
+          navigate("/auth/login");
+        }
       }
     })();
   }, [tripId]);
 
   function gotoList() {
     navigate("/admin/tripList");
-    //dispatch(openAlert({ errorMsg: "Create Trip Successed!", open: true }));
   }
 
   return (
@@ -63,13 +63,8 @@ export default function UserCreate() {
       <Typography variant="h6" gutterBottom>
         View Trip
       </Typography>
-      <Formik
-        initialValues={trip}
-        enableReinitialize={true}
-      >
-        {({
-          values,
-        }) => (
+      <Formik initialValues={trip} enableReinitialize={true}>
+        {({ values }) => (
           <form>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
