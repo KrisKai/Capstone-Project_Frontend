@@ -8,14 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { userApi } from "api";
-import {
-  userActions,
-  getUserList,
-  selectAllUserList,
-  selectUserFilter,
-} from "redux/modules/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -51,9 +44,15 @@ const columns = [
 
 export default function StickyHeadTableUser() {
   let navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const allUsers = useAppSelector(selectAllUserList);
-  const filter = useAppSelector(selectUserFilter);
+  const [filter, setFilter] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+    userName: "",
+  });
+  const [allUsers, setAllUsers] = useState({
+    listOfUser: [],
+    numOfUser: 0,
+  });
   const userList = allUsers.listOfUser;
   const numOfUser = allUsers.numOfUser;
 
@@ -65,32 +64,26 @@ export default function StickyHeadTableUser() {
 
   const handleChange = (event) => {
     if ((event.type && event.type === "click") || !event) {
-      dispatch(
-        userActions.setFilter({
-          ...filter,
-          userName: search,
-        })
-      );
+      setFilter({
+        ...filter,
+        userName: search,
+      });
     }
   };
 
   const handleChangePage = (event, newPage) => {
-    dispatch(
-      userActions.setFilter({
-        ...filter,
-        pageIndex: newPage,
-      })
-    );
+    setFilter({
+      ...filter,
+      pageIndex: newPage,
+    });
   };
 
   const handleChangeRowsPerPage = (event) => {
-    dispatch(
-      userActions.setFilter({
-        ...filter,
-        pageIndex: 0,
-        pageSize: +event.target.value,
-      })
-    );
+    setFilter({
+      ...filter,
+      pageIndex: 0,
+      pageSize: +event.target.value,
+    });
   };
 
   const handleUpdate = (id) => {
@@ -107,7 +100,7 @@ export default function StickyHeadTableUser() {
 
       // Trigger to re-fetch student list with current filter
       const newFilter = { ...filter };
-      dispatch(userActions.setFilter(newFilter));
+      setFilter(newFilter);
     } catch (error) {
       // Toast error
       console.log("Failed to fetch user", error);
@@ -127,8 +120,13 @@ export default function StickyHeadTableUser() {
   }
 
   useEffect(() => {
-    dispatch(getUserList(filter));
-  }, [dispatch, filter]);
+    async function getAllUsers() {
+      const response = await userApi.getAll(filter);
+      console.log(response)
+      setAllUsers(response);
+    }
+    getAllUsers()
+  }, [filter]);
 
   return (
     <>
