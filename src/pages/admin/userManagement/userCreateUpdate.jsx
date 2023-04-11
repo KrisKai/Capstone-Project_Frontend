@@ -45,7 +45,7 @@ export default function UserCreate() {
         if (data.userVO != null && data.userVO != "") {
           data.userVO.fldBirthday = dayjs.utc(data.userVO.fldBirthday);
           setUser(data.userVO);
-          dispatch(setInfo(data.currentUserObj));
+          // dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/userList");
         }

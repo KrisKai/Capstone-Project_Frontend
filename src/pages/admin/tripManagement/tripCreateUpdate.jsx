@@ -74,7 +74,7 @@ export default function UserCreate() {
             data.tripVO.fldEstimateStartTime
           );
           setTrip(data.tripVO);
-          dispatch(setInfo(data.currentUserObj));
+          // dispatch(setInfo(data.currentUserObj));
         } else {
           navigate("/admin/tripList");
         }

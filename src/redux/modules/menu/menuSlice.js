@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 // initial state
 const initialState = {
@@ -9,7 +9,7 @@ const initialState = {
   currentUser: {
     name: "",
     role: "",
-    userId: ""
+    userId: "",
   },
 };
 
@@ -46,7 +46,7 @@ export const {
   activeComponent,
   openDrawer,
   openComponentDrawer,
-  setInfo
+  setInfo,
 } = menuSlice.actions;
 
 // Reducer
