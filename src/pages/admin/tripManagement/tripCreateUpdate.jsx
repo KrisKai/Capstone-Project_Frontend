@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { tripApi } from "api";
+import { tripApi, userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
@@ -41,11 +41,30 @@ export default function UserCreate() {
     fldTripDestinationLocationName: "",
     fldTripDestinationLocationAddress: "",
   });
+  const [user, setUser] = useState([{
+    fldUsername: "",
+    fldRole: "",
+    fldBirthday: "",
+    fldEmail: "",
+    fldFullname: "",
+    fldPhone: "",
+    fldAddress: "",
+  }]);
+
+  console.log(user);
 
   useEffect(() => {
-    if (!tripId) return;
     // IFFE
     (async () => {
+      const response = await userApi.getAll({
+        pageIndex: 0,
+        pageSize: 99999999,
+        userName: "",
+      });
+      console.log(response);
+      setUser(response.listOfUser);
+      if (!tripId) return;
+
       try {
         const data = await tripApi.getById(tripId);
         if (data.tripVO != null && data.tripVO != "") {
@@ -337,15 +356,14 @@ export default function UserCreate() {
                     )}
                   />
                 </LocalizationProvider>
-                {touched.fldEstimateStartTime &&
-                  errors.fldEstimateStartTime && (
-                    <FormHelperText
-                      error
-                      id="standard-weight-helper-fldEstimateStartTime"
-                    >
-                      {errors.fldEstimateStartTime}
-                    </FormHelperText>
-                  )}
+                {touched.fldEstimateStartTime && errors.fldEstimateStartTime && (
+                  <FormHelperText
+                    error
+                    id="standard-weight-helper-fldEstimateStartTime"
+                  >
+                    {errors.fldEstimateStartTime}
+                  </FormHelperText>
+                )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider

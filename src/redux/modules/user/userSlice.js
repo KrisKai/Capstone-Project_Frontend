@@ -12,6 +12,7 @@ const initialState = {
   filter: {
     pageIndex: 0,
     pageSize: 10,
+    userName: ""
   },
 };
 
