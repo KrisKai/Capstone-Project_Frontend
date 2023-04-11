@@ -56,7 +56,6 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
     });
     builder.addCase(getCurrentUser.fulfilled, (state, action) => {
-      console.log(action)
       if (action.payload === null || action.payload === "") {
         localStorage.removeItem("access_token");
         window.location.replace("/auth/login");
