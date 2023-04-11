@@ -85,7 +85,7 @@ export default function UserCreate() {
   }, [tripId]);
 
   function gotoList() {
-    navigate(`/admin/tripList/${tripId}`);
+    navigate(`/admin/tripMemberList/${tripId}`);
   }
 
   const validationSchema = yup.object().shape({

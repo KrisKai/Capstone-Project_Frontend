@@ -23,8 +23,8 @@ dayjs.extend(utc);
 
 export default function UserCreate() {
   let navigate = useNavigate();
-  const { tripId } = useParams();
-  const isEdit = Boolean(tripId);
+  const { tripId, roleId } = useParams();
+  const isEdit = Boolean(roleId);
   const [trip, setTrip] = useState({
     fldTripName: "",
     fldTripBudget: null,
@@ -85,7 +85,7 @@ export default function UserCreate() {
   }, [tripId]);
 
   function gotoList() {
-    navigate("/admin/tripList");
+    navigate(`/admin/tripRoleList/${tripId}`);
   }
 
   const validationSchema = yup.object().shape({
