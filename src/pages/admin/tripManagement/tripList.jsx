@@ -127,7 +127,7 @@ export default function StickyHeadTableTrip() {
   useEffect(() => {
     async function getAllTrips() {
       const response = await tripApi.getAll(filter);
-      getAllTrips(response);
+      setAllTrips(response);
     }
     getAllTrips();
   }, [filter]);
