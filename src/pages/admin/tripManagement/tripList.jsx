@@ -127,6 +127,13 @@ export default function StickyHeadTableTrip() {
   useEffect(() => {
     async function getAllTrips() {
       const response = await tripApi.getAll(filter);
+      response.listOfTrip.forEach((trip) => {
+        trip.fldEstimateArrivalTime = trip.fldEstimateArrivalTime.substring(
+          0,
+          10
+        );
+        trip.fldEstimateStartTime = trip.fldEstimateStartTime.substring(0, 10);
+      });
       setAllTrips(response);
     }
     getAllTrips();
