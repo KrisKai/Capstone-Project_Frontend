@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import { tripApi } from "api";
+import { tripApi, tripMemberApi, tripPlanApi, tripRoleApi } from "api";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -31,13 +31,13 @@ export default function StickyHeadTableTrip() {
       try {
         const data = await tripApi.getById(tripId);
         if (data.tripVO != null && data.tripVO != "") {
-          // data.tripVO.fldEstimateArrivalTime = dayjs.utc(
-          //   data.tripVO.fldEstimateArrivalTime
-          // );
-          // data.tripVO.fldEstimateStartTime = dayjs.utc(
-          //   data.tripVO.fldEstimateStartTime
-          // );
-          // setTrip(data.tripVO);
+          const filter = {
+            pageIndex: 0,
+            pageSize: 10,
+          };
+          const planList = await tripPlanApi.getAll(filter)
+          const roleList = await tripRoleApi.getAll(filter)
+          const memberList = await tripMemberApi.getAll(filter)
         } else {
           navigate("/admin/tripList");
         }

@@ -21,11 +21,12 @@ import * as Yup from "yup";
 // project import
 import { AnimateButton } from "components/Extend";
 import { useAppDispatch } from "redux/hooks";
-import { handleLogin } from "redux/modules/authenticate/authSlice";
+import { handleLogin, authActions } from "redux/modules/authenticate/authSlice";
 
 // assets
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -43,7 +44,6 @@ const AuthLogin = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    //AuthContext.login(data.get('email'),data.get('password'));
     dispatch(
       handleLogin({
         Username: data.get("email"),
@@ -52,8 +52,16 @@ const AuthLogin = () => {
     )
       .unwrap()
       .then((data) => {
-        localStorage.setItem("access_token", data.token);
-        navigate("/admin/dashboard");
+        if (data.Code != "L001") {
+          dispatch(authActions.loginSuccess(data));
+          localStorage.setItem("access_token", data.token);
+          navigate("/admin/dashboard");
+        } else {
+          dispatch(authActions.loginFailed(data));
+          toast.error(data.Message, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
       });
   };
   return (
