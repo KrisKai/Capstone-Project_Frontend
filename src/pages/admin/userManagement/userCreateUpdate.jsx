@@ -40,9 +40,9 @@ export default function UserCreate() {
     (async () => {
       try {
         const data = await userApi.getById(userId);
-        if (data.userVO != null && data.userVO != "") {
-          data.userVO.fldBirthday = dayjs.utc(data.userVO.fldBirthday);
-          setUser(data.userVO);
+        if (data != null && data != "") {
+          data.fldBirthday = dayjs.utc(data.fldBirthday);
+          setUser(data);
         } else {
           navigate("/admin/userList");
         }
