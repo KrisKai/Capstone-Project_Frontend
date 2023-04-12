@@ -128,7 +128,7 @@ export default function StickyHeadTableTrip() {
   };
 
   function gotoCreate() {
-    navigate(`/admin/tripMemberCreate?tripId=${tripId}`);
+    navigate(`/admin/tripMemberCreate/${tripId}`);
   }
 
   function gotoList() {

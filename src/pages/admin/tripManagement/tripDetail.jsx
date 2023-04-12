@@ -38,9 +38,13 @@ export default function StickyHeadTableTrip() {
             pageIndex: 0,
             pageSize: 10,
           };
-          setPlanList(await tripPlanApi.getAll(filter));
-          setRoleList(await tripRoleApi.getAll(filter));
-          setMemberList(await tripMemberApi.getAll(filter));
+          const plan = await tripPlanApi.getAll(filter);
+          const role = await tripRoleApi.getAll(filter);
+          const member = await tripMemberApi.getAll(filter);
+          console.log(role)
+          setPlanList(plan);
+          setRoleList(role);
+          setMemberList(member);
         } else {
           navigate("/admin/tripList");
         }

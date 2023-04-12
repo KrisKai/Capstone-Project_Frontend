@@ -94,7 +94,7 @@ export default function UserCreate() {
                 return toast.error(reponse.Message);
               default: {
                 if (reponse > 0) {
-                  navigate("/admin/tripList");
+                  navigate(`/admin/tripRoleList/${tripId}`);
                   if (isEdit) {
                     toast.success("Update Trip Role Successed!");
                   } else {

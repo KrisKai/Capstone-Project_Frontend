@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { tripApi, userApi } from "api";
+import { tripApi, tripMemberApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
@@ -25,7 +25,7 @@ export default function UserCreate() {
   let navigate = useNavigate();
   let { tripId, memberId } = useParams();
   const isEdit = Boolean(memberId);
-  const [trip, setTrip] = useState({
+  const [member, setMember] = useState({
     fldTripName: "",
     fldTripBudget: null,
     fldTripDescription: "",
@@ -38,44 +38,38 @@ export default function UserCreate() {
     fldTripDestinationLocationName: "",
     fldTripDestinationLocationAddress: "",
   });
-  const [user, setUser] = useState([{
-    fldUserId: "",
-    fldUsername: "",
-    fldRole: "",
-    fldBirthday: "",
-    fldEmail: "",
-    fldFullname: "",
-    fldPhone: "",
-    fldAddress: "",
-  }]);
-
-  console.log(user);
+  // const [user, setUser] = useState([
+  //   {
+  //     fldUserId: "",
+  //     fldUsername: "",
+  //     fldRole: "",
+  //     fldBirthday: "",
+  //     fldEmail: "",
+  //     fldFullname: "",
+  //     fldPhone: "",
+  //     fldAddress: "",
+  //   },
+  // ]);
 
   useEffect(() => {
     // IFFE
     (async () => {
-      const response = await userApi.getAll({
-        pageIndex: 0,
-        pageSize: 99999999,
-        userName: "",
-      });
-      setUser(response.listOfUser);
-      if (!tripId) return;
+      // const response = await userApi.getAll({
+      //   pageIndex: 0,
+      //   pageSize: 99999999,
+      //   userName: "",
+      // });
+      // setUser(response.listOfUser);
+      if (!tripId || !memberId) return;
       try {
-        const data = await tripApi.getById(tripId);
-        if (data.tripVO != null && data.tripVO != "") {
-          data.tripVO.fldEstimateArrivalTime = dayjs.utc(
-            data.tripVO.fldEstimateArrivalTime
-          );
-          data.tripVO.fldEstimateStartTime = dayjs.utc(
-            data.tripVO.fldEstimateStartTime
-          );
-          setTrip(data.tripVO);
+        const data = await tripMemberApi.getById(tripId);
+        if (data != null && data != "") {
+          setMember(data);
         } else {
-          navigate("/admin/tripList");
+          navigate(`/admin/tripMemberList/${tripId}`);
         }
       } catch (error) {
-        console.log("Failed to fetch trip details", error);
+        console.log("Failed to fetch trip member", error);
         if (error.response.status == 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
@@ -123,10 +117,10 @@ export default function UserCreate() {
   return (
     <>
       <Typography variant="h6" gutterBottom>
-        {isEdit ? "Update Trip" : "Create Trip"}
+        {isEdit ? "Update Trip Member" : "Create Trip Member"}
       </Typography>
       <Formik
-        initialValues={trip}
+        initialValues={member}
         enableReinitialize={true}
         validationSchema={validationSchema}
         onSubmit={async (values, { setErrors, setStatus }) => {
@@ -134,9 +128,9 @@ export default function UserCreate() {
             setStatus({ success: false });
             let reponse;
             if (isEdit) {
-              reponse = await tripApi.update(values);
+              reponse = await tripMemberApi.update(values);
             } else {
-              reponse = await tripApi.create(values);
+              reponse = await tripMemberApi.create(values);
             }
 
             switch (reponse.Code) {
@@ -148,11 +142,11 @@ export default function UserCreate() {
                 return toast.error(reponse.Message);
               default: {
                 if (reponse > 0) {
-                  navigate("/admin/tripList");
+                  navigate(`/admin/tripMemberList/${tripId}`);
                   if (isEdit) {
-                    toast.success("Update Trip Successed!");
+                    toast.success("Update Trip Member Successed!");
                   } else {
-                    toast.success("Create Trip Successed!");
+                    toast.success("Create Trip Member Successed!");
                   }
                 }
               }
@@ -231,9 +225,11 @@ export default function UserCreate() {
                     onChange={handleChange}
                     name="fldTripPresenter"
                   >
-                    {user.map((item) => (
-                      <MenuItem value={item.fldUserId}>{item.fldFullname} ({item.fldEmail})</MenuItem>
-                    ))}
+                    {/* {user.map((item) => (
+                      <MenuItem value={item.fldUserId}>
+                        {item.fldFullname} ({item.fldEmail})
+                      </MenuItem>
+                    ))} */}
                   </Select>
 
                   {touched.fldTripPresenter && errors.fldTripPresenter && (
@@ -319,14 +315,15 @@ export default function UserCreate() {
                     )}
                   />
                 </LocalizationProvider>
-                {touched.fldEstimateStartTime && errors.fldEstimateStartTime && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldEstimateStartTime"
-                  >
-                    {errors.fldEstimateStartTime}
-                  </FormHelperText>
-                )}
+                {touched.fldEstimateStartTime &&
+                  errors.fldEstimateStartTime && (
+                    <FormHelperText
+                      error
+                      id="standard-weight-helper-fldEstimateStartTime"
+                    >
+                      {errors.fldEstimateStartTime}
+                    </FormHelperText>
+                  )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider
