@@ -63,14 +63,14 @@ export default function UserCreate() {
       if (!tripId) return;
       try {
         const data = await tripApi.getById(tripId);
-        if (data.tripVO != null && data.tripVO != "") {
-          data.tripVO.fldEstimateArrivalTime = dayjs.utc(
-            data.tripVO.fldEstimateArrivalTime
+        if (data != null && data != "") {
+          data.fldEstimateArrivalTime = dayjs.utc(
+            data.fldEstimateArrivalTime
           );
-          data.tripVO.fldEstimateStartTime = dayjs.utc(
-            data.tripVO.fldEstimateStartTime
+          data.fldEstimateStartTime = dayjs.utc(
+            data.fldEstimateStartTime
           );
-          setTrip(data.tripVO);
+          setTrip(data);
         } else {
           navigate("/admin/tripList");
         }

@@ -105,7 +105,7 @@ export default function StickyHeadTableTrip() {
   };
 
   function gotoCreate() {
-    navigate("/admin/tripRoleCreate");
+    navigate(`/admin/tripRoleCreate/${tripId}`);
   }
 
   function gotoList() {

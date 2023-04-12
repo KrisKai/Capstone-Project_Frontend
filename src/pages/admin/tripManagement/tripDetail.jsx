@@ -4,13 +4,16 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import { tripApi, tripMemberApi, tripPlanApi, tripRoleApi } from "api";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
   const { tripId } = useParams();
+  const [planList, setPlanList] = useState([]);
+  const [roleList, setRoleList] = useState([]);
+  const [memberList, setMemberList] = useState([]);
 
   function gotoPlan() {
     navigate(`/admin/tripPlanList/${tripId}`);
@@ -30,14 +33,14 @@ export default function StickyHeadTableTrip() {
     (async () => {
       try {
         const data = await tripApi.getById(tripId);
-        if (data.tripVO != null && data.tripVO != "") {
+        if (data != null && data != "") {
           const filter = {
             pageIndex: 0,
             pageSize: 10,
           };
-          const planList = await tripPlanApi.getAll(filter)
-          const roleList = await tripRoleApi.getAll(filter)
-          const memberList = await tripMemberApi.getAll(filter)
+          setPlanList(await tripPlanApi.getAll(filter));
+          setRoleList(await tripRoleApi.getAll(filter));
+          setMemberList(await tripMemberApi.getAll(filter));
         } else {
           navigate("/admin/tripList");
         }
@@ -66,13 +69,8 @@ export default function StickyHeadTableTrip() {
             >
               Trip Plan
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              adjective
-            </Typography>
-            <Typography variant="body2">
-              well meaning and kindly.
-              <br />
-              {'"a benevolent smile"'}
+            <Typography variant="body2" sx={{ mt: 3 }}>
+              includes {planList.length} plan(s)
             </Typography>
           </CardContent>
           <CardActions>
@@ -90,13 +88,8 @@ export default function StickyHeadTableTrip() {
             >
               Trip Member
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              adjective
-            </Typography>
-            <Typography variant="body2">
-              well meaning and kindly.
-              <br />
-              {'"a benevolent smile"'}
+            <Typography variant="body2" sx={{ mt: 3 }}>
+              includes {memberList.length} member(s)
             </Typography>
           </CardContent>
           <CardActions>
@@ -114,13 +107,8 @@ export default function StickyHeadTableTrip() {
             >
               Trip Role
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              adjective
-            </Typography>
             <Typography variant="body2">
-              well meaning and kindly.
-              <br />
-              {'"a benevolent smile"'}
+              includes {roleList.length} role(s)
             </Typography>
           </CardContent>
           <CardActions>
