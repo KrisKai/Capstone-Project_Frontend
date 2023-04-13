@@ -38,16 +38,13 @@ export default function UserCreate() {
     fldTripDestinationLocationName: "",
     fldTripDestinationLocationAddress: "",
   });
-  const [user, setUser] = useState([{
-    fldUserId: "",
-    fldUsername: "",
-    fldRole: "",
-    fldBirthday: "",
-    fldEmail: "",
-    fldFullname: "",
-    fldPhone: "",
-    fldAddress: "",
-  }]);
+  const [user, setUser] = useState([
+    {
+      fldUserId: "",
+      fldEmail: "",
+      fldFullname: "",
+    },
+  ]);
 
   console.log(user);
 

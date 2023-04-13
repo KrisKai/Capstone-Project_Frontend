@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { tripApi, tripMemberApi } from "api";
+import { userApi, tripMemberApi, tripRoleApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
@@ -26,40 +26,41 @@ export default function UserCreate() {
   let { tripId, memberId } = useParams();
   const isEdit = Boolean(memberId);
   const [member, setMember] = useState({
-    fldTripName: "",
-    fldTripBudget: null,
-    fldTripDescription: "",
-    fldEstimateStartTime: null,
-    fldEstimateArrivalTime: null,
-    fldTripMember: "",
-    fldTripPresenter: "",
-    fldTripStartLocationName: "",
-    fldTripStartLocationAddress: "",
-    fldTripDestinationLocationName: "",
-    fldTripDestinationLocationAddress: "",
+    fldUserId: "",
+    fldTripId: "",
+    fldMemberRoleId: "",
+    fldNickName: "",
+    fldStatus: "ACTIVE",
   });
-  // const [user, setUser] = useState([
-  //   {
-  //     fldUserId: "",
-  //     fldUsername: "",
-  //     fldRole: "",
-  //     fldBirthday: "",
-  //     fldEmail: "",
-  //     fldFullname: "",
-  //     fldPhone: "",
-  //     fldAddress: "",
-  //   },
-  // ]);
+  const [name, setName] = useState("");
+  const [user, setUser] = useState([
+    {
+      fldUserId: "",
+      fldEmail: "",
+      fldFullname: "",
+    },
+  ]);
+
+  const [role, setRole] = useState({
+    fldRoleName: "",
+    fldDescription: "",
+  });
 
   useEffect(() => {
     // IFFE
     (async () => {
-      // const response = await userApi.getAll({
-      //   pageIndex: 0,
-      //   pageSize: 99999999,
-      //   userName: "",
-      // });
-      // setUser(response.listOfUser);
+      const response = await userApi.getAll({
+        pageIndex: 0,
+        pageSize: 99999999,
+        userName: "",
+      });
+      setUser(response.listOfUser);
+      const role = await tripRoleApi.getAll({
+        pageIndex: 0,
+        pageSize: 99999999,
+        roleName: "",
+      });
+      setRole(role.listOfRole);
       if (!tripId || !memberId) return;
       try {
         const data = await tripMemberApi.getById(tripId);
@@ -82,36 +83,24 @@ export default function UserCreate() {
     navigate(`/admin/tripMemberList/${tripId}`);
   }
 
+  function handleChangeSelect(e) {
+    console.log(e.target.value);
+  }
+
   const validationSchema = yup.object().shape({
-    fldTripName: yup
-      .string("Enter Trip Name")
-      .required("Trip Name is required"),
-    fldTripBudget: yup.number().required("Trip Budget is required"),
-    fldTripDescription: yup
+    fldUserId: yup.string("Enter User").required("User is required"),
+    fldTripId: yup
       .string("Enter Trip Description")
       .required("Trip Description is required"),
-    fldEstimateStartTime: yup
+    fldMemberRoleId: yup
       .string("Enter Estimate Start Time")
       .required("Estimate Start Time is required"),
-    fldEstimateArrivalTime: yup
+    fldNickName: yup
       .string("Enter Estimate Arrival Time")
       .required("Estimate Arrival Time is required"),
-    fldTripMember: yup.number().min(1).required("Trip Member is required"),
-    fldTripPresenter: yup
+    fldStatus: yup
       .string("Enter Trip Presenter")
       .required("Trip Presenter is required"),
-    fldTripStartLocationName: yup
-      .string("Enter Trip Start Location Name")
-      .required("Trip Start Location Name is required"),
-    fldTripStartLocationAddress: yup
-      .string("Enter Trip Start Location Address")
-      .required("Trip Start Location Address is required"),
-    fldTripDestinationLocationName: yup
-      .string("Enter Trip Destination Location Name")
-      .required("Trip Destination Location Name is required"),
-    fldTripDestinationLocationAddress: yup
-      .string("Enter Trip Destination Location Address")
-      .required("Trip Destination Location Address is required"),
   });
 
   return (
@@ -167,69 +156,25 @@ export default function UserCreate() {
         }) => (
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="fldTripName"
-                  name="fldTripName"
-                  label="Trip Name"
-                  fullWidth
-                  variant="standard"
-                  value={values.fldTripName}
-                  onChange={handleChange}
-                  error={Boolean(touched.fldTripName && errors.fldTripName)}
-                />
-                {touched.fldTripName && errors.fldTripName && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-text-fldTripName"
-                  >
-                    {errors.fldTripName}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="fldTripBudget"
-                  name="fldTripBudget"
-                  label="Trip Budget"
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">VND</InputAdornment>
-                    ),
-                  }}
-                  variant="standard"
-                  value={values.fldTripBudget}
-                  onChange={handleChange}
-                  error={Boolean(touched.fldTripBudget && errors.fldTripBudget)}
-                />
-                {touched.fldTripBudget && errors.fldTripBudget && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-text-fldTripName"
-                  >
-                    {errors.fldTripBudget}
-                  </FormHelperText>
-                )}
-              </Grid>
               <Grid item xs={12} sm={4}>
                 <FormControl sx={{ mt: 1, minWidth: 400 }}>
-                  <InputLabel id="fldTripPresenter">Trip Presenter</InputLabel>
+                  <InputLabel id="fldUserId">Trip Member Id</InputLabel>
                   <Select
-                    labelId="fldTripPresenter"
-                    id="fldTripPresenter"
-                    value={values.fldTripPresenter}
+                    labelId="fldUserId"
+                    id="fldUserId"
+                    value={values.fldUserId}
                     label="Role"
                     onChange={handleChange}
-                    name="fldTripPresenter"
+                    name="fldUserId"
                   >
-                    {/* {user.map((item) => (
-                      <MenuItem value={item.fldUserId}>
+                    {user.map((item) => (
+                      <MenuItem
+                        value={item.fldUserId}
+                        onClick={handleChangeSelect}
+                      >
                         {item.fldFullname} ({item.fldEmail})
                       </MenuItem>
-                    ))} */}
+                    ))}
                   </Select>
 
                   {touched.fldTripPresenter && errors.fldTripPresenter && (
@@ -241,230 +186,101 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  required
-                  id="fldTripMember"
-                  name="fldTripMember"
-                  label="Trip Member"
-                  type="number"
+                  id="fldUserName"
+                  name="fldUserName"
+                  label="Member Name"
                   fullWidth
                   variant="standard"
-                  value={values.fldTripMember}
-                  onChange={handleChange}
-                  error={Boolean(touched.fldTripMember && errors.fldTripMember)}
+                  value={name}
+                  disabled={true}
                 />
-                {touched.fldTripMember && errors.fldTripMember && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldTripMember"
-                  >
-                    {errors.fldTripMember}
-                  </FormHelperText>
-                )}
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  id="fldUserName"
+                  name="fldUserName"
+                  label="Email"
+                  fullWidth
+                  variant="standard"
+                  value={name}
+                  disabled={true}
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
                 <TextField
                   required
-                  id="fldTripDescription"
-                  name="fldTripDescription"
-                  label="Trip Description"
+                  id="fldNickName"
+                  name="fldNickName"
+                  label="Nickname"
                   fullWidth
                   autoComplete=""
                   variant="standard"
-                  value={values.fldTripDescription}
+                  value={values.fldNickName}
                   onChange={handleChange}
-                  error={Boolean(
-                    touched.fldTripDescription && errors.fldTripDescription
-                  )}
+                  error={Boolean(touched.fldNickName && errors.fldNickName)}
                 />
-                {touched.fldTripDescription && errors.fldTripDescription && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldTripDescription"
-                  >
-                    {errors.fldTripDescription}
+                {touched.fldNickName && errors.fldNickName && (
+                  <FormHelperText error id="standard-weight-helper-fldNickName">
+                    {errors.fldNickName}
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <LocalizationProvider
-                  dateAdapter={AdapterDayjs}
-                  dateLibInstance={dayjs.utc}
-                >
-                  <DatePicker
-                    required
-                    sx={{
-                      "& .MuiInputBase-root": {
-                        paddingY: 1,
-                        paddingX: 3,
-                      },
-                      "& .MuiFormLabel-root": {
-                        paddingY: 1,
-                      },
-                    }}
-                    label="Estimate Start Time"
-                    id="fldEstimateStartTime"
-                    name="fldEstimateStartTime"
-                    fullWidth
-                    value={values.fldEstimateStartTime}
-                    onChange={(value) => {
-                      setFieldValue("fldEstimateStartTime", value);
-                    }}
-                    error={Boolean(
-                      touched.fldEstimateStartTime &&
-                        errors.fldEstimateStartTime
-                    )}
-                  />
-                </LocalizationProvider>
-                {touched.fldEstimateStartTime &&
-                  errors.fldEstimateStartTime && (
-                    <FormHelperText
-                      error
-                      id="standard-weight-helper-fldEstimateStartTime"
-                    >
-                      {errors.fldEstimateStartTime}
-                    </FormHelperText>
-                  )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <LocalizationProvider
-                  dateAdapter={AdapterDayjs}
-                  dateLibInstance={dayjs.utc}
-                >
-                  <DatePicker
-                    required
-                    sx={{
-                      "& .MuiInputBase-root": {
-                        paddingY: 1,
-                        paddingX: 3,
-                      },
-                      "& .MuiFormLabel-root": {
-                        paddingY: 1,
-                      },
-                    }}
-                    id="fldEstimateArrivalTime"
-                    name="fldEstimateArrivalTime"
-                    label="Estimate Arrival Time"
-                    fullWidth
-                    value={values.fldEstimateArrivalTime}
-                    onChange={(value) =>
-                      setFieldValue("fldEstimateArrivalTime", value)
-                    }
-                    error={Boolean(
-                      touched.fldEstimateArrivalTime &&
-                        errors.fldEstimateArrivalTime
-                    )}
-                  />
-                  {touched.fldEstimateArrivalTime &&
-                    errors.fldEstimateArrivalTime && (
-                      <FormHelperText
-                        error
-                        id="standard-weight-helper-fldEstimateArrivalTime"
+              <Grid item xs={12} sm={8}></Grid>
+              <Grid item xs={12} sm={4}>
+                <FormControl sx={{ mt: 1, minWidth: 400 }}>
+                  <InputLabel id="fldUserId">Trip Member Id</InputLabel>
+                  <Select
+                    labelId="fldUserId"
+                    id="fldUserId"
+                    value={values.fldUserId}
+                    label="fldUserId"
+                    onChange={handleChange}
+                    name="fldUserId"
+                  >
+                    {user.map((item) => (
+                      <MenuItem
+                        value={item.fldUserId}
+                        onClick={handleChangeSelect}
                       >
-                        {errors.fldEstimateArrivalTime}
-                      </FormHelperText>
-                    )}
-                </LocalizationProvider>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="fldTripStartLocationName"
-                  name="fldTripStartLocationName"
-                  label="Trip Start Location Name"
-                  fullWidth
-                  variant="standard"
-                  value={values.fldTripStartLocationName}
-                  onChange={handleChange}
-                  error={Boolean(
-                    touched.fldTripStartLocationName &&
-                      errors.fldTripStartLocationName
-                  )}
-                />
-                {touched.fldTripStartLocationName &&
-                  errors.fldTripStartLocationName && (
-                    <FormHelperText
-                      error
-                      id="standard-weight-helper-fldTripStartLocationName"
-                    >
-                      {errors.fldTripStartLocationName}
+                        {item.fldFullname} ({item.fldEmail})
+                      </MenuItem>
+                    ))}
+                  </Select>
+
+                  {touched.fldUserId && errors.fldUserId && (
+                    <FormHelperText error id="standard-weight-helper-fldUserId">
+                      {errors.fldUserId}
                     </FormHelperText>
                   )}
+                </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="fldTripStartLocationAddress"
-                  name="fldTripStartLocationAddress"
-                  label="Trip Start Location Address"
-                  fullWidth
-                  variant="standard"
-                  value={values.fldTripStartLocationAddress}
-                  onChange={handleChange}
-                  error={Boolean(
-                    touched.fldTripStartLocationAddress &&
-                      errors.fldTripStartLocationAddress
-                  )}
-                />
-                {touched.fldTripStartLocationAddress &&
-                  errors.fldTripStartLocationAddress && (
-                    <FormHelperText
-                      error
-                      id="standard-weight-helper-fldTripStartLocationAddress"
-                    >
-                      {errors.fldTripStartLocationAddress}
+              {isEdit ? (
+                <Grid item xs={12} sm={4}>
+                  <FormControl sx={{ mt: 1, minWidth: 200 }}>
+                  <InputLabel id="fldStatus">Status</InputLabel>
+                  <Select
+                    labelId="fldStatus"
+                    id="fldStatus"
+                    value={values.fldStatus}
+                    label="Status"
+                    onChange={handleChange}
+                    name="fldStatus"
+                  >
+                    <MenuItem value="ACTIVE">Active</MenuItem>
+                    <MenuItem value="INACTIVE">Inactive</MenuItem>
+                    <MenuItem value="BANNED">Banned</MenuItem>
+                  </Select>
+
+                  {touched.fldStatus && errors.fldStatus && (
+                    <FormHelperText error id="standard-weight-helper-fldStatus">
+                      {errors.fldStatus}
                     </FormHelperText>
                   )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="fldTripDestinationLocationName"
-                  name="fldTripDestinationLocationName"
-                  label="Trip Destination Location Name"
-                  fullWidth
-                  variant="standard"
-                  value={values.fldTripDestinationLocationName}
-                  onChange={handleChange}
-                  error={Boolean(
-                    touched.fldTripDestinationLocationName &&
-                      errors.fldTripDestinationLocationName
-                  )}
-                />
-                {touched.fldTripDestinationLocationName &&
-                  errors.fldTripDestinationLocationName && (
-                    <FormHelperText
-                      error
-                      id="standard-weight-helper-fldTripDestinationLocationName"
-                    >
-                      {errors.fldTripDestinationLocationName}
-                    </FormHelperText>
-                  )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="fldTripDestinationLocationAddress"
-                  name="fldTripDestinationLocationAddress"
-                  label="Trip Destination Location Address"
-                  fullWidth
-                  variant="standard"
-                  value={values.fldTripDestinationLocationAddress}
-                  onChange={handleChange}
-                  error={Boolean(
-                    touched.fldTripDestinationLocationAddress &&
-                      errors.fldTripDestinationLocationAddress
-                  )}
-                />
-                {touched.fldTripDestinationLocationAddress &&
-                  errors.fldTripDestinationLocationAddress && (
-                    <FormHelperText
-                      error
-                      id="standard-weight-helper-fldTripDestinationLocationAddress"
-                    >
-                      {errors.fldTripDestinationLocationAddress}
-                    </FormHelperText>
-                  )}
-              </Grid>
+                </FormControl>
+                </Grid>
+              ) : (
+                <Grid item xs={12} sm={8}></Grid>
+              )}
               <Grid item xs={12} sm={6}>
                 <Button variant="outlined" onClick={gotoList}>
                   Return to List
