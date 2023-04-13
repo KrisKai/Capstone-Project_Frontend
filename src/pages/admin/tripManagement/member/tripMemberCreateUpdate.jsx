@@ -14,7 +14,7 @@ import { userApi, tripMemberApi, tripRoleApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
@@ -27,12 +27,13 @@ export default function UserCreate() {
   const isEdit = Boolean(memberId);
   const [member, setMember] = useState({
     fldUserId: "",
-    fldTripId: "",
+    fldTripId: tripId,
     fldMemberRoleId: "",
     fldNickName: "",
-    fldStatus: "ACTIVE",
+    fldStatus: "Active",
   });
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [user, setUser] = useState([
     {
       fldUserId: "",
@@ -41,10 +42,13 @@ export default function UserCreate() {
     },
   ]);
 
-  const [role, setRole] = useState({
-    fldRoleName: "",
-    fldDescription: "",
-  });
+  const [role, setRole] = useState([
+    {
+      fldRoleName: "",
+      fldDescription: "",
+    },
+  ]);
+  const ref = useRef(null);
 
   useEffect(() => {
     // IFFE
@@ -83,15 +87,18 @@ export default function UserCreate() {
     navigate(`/admin/tripMemberList/${tripId}`);
   }
 
-  function handleChangeSelect(e) {
-    console.log(e.target.value);
+  function handleChangeSelect() {
+    console.log(ref.current.values);
+    user.forEach((item) => {
+      if (item.fldUserId === ref.current.values.fldUserId) {
+        setName(item.fldFullname);
+        setEmail(item.fldEmail);
+      }
+    });
   }
 
   const validationSchema = yup.object().shape({
     fldUserId: yup.string("Enter User").required("User is required"),
-    fldTripId: yup
-      .string("Enter Trip Description")
-      .required("Trip Description is required"),
     fldMemberRoleId: yup
       .string("Enter Estimate Start Time")
       .required("Estimate Start Time is required"),
@@ -109,6 +116,7 @@ export default function UserCreate() {
         {isEdit ? "Update Trip Member" : "Create Trip Member"}
       </Typography>
       <Formik
+        innerRef={ref}
         initialValues={member}
         enableReinitialize={true}
         validationSchema={validationSchema}
@@ -186,8 +194,8 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  id="fldUserName"
-                  name="fldUserName"
+                  id="name"
+                  name="name"
                   label="Member Name"
                   fullWidth
                   variant="standard"
@@ -197,12 +205,12 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  id="fldUserName"
+                  id="email"
                   name="fldUserName"
                   label="Email"
                   fullWidth
                   variant="standard"
-                  value={name}
+                  value={email}
                   disabled={true}
                 />
               </Grid>
@@ -228,21 +236,21 @@ export default function UserCreate() {
               <Grid item xs={12} sm={8}></Grid>
               <Grid item xs={12} sm={4}>
                 <FormControl sx={{ mt: 1, minWidth: 400 }}>
-                  <InputLabel id="fldUserId">Trip Member Id</InputLabel>
+                  <InputLabel id="fldMemberRoleId">Trip Role</InputLabel>
                   <Select
-                    labelId="fldUserId"
-                    id="fldUserId"
-                    value={values.fldUserId}
-                    label="fldUserId"
+                    labelId="fldMemberRoleId"
+                    id="fldMemberRoleId"
+                    value={values.fldMemberRoleId}
+                    label="fldMemberRoleId"
                     onChange={handleChange}
-                    name="fldUserId"
+                    name="fldMemberRoleId"
                   >
-                    {user.map((item) => (
+                    {role.map((item) => (
                       <MenuItem
-                        value={item.fldUserId}
+                        value={item.fldRoleId}
                         onClick={handleChangeSelect}
                       >
-                        {item.fldFullname} ({item.fldEmail})
+                        {item.fldRoleName}
                       </MenuItem>
                     ))}
                   </Select>
@@ -257,26 +265,29 @@ export default function UserCreate() {
               {isEdit ? (
                 <Grid item xs={12} sm={4}>
                   <FormControl sx={{ mt: 1, minWidth: 200 }}>
-                  <InputLabel id="fldStatus">Status</InputLabel>
-                  <Select
-                    labelId="fldStatus"
-                    id="fldStatus"
-                    value={values.fldStatus}
-                    label="Status"
-                    onChange={handleChange}
-                    name="fldStatus"
-                  >
-                    <MenuItem value="ACTIVE">Active</MenuItem>
-                    <MenuItem value="INACTIVE">Inactive</MenuItem>
-                    <MenuItem value="BANNED">Banned</MenuItem>
-                  </Select>
+                    <InputLabel id="fldStatus">Status</InputLabel>
+                    <Select
+                      labelId="fldStatus"
+                      id="fldStatus"
+                      value={values.fldStatus}
+                      label="Status"
+                      onChange={handleChange}
+                      name="fldStatus"
+                    >
+                      <MenuItem value="ACTIVE">Active</MenuItem>
+                      <MenuItem value="INACTIVE">Inactive</MenuItem>
+                      <MenuItem value="BANNED">Banned</MenuItem>
+                    </Select>
 
-                  {touched.fldStatus && errors.fldStatus && (
-                    <FormHelperText error id="standard-weight-helper-fldStatus">
-                      {errors.fldStatus}
-                    </FormHelperText>
-                  )}
-                </FormControl>
+                    {touched.fldStatus && errors.fldStatus && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-fldStatus"
+                      >
+                        {errors.fldStatus}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
                 </Grid>
               ) : (
                 <Grid item xs={12} sm={8}></Grid>

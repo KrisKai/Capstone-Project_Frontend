@@ -37,6 +37,7 @@ export default function UserCreate() {
     fldTripStartLocationAddress: "",
     fldTripDestinationLocationName: "",
     fldTripDestinationLocationAddress: "",
+    fldTripStatus: "ACTIVE",
   });
   const [user, setUser] = useState([
     {
@@ -61,12 +62,8 @@ export default function UserCreate() {
       try {
         const data = await tripApi.getById(tripId);
         if (data != null && data != "") {
-          data.fldEstimateArrivalTime = dayjs.utc(
-            data.fldEstimateArrivalTime
-          );
-          data.fldEstimateStartTime = dayjs.utc(
-            data.fldEstimateStartTime
-          );
+          data.fldEstimateArrivalTime = dayjs.utc(data.fldEstimateArrivalTime);
+          data.fldEstimateStartTime = dayjs.utc(data.fldEstimateStartTime);
           setTrip(data);
         } else {
           navigate("/admin/tripList");
@@ -144,13 +141,11 @@ export default function UserCreate() {
               case "I001":
                 return toast.error(reponse.Message);
               default: {
-                if (reponse > 0) {
-                  navigate("/admin/tripList");
-                  if (isEdit) {
-                    toast.success("Update Trip Successed!");
-                  } else {
-                    toast.success("Create Trip Successed!");
-                  }
+                navigate("/admin/tripList");
+                if (isEdit) {
+                  toast.success("Update Trip Successed!");
+                } else {
+                  toast.success("Create Trip Successed!");
                 }
               }
             }
@@ -229,7 +224,9 @@ export default function UserCreate() {
                     name="fldTripPresenter"
                   >
                     {user.map((item) => (
-                      <MenuItem value={item.fldUserId}>{item.fldFullname} ({item.fldEmail})</MenuItem>
+                      <MenuItem value={item.fldUserId}>
+                        {item.fldFullname} ({item.fldEmail})
+                      </MenuItem>
                     ))}
                   </Select>
 
@@ -316,14 +313,15 @@ export default function UserCreate() {
                     )}
                   />
                 </LocalizationProvider>
-                {touched.fldEstimateStartTime && errors.fldEstimateStartTime && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldEstimateStartTime"
-                  >
-                    {errors.fldEstimateStartTime}
-                  </FormHelperText>
-                )}
+                {touched.fldEstimateStartTime &&
+                  errors.fldEstimateStartTime && (
+                    <FormHelperText
+                      error
+                      id="standard-weight-helper-fldEstimateStartTime"
+                    >
+                      {errors.fldEstimateStartTime}
+                    </FormHelperText>
+                  )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider
@@ -465,6 +463,36 @@ export default function UserCreate() {
                     </FormHelperText>
                   )}
               </Grid>
+              {isEdit ? (
+                <Grid item xs={12}>
+                  <FormControl sx={{ mt: 1, minWidth: 200 }}>
+                    <InputLabel id="fldTripStatus">Status</InputLabel>
+                    <Select
+                      labelId="fldTripStatus"
+                      id="fldTripStatus"
+                      value={values.fldStatus}
+                      label="fldTripStatus"
+                      onChange={handleChange}
+                      name="fldTripStatus"
+                    >
+                      <MenuItem value="ACTIVE">Active</MenuItem>
+                      <MenuItem value="INACTIVE">Inactive</MenuItem>
+                      <MenuItem value="BANNED">Banned</MenuItem>
+                    </Select>
+
+                    {touched.fldTripStatus && errors.fldTripStatus && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-fldTripStatus"
+                      >
+                        {errors.fldTripStatus}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                </Grid>
+              ) : (
+                <></>
+              )}
               <Grid item xs={12} sm={6}>
                 <Button variant="outlined" onClick={gotoList}>
                   Return to List

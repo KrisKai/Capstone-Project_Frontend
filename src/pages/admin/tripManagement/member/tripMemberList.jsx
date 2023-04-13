@@ -35,13 +35,7 @@ const columns = [
     align: "center",
   },
   {
-    id: "fldAddress",
-    label: "Address",
-    minWidth: 130,
-    align: "center",
-  },
-  {
-    id: "fldRole",
+    id: "fldRoleName",
     label: "Role",
     minWidth: 130,
     align: "center",
