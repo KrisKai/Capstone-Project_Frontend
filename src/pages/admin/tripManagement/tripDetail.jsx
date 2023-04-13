@@ -11,9 +11,9 @@ import { toast } from "react-toastify";
 export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
   const { tripId } = useParams();
-  const [planList, setPlanList] = useState([]);
-  const [roleList, setRoleList] = useState([]);
-  const [memberList, setMemberList] = useState([]);
+  const [planList, setPlanList] = useState(0);
+  const [roleList, setRoleList] = useState(0);
+  const [memberList, setMemberList] = useState(0);
 
   function gotoPlan() {
     navigate(`/admin/tripPlanList/${tripId}`);
@@ -41,10 +41,9 @@ export default function StickyHeadTableTrip() {
           const plan = await tripPlanApi.getAll(filter);
           const role = await tripRoleApi.getAll(filter);
           const member = await tripMemberApi.getAll(filter);
-          console.log(role)
-          setPlanList(plan);
-          setRoleList(role);
-          setMemberList(member);
+          setPlanList(plan.numOfPlan);
+          setRoleList(role.numOfRole);
+          setMemberList(member.numOfMember);
         } else {
           navigate("/admin/tripList");
         }
@@ -74,7 +73,7 @@ export default function StickyHeadTableTrip() {
               Trip Plan
             </Typography>
             <Typography variant="body2" sx={{ mt: 3 }}>
-              includes {planList.length} plan(s)
+              includes {planList} plan(s)
             </Typography>
           </CardContent>
           <CardActions>
@@ -93,7 +92,7 @@ export default function StickyHeadTableTrip() {
               Trip Member
             </Typography>
             <Typography variant="body2" sx={{ mt: 3 }}>
-              includes {memberList.length} member(s)
+              includes {memberList} member(s)
             </Typography>
           </CardContent>
           <CardActions>
@@ -112,7 +111,7 @@ export default function StickyHeadTableTrip() {
               Trip Role
             </Typography>
             <Typography variant="body2">
-              includes {roleList.length} role(s)
+              includes {roleList} role(s)
             </Typography>
           </CardContent>
           <CardActions>
