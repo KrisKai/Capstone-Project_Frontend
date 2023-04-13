@@ -7,9 +7,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { tripPlanApi, tripApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -44,7 +41,8 @@ export default function UserCreate() {
       setTrip(response.listOfTrip);
       if (!tripId || !planId) return;
       try {
-        const data = await tripPlanApi.getById(tripId);
+        console.log(planId)
+        const data = await tripPlanApi.getById(planId);
         if (data != null && data != "") {
           setPlan(data);
         } else {
@@ -65,7 +63,6 @@ export default function UserCreate() {
   }
 
   const validationSchema = yup.object().shape({
-    fldTripId: yup.string("Enter Trip").required("Trip is required"),
     fldPlanDescription: yup
       .string("Enter Plan Description")
       .required("Plan Description is required"),
@@ -77,12 +74,14 @@ export default function UserCreate() {
         {isEdit ? "Update Trip Plan" : "Create Trip Plan"}
       </Typography>
       <Formik
-        initialValues={trip}
+        initialValues={plan}
         enableReinitialize={true}
         validationSchema={validationSchema}
         onSubmit={async (values, { setErrors, setStatus }) => {
           try {
             setStatus({ success: false });
+
+            console.log(1);
             let reponse;
             if (isEdit) {
               reponse = await tripPlanApi.update(values);
@@ -127,47 +126,44 @@ export default function UserCreate() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="fldTripName"
-                  name="fldTripName"
+                  id="fldTripId"
+                  name="fldTripId"
                   label="Trip Name"
                   fullWidth
                   variant="standard"
-                  value={values.fldTripName}
+                  value={tripId}
                   onChange={handleChange}
-                  error={Boolean(touched.fldTripName && errors.fldTripName)}
+                  error={Boolean(touched.fldTripId && errors.fldTripId)}
                 />
-                {touched.fldTripName && errors.fldTripName && (
+                {touched.fldTripId && errors.fldTripId && (
                   <FormHelperText
                     error
-                    id="standard-weight-helper-text-fldTripName"
+                    id="standard-weight-helper-text-fldTripId"
                   >
-                    {errors.fldTripName}
+                    {errors.fldTripId}
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
-                  id="fldTripBudget"
-                  name="fldTripBudget"
-                  label="Trip Budget"
+                  id="fldPlanDescription"
+                  name="fldPlanDescription"
+                  label="Plan Description"
                   fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">VND</InputAdornment>
-                    ),
-                  }}
                   variant="standard"
-                  value={values.fldTripBudget}
+                  value={values.fldPlanDescription}
                   onChange={handleChange}
-                  error={Boolean(touched.fldTripBudget && errors.fldTripBudget)}
+                  error={Boolean(
+                    touched.fldPlanDescription && errors.fldPlanDescription
+                  )}
                 />
-                {touched.fldTripBudget && errors.fldTripBudget && (
+                {touched.fldPlanDescription && errors.fldPlanDescription && (
                   <FormHelperText
                     error
-                    id="standard-weight-helper-text-fldTripName"
+                    id="standard-weight-helper-text-fldPlanDescription"
                   >
-                    {errors.fldTripBudget}
+                    {errors.fldPlanDescription}
                   </FormHelperText>
                 )}
               </Grid>
