@@ -76,7 +76,7 @@ export default function StickyHeadTableTrip() {
 
   const handleUpdate = (id) => {
     // update
-    navigate(`/admin/tripPlanUpdate/${id}`);
+    navigate(`/admin/tripPlanUpdate/${tripId}/${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -160,8 +160,8 @@ export default function StickyHeadTableTrip() {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldTripId}
-                    key={row.fldTripId}
+                    tabIndex={row.fldPlanId}
+                    key={row.fldPlanId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -171,7 +171,7 @@ export default function StickyHeadTableTrip() {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              onClick={() => gotoView(row.fldTripId)}
+                              onClick={() => gotoView(row.fldPlanId)}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
@@ -190,7 +190,7 @@ export default function StickyHeadTableTrip() {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldTripId}
+                        value={row.fldPlanId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -198,7 +198,7 @@ export default function StickyHeadTableTrip() {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.fldTripId}
+                        value={row.fldPlanId}
                         onClick={(e) => handleDelete(e.target.value)}
                         color="secondary"
                       >

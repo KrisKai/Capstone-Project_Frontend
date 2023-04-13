@@ -75,7 +75,7 @@ export default function StickyHeadTableTrip() {
     // call api
     setFilter({
       ...filter,
-      tripName: event.target.value,
+      memberName: event.target.value,
     });
   };
 
@@ -83,7 +83,7 @@ export default function StickyHeadTableTrip() {
     setSearchTerm(event.target.value);
     setFilter({
       ...filter,
-      tripName: event.target.value,
+      memberName: event.target.value,
     });
   };
 
@@ -104,7 +104,7 @@ export default function StickyHeadTableTrip() {
 
   const handleUpdate = (id) => {
     // update
-    navigate(`/admin/tripMemberUpdate/${id}`);
+    navigate(`/admin/tripMemberUpdate/${tripId}/${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -188,8 +188,8 @@ export default function StickyHeadTableTrip() {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldTripId}
-                    key={row.fldTripId}
+                    tabIndex={row.fldMemberId}
+                    key={row.fldMemberId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -199,7 +199,7 @@ export default function StickyHeadTableTrip() {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              onClick={() => gotoView(row.fldTripId)}
+                              onClick={() => gotoView(row.fldMemberId)}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
@@ -218,7 +218,7 @@ export default function StickyHeadTableTrip() {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldTripId}
+                        value={row.fldMemberId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -226,7 +226,7 @@ export default function StickyHeadTableTrip() {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.fldTripId}
+                        value={row.fldMemberId}
                         onClick={(e) => handleDelete(e.target.value)}
                         color="secondary"
                       >
