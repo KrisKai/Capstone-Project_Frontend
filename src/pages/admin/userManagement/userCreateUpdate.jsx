@@ -16,6 +16,8 @@ import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAppSelector } from "redux/hooks";
+import { selectCurrentUser } from "redux/modules/authenticate/authSlice";
 import * as yup from "yup";
 
 dayjs.extend(utc);
@@ -36,6 +38,7 @@ export default function UserCreate() {
     fldAddress: "",
     fldActiveStatus: "ACTIVE",
   });
+  const currentUser = useAppSelector(selectCurrentUser);
 
   useEffect(() => {
     if (!userId) return;
@@ -272,7 +275,9 @@ export default function UserCreate() {
                       <em>None</em>
                     </MenuItem>
                     <MenuItem value="USER">User</MenuItem>
-                    <MenuItem value="ADMIN">Admin</MenuItem>
+                    {currentUser.role === "ADMIN" && (
+                      <MenuItem value="ADMIN">Admin</MenuItem>
+                    )}
                     <MenuItem value="EMPL">Employee</MenuItem>
                   </Select>
 
