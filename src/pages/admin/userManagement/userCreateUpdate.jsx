@@ -115,6 +115,8 @@ export default function UserCreate() {
                 return toast.error(reponse.Message);
               case "I001":
                 return toast.error(reponse.Message);
+              case "V001":
+                return toast.error(reponse.Message);
               default: {
                 // if (reponse > 0) {
                 navigate("/admin/userList");
