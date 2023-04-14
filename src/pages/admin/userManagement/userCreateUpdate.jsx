@@ -26,6 +26,8 @@ export default function UserCreate() {
   const isEdit = Boolean(userId);
   const [user, setUser] = useState({
     fldUsername: "",
+    fldPassword: null,
+    fldRetypePassword: null,
     fldRole: "",
     fldBirthday: "",
     fldEmail: "",
@@ -73,14 +75,14 @@ export default function UserCreate() {
     fldAddress: yup.string("Enter Address").required("Address is required"),
     fldBirthday: yup.string("Enter Birthday").required("Birthday is required"),
     fldRole: yup.string("Enter Role").required("Role is required"),
-    fldPassword: yup
-      .string("Enter Password")
-      .min(8, "Must be atleast 8 digits")
-      .required("Password is required"),
-    fldRetypePassword: yup
-      .string("Enter Retype Password")
-      .oneOf([yup.ref("fldPassword"), null], "Passwords don't match!")
-      .required("Retype Password is required"),
+    // fldPassword: yup
+    //   .string("Enter Password")
+    //   .min(8, "Must be atleast 8 digits")
+    //   .required("Password is required"),
+    // fldRetypePassword: yup
+    //   .string("Enter Retype Password")
+    //   .oneOf([yup.ref("fldPassword"), null], "Passwords don't match!")
+    //   .required("Retype Password is required"),
   });
 
   function gotoList() {
@@ -337,7 +339,7 @@ export default function UserCreate() {
                     <Select
                       labelId="fldActiveStatus"
                       id="fldActiveStatus"
-                      value={values.fldStatus}
+                      value={values.fldActiveStatus}
                       label="fldActiveStatus"
                       onChange={handleChange}
                       name="fldActiveStatus"
