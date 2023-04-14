@@ -47,8 +47,6 @@ export default function UserCreate() {
     },
   ]);
 
-  console.log(user);
-
   useEffect(() => {
     // IFFE
     (async () => {
