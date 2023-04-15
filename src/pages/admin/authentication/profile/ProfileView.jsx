@@ -49,10 +49,9 @@ const ProfileView = () => {
           width: "200px",
           margin: "auto",
           marginTop: 3,
-          marginBottom: 3
+          marginBottom: 3,
         }}
       />
-      <Typography variant="h5">Profile picture</Typography>
     </>
   );
 };

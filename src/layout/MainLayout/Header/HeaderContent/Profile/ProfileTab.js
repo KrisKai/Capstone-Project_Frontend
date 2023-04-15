@@ -30,13 +30,18 @@ import ProfileView from "pages/admin/authentication/profile/ProfileView";
 // ==============================|| HEADER PROFILE - PROFILE TAB ||============================== //
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiPaper-root": {
+    minWidth: 500,
+  },
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
-    width: "70%",
+    width: "100%",
   },
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
-    width: "70%",
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
   },
 }));
 
@@ -82,7 +87,6 @@ const ProfileTab = ({ handleLogout }) => {
 
   return (
     <List
-      component="nav"
       sx={{
         p: 0,
         "& .MuiListItemIcon-root": {
