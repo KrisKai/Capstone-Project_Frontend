@@ -95,15 +95,15 @@ const ProfileTab = ({ handleLogout }) => {
         },
       }}
     >
-      <ListItemButton selected={selectedIndex === 0} onClick={handleOpenView}>
+      {/* <ListItemButton selected={selectedIndex === 0} onClick={handleOpenView}>
         <ListItemIcon>
           <EditOutlined />
         </ListItemIcon>
         <ListItemText primary="Edit Profile" />
-      </ListItemButton>
+      </ListItemButton> */}
       <ListItemButton
-        selected={selectedIndex === 1}
-        onClick={(event) => handleListItemClick(event, 1)}
+        selected={selectedIndex === 0}
+        onClick={handleOpenView}
       >
         <ListItemIcon>
           <UserOutlined />
@@ -111,9 +111,9 @@ const ProfileTab = ({ handleLogout }) => {
         <ListItemText primary="View Profile" />
       </ListItemButton>
 
-      <ListItemButton
-        selected={selectedIndex === 3}
-        onClick={(event) => handleListItemClick(event, 3)}
+      {/* <ListItemButton
+        selected={selectedIndex === 2}
+        onClick={(event) => handleListItemClick(event, 2)}
       >
         <ListItemIcon>
           <ProfileOutlined />
@@ -121,14 +121,14 @@ const ProfileTab = ({ handleLogout }) => {
         <ListItemText primary="Social Profile" />
       </ListItemButton>
       <ListItemButton
-        selected={selectedIndex === 4}
-        onClick={(event) => handleListItemClick(event, 4)}
+        selected={selectedIndex === 3}
+        onClick={(event) => handleListItemClick(event, 3)}
       >
         <ListItemIcon>
           <WalletOutlined />
         </ListItemIcon>
         <ListItemText primary="Billing" />
-      </ListItemButton>
+      </ListItemButton> */}
       <ListItemButton selected={selectedIndex === 2} onClick={handleLogout}>
         <ListItemIcon>
           <LogoutOutlined />

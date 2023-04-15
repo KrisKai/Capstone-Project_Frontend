@@ -71,7 +71,6 @@ const Profile = () => {
   const currentUser = useAppSelector(selectCurrentUser);
 
   useEffect(() => {
-    console.log(localStorage.getItem("access_token"));
     if (localStorage.getItem("access_token")) {
       dispatch(getCurrentUser());
     }

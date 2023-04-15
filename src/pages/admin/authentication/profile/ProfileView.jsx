@@ -1,10 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // material-ui
-import { useTheme } from "@mui/material/styles";
-import { Box, Typography, useMediaQuery, Avatar } from "@mui/material";
+import { Box, Typography, useMediaQuery, Avatar, Button } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import EmailIcon from "@mui/icons-material/Email";
+import PhoneIcon from "@mui/icons-material/Phone";
+import HomeIcon from "@mui/icons-material/Home";
+import CakeIcon from "@mui/icons-material/Cake";
+import AccessTimeFilledRoundedIcon from "@mui/icons-material/AccessTimeFilledRounded";
 
 import avatar1 from "assets/images/users/avatar-1.png";
+import { authApi } from "api";
 
 // sx styles
 const avatarSX = {
@@ -38,9 +44,35 @@ const style = {
 };
 
 const ProfileView = () => {
+  const [currentInfo, setCurrentInfo] = useState({
+    fldUsername: "",
+    fldRole: "",
+    fldBirthday: "",
+    fldEmail: "",
+    fldFullname: "",
+    fldPhone: "",
+    fldAddress: "",
+    fldCreateDate: "",
+  });
+
+  useEffect(() => {
+    async function getInfo() {
+      const response = await authApi.getCurrentInfo();
+      if (response.fldBirthday) {
+        response.fldBirthday = response.fldBirthday.substring(0, 10);
+        response.fldCreateDate = response.fldCreateDate.substring(0, 10);
+      }
+      setCurrentInfo(response);
+    }
+    getInfo();
+  }, []);
   return (
     <>
-      <Typography variant="h5">Profile picture</Typography>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h5">Profile picture</Typography>
+        <Button variant="outlined">Upload Avatar</Button>
+      </Box>
+
       <Avatar
         alt="profile user"
         src={avatar1}
@@ -52,6 +84,30 @@ const ProfileView = () => {
           marginBottom: 3,
         }}
       />
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h5">Customize your intro</Typography>
+        <Button variant="outlined">Edit info</Button>
+      </Box>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <PersonIcon /> {currentInfo.fldFullname}
+        </Typography>
+        <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <EmailIcon /> {currentInfo.fldEmail}
+        </Typography>
+        <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <PhoneIcon /> {currentInfo.fldPhone}
+        </Typography>
+        <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <HomeIcon /> {currentInfo.fldAddress}
+        </Typography>
+        <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <CakeIcon /> {currentInfo.fldBirthday}
+        </Typography>
+        <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <AccessTimeFilledRoundedIcon /> {currentInfo.fldCreateDate}
+        </Typography>
+      </Box>
     </>
   );
 };
