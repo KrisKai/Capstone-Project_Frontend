@@ -21,6 +21,10 @@ const userApi = {
     const url = `/users/${id}`;
     return axiosInstance.delete(url);
   },
+  reset(id) {
+    const url = `/users/reset-password/${id}`;
+    return axiosInstance.put(url);
+  },
 };
 
 export default userApi;

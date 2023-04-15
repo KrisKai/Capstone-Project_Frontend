@@ -11,6 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import { userApi } from "api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { boolean } from "yup";
 
 const columns = [
   { id: "fldUsername", label: "UserName", minWidth: 100, onclick: true },
@@ -53,6 +54,8 @@ export default function StickyHeadTableUser() {
   });
   const userList = allUsers.listOfUser;
   const numOfUser = allUsers.numOfUser;
+  const currentUser = useAppSelector(selectCurrentUser);
+  const isAdmin = boolean(currentUser.role === "ADMIN");
 
   const [search, setSearch] = useState("");
 
@@ -89,6 +92,15 @@ export default function StickyHeadTableUser() {
     navigate(`/admin/userUpdate/${id}`);
   };
 
+  const handleReset = async (id) => {
+    const response = await userApi.reset(id);
+    if (response > 0) {
+      toast.success("Reset Password Successed!");
+    } else {
+      toast.error("Reset Password Failed!");
+    }
+  };
+
   const handleDelete = async (id) => {
     try {
       // Remove user API
@@ -122,7 +134,7 @@ export default function StickyHeadTableUser() {
       const response = await userApi.getAll(filter);
       setAllUsers(response);
     }
-    getAllUsers()
+    getAllUsers();
   }, [filter]);
 
   return (
@@ -156,6 +168,11 @@ export default function StickyHeadTableUser() {
                     {column.label}
                   </TableCell>
                 ))}
+                {isAdmin && (
+                  <TableCell key="reset" align="center">
+                    Reset Password
+                  </TableCell>
+                )}
                 <TableCell key="edit" align="center">
                   Edit || Delete
                 </TableCell>
@@ -195,6 +212,18 @@ export default function StickyHeadTableUser() {
                         </>
                       );
                     })}
+                    {isAdmin && (
+                      <TableCell key="reset" align="center">
+                        <Button
+                          variant="outlined"
+                          value={row.fldUserId}
+                          onClick={(e) => handleReset(e.target.value)}
+                          color="primary"
+                        >
+                          Reset Password
+                        </Button>
+                      </TableCell>
+                    )}
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
