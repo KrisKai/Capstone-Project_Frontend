@@ -106,7 +106,6 @@ export default function StickyHeadTableUser() {
     try {
       // Remove user API
       await userApi.delete(id || "");
-
       toast.success("Remove user successfully!");
 
       // Trigger to re-fetch student list with current filter
