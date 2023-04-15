@@ -1,16 +1,12 @@
 import { Button, FormHelperText } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
-import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { userApi, tripMemberApi, tripRoleApi } from "api";
+import { tripMemberApi, tripRoleApi, userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
@@ -87,10 +83,9 @@ export default function UserCreate() {
     navigate(`/admin/tripMemberList/${tripId}`);
   }
 
-  function handleChangeSelect() {
-    console.log(ref.current.values);
+  function handleChangeSelect(fldUserId) {
     user.forEach((item) => {
-      if (item.fldUserId === ref.current.values.fldUserId) {
+      if (item.fldUserId === fldUserId) {
         setName(item.fldFullname);
         setEmail(item.fldEmail);
       }
@@ -172,14 +167,14 @@ export default function UserCreate() {
                     id="fldUserId"
                     value={values.fldUserId}
                     label="Role"
-                    onChange={handleChange}
+                    onChange={(event) => {
+                      setFieldValue("fldUserId", event.target.value);
+                      handleChangeSelect(event.target.value);
+                    }}
                     name="fldUserId"
                   >
                     {user.map((item) => (
-                      <MenuItem
-                        value={item.fldUserId}
-                        onClick={handleChangeSelect}
-                      >
+                      <MenuItem value={item.fldUserId}>
                         {item.fldFullname} ({item.fldEmail})
                       </MenuItem>
                     ))}
