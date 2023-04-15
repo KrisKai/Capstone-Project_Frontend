@@ -11,7 +11,6 @@ import TableRow from "@mui/material/TableRow";
 import { userApi } from "api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { boolean } from "yup";
 import { useAppSelector } from "redux/hooks";
 import { selectCurrentUser } from "redux/modules/authenticate/authSlice";
 
@@ -116,7 +115,7 @@ export default function StickyHeadTableUser() {
     } catch (error) {
       // Toast error
       console.log("Failed to fetch user", error);
-      if (error.response.status == 401) {
+      if (error.response.status === 401) {
         localStorage.removeItem("access_token");
         navigate("/auth/login");
       }
