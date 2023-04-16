@@ -22,8 +22,8 @@ const userApi = {
     return axiosInstance.delete(url);
   },
   reset(id) {
-    const url = `/users/reset-password/${id}`;
-    return axiosInstance.put(url);
+    const url = "/users/reset-password";
+    return axiosInstance.put(url, id);
   },
 };
 

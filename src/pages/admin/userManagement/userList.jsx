@@ -96,7 +96,7 @@ export default function StickyHeadTableUser() {
   const handleReset = async (id) => {
     const response = await userApi.reset(id);
     if (response > 0) {
-      toast.success("Reset Password Successed!");
+      toast.success("Change Password To Qwe1234!");
     } else {
       toast.error("Reset Password Failed!");
     }
