@@ -3,14 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 // material-ui
-import MuiBreadcrumbs from "@mui/material/Breadcrumbs";
 import { Grid, Typography } from "@mui/material";
 
 // project imports
-import MainCard from "../Layout/MainCard.jsx";
-import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
+import Snackbar from "@mui/material/Snackbar";
+import { useAppSelector } from "redux/hooks";
+import MainCard from "../Layout/MainCard.jsx";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -24,7 +23,6 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
   const [item, setItem] = useState();
   const menu = useAppSelector((state) => state.menu);
   const { errorMsg, open } = menu;
-  const dispatch = useAppDispatch();
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
