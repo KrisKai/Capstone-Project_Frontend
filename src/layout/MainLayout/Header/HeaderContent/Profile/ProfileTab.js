@@ -27,6 +27,7 @@ import {
   WalletOutlined,
 } from "@ant-design/icons";
 import ProfileView from "pages/admin/authentication/profile/ProfileView";
+import ProfileEdit from "pages/admin/authentication/profile/ProfileEdit";
 // ==============================|| HEADER PROFILE - PROFILE TAB ||============================== //
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -84,6 +85,16 @@ const ProfileTab = ({ handleLogout }) => {
   const [openView, setOpenView] = useState(false);
   const handleOpenView = () => setOpenView(true);
   const handleCloseView = () => setOpenView(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const handleOpenEdit = () => setOpenEdit(true);
+  const handleCloseEdit = () => setOpenEdit(false);
+  const [openChange, setOpenChange] = useState(false);
+  const handleOpenChange = () => setOpenChange(true);
+  const handleCloseChange = () => setOpenChange(false);
+
+  function handleEditModal(data) {
+    console.log(data)
+  }
 
   return (
     <List
@@ -146,16 +157,32 @@ const ProfileTab = ({ handleLogout }) => {
           id="customized-dialog-title"
           onClose={handleCloseView}
         >
-          <Typography variant="h4">Edit profile</Typography>
+          <Typography variant="h4">Your profile</Typography>
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <ProfileView />
+          <ProfileView  handleCallback={handleEditModal}/>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleCloseView}>
-            Save changes
+            Change Password
           </Button>
         </DialogActions>
+      </BootstrapDialog>
+      <BootstrapDialog
+        onClose={handleCloseEdit}
+        aria-labelledby="customized-dialog-title"
+        open={openEdit}
+        sx={{ minWidth: "700px" }}
+      >
+        <BootstrapDialogTitle
+          id="customized-dialog-title"
+          onClose={handleCloseEdit}
+        >
+          <Typography variant="h4">Edit profile</Typography>
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+          <ProfileEdit/>
+        </DialogContent>
       </BootstrapDialog>
     </List>
   );

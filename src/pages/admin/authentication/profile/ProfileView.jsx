@@ -12,38 +12,9 @@ import AccessTimeFilledRoundedIcon from "@mui/icons-material/AccessTimeFilledRou
 import avatar1 from "assets/images/users/avatar-1.png";
 import { authApi } from "api";
 
-// sx styles
-const avatarSX = {
-  width: 36,
-  height: 36,
-  fontSize: "1rem",
-};
-
-const actionSX = {
-  mt: "6px",
-  ml: 1,
-  top: "auto",
-  right: "auto",
-  alignSelf: "flex-start",
-
-  transform: "none",
-};
-
 // ==============================|| PROFILE - VIEW ||============================== //
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "70%",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
-const ProfileView = () => {
+const ProfileView = (props) => {
   const [currentInfo, setCurrentInfo] = useState({
     fldUsername: "",
     fldRole: "",
@@ -86,7 +57,7 @@ const ProfileView = () => {
       />
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h5">Customize your intro</Typography>
-        <Button variant="outlined">Edit info</Button>
+        <Button onClick={props.handleCallback(123)} variant="outlined">Edit info</Button>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
