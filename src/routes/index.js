@@ -9,6 +9,7 @@ import { AuthGuardUser, GuestGuardUser } from "guards/user";
 // project import
 import { Loadable } from "components/Loadable";
 import MainLayout from "layout/MainLayout/index";
+import Home from "pages/home/Home";
 
 // ----------------------------------------------------------------------
 
@@ -227,6 +228,7 @@ export default function Router() {
         // { path: 'verify', element: <VerifyCode /> }
       ],
     },
+    { path: "/home", element: <Home /> },
     { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 }
@@ -282,7 +284,9 @@ const TripMemberList = Loadable(
   lazy(() => import("../pages/admin/tripManagement/member/tripMemberList"))
 );
 const TripMemberCreateUpdate = Loadable(
-  lazy(() => import("../pages/admin/tripManagement/member/tripMemberCreateUpdate"))
+  lazy(() =>
+    import("../pages/admin/tripManagement/member/tripMemberCreateUpdate")
+  )
 );
 const TripRoleList = Loadable(
   lazy(() => import("../pages/admin/tripManagement/role/tripRoleList"))
