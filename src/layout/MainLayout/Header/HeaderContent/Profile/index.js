@@ -29,10 +29,8 @@ import { SettingOutlined, UserOutlined } from "@ant-design/icons";
 import avatar1 from "assets/images/users/avatar-1.png";
 
 import { useNavigate } from "react-router-dom";
-// import { handleLogin } from "redux/modules/authenticate/authSlice";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { getCurrentUser } from "redux/modules/authenticate/authSlice";
-import { selectCurrentUser } from "redux/modules/authenticate/authSlice";
+import { getCurrentUser, selectCurrentUser } from "redux/modules/authenticate/authSlice";
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {

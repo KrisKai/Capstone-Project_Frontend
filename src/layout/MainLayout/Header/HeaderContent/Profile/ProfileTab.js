@@ -25,6 +25,7 @@ import {
 } from "@ant-design/icons";
 import ProfileView from "pages/admin/authentication/profile/ProfileView";
 import ProfileEdit from "pages/admin/authentication/profile/ProfileEdit";
+import ProfileChangePassword from "pages/admin/authentication/profile/ProfileChangePassword";
 // ==============================|| HEADER PROFILE - PROFILE TAB ||============================== //
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -97,6 +98,14 @@ const ProfileTab = ({ handleLogout }) => {
     }
   }
 
+  function handleChangeModal(data) {
+    if (data === true) {
+      handleOpenChange();
+    } else {
+      handleCloseChange();
+    }
+  }
+
   return (
     <List
       sx={{
@@ -161,7 +170,7 @@ const ProfileTab = ({ handleLogout }) => {
           <ProfileView handleCallback={handleEditModal} />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleCloseView}>
+          <Button autoFocus onClick={handleOpenChange}>
             Change Password
           </Button>
         </DialogActions>
@@ -180,6 +189,22 @@ const ProfileTab = ({ handleLogout }) => {
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <ProfileEdit handleCallback={handleEditModal} />
+        </DialogContent>
+      </BootstrapDialog>
+      <BootstrapDialog
+        onClose={handleCloseChange}
+        aria-labelledby="customized-dialog-title"
+        open={openChange}
+        sx={{ minWidth: "700px" }}
+      >
+        <BootstrapDialogTitle
+          id="customized-dialog-title"
+          onClose={handleCloseChange}
+        >
+          <Typography variant="h4">Change Password</Typography>
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+          <ProfileChangePassword handleCallback={handleChangeModal} />
         </DialogContent>
       </BootstrapDialog>
     </List>

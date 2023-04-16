@@ -25,6 +25,10 @@ const userApi = {
     const url = "/users/reset-password";
     return axiosInstance.put(url, id);
   },
+  changePassword(data) {
+    const url = "/users/change-password";
+    return axiosInstance.put(url, { data });
+  },
 };
 
 export default userApi;
