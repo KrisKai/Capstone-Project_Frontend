@@ -90,8 +90,8 @@ const ProfileEdit = (props) => {
               case "V001":
                 return toast.error(reponse.Message);
               default: {
-                navigate("/admin/userList");
-                toast.success("Update User Successed!");
+                toast.success("Update Your Info Successed!");
+                props.handleCallback(false)
               }
             }
           } catch (err) {
@@ -230,7 +230,10 @@ const ProfileEdit = (props) => {
               </Grid>
               <Grid item xs={12} sm={6}></Grid>
               <Grid item xs={12} textAlign="right">
-                <Button onClick={props.handleCallback(123)} variant="outlined">
+                <Button
+                  onClick={() => props.handleCallback(false)}
+                  variant="outlined"
+                >
                   Cancel
                 </Button>
                 <Button type="submit" variant="outlined">

@@ -20,11 +20,8 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 // assets
 import {
-  EditOutlined,
-  ProfileOutlined,
   LogoutOutlined,
   UserOutlined,
-  WalletOutlined,
 } from "@ant-design/icons";
 import ProfileView from "pages/admin/authentication/profile/ProfileView";
 import ProfileEdit from "pages/admin/authentication/profile/ProfileEdit";
@@ -93,7 +90,11 @@ const ProfileTab = ({ handleLogout }) => {
   const handleCloseChange = () => setOpenChange(false);
 
   function handleEditModal(data) {
-    console.log(data)
+    if (data === true) {
+      handleOpenEdit();
+    } else {
+      handleCloseEdit();
+    }
   }
 
   return (
@@ -112,10 +113,7 @@ const ProfileTab = ({ handleLogout }) => {
         </ListItemIcon>
         <ListItemText primary="Edit Profile" />
       </ListItemButton> */}
-      <ListItemButton
-        selected={selectedIndex === 0}
-        onClick={handleOpenView}
-      >
+      <ListItemButton selected={selectedIndex === 0} onClick={handleOpenView}>
         <ListItemIcon>
           <UserOutlined />
         </ListItemIcon>
@@ -160,7 +158,7 @@ const ProfileTab = ({ handleLogout }) => {
           <Typography variant="h4">Your profile</Typography>
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <ProfileView  handleCallback={handleEditModal}/>
+          <ProfileView handleCallback={handleEditModal} />
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleCloseView}>
@@ -181,7 +179,7 @@ const ProfileTab = ({ handleLogout }) => {
           <Typography variant="h4">Edit profile</Typography>
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <ProfileEdit/>
+          <ProfileEdit handleCallback={handleEditModal} />
         </DialogContent>
       </BootstrapDialog>
     </List>

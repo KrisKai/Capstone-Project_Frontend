@@ -57,7 +57,9 @@ const ProfileView = (props) => {
       />
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h5">Customize your intro</Typography>
-        <Button onClick={props.handleCallback(123)} variant="outlined">Edit info</Button>
+        <Button onClick={() => props.handleCallback(true)} variant="outlined">
+          Edit info
+        </Button>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
