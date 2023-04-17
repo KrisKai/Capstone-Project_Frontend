@@ -31,7 +31,10 @@ const ProfileView = (props) => {
       const response = await authApi.getCurrentInfo();
       if (response.fldBirthday) {
         response.fldBirthday = response.fldBirthday.substring(0, 10);
-        response.fldCreateDate = response.fldCreateDate.substring(0, 10);
+
+        //temp
+        // response.fldCreateDate = response.fldCreateDate.substring(0, 10);
+        response.fldCreateDate = "2023-12-12";
       }
       setCurrentInfo(response);
     }
@@ -61,7 +64,7 @@ const ProfileView = (props) => {
           Edit info
         </Button>
       </Box>
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <PersonIcon /> {currentInfo.fldFullname}
         </Typography>
