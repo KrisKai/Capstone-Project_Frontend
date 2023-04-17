@@ -6,7 +6,8 @@ import {
     FontSizeOutlined,
     UserAddOutlined,
     LoadingOutlined,
-    UserOutlined
+    UserOutlined,
+    FeedbackOutlined
 } from '@ant-design/icons';
 
 // icons
@@ -29,7 +30,7 @@ const user = {
     children: [
         {
             id: 'user-list',
-            title: 'List User',
+            title: 'List of User',
             type: 'item',
             url: '/admin/userList',
             icon: icons.UserOutlined
