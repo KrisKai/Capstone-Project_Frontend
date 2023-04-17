@@ -225,6 +225,14 @@ export default function Router() {
             </AuthGuard>
           ),
         },
+        {
+          path: "feedbackList",
+          element: (
+            <AuthGuard>
+              <FeedbackList />
+            </AuthGuard>
+          ),
+        },
         // { path: 'verify', element: <VerifyCode /> }
       ],
     },
@@ -293,6 +301,9 @@ const TripRoleList = Loadable(
 );
 const TripRoleCreateUpdate = Loadable(
   lazy(() => import("../pages/admin/tripManagement/role/tripRoleCreateUpdate"))
+);
+const FeedbackList = Loadable(
+  lazy(() => import("../pages/admin/feedbackManagement/feedbackList"))
 );
 const Maintenance = Loadable(lazy(() => import("../pages/Maintenance")));
 const Page500 = Loadable(lazy(() => import("../pages/Page500")));
