@@ -27,7 +27,7 @@ const userApi = {
   },
   changePassword(data) {
     const url = "/users/change-password";
-    return axiosInstance.put(url, { data });
+    return axiosInstance.put(url, data);
   },
 };
 

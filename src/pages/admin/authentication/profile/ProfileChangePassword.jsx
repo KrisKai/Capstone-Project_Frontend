@@ -5,7 +5,6 @@ import { TextField, FormHelperText, Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { userApi } from "api";
 import { Formik } from "formik";
-import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
@@ -16,7 +15,6 @@ import { selectCurrentUser } from "redux/modules/authenticate/authSlice";
 const ProfileChangePassword = (props) => {
   const currentUser = useAppSelector(selectCurrentUser);
   console.log(currentUser);
-  const navigate = useNavigate();
   const [currentInfo, setCurrentInfo] = useState({
     fldUserId: currentUser.userId,
     fldOldPassword: null,
