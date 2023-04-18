@@ -15,20 +15,17 @@ import Home from "pages/home/Home";
 
 export default function Router() {
   return useRoutes([
+    // { path: "/", element: <Home /> },
     {
       path: "/",
-      element: (
-        <GuestGuardUser>
-          <AuthLoginUser />
-        </GuestGuardUser>
-      ),
+      element: <Home />,
       children: [
         {
           path: "login",
           element: (
-            <GuestGuardUser>
+            //<GuestGuardUser>
               <AuthLoginUser />
-            </GuestGuardUser>
+            //</GuestGuardUser>
           ),
         },
         {
@@ -236,7 +233,6 @@ export default function Router() {
         // { path: 'verify', element: <VerifyCode /> }
       ],
     },
-    { path: "/home", element: <Home /> },
     { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 }

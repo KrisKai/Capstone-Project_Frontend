@@ -15,7 +15,7 @@ import Logo from "assets/images/logo.svg";
 const listNavItems = [
   {
     display: "Trang chủ",
-    link: "/home",
+    link: "/",
   },
   {
     display: "Cẩm nang đi phượt",

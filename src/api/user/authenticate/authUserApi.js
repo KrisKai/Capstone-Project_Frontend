@@ -5,6 +5,10 @@ const authUserApi = {
     const url = "/authenticate/login-user";
     return axiosInstance.post(url, params);
   },
+  register(params) {
+    const url = "/authenticate/register-user";
+    return axiosInstance.post(url, params);
+  },
   getCurrentUser() {
     const url = "/authenticate/getCurrentUser";
     return axiosInstance.get(url);

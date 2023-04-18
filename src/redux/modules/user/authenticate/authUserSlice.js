@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import authApi from "api/authenticate/authApi";
+import authUserApi from "api/user/authenticate/authUserApi";
 
 const initialState = {
   isAuthenticated: false,
@@ -13,24 +13,24 @@ const initialState = {
 
 //thunk
 export const handleLogin = createAsyncThunk(
-  "auth/handleLogin",
+  "authUser/handleLogin",
   async (payload, thunkApi) => {
-    const response = await authApi.login(payload);
+    const response = await authUserApi.login(payload);
     return response;
   }
 );
 
 export const getCurrentUser = createAsyncThunk(
-  "auth/getCurrentUser",
+  "authUser/getCurrentUser",
   async (payload, thunkApi) => {
-    const response = await authApi.getCurrentUser();
+    const response = await authUserApi.getCurrentUser();
     return response;
   }
 );
 
 //slice
 const authUserSlice = createSlice({
-  name: "auth",
+  name: "authUser",
   initialState,
   reducers: {
     login(state) {
@@ -57,8 +57,8 @@ const authUserSlice = createSlice({
     });
     builder.addCase(getCurrentUser.fulfilled, (state, action) => {
       if (action.payload === null || action.payload === "") {
-        localStorage.removeItem("access_token");
-        window.location.replace("/auth/login");
+        localStorage.removeItem("access_token_user");
+        window.location.replace("/login");
       }
       state.isAuthenticated = true;
       state.currentUser = action.payload;
@@ -67,7 +67,7 @@ const authUserSlice = createSlice({
 });
 
 // Actions
-export const authActions = authUserSlice.actions;
+export const authUserActions = authUserSlice.actions;
 
 // Selectors
 export const selectIsInitialized = (state) => state.auth.isInitialized;
