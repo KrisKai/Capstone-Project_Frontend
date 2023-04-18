@@ -8,55 +8,63 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { userApi } from "api";
+import { feedbackApi } from "api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAppSelector } from "redux/hooks";
-import { selectCurrentUser } from "redux/modules/authenticate/authSlice";
 
 const columns = [
-  { id: "fldUsername", label: "UserName", minWidth: 100, onclick: true },
+  { id: "fldTripId", label: "Trip Id", minWidth: 100, onclick: true },
   {
-    id: "fldFullname",
-    label: "Full Name",
+    id: "fldUserId",
+    label: "User Id",
     minWidth: 150,
     align: "center",
   },
   {
-    id: "fldRole",
-    label: "Role",
+    id: "fldFeedback",
+    label: "Feedback",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "fldEmail",
-    label: "Email",
+    id: "fldRate",
+    label: "Rate",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "fldActiveStatus",
-    label: "Active Status",
+    id: "fldLike",
+    label: "Like",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: "fldDislike",
+    label: "Dislike",
+    minWidth: 100,
+    align: "center",
+  },
+  {
+    id: "fldLocationName",
+    label: "Location Name",
     minWidth: 100,
     align: "center",
   },
 ];
 
-export default function StickyHeadTableUser() {
+export default function StickyHeadTableFeedback() {
   let navigate = useNavigate();
   const [filter, setFilter] = useState({
     pageIndex: 0,
     pageSize: 10,
-    userName: "",
+    feedbackName: "",
   });
-  const [allUsers, setAllUsers] = useState({
-    listOfUser: [],
-    numOfUser: 0,
+  const [allFeedbacks, setAllFeedbacks] = useState({
+    listOfFeedback: [],
+    numOfFeedback: 0,
   });
-  const userList = allUsers.listOfUser;
-  const numOfUser = allUsers.numOfUser;
-  const currentUser = useAppSelector(selectCurrentUser);
-  const isAdmin = Boolean(currentUser.role === "ADMIN");
+  const feedbackList = allFeedbacks.listOfFeedback;
+  const numOfFeedback = allFeedbacks.numOfFeedback;
 
   const [search, setSearch] = useState("");
 
@@ -68,7 +76,7 @@ export default function StickyHeadTableUser() {
     if ((event.type && event.type === "click") || !event) {
       setFilter({
         ...filter,
-        userName: search,
+        feedbackName: search,
       });
     }
   };
@@ -88,32 +96,18 @@ export default function StickyHeadTableUser() {
     });
   };
 
-  const handleUpdate = (id) => {
-    // update
-    navigate(`/admin/userUpdate/${id}`);
-  };
-
-  const handleReset = async (id) => {
-    const response = await userApi.reset(id);
-    if (response > 0) {
-      toast.success("Change Password To Qwe1234!");
-    } else {
-      toast.error("Reset Password Failed!");
-    }
-  };
-
   const handleDelete = async (id) => {
     try {
-      // Remove user API
-      await userApi.delete(id || "");
-      toast.success("Remove user successfully!");
+      // Remove feedback API
+      await feedbackApi.delete(id || "");
+      toast.success("Remove feedback successfully!");
 
       // Trigger to re-fetch student list with current filter
       const newFilter = { ...filter };
       setFilter(newFilter);
     } catch (error) {
       // Toast error
-      console.log("Failed to fetch user", error);
+      console.log("Failed to fetch feedback", error);
       if (error.response.status === 401) {
         localStorage.removeItem("access_token");
         navigate("/auth/login");
@@ -121,20 +115,16 @@ export default function StickyHeadTableUser() {
     }
   };
 
-  function gotoCreate() {
-    navigate("/admin/userCreate");
-  }
-
   function gotoView(id) {
-    navigate(`/admin/userView/${id}`);
+    navigate(`/admin/feedbackView/${id}`);
   }
 
   useEffect(() => {
-    async function getAllUsers() {
-      const response = await userApi.getAll(filter);
-      setAllUsers(response);
+    async function getAllFeedbacks() {
+      const response = await feedbackApi.getAll(filter);
+      setAllFeedbacks(response);
     }
-    getAllUsers();
+    getAllFeedbacks();
   }, [filter]);
 
   return (
@@ -168,24 +158,19 @@ export default function StickyHeadTableUser() {
                     {column.label}
                   </TableCell>
                 ))}
-                {isAdmin && (
-                  <TableCell key="reset" align="center">
-                    Reset Password
-                  </TableCell>
-                )}
                 <TableCell key="edit" align="center">
-                  Edit || Delete
+                  Delete
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {userList?.map((row) => {
+              {feedbackList?.map((row) => {
                 return (
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldUserId}
-                    key={row.fldUserId}
+                    tabIndex={row.fldFeedbackId}
+                    key={row.fldFeedbackId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -196,7 +181,7 @@ export default function StickyHeadTableUser() {
                               key={column.id}
                               align={column.align}
                               style={{ textDecoration: "underline" }}
-                              onClick={() => gotoView(row.fldUserId)}
+                              onClick={() => gotoView(row.fldFeedbackId)}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
@@ -212,30 +197,10 @@ export default function StickyHeadTableUser() {
                         </>
                       );
                     })}
-                    {isAdmin && (
-                      <TableCell key="reset" align="center">
-                        <Button
-                          variant="outlined"
-                          value={row.fldUserId}
-                          onClick={(e) => handleReset(e.target.value)}
-                          color="primary"
-                        >
-                          Reset Password
-                        </Button>
-                      </TableCell>
-                    )}
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldUserId}
-                        onClick={(e) => handleUpdate(e.target.value)}
-                        color="primary"
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        value={row.fldUserId}
+                        value={row.fldFeedbackId}
                         onClick={(e) => handleDelete(e.target.value)}
                         color="secondary"
                       >
@@ -251,18 +216,13 @@ export default function StickyHeadTableUser() {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={numOfUser}
+          count={numOfFeedback}
           rowsPerPage={filter.pageSize}
           page={filter.pageIndex}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <Box sx={{ mt: 2 }} textAlign="right">
-        <Button variant="outlined" onClick={gotoCreate} right>
-          Create
-        </Button>
-      </Box>
     </>
   );
 }
