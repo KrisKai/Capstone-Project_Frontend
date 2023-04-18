@@ -149,7 +149,6 @@ export default function UserCreate() {
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldUsername"
                   name="fldUsername"
                   label="Username"
@@ -167,7 +166,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldFullname"
                   name="fldFullname"
                   label="Full name"
@@ -186,7 +184,6 @@ export default function UserCreate() {
                 <>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      required
                       id="fldPassword"
                       name="fldPassword"
                       label="Password"
@@ -207,7 +204,6 @@ export default function UserCreate() {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      required
                       id="fldRetypePassword"
                       name="fldRetypePassword"
                       label="Retype Password"
@@ -228,7 +224,7 @@ export default function UserCreate() {
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
+                  
                   id="fldAddress"
                   name="fldAddress"
                   label="Address"
@@ -245,7 +241,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldPhone"
                   name="fldPhone"
                   label="Phone Number"
@@ -290,7 +285,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={10}>
                 <TextField
-                  required
                   id="fldEmail"
                   name="fldEmail"
                   label="Email"
