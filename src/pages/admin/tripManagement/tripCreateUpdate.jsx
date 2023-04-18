@@ -165,7 +165,6 @@ export default function UserCreate() {
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldTripName"
                   name="fldTripName"
                   label="Trip Name"
@@ -186,7 +185,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldTripBudget"
                   name="fldTripBudget"
                   label="Trip Budget"
@@ -237,7 +235,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  required
                   id="fldTripMember"
                   name="fldTripMember"
                   label="Trip Member"
@@ -259,7 +256,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   id="fldTripDescription"
                   name="fldTripDescription"
                   label="Trip Description"
@@ -363,7 +359,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldTripStartLocationName"
                   name="fldTripStartLocationName"
                   label="Trip Start Location Name"
@@ -388,7 +383,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldTripStartLocationAddress"
                   name="fldTripStartLocationAddress"
                   label="Trip Start Location Address"
@@ -413,7 +407,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldTripDestinationLocationName"
                   name="fldTripDestinationLocationName"
                   label="Trip Destination Location Name"
@@ -438,7 +431,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldTripDestinationLocationAddress"
                   name="fldTripDestinationLocationAddress"
                   label="Trip Destination Location Address"
