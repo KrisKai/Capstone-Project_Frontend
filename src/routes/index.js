@@ -18,15 +18,28 @@ export default function Router() {
     // { path: "/", element: <Home /> },
     {
       path: "/",
-      element: <Home />,
       children: [
+        {
+          path: "/",
+          element: (
+            <Home />
+          ),
+        },
         {
           path: "login",
           element: (
-            //<GuestGuardUser>
+            <GuestGuardUser>
               <AuthLoginUser />
-            //</GuestGuardUser>
+            </GuestGuardUser>
           ),
+        },
+        {
+          path: 'register',
+          element: (
+            <GuestGuardUser>
+              <Register />
+            </GuestGuardUser>
+          )
         },
         {
           path: "dashboard",
@@ -49,14 +62,6 @@ export default function Router() {
             </GuestGuard>
           ),
         },
-        // {
-        //   path: 'register',
-        //   element: (
-        //     <GuestGuard>
-        //       <Register />
-        //     </GuestGuard>
-        //   )
-        // },
         { path: "login-unprotected", element: <AuthLogin /> },
         // { path: 'register-unprotected', element: <Register /> },
         // { path: 'verify', element: <VerifyCode /> }
@@ -243,7 +248,7 @@ export default function Router() {
 const AuthLoginUser = Loadable(
   lazy(() => import("../pages/user/authentication/LoginUser"))
 );
-// const Register = Loadable(lazy(() => import('../pages/user/authentication/Register')));
+const Register = Loadable(lazy(() => import('../pages/user/authentication/Register')));
 
 //     --------------ADMIN------------------
 // Authentication

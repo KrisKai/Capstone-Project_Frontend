@@ -290,7 +290,6 @@ export default function UserCreate() {
                   label="Email"
                   fullWidth
                   variant="standard"
-                  type="email"
                   value={values.fldEmail}
                   onChange={handleChange}
                 />

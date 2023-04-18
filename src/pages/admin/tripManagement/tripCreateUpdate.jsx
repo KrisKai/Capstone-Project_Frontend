@@ -460,7 +460,7 @@ export default function UserCreate() {
                     <Select
                       labelId="fldTripStatus"
                       id="fldTripStatus"
-                      value={values.fldStatus}
+                      value={values.fldTripStatus}
                       label="fldTripStatus"
                       onChange={handleChange}
                       name="fldTripStatus"
