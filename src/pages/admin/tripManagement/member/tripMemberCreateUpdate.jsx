@@ -211,7 +211,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  required
                   id="fldNickName"
                   name="fldNickName"
                   label="Nickname"

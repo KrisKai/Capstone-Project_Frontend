@@ -125,7 +125,6 @@ export default function UserCreate() {
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldTripId"
                   name="fldTripId"
                   label="Trip Name"
@@ -146,7 +145,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   id="fldPlanDescription"
                   name="fldPlanDescription"
                   label="Plan Description"

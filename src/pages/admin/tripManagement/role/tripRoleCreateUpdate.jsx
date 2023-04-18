@@ -121,7 +121,6 @@ export default function UserCreate() {
             <Grid container spacing={3}>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  required
                   id="fldRoleName"
                   name="fldRoleName"
                   label="Role Name"
@@ -165,7 +164,6 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   id="fldDescription"
                   name="fldDescription"
                   label="Role Description"
