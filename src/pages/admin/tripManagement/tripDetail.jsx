@@ -3,7 +3,13 @@ import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import { tripApi, tripMemberApi, tripPlanApi, tripRoleApi } from "api";
+import {
+  tripApi,
+  tripMemberApi,
+  tripPlanApi,
+  tripRoleApi,
+  tripItemApi,
+} from "api";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,6 +20,7 @@ export default function StickyHeadTableTrip() {
   const [planList, setPlanList] = useState(0);
   const [roleList, setRoleList] = useState(0);
   const [memberList, setMemberList] = useState(0);
+  const [itemList, setItemList] = useState(0);
 
   function gotoPlan() {
     navigate(`/admin/tripPlanList/${tripId}`);
@@ -25,6 +32,10 @@ export default function StickyHeadTableTrip() {
 
   function gotoRole() {
     navigate(`/admin/tripRoleList/${tripId}`);
+  }
+
+  function gotoItem() {
+    navigate(`/admin/tripItemList/${tripId}`);
   }
 
   useEffect(() => {
@@ -41,9 +52,11 @@ export default function StickyHeadTableTrip() {
           const plan = await tripPlanApi.getAll(filter);
           const role = await tripRoleApi.getAll(filter);
           const member = await tripMemberApi.getAll(filter);
+          const item = await tripItemApi.getAll(filter);
           setPlanList(plan.numOfPlan);
           setRoleList(role.numOfRole);
           setMemberList(member.numOfMember);
+          setItemList(item.numOfItem);
         } else {
           navigate("/admin/tripList");
         }
@@ -110,12 +123,27 @@ export default function StickyHeadTableTrip() {
             >
               Trip Role
             </Typography>
-            <Typography variant="body2">
-              includes {roleList} role(s)
-            </Typography>
+            <Typography variant="body2">includes {roleList} role(s)</Typography>
           </CardContent>
           <CardActions>
             <Button size="small" onClick={gotoRole}>
+              More Details
+            </Button>
+          </CardActions>
+        </Card>
+        <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
+          <CardContent>
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              Trip Item
+            </Typography>
+            <Typography variant="body2">includes {itemList} item(s)</Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" onClick={gotoItem}>
               More Details
             </Button>
           </CardActions>
