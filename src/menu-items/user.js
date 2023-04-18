@@ -30,7 +30,7 @@ const user = {
     children: [
         {
             id: 'user-list',
-            title: 'List of User',
+            title: 'List of Users',
             type: 'item',
             url: '/admin/userList',
             icon: icons.UserOutlined

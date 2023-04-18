@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import authApi from "api/authenticate/authApi";
+import authApi from "api/admin/authenticate/authApi";
 
 const initialState = {
   isAuthenticated: false,
@@ -41,7 +41,7 @@ const authSlice = createSlice({
       state.isInitialized = false;
       state.currentUser = action.payload;
     },
-    loginFailed(state, action) {
+    loginFailed(state) {
       state.isInitialized = false;
     },
 

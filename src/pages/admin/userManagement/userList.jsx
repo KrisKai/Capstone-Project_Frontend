@@ -12,7 +12,7 @@ import { userApi } from "api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAppSelector } from "redux/hooks";
-import { selectCurrentUser } from "redux/modules/authenticate/authSlice";
+import { selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
 
 const columns = [
   { id: "fldUsername", label: "UserName", minWidth: 100, onclick: true },

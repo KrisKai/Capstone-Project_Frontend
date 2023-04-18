@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { openDrawer } from "../../redux/modules/menu/menuSlice";
+import { openDrawer } from "redux/modules/admin/menu/menuSlice";
 
 // material-ui
 import { useTheme } from "@mui/material/styles";

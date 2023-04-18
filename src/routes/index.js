@@ -18,9 +18,9 @@ export default function Router() {
     {
       path: "/",
       element: (
-        <GuestGuard>
+        <GuestGuardUser>
           <AuthLoginUser />
-        </GuestGuard>
+        </GuestGuardUser>
       ),
       children: [
         {

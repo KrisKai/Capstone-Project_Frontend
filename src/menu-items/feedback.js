@@ -10,7 +10,7 @@ const feedback = {
     children: [
         {
             id: 'feedback-list',
-            title: 'List of Feedback',
+            title: 'List of Feedbacks',
             type: 'item',
             url: '/admin/feedbackList',
             icon: FeedbackOutlinedIcon

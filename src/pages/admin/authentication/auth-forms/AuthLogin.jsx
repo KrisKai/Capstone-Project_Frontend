@@ -21,7 +21,7 @@ import * as Yup from "yup";
 // project import
 import { AnimateButton } from "components/Extend";
 import { useAppDispatch } from "redux/hooks";
-import { handleLogin, authActions } from "redux/modules/authenticate/authSlice";
+import { handleLogin, authActions } from "redux/modules/admin/authenticate/authSlice";
 
 // assets
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";

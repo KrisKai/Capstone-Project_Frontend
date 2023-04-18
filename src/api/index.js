@@ -1,9 +1,9 @@
-import authApi from "./authenticate/authApi";
-import tripApi from "./trip/tripApi";
-import userApi from "./user/userApi";
-import tripMemberApi from "./trip/member/tripMemberApi";
-import tripPlanApi from "./trip/plan/tripPlanApi";
-import tripRoleApi from "./trip/role/tripRoleApi";
-import feedbackApi from "./feedback/feedbackApi";
+import authApi from "./admin/authenticate/authApi";
+import tripApi from "./admin/trip/tripApi";
+import userApi from "./admin/user/userApi";
+import tripMemberApi from "./admin/trip/member/tripMemberApi";
+import tripPlanApi from "./admin/trip/plan/tripPlanApi";
+import tripRoleApi from "./admin/trip/role/tripRoleApi";
+import feedbackApi from "./admin/feedback/feedbackApi";
 
 export { authApi, tripApi, userApi, tripMemberApi, tripPlanApi, tripRoleApi, feedbackApi };

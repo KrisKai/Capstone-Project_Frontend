@@ -6,6 +6,7 @@ function path(root, sublink) {
   
   const ROOTS_AUTH = '/auth';
   const ROOTS_DASHBOARD = '/admin';
+  const ROOTS_USER_SITE = '/'
   
   // ----------------------------------------------------------------------
   
@@ -43,11 +44,6 @@ function path(root, sublink) {
       root: path(ROOTS_DASHBOARD, '/trip'),
       all: path(ROOTS_DASHBOARD, '/trip/all')
     },
-    // chat: {
-    //   root: path(ROOTS_DASHBOARD, '/chat'),
-    //   new: path(ROOTS_DASHBOARD, '/chat/new'),
-    //   conversation: path(ROOTS_DASHBOARD, '/chat/:conversationKey')
-    // },
     user: {
       root: path(ROOTS_DASHBOARD, '/user'),
       profile: path(ROOTS_DASHBOARD, '/user/profile'),
@@ -58,6 +54,14 @@ function path(root, sublink) {
       account: path(ROOTS_DASHBOARD, '/user/account')
     }
   };
+
+  export const PATH_USER_SITE = {
+    root: ROOTS_USER_SITE,
+    login: path(ROOTS_USER_SITE, 'login'),
+    general: {
+      dashboard: path(ROOTS_USER_SITE, 'dashboard')
+    }
+  }
   
   export const PATH_DOCS = 'https://docs-minimals.vercel.app/introduction';
   export const PATH_SEARCHPAGE = '/project';

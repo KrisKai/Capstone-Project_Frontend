@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 // routes
-import { PATH_DASHBOARD } from "../../routes/path";
+import { PATH_DASHBOARD } from "routes/path";
 
 // ----------------------------------------------------------------------
 

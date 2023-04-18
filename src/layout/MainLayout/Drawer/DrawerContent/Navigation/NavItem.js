@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 
 // project import
-import { activeItem } from "redux/modules/menu/menuSlice";
+import { activeItem } from "redux/modules/admin/menu/menuSlice";
 
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
 

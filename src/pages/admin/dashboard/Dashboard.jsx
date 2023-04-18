@@ -25,7 +25,7 @@ import {
 } from "@ant-design/icons";
 
 
-import { getCurrentUser } from "redux/modules/authenticate/authSlice";
+import { getCurrentUser } from "redux/modules/admin/authenticate/authSlice";
 
 // avatar style
 const avatarSX = {

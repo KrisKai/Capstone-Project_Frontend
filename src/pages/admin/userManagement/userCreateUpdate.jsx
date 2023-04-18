@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAppSelector } from "redux/hooks";
-import { selectCurrentUser } from "redux/modules/authenticate/authSlice";
+import { selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
 import * as yup from "yup";
 
 dayjs.extend(utc);

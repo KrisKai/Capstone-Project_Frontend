@@ -25,7 +25,7 @@ import * as Yup from "yup";
 // project import
 import { AnimateButton } from "components/Extend";
 import { useAppDispatch } from "redux/hooks";
-import { handleLogin } from "redux/modules/authenticate/authSlice";
+import { handleLogin } from "redux/modules/admin/authenticate/authSlice";
 import FirebaseSocial from "./FirebaseSocial";
 // assets
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
@@ -58,8 +58,8 @@ const AuthLogin = () => {
     )
       .unwrap()
       .then((data) => {
-        localStorage.setItem("access_token", data.token);
-        navigate("/admin/dashboard");
+        localStorage.setItem("access_token_user", data.token);
+        navigate("/dashboard");
       });
   };
   return (
@@ -100,7 +100,6 @@ const AuthLogin = () => {
                   <InputLabel htmlFor="email-login">Email Address</InputLabel>
                   <OutlinedInput
                     id="email-login"
-                    type="email"
                     value={values.email}
                     name="email"
                     onBlur={handleBlur}

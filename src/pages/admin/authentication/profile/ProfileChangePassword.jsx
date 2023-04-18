@@ -8,7 +8,7 @@ import { Formik } from "formik";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { selectCurrentUser } from "redux/modules/authenticate/authSlice";
+import { selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
 
 // ==============================|| PROFILE - EDIT ||============================== //
 

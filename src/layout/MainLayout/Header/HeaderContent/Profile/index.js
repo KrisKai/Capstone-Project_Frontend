@@ -30,7 +30,7 @@ import avatar1 from "assets/images/users/avatar-1.png";
 
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { getCurrentUser, selectCurrentUser } from "redux/modules/authenticate/authSlice";
+import { getCurrentUser, selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
