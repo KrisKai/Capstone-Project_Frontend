@@ -282,8 +282,8 @@ export default function UserCreate() {
                     </FormHelperText>
                   )}
                 </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={10}>
+              </Grid><Grid item xs={12} sm={2}></Grid>
+              <Grid item xs={12} sm={8}>
                 <TextField
                   id="fldEmail"
                   name="fldEmail"

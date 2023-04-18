@@ -233,7 +233,8 @@ export default function UserCreate() {
                   )}
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={2}></Grid>
+              <Grid item xs={12} sm={2}>
                 <TextField
                   id="fldTripMember"
                   name="fldTripMember"
