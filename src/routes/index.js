@@ -228,10 +228,34 @@ export default function Router() {
           ),
         },
         {
+          path: `tripItemList/:tripId`,
+          element: (
+            <AuthGuard>
+              <TripItemList />
+            </AuthGuard>
+          ),
+        },
+        {
           path: "feedbackList",
           element: (
             <AuthGuard>
               <FeedbackList />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: "itemList",
+          element: (
+            <AuthGuard>
+              <ItemList />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: "itemCategoryList",
+          element: (
+            <AuthGuard>
+              <CategoryList />
             </AuthGuard>
           ),
         },
@@ -303,8 +327,20 @@ const TripRoleList = Loadable(
 const TripRoleCreateUpdate = Loadable(
   lazy(() => import("../pages/admin/tripManagement/role/tripRoleCreateUpdate"))
 );
+const TripItemList = Loadable(
+  lazy(() => import("../pages/admin/tripManagement/item/tripItemList"))
+);
+const TripItemCreateUpdate = Loadable(
+  lazy(() => import("../pages/admin/tripManagement/role/tripRoleCreateUpdate"))
+);
 const FeedbackList = Loadable(
   lazy(() => import("../pages/admin/feedbackManagement/feedbackList"))
+);
+const ItemList = Loadable(
+  lazy(() => import("../pages/admin/itemManagement/itemList"))
+);
+const CategoryList = Loadable(
+  lazy(() => import("../pages/admin/itemManagement/categoryList"))
 );
 const Maintenance = Loadable(lazy(() => import("../pages/Maintenance")));
 const Page500 = Loadable(lazy(() => import("../pages/Page500")));

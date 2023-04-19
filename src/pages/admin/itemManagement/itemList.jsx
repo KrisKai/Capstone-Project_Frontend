@@ -1,0 +1,248 @@
+import { Box, Button, TextField } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import { itemApi } from "api";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import Grid from "@mui/material/Grid";
+
+const columns = [
+  // { id: "fldItemId", label: "Item Id", minWidth: 100, onclick: true },
+  {
+    id: "fldItemName",
+    label: "Item Name",
+    minWidth: 100,
+    format: (value) => value.toLocaleString("en-US"),
+    onclick: true
+  },
+  {
+    id: "fldItemDescription",
+    label: "Item Description",
+    minWidth: 100,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "fldCategoryName",
+    label: "Category Name",
+    minWidth: 100,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "fldQuantity",
+    label: "Quantity",
+    minWidth: 100,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+];
+
+export default function StickyHeadTableItem() {
+  let navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [allItems, setAllItems] = useState({
+    listOfItem: [],
+    numOfItem: 0,
+  });
+  const [filter, setFilter] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+    itemName: "",
+  });
+  const itemList = allItems.listOfItem;
+  const numberOfItem = allItems.numOfItem;
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    // call api
+    setFilter({
+      ...filter,
+      itemName: event.target.value,
+    });
+  };
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+    setFilter({
+      ...filter,
+      itemName: event.target.value,
+    });
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setFilter({
+      ...filter,
+      pageIndex: newPage,
+    });
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setFilter({
+      ...filter,
+      pageIndex: 0,
+      pageSize: +event.target.value,
+    });
+  };
+
+  const handleUpdate = (id) => {
+    // update
+    navigate(`/admin/itemUpdate/${id}`);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      // Remove item API
+      await itemApi.delete(id || "");
+
+      toast.success("Remove item successfully!");
+
+      // Trigger to re-fetch student list with current filter
+      const newFilter = { ...filter };
+      setFilter(newFilter);
+    } catch (error) {
+      // Toast error
+      console.log("Failed to fetch item", error);
+      if (error.response.status == 401) {
+        localStorage.removeItem("access_token");
+        navigate("/auth/login");
+      }
+    }
+  };
+
+  function gotoCreate() {
+    navigate(`/admin/itemCreate`);
+  }
+
+  function gotoView(id) {
+    navigate(`/admin/itemView/${id}`);
+  }
+
+  useEffect(() => {
+    async function getAllItems() {
+      const response = await itemApi.getAll(filter);
+      setAllItems(response);
+    }
+    getAllItems();
+  }, [filter]);
+
+  return (
+    <>
+      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+        <Box sx={{ mt: 1, mb: 1 }} textAlign="right">
+          <TextField
+            id="search"
+            type="search"
+            label="Search"
+            value={searchTerm}
+            onChange={handleChange}
+            sx={{ width: 400 }}
+          />
+          <Button variant="outlined" onClick={handleSearch} sx={{ height: 42 }}>
+            Search
+          </Button>
+        </Box>
+
+        <TableContainer>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+                <TableCell key="edit" align="center">
+                  Edit || Delete
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {itemList.map((row) => {
+                return (
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    tabIndex={row.fldItemId}
+                    key={row.fldItemId}
+                  >
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <>
+                          {column.onclick ? (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              onClick={() => gotoView(row.fldItemId)}
+                            >
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          ) : (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          )}
+                        </>
+                      );
+                    })}
+                    <TableCell key="edit" align="center">
+                      <Button
+                        variant="outlined"
+                        value={row.fldItemId}
+                        onClick={(e) => handleUpdate(e.target.value)}
+                        color="primary"
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        value={row.fldItemId}
+                        onClick={(e) => handleDelete(e.target.value)}
+                        color="secondary"
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={numberOfItem}
+          rowsPerPage={filter.pageSize}
+          page={filter.pageIndex}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+      <Grid container sx={{ mt: 2 }}>
+        <Grid xs={6}></Grid>
+        <Grid xs={6} textAlign="right">
+          <Button variant="outlined" onClick={gotoCreate} right>
+            Create
+          </Button>
+        </Grid>
+      </Grid>
+    </>
+  );
+}

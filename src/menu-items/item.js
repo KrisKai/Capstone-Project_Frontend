@@ -19,7 +19,7 @@ const item = {
             id: 'category-list',
             title: 'Category of Items',
             type: 'item',
-            url: '/admin/itemCategory',
+            url: '/admin/itemCategoryList',
             icon: CategoryOutlinedIcon
         }
     ]
