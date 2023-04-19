@@ -28,10 +28,15 @@ import { strengthColor, strengthIndicator } from "utils/password-strength";
 import FirebaseSocial from "./FirebaseSocial";
 // assets
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import { useAppDispatch } from "redux/hooks";
+import { handleRegister } from "redux/modules/user/authenticate/authUserSlice";
+import { toast } from "react-toastify";
 
 // ============================|| FIREBASE - REGISTER ||============================ //
 
 const AuthRegister = () => {
+  const dispatch = useAppDispatch();
+
   const [level, setLevel] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -84,6 +89,11 @@ const AuthRegister = () => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
+            dispatch(handleRegister(values))
+              .unwrap()
+              .then((res) => {
+                toast("Register success", toast.success);
+              });
             console.log(values);
             setStatus({ success: false });
             setSubmitting(false);

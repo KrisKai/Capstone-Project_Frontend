@@ -28,6 +28,14 @@ export const getCurrentUser = createAsyncThunk(
   }
 );
 
+export const handleRegister = createAsyncThunk(
+  "authUser/register",
+  async (payload, thunkApi) => {
+    const response = await authUserApi.register(payload);
+    return response;
+  }
+);
+
 //slice
 const authUserSlice = createSlice({
   name: "authUser",
@@ -62,6 +70,10 @@ const authUserSlice = createSlice({
       }
       state.isAuthenticated = true;
       state.currentUser = action.payload;
+    });
+    builder.addCase(handleRegister.fulfilled, (state, action) => {
+      state.currentUser = action.payload.currentUserObj;
+      state.isAuthenticated = true;
     });
   },
 });
