@@ -236,6 +236,22 @@ export default function Router() {
           ),
         },
         {
+          path: `tripItemCreate/:tripId`,
+          element: (
+            <AuthGuard>
+              <TripItemCreateUpdate />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: `tripItemUpdate/:tripId/:itemId`,
+          element: (
+            <AuthGuard>
+              <TripItemCreateUpdate />
+            </AuthGuard>
+          ),
+        },
+        {
           path: "feedbackList",
           element: (
             <AuthGuard>
@@ -251,11 +267,45 @@ export default function Router() {
             </AuthGuard>
           ),
         },
+        
+        {
+          path: "itemCreate",
+          element: (
+            <AuthGuard>
+              <ItemCreateUpdate />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: `itemUpdate/:itemId`,
+          element: (
+            <AuthGuard>
+              <ItemCreateUpdate />
+            </AuthGuard>
+          ),
+        },
         {
           path: "itemCategoryList",
           element: (
             <AuthGuard>
               <CategoryList />
+            </AuthGuard>
+          ),
+        },
+        
+        {
+          path: "categoryCreate",
+          element: (
+            <AuthGuard>
+              <CategoryCreateUpdate />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: `categoryUpdate/:categoryId`,
+          element: (
+            <AuthGuard>
+              <CategoryCreateUpdate />
             </AuthGuard>
           ),
         },
@@ -331,7 +381,7 @@ const TripItemList = Loadable(
   lazy(() => import("../pages/admin/tripManagement/item/tripItemList"))
 );
 const TripItemCreateUpdate = Loadable(
-  lazy(() => import("../pages/admin/tripManagement/role/tripRoleCreateUpdate"))
+  lazy(() => import("../pages/admin/tripManagement/item/tripItemCreateUpdate"))
 );
 const FeedbackList = Loadable(
   lazy(() => import("../pages/admin/feedbackManagement/feedbackList"))
@@ -339,8 +389,14 @@ const FeedbackList = Loadable(
 const ItemList = Loadable(
   lazy(() => import("../pages/admin/itemManagement/itemList"))
 );
+const ItemCreateUpdate = Loadable(
+  lazy(() => import("../pages/admin/itemManagement/itemCreateUpdate"))
+);
 const CategoryList = Loadable(
   lazy(() => import("../pages/admin/itemManagement/categoryList"))
+);
+const CategoryCreateUpdate = Loadable(
+  lazy(() => import("../pages/admin/itemManagement/categoryCreateUpdate"))
 );
 const Maintenance = Loadable(lazy(() => import("../pages/Maintenance")));
 const Page500 = Loadable(lazy(() => import("../pages/Page500")));
