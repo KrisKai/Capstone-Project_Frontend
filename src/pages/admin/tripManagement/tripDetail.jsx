@@ -3,6 +3,7 @@ import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
 import {
   tripApi,
   tripMemberApi,
@@ -36,6 +37,10 @@ export default function StickyHeadTableTrip() {
 
   function gotoItem() {
     navigate(`/admin/tripItemList/${tripId}`);
+  }
+
+  function gotoList() {
+    navigate(`/admin/tripList`);
   }
 
   useEffect(() => {
@@ -148,6 +153,13 @@ export default function StickyHeadTableTrip() {
             </Button>
           </CardActions>
         </Card>
+        <Grid container sx={{ mt: 2 }}>
+          <Grid xs={6}>
+            <Button variant="outlined" onClick={gotoList} right>
+              Return to Detail
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </>
   );

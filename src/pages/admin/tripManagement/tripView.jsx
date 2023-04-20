@@ -185,7 +185,6 @@ export default function UserCreate() {
                   disabled={true}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}></Grid>
               <Grid item xs={12} sm={6}>
                 <Button variant="outlined" onClick={gotoList}>
                   Return to List

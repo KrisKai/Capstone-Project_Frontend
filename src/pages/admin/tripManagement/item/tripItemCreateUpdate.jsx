@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { tripItemApi, tripApi } from "api";
+import { tripItemApi, tripApi, itemCategoryApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
@@ -23,7 +23,7 @@ export default function TripItemCreate() {
   const { tripId, itemId } = useParams();
   const isEdit = Boolean(itemId);
   const [item, setItem] = useState({
-    fldTripId: "",
+    fldTripId: tripId,
     fldItemDescription: null,
   });
   const [trip, setTrip] = useState({
@@ -46,9 +46,13 @@ export default function TripItemCreate() {
         tripName: "",
       });
       setTrip(response.listOfTrip);
+      const categoryList = await itemCategoryApi.getAll({
+        pageIndex: 0,
+        pageSize: 99999999,
+      });
+      setCategory(categoryList.listOfCategory);
       if (!tripId || !itemId) return;
       try {
-        console.log(itemId);
         const data = await tripItemApi.getById(itemId);
         if (data != null && data != "") {
           setItem(data);
@@ -151,7 +155,7 @@ export default function TripItemCreate() {
                   label="Trip Name"
                   fullWidth
                   variant="standard"
-                  value={tripId}
+                  value={values.fldTripId}
                   error={Boolean(touched.fldTripId && errors.fldTripId)}
                 />
                 {touched.fldTripId && errors.fldTripId && (
@@ -170,7 +174,7 @@ export default function TripItemCreate() {
                   label="Item Name"
                   fullWidth
                   variant="standard"
-                  value={tripId}
+                  value={values.fldItemName}
                   onChange={handleChange}
                   error={Boolean(touched.fldItemName && errors.fldItemName)}
                 />
@@ -252,7 +256,7 @@ export default function TripItemCreate() {
                     labelId="fldCategoryId"
                     id="fldCategoryId"
                     value={values.fldCategoryId}
-                    label="Role"
+                    label="fldCategoryId"
                     onChange={handleChange}
                     name="fldCategoryId"
                   >
@@ -262,7 +266,6 @@ export default function TripItemCreate() {
                       </MenuItem>
                     ))}
                   </Select>
-
                   {touched.fldCategoryId && errors.fldCategoryId && (
                     <FormHelperText
                       error
@@ -272,7 +275,8 @@ export default function TripItemCreate() {
                     </FormHelperText>
                   )}
                 </FormControl>
-              </Grid><Grid item xs={12} sm={2}>
+              </Grid>
+              <Grid item xs={12} sm={2}>
                 <TextField
                   id="fldQuantity"
                   name="fldQuantity"
