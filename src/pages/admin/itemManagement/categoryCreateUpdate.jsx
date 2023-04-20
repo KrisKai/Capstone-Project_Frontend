@@ -41,7 +41,7 @@ export default function CategoryCreate() {
         if (data != null && data != "") {
           setCategory(data);
         } else {
-          navigate("/admin/categoryList");
+          navigate("/admin/itemCategoryList");
         }
       } catch (error) {
         console.log("Failed to fetch category", error);
@@ -54,7 +54,7 @@ export default function CategoryCreate() {
   }, [categoryId]);
 
   function gotoList() {
-    navigate("/admin/categoryList");
+    navigate("/admin/itemCategoryList");
   }
 
   const validationSchema = yup.object().shape({
@@ -93,7 +93,7 @@ export default function CategoryCreate() {
               case "I001":
                 return toast.error(reponse.Message);
               default: {
-                navigate("/admin/categoryList");
+                navigate("/admin/itemCategoryList");
                 if (isEdit) {
                   toast.success("Update Category Successed!");
                 } else {
