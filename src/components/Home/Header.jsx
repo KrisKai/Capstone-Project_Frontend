@@ -103,10 +103,11 @@ const Header = () => {
                 },
               }}
             >
-              {listNavItems.map((item) => {
+              {listNavItems.map((item, idx) => {
                 return (
                   <>
                     <ListItem
+                      key={idx}
                       sx={{ display: "flex", justifyContent: "center" }}
                     >
                       <Link
