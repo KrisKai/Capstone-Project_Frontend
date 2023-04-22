@@ -29,8 +29,10 @@ export default function UserCreate() {
     fldTripName: "",
     fldTripBudget: null,
     fldTripDescription: "",
+    fldEstimateStartDate: null,
+    fldEstimateEndDate: null,
     fldEstimateStartTime: null,
-    fldEstimateArrivalTime: null,
+    fldEstimateEndTime: null,
     fldTripMember: "",
     fldTripPresenter: "",
     fldTripStartLocationName: "",
@@ -60,8 +62,8 @@ export default function UserCreate() {
       try {
         const data = await tripApi.getById(tripId);
         if (data != null && data != "") {
-          data.fldEstimateArrivalTime = dayjs.utc(data.fldEstimateArrivalTime);
-          data.fldEstimateStartTime = dayjs.utc(data.fldEstimateStartTime);
+          data.fldEstimateEndDate = dayjs.utc(data.fldEstimateEndDate);
+          data.fldEstimateStartDate = dayjs.utc(data.fldEstimateStartDate);
           setTrip(data);
         } else {
           navigate("/admin/tripList");
@@ -88,12 +90,12 @@ export default function UserCreate() {
     fldTripDescription: yup
       .string("Enter Trip Description")
       .required("Trip Description is required"),
-    fldEstimateStartTime: yup
+    fldEstimateStartDate: yup
       .string("Enter Estimate Start Time")
       .required("Estimate Start Time is required"),
-    fldEstimateArrivalTime: yup
-      .string("Enter Estimate Arrival Time")
-      .required("Estimate Arrival Time is required"),
+    fldEstimateEndDate: yup
+      .string("Enter Estimate End Time")
+      .required("Estimate End Time is required"),
     fldTripMember: yup.number().min(1).required("Trip Member is required"),
     fldTripPresenter: yup
       .string("Enter Trip Presenter")
@@ -111,6 +113,11 @@ export default function UserCreate() {
       .string("Enter Trip Destination Location Address")
       .required("Trip Destination Location Address is required"),
   });
+
+  let hours = [];
+  for (let i = 0; i < 24; i++) {
+    hours.push(i);
+  }
 
   return (
     <>
@@ -227,7 +234,7 @@ export default function UserCreate() {
                   </Select>
 
                   {touched.fldTripPresenter && errors.fldTripPresenter && (
-                    <FormHelperText error id="standard-weight-helper-role">
+                    <FormHelperText error id="standard-weight-helper-fldTripPresenter">
                       {errors.fldTripPresenter}
                     </FormHelperText>
                   )}
@@ -278,7 +285,7 @@ export default function UserCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={3}>
                 <LocalizationProvider
                   dateAdapter={AdapterDayjs}
                   dateLibInstance={dayjs.utc}
@@ -294,31 +301,56 @@ export default function UserCreate() {
                         paddingY: 1,
                       },
                     }}
-                    label="Estimate Start Time"
-                    id="fldEstimateStartTime"
-                    name="fldEstimateStartTime"
+                    label="Estimate Start Date"
+                    id="fldEstimateStartDate"
+                    name="fldEstimateStartDate"
                     fullWidth
-                    value={values.fldEstimateStartTime}
+                    value={values.fldEstimateStartDate}
                     onChange={(value) => {
-                      setFieldValue("fldEstimateStartTime", value);
+                      setFieldValue("fldEstimateStartDate", value);
                     }}
                     error={Boolean(
-                      touched.fldEstimateStartTime &&
-                        errors.fldEstimateStartTime
+                      touched.fldEstimateStartDate &&
+                        errors.fldEstimateStartDate
                     )}
                   />
                 </LocalizationProvider>
-                {touched.fldEstimateStartTime &&
-                  errors.fldEstimateStartTime && (
+                {touched.fldEstimateStartDate &&
+                  errors.fldEstimateStartDate && (
                     <FormHelperText
                       error
-                      id="standard-weight-helper-fldEstimateStartTime"
+                      id="standard-weight-helper-fldEstimateStartDate"
                     >
-                      {errors.fldEstimateStartTime}
+                      {errors.fldEstimateStartDate}
                     </FormHelperText>
                   )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={3}>
+                <FormControl sx={{ mt: 1, minWidth: 300 }}>
+                  <InputLabel id="fldEstimateStartTime">
+                    Estimate Start Time
+                  </InputLabel>
+                  <Select
+                    labelId="fldEstimateStartTime"
+                    id="fldEstimateStartTime"
+                    value={values.fldEstimateStartTime}
+                    label="fldEstimateStartTime"
+                    onChange={handleChange}
+                    name="fldEstimateStartTime"
+                  >
+                    {hours.map((item) => (
+                      <MenuItem value={item}>{item}</MenuItem>
+                    ))}
+                  </Select>
+
+                  {touched.fldEstimateStartTime && errors.fldEstimateStartTime && (
+                    <FormHelperText error id="standard-weight-helper-fldEstimateStartTime">
+                      {errors.fldEstimateStartTime}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={3}>
                 <LocalizationProvider
                   dateAdapter={AdapterDayjs}
                   dateLibInstance={dayjs.utc}
@@ -334,29 +366,52 @@ export default function UserCreate() {
                         paddingY: 1,
                       },
                     }}
-                    id="fldEstimateArrivalTime"
-                    name="fldEstimateArrivalTime"
-                    label="Estimate Arrival Time"
+                    id="fldEstimateEndDate"
+                    name="fldEstimateEndDate"
+                    label="Estimate End Date"
                     fullWidth
-                    value={values.fldEstimateArrivalTime}
+                    value={values.fldEstimateEndDate}
                     onChange={(value) =>
-                      setFieldValue("fldEstimateArrivalTime", value)
+                      setFieldValue("fldEstimateEndDate", value)
                     }
                     error={Boolean(
-                      touched.fldEstimateArrivalTime &&
-                        errors.fldEstimateArrivalTime
+                      touched.fldEstimateEndDate && errors.fldEstimateEndDate
                     )}
                   />
-                  {touched.fldEstimateArrivalTime &&
-                    errors.fldEstimateArrivalTime && (
-                      <FormHelperText
-                        error
-                        id="standard-weight-helper-fldEstimateArrivalTime"
-                      >
-                        {errors.fldEstimateArrivalTime}
-                      </FormHelperText>
-                    )}
+                  {touched.fldEstimateEndDate && errors.fldEstimateEndDate && (
+                    <FormHelperText
+                      error
+                      id="standard-weight-helper-fldEstimateEndDate"
+                    >
+                      {errors.fldEstimateEndDate}
+                    </FormHelperText>
+                  )}
                 </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <FormControl sx={{ mt: 1, minWidth: 300 }}>
+                  <InputLabel id="fldEstimateEndTime">
+                    Estimate End Time
+                  </InputLabel>
+                  <Select
+                    labelId="fldEstimateEndTime"
+                    id="fldEstimateEndTime"
+                    value={values.fldEstimateEndTime}
+                    label="fldEstimateEndTime"
+                    onChange={handleChange}
+                    name="fldEstimateEndTime"
+                  >
+                    {hours.map((item) => (
+                      <MenuItem value={item}>{item}</MenuItem>
+                    ))}
+                  </Select>
+
+                  {touched.fldEstimateEndTime && errors.fldEstimateEndTime && (
+                    <FormHelperText error id="standard-weight-helper-fldEstimateEndTime">
+                      {errors.fldEstimateEndTime}
+                    </FormHelperText>
+                  )}
+                </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField

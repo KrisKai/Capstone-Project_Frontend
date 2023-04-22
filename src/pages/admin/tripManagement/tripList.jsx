@@ -22,14 +22,14 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "fldEstimateStartTime",
-    label: "Estimate Start Time",
+    id: "fldStartLocationName",
+    label: "Departure",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "fldEstimateArrivalTime",
-    label: "Estimate Arrival Time",
+    id: "fldEndLocationName",
+    label: "Destination",
     minWidth: 170,
     align: "center",
   },
@@ -38,7 +38,6 @@ const columns = [
     label: "Trip Status",
     minWidth: 130,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
   },
 ];
 
@@ -128,11 +127,11 @@ export default function StickyHeadTableTrip() {
     async function getAllTrips() {
       const response = await tripApi.getAll(filter);
       response.listOfTrip.forEach((trip) => {
-        trip.fldEstimateArrivalTime = trip.fldEstimateArrivalTime.substring(
-          0,
-          10
-        );
-        trip.fldEstimateStartTime = trip.fldEstimateStartTime.substring(0, 10);
+        // trip.fldEstimateArrivalTime = trip.fldEstimateArrivalTime.substring(
+        //   0,
+        //   10
+        // );
+        // trip.fldEstimateStartTime = trip.fldEstimateStartTime.substring(0, 10);
       });
       setAllTrips(response);
     }
