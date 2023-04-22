@@ -1,5 +1,5 @@
 import { Header, Rate, Schedule } from "components/Home";
-import { Container } from "@mui/material";
+import { Container, Box } from "@mui/material";
 
 const Home = () => {
   return (
@@ -7,7 +7,9 @@ const Home = () => {
       <Header />
       <Container>
         <Rate />
-        <Schedule />
+        <Box mt={10}>
+          <Schedule />
+        </Box>
       </Container>
     </div>
   );
