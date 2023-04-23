@@ -1,17 +1,25 @@
-import { Header, Rate, Schedule } from "components/Home";
+import { Explore, Header, Rate, Schedule, Footer } from "components/Home";
 import { Container, Box } from "@mui/material";
 
 const Home = () => {
   return (
-    <div>
+    <Box>
       <Header />
       <Container>
-        <Rate />
         <Box mt={10}>
           <Schedule />
         </Box>
+        <Box mt={10}>
+          <Rate />
+        </Box>
+        <Box mt={10}>
+          <Explore />
+        </Box>
       </Container>
-    </div>
+      <Box mt={10}>
+        <Footer />
+      </Box>
+    </Box>
   );
 };
 

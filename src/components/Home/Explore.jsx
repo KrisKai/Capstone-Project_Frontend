@@ -1,36 +1,23 @@
-import { Box, Card, IconButton } from "@mui/material";
-import { StarRounded } from "@material-ui/icons";
+import { Box, Card, CardMedia, IconButton } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import Image1 from "assets/images/unsplash_1.png";
+import Image2 from "assets/images/unsplash_2.png";
+import Image3 from "assets/images/unsplash_3.png";
+import Image4 from "assets/images/unsplash_4.png";
+
+const list = [Image1, Image2, Image3, Image4];
 
 const RateCard = (props) => {
   return (
-    <Card sx={{ minWidth: "295px" }}>
-      <Box display="flex" justifyContent="center">
-        {Array(5)
-          .fill()
-          .map((_, idx) => (
-            <StarRounded
-              key={idx}
-              htmlColor="#689F38"
-              fontSize="large"
-            ></StarRounded>
-          ))}
-      </Box>
-      <Box padding={1}>
-        Est sunt commodo ullamco voluptate fugiat voluptate laborum sint veniam
-        officia anim tempor. Reprehenderit aute aliquip exercitation velit
-        tempor nisi pariatur irure sit. Qui nostrud veniam deserunt fugiat. Sit
-        tempor ut do commodo cillum ea minim. Anim fugiat quis non id. Quis do
-        officia anim laborum deserunt nulla veniam officia est quis.
-        <div>asdasdasdasd</div>
-      </Box>
+    <Card sx={{ minWidth: "295px", minHeight: "200px" }}>
+      <CardMedia image={props.data} sx={{ height: "100%" }}></CardMedia>
     </Card>
   );
 };
 
-const Rate = () => {
+const Explore = () => {
   const [test, setTest] = useState(6);
   const [a, setA] = useState(0);
   const x = useRef();
@@ -51,7 +38,7 @@ const Rate = () => {
 
   return (
     <div>
-      <h1>Đánh giá của những người đã từng trải nghiệm</h1>
+      <h1>Khám phá điểm đến ngẫu hứng của bạn</h1>
       <Box display="flex" alignItems="center" position="relative" py="5px">
         <Box position="absolute" left="-20px">
           <IconButton
@@ -82,11 +69,9 @@ const Rate = () => {
           }}
           ref={x}
         >
-          {Array(test)
-            .fill()
-            .map((_, idx) => {
-              return <RateCard idx={idx} />;
-            })}
+          {list.map((data, idx) => {
+            return <RateCard key={idx} data={data} />;
+          })}
         </Box>
 
         <Box position="absolute" right="-17px">
@@ -122,4 +107,4 @@ const Rate = () => {
   );
 };
 
-export default Rate;
+export default Explore;
