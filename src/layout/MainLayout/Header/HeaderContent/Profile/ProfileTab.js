@@ -175,6 +175,8 @@ const ProfileTab = ({ handleLogout }) => {
           </Button>
         </DialogActions>
       </BootstrapDialog>
+
+      {/* modal Edit */}
       <BootstrapDialog
         onClose={handleCloseEdit}
         aria-labelledby="customized-dialog-title"

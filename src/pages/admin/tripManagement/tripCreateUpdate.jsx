@@ -1,4 +1,3 @@
-import { Button, FormHelperText } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -6,7 +5,23 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import {
+  Button,
+  FormHelperText,
+  IconButton,
+  styled,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Typography,
+  Box,
+  ButtonGroup,
+  Stack,
+  Input,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import PropTypes from "prop-types";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -14,17 +29,39 @@ import { tripApi, userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+// import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 import * as yup from "yup";
+// import gg map api
+import {
+  useJsApiLoader,
+  GoogleMap,
+  Marker,
+  Autocomplete,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
 
 dayjs.extend(utc);
 
-export default function UserCreate() {
+const center = { lat: 48.8584, lng: 2.2945 };
+
+export default function TripCreate() {
   let navigate = useNavigate();
   const { tripId } = useParams();
   const isEdit = Boolean(tripId);
+
+  // using for map
+  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [distance, setDistance] = useState("");
+  const [duration, setDuration] = useState("");
+  /** @type React.MutableRefObject<HTMLInputElement> */
+  const originRef = useRef();
+  /** @type React.MutableRefObject<HTMLInputElement> */
+  const destiantionRef = useRef();
+
   const [trip, setTrip] = useState({
     fldTripName: "",
     fldTripBudget: null,
@@ -48,6 +85,53 @@ export default function UserCreate() {
       fldFullname: "",
     },
   ]);
+  const [openView, setOpenView] = useState(false);
+  const handleOpenView = () => setOpenView(true);
+  const handleCloseView = () => setOpenView(false);
+
+  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    "& .MuiPaper-root": {
+      minWidth: 1500,
+    },
+    "& .MuiDialogContent-root": {
+      padding: theme.spacing(2),
+      width: "100%",
+    },
+    "& .MuiDialogActions-root": {
+      padding: theme.spacing(1),
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
+    },
+  }));
+  function BootstrapDialogTitle(props) {
+    const { children, onClose, ...other } = props;
+
+    return (
+      <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+        {children}
+        {onClose ? (
+          <IconButton
+            aria-label="close"
+            onClick={onClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        ) : null}
+      </DialogTitle>
+    );
+  }
+
+  BootstrapDialogTitle.propTypes = {
+    children: PropTypes.node,
+    onClose: PropTypes.func.isRequired,
+  };
 
   useEffect(() => {
     // IFFE
@@ -117,6 +201,31 @@ export default function UserCreate() {
   let hours = [];
   for (let i = 0; i < 24; i++) {
     hours.push(i);
+  }
+
+  function clearRoute() {
+    setDirectionsResponse(null);
+    setDistance("");
+    setDuration("");
+    originRef.current.value = "";
+    destiantionRef.current.value = "";
+  }
+
+  async function calculateRoute() {
+    if (originRef.current.value === "" || destiantionRef.current.value === "") {
+      return;
+    }
+    // eslint-disable-next-line no-undef
+    // const directionsService = new google.maps.DirectionsService()
+    // const results = await directionsService.route({
+    //   origin: originRef.current.value,
+    //   destination: destiantionRef.current.value,
+    //   // eslint-disable-next-line no-undef
+    //   travelMode: google.maps.TravelMode.DRIVING,
+    // })
+    // setDirectionsResponse(results)
+    // setDistance(results.routes[0].legs[0].distance.text)
+    // setDuration(results.routes[0].legs[0].duration.text)
   }
 
   return (
@@ -234,7 +343,10 @@ export default function UserCreate() {
                   </Select>
 
                   {touched.fldTripPresenter && errors.fldTripPresenter && (
-                    <FormHelperText error id="standard-weight-helper-fldTripPresenter">
+                    <FormHelperText
+                      error
+                      id="standard-weight-helper-fldTripPresenter"
+                    >
                       {errors.fldTripPresenter}
                     </FormHelperText>
                   )}
@@ -343,11 +455,15 @@ export default function UserCreate() {
                     ))}
                   </Select>
 
-                  {touched.fldEstimateStartTime && errors.fldEstimateStartTime && (
-                    <FormHelperText error id="standard-weight-helper-fldEstimateStartTime">
-                      {errors.fldEstimateStartTime}
-                    </FormHelperText>
-                  )}
+                  {touched.fldEstimateStartTime &&
+                    errors.fldEstimateStartTime && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-fldEstimateStartTime"
+                      >
+                        {errors.fldEstimateStartTime}
+                      </FormHelperText>
+                    )}
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={3}>
@@ -407,11 +523,18 @@ export default function UserCreate() {
                   </Select>
 
                   {touched.fldEstimateEndTime && errors.fldEstimateEndTime && (
-                    <FormHelperText error id="standard-weight-helper-fldEstimateEndTime">
+                    <FormHelperText
+                      error
+                      id="standard-weight-helper-fldEstimateEndTime"
+                    >
                       {errors.fldEstimateEndTime}
                     </FormHelperText>
                   )}
                 </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                Choose from map
+                <Button onClick={handleOpenView}>Open Map</Button>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -553,6 +676,89 @@ export default function UserCreate() {
           </form>
         )}
       </Formik>
+      <BootstrapDialog
+        onClose={handleCloseView}
+        aria-labelledby="customized-dialog-title"
+        open={openView}
+        sx={{ minWidth: "2000px" }}
+      >
+        <BootstrapDialogTitle
+          id="customized-dialog-title"
+          onClose={handleCloseView}
+        >
+          <Typography variant="h4">
+            Pick the Departure and Destination from map
+          </Typography>
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+          <Box
+            p={4}
+            borderRadius="lg"
+            m={4}
+            bgColor="white"
+            shadow="base"
+            zIndex="1"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Stack
+              spacing={1}
+              justifyContent="center"
+              sx={{ display: "flex", gap: 1, flexWrap: "wrap", p: 0, m: 0 }}
+              maxWidth={600}
+              direction="row"
+            >
+              <Box sx={{ flexGrow: 1 }}>
+                {/* <Autocomplete> */}
+                <Input type="text" placeholder="Origin" ref={originRef} />
+                {/* </Autocomplete> */}
+              </Box>
+              <Box sx={{ flexGrow: 1 }}>
+                {/* <Autocomplete> */}
+                <Input
+                  type="text"
+                  placeholder="Destination"
+                  ref={destiantionRef}
+                />
+                {/* </Autocomplete> */}
+              </Box>
+
+              <ButtonGroup>
+                <Button
+                  colorScheme="pink"
+                  type="submit"
+                  onClick={calculateRoute}
+                >
+                  Calculate Route
+                </Button>
+                {/* <IconButton
+                  aria-label="center back"
+                  icon={<FaTimes />}
+                  onClick={clearRoute}
+                /> */}
+              </ButtonGroup>
+            </Stack>
+            <Stack
+              spacing={4}
+              mt={4}
+              justifyContent="space-between"
+              maxWidth={600}
+            >
+              <Typography>Distance: {distance} </Typography>
+              <Typography>Duration: {duration} </Typography>
+              {/* <IconButton
+                aria-label="center back"
+                icon={<FaLocationArrow />}
+                isRound
+                onClick={() => {
+                  map.panTo(center);
+                  map.setZoom(15);
+                }}
+              /> */}
+            </Stack>
+          </Box>
+        </DialogContent>
+      </BootstrapDialog>
     </>
   );
 }
