@@ -71,7 +71,10 @@ export default function UserCreate() {
             label="Username"
             fullWidth
             value={user.fldUsername}
-            variant="standard"
+            variant="outlined"
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -81,7 +84,10 @@ export default function UserCreate() {
             label="Full name"
             fullWidth
             value={user.fldFullname}
-            variant="standard"
+            variant="outlined"
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -90,8 +96,11 @@ export default function UserCreate() {
             name="fldAddress"
             label="Address"
             fullWidth
-            variant="standard"
+            variant="outlined"
             value={user.fldAddress}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -100,8 +109,11 @@ export default function UserCreate() {
             name="fldPhone"
             label="Phone Number"
             fullWidth
-            variant="standard"
+            variant="outlined"
             value={user.fldPhone}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={2}>
@@ -110,19 +122,11 @@ export default function UserCreate() {
             name="fldRole"
             label="Role"
             fullWidth
-            variant="standard"
+            variant="outlined"
             value={user.fldRole}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="fldEmail"
-            name="fldEmail"
-            label="Email"
-            fullWidth
-            variant="standard"
-            type="email"
-            value={user.fldEmail}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -131,8 +135,25 @@ export default function UserCreate() {
             name="fldBirthday"
             label="Birthday"
             fullWidth
-            variant="standard"
+            variant="outlined"
             value={user.fldBirthday}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="fldEmail"
+            name="fldEmail"
+            label="Email"
+            fullWidth
+            variant="outlined"
+            type="email"
+            value={user.fldEmail}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={3}>
@@ -141,8 +162,11 @@ export default function UserCreate() {
             name="fldCreateBy"
             label="Create By"
             fullWidth
-            variant="standard"
+            variant="outlined"
             value={user.fldCreateBy}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={3}>
@@ -151,8 +175,11 @@ export default function UserCreate() {
             name="fldCreateDate"
             label="Create Date"
             fullWidth
-            variant="standard"
+            variant="outlined"
             value={user.fldCreateDate}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Grid>
         {user.fldUpdateBy !== null ? (
@@ -163,8 +190,11 @@ export default function UserCreate() {
                 name="fldUpdateBy"
                 label="Update By"
                 fullWidth
-                variant="standard"
+                variant="outlined"
                 value={user.fldUpdateBy}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={3}>
@@ -173,8 +203,11 @@ export default function UserCreate() {
                 name="fldUpdateDate"
                 label="Update Date"
                 fullWidth
-                variant="standard"
+                variant="outlined"
                 value={user.fldUpdateDate}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
             </Grid>
           </>

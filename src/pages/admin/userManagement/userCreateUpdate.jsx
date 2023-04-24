@@ -156,7 +156,9 @@ export default function UserCreate() {
                   value={values.fldUsername}
                   variant="standard"
                   onChange={handleChange}
-                  disabled={isEdit}
+                  InputProps={{
+                    readOnly: isEdit,
+                  }}
                 />
                 {touched.fldUsername && errors.fldUsername && (
                   <FormHelperText error id="standard-weight-helper-nickName">
@@ -255,7 +257,7 @@ export default function UserCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12} sm={2}>
+              <Grid item xs={12} sm={3}>
                 <FormControl sx={{ mt: 1, minWidth: 200 }}>
                   <InputLabel id="fldRole">Role</InputLabel>
                   <Select
@@ -282,24 +284,8 @@ export default function UserCreate() {
                     </FormHelperText>
                   )}
                 </FormControl>
-              </Grid><Grid item xs={12} sm={2}></Grid>
-              <Grid item xs={12} sm={8}>
-                <TextField
-                  id="fldEmail"
-                  name="fldEmail"
-                  label="Email"
-                  fullWidth
-                  variant="standard"
-                  value={values.fldEmail}
-                  onChange={handleChange}
-                />
-                {touched.fldEmail && errors.fldEmail && (
-                  <FormHelperText error id="standard-weight-helper-email">
-                    {errors.fldEmail}
-                  </FormHelperText>
-                )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={3}>
                 <LocalizationProvider
                   dateAdapter={AdapterDayjs}
                   dateLibInstance={dayjs.utc}
@@ -332,8 +318,25 @@ export default function UserCreate() {
                   </FormHelperText>
                 )}
               </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="fldEmail"
+                  name="fldEmail"
+                  label="Email"
+                  fullWidth
+                  variant="standard"
+                  value={values.fldEmail}
+                  onChange={handleChange}
+                />
+                {touched.fldEmail && errors.fldEmail && (
+                  <FormHelperText error id="standard-weight-helper-email">
+                    {errors.fldEmail}
+                  </FormHelperText>
+                )}
+              </Grid>
+              
               {isEdit ? (
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <FormControl sx={{ mt: 1, minWidth: 200 }}>
                     <InputLabel id="fldActiveStatus">Status</InputLabel>
                     <Select
@@ -360,7 +363,7 @@ export default function UserCreate() {
                   </FormControl>
                 </Grid>
               ) : (
-                <Grid item xs={12} sm={6}></Grid>
+                <Grid item xs={12}></Grid>
               )}
               <Grid item xs={12} sm={6}>
                 <Button variant="outlined" onClick={gotoList}>

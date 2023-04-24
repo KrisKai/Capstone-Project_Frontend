@@ -69,19 +69,19 @@ export default function UserCreate() {
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldTripName"
                   name="fldTripName"
                   label="Trip Name"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldTripName}
-                  disabled={true}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldTripBudget"
                   name="fldTripBudget"
                   label="Trip Budget"
@@ -90,23 +90,24 @@ export default function UserCreate() {
                     startAdornment: (
                       <InputAdornment position="start">VND</InputAdornment>
                     ),
+                    readOnly: true,
                   }}
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldTripBudget}
-                  disabled={true}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   id="fldTripDescription"
                   name="fldTripDescription"
                   label="Trip Description"
                   fullWidth
                   autoComplete=""
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldTripDescription}
-                  disabled={true}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -115,7 +116,6 @@ export default function UserCreate() {
                   dateLibInstance={dayjs.utc}
                 >
                   <DatePicker
-                    required
                     sx={{
                       "& .MuiInputBase-root": {
                         paddingY: 1,
@@ -130,7 +130,9 @@ export default function UserCreate() {
                     name="fldEstimateStartTime"
                     fullWidth
                     value={values.fldEstimateStartTime}
-                    disabled={true}
+                    InputProps={{
+                      readOnly: true,
+                    }}
                   />
                 </LocalizationProvider>
               </Grid>
@@ -140,7 +142,6 @@ export default function UserCreate() {
                   dateLibInstance={dayjs.utc}
                 >
                   <DatePicker
-                    required
                     sx={{
                       "& .MuiInputBase-root": {
                         paddingY: 1,
@@ -155,34 +156,38 @@ export default function UserCreate() {
                     label="Estimate Arrival Time"
                     fullWidth
                     value={values.fldEstimateArrivalTime}
-                    disabled={true}
+                    InputProps={{
+                      readOnly: true,
+                    }}
                   />
                 </LocalizationProvider>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="fldTripMember"
                   name="fldTripMember"
                   label="Trip Member"
                   type="number"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldTripMember}
-                  disabled={true}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   id="fldTripStatus"
                   name="fldTripStatus"
                   label="Trip Status"
                   fullWidth
                   autoComplete=""
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldTripStatus}
-                  disabled={true}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
