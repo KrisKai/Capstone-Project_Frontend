@@ -72,10 +72,8 @@ export default function TripCreate() {
     fldEstimateEndTime: null,
     fldTripMember: "",
     fldTripPresenter: "",
-    fldTripStartLocationName: "",
-    fldTripStartLocationAddress: "",
-    fldTripDestinationLocationName: "",
-    fldTripDestinationLocationAddress: "",
+    fldStartLocationName: "",
+    fldEndLocationName: "",
     fldTripStatus: "ACTIVE",
   });
   const [user, setUser] = useState([
@@ -189,13 +187,13 @@ export default function TripCreate() {
     fldTripPresenter: yup
       .string("Enter Trip Presenter")
       .required("Trip Presenter is required"),
-    fldTripStartLocationName: yup
+    fldStartLocationName: yup
       .string("Enter Trip Start Location Name")
       .required("Trip Start Location Name is required"),
     fldTripStartLocationAddress: yup
       .string("Enter Trip Start Location Address")
       .required("Trip Start Location Address is required"),
-    fldTripDestinationLocationName: yup
+    fldEndLocationName: yup
       .string("Enter Trip Destination Location Name")
       .required("Trip Destination Location Name is required"),
     fldTripDestinationLocationAddress: yup
@@ -543,97 +541,55 @@ export default function TripCreate() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  id="fldTripStartLocationName"
-                  name="fldTripStartLocationName"
+                  id="fldStartLocationName"
+                  name="fldStartLocationName"
                   label="Trip Start Location Name"
                   fullWidth
                   variant="standard"
-                  value={values.fldTripStartLocationName}
+                  value={values.fldStartLocationName}
                   onChange={handleChange}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                   error={Boolean(
-                    touched.fldTripStartLocationName &&
-                      errors.fldTripStartLocationName
+                    touched.fldStartLocationName &&
+                      errors.fldStartLocationName
                   )}
                 />
-                {touched.fldTripStartLocationName &&
-                  errors.fldTripStartLocationName && (
+                {touched.fldStartLocationName &&
+                  errors.fldStartLocationName && (
                     <FormHelperText
                       error
-                      id="standard-weight-helper-fldTripStartLocationName"
+                      id="standard-weight-helper-fldStartLocationName"
                     >
-                      {errors.fldTripStartLocationName}
+                      {errors.fldStartLocationName}
                     </FormHelperText>
                   )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  id="fldTripStartLocationAddress"
-                  name="fldTripStartLocationAddress"
-                  label="Trip Start Location Address"
-                  fullWidth
-                  variant="standard"
-                  value={values.fldTripStartLocationAddress}
-                  onChange={handleChange}
-                  error={Boolean(
-                    touched.fldTripStartLocationAddress &&
-                      errors.fldTripStartLocationAddress
-                  )}
-                />
-                {touched.fldTripStartLocationAddress &&
-                  errors.fldTripStartLocationAddress && (
-                    <FormHelperText
-                      error
-                      id="standard-weight-helper-fldTripStartLocationAddress"
-                    >
-                      {errors.fldTripStartLocationAddress}
-                    </FormHelperText>
-                  )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="fldTripDestinationLocationName"
-                  name="fldTripDestinationLocationName"
+                  id="fldEndLocationName"
+                  name="fldEndLocationName"
                   label="Trip Destination Location Name"
                   fullWidth
                   variant="standard"
-                  value={values.fldTripDestinationLocationName}
+                  value={values.fldEndLocationName}
                   onChange={handleChange}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                   error={Boolean(
-                    touched.fldTripDestinationLocationName &&
-                      errors.fldTripDestinationLocationName
+                    touched.fldEndLocationName &&
+                      errors.fldEndLocationName
                   )}
                 />
-                {touched.fldTripDestinationLocationName &&
-                  errors.fldTripDestinationLocationName && (
+                {touched.fldEndLocationName &&
+                  errors.fldEndLocationName && (
                     <FormHelperText
                       error
-                      id="standard-weight-helper-fldTripDestinationLocationName"
+                      id="standard-weight-helper-fldEndLocationName"
                     >
-                      {errors.fldTripDestinationLocationName}
-                    </FormHelperText>
-                  )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="fldTripDestinationLocationAddress"
-                  name="fldTripDestinationLocationAddress"
-                  label="Trip Destination Location Address"
-                  fullWidth
-                  variant="standard"
-                  value={values.fldTripDestinationLocationAddress}
-                  onChange={handleChange}
-                  error={Boolean(
-                    touched.fldTripDestinationLocationAddress &&
-                      errors.fldTripDestinationLocationAddress
-                  )}
-                />
-                {touched.fldTripDestinationLocationAddress &&
-                  errors.fldTripDestinationLocationAddress && (
-                    <FormHelperText
-                      error
-                      id="standard-weight-helper-fldTripDestinationLocationAddress"
-                    >
-                      {errors.fldTripDestinationLocationAddress}
+                      {errors.fldEndLocationName}
                     </FormHelperText>
                   )}
               </Grid>
