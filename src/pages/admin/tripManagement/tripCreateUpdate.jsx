@@ -34,6 +34,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 // import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 import * as yup from "yup";
+import Map from "./Map";
 // import gg map api
 import {
   useJsApiLoader,
@@ -93,12 +94,10 @@ export default function TripCreate() {
   // })
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    "& .MuiPaper-root": {
-      minWidth: 1500,
-    },
     "& .MuiDialogContent-root": {
       padding: theme.spacing(2),
       width: "100%",
+      position: "relative",
     },
     "& .MuiDialogActions-root": {
       padding: theme.spacing(1),
@@ -168,6 +167,11 @@ export default function TripCreate() {
   function gotoList() {
     navigate("/admin/tripList");
   }
+
+  //đây là chỗ lấy dữ liệu từ map (mà api key bay màu rồi :v)
+  const test1 = (a) => {
+    console.log(a);
+  };
 
   const validationSchema = yup.object().shape({
     fldTripName: yup
@@ -552,8 +556,7 @@ export default function TripCreate() {
                     readOnly: true,
                   }}
                   error={Boolean(
-                    touched.fldStartLocationName &&
-                      errors.fldStartLocationName
+                    touched.fldStartLocationName && errors.fldStartLocationName
                   )}
                 />
                 {touched.fldStartLocationName &&
@@ -579,19 +582,17 @@ export default function TripCreate() {
                     readOnly: true,
                   }}
                   error={Boolean(
-                    touched.fldEndLocationName &&
-                      errors.fldEndLocationName
+                    touched.fldEndLocationName && errors.fldEndLocationName
                   )}
                 />
-                {touched.fldEndLocationName &&
-                  errors.fldEndLocationName && (
-                    <FormHelperText
-                      error
-                      id="standard-weight-helper-fldEndLocationName"
-                    >
-                      {errors.fldEndLocationName}
-                    </FormHelperText>
-                  )}
+                {touched.fldEndLocationName && errors.fldEndLocationName && (
+                  <FormHelperText
+                    error
+                    id="standard-weight-helper-fldEndLocationName"
+                  >
+                    {errors.fldEndLocationName}
+                  </FormHelperText>
+                )}
               </Grid>
               {isEdit ? (
                 <Grid item xs={12}>
@@ -641,7 +642,6 @@ export default function TripCreate() {
         onClose={handleCloseView}
         aria-labelledby="customized-dialog-title"
         open={openView}
-        sx={{ minWidth: "2000px" }}
       >
         <BootstrapDialogTitle
           id="customized-dialog-title"
@@ -652,72 +652,7 @@ export default function TripCreate() {
           </Typography>
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Box
-            p={4}
-            borderRadius="lg"
-            m={4}
-            bgColor="white"
-            shadow="base"
-            zIndex="1"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Stack
-              spacing={1}
-              justifyContent="center"
-              sx={{ display: "flex", gap: 1, flexWrap: "wrap", p: 0, m: 0 }}
-              maxWidth={600}
-              direction="row"
-            >
-              <Box sx={{ flexGrow: 1 }}>
-                {/* <Autocomplete> */}
-                <Input type="text" placeholder="Origin" ref={originRef} />
-                {/* </Autocomplete> */}
-              </Box>
-              <Box sx={{ flexGrow: 1 }}>
-                {/* <Autocomplete> */}
-                <Input
-                  type="text"
-                  placeholder="Destination"
-                  ref={destiantionRef}
-                />
-                {/* </Autocomplete> */}
-              </Box>
-
-              <ButtonGroup>
-                <Button
-                  colorScheme="pink"
-                  type="submit"
-                  onClick={calculateRoute}
-                >
-                  Calculate Route
-                </Button>
-                {/* <IconButton
-                  aria-label="center back"
-                  icon={<FaTimes />}
-                  onClick={clearRoute}
-                /> */}
-              </ButtonGroup>
-            </Stack>
-            <Stack
-              spacing={4}
-              mt={4}
-              justifyContent="space-between"
-              maxWidth={600}
-            >
-              <Typography>Distance: {distance} </Typography>
-              <Typography>Duration: {duration} </Typography>
-              {/* <IconButton
-                aria-label="center back"
-                icon={<FaLocationArrow />}
-                isRound
-                onClick={() => {
-                  map.panTo(center);
-                  map.setZoom(15);
-                }}
-              /> */}
-            </Stack>
-          </Box>
+          <Map test={test1} />
         </DialogContent>
       </BootstrapDialog>
     </>
