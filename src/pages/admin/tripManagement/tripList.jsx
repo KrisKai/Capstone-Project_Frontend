@@ -126,13 +126,6 @@ export default function StickyHeadTableTrip() {
   useEffect(() => {
     async function getAllTrips() {
       const response = await tripApi.getAll(filter);
-      response.listOfTrip.forEach((trip) => {
-        // trip.fldEstimateArrivalTime = trip.fldEstimateArrivalTime.substring(
-        //   0,
-        //   10
-        // );
-        // trip.fldEstimateStartTime = trip.fldEstimateStartTime.substring(0, 10);
-      });
       setAllTrips(response);
     }
     getAllTrips();
@@ -194,6 +187,7 @@ export default function StickyHeadTableTrip() {
                               key={column.id}
                               align={column.align}
                               onClick={() => gotoView(row.fldTripId)}
+                              style={{ textDecoration: "underline" }}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)

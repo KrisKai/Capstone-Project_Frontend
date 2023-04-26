@@ -74,7 +74,7 @@ export default function UserCreate() {
       .string()
       .email("Enter Valid Email")
       .required("Email is required"),
-    fldPhone: yup.number().required("Phone is required"),
+    fldPhone: yup.string().matches("^[0-9]{10,11}","Invalid number phone").required("Phone is required"),
     fldAddress: yup.string("Enter Address").required("Address is required"),
     fldBirthday: yup.string("Enter Birthday").required("Birthday is required"),
     fldRole: yup.string("Enter Role").required("Role is required"),
@@ -226,7 +226,6 @@ export default function UserCreate() {
 
               <Grid item xs={12} sm={6}>
                 <TextField
-                  
                   id="fldAddress"
                   name="fldAddress"
                   label="Address"
@@ -331,7 +330,7 @@ export default function UserCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              
+
               {isEdit ? (
                 <Grid item xs={12}>
                   <FormControl sx={{ mt: 1, minWidth: 200 }}>
