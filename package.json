@@ -53,6 +53,7 @@
     "redux-saga-jwt": "^1.1.1-next.3",
     "simplebar-react": "^3.2.2",
     "stylis-plugin-rtl": "^2.1.1",
+    "use-places-autocomplete": "^4.0.0",
     "util": "^0.12.5",
     "web-vitals": "^3.1.1",
     "yup": "^1.0.2"
