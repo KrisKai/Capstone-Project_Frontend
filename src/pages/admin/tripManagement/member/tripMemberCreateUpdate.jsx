@@ -63,9 +63,11 @@ export default function UserCreate() {
       setRole(role.listOfRole);
       if (!tripId || !memberId) return;
       try {
-        const data = await tripMemberApi.getById(tripId);
+        const data = await tripMemberApi.getById(memberId);
         if (data != null && data != "") {
           setMember(data);
+          setName(data.fldFullname);
+          setEmail(data.fldEmail);
         } else {
           navigate(`/admin/tripMemberList/${tripId}`);
         }
@@ -195,7 +197,9 @@ export default function UserCreate() {
                   fullWidth
                   variant="standard"
                   value={name}
-                  disabled={true}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
@@ -206,7 +210,9 @@ export default function UserCreate() {
                   fullWidth
                   variant="standard"
                   value={email}
-                  disabled={true}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
