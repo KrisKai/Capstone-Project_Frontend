@@ -268,11 +268,8 @@ export default function UserCreate() {
                     onChange={handleChange}
                     name="fldRole"
                   >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
                     <MenuItem value="USER">User</MenuItem>
-                    {currentUser.role === "ADMIN" && (
+                    {currentUser.role === "Admin" && (
                       <MenuItem value="ADMIN">Admin</MenuItem>
                     )}
                     <MenuItem value="EMPL">Employee</MenuItem>

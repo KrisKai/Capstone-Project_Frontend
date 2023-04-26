@@ -1,7 +1,7 @@
 export const REACT_APP_API_URL =
   'https://localhost:7184/api/v1.0';
 
-export const GOOGLE_MAP_API = "AIzaSyB7F0z0GNk2jK36TjezqQFI1Iz-sxLkNfc";
+export const GOOGLE_MAP_API = "AIzaSyCQjsNlraM6qlx4weIZSz9PFW6DN-P0_H8";
 
 // ==============================|| THEME CONFIG  ||============================== //
 

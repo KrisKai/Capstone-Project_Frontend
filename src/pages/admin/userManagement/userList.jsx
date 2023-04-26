@@ -56,7 +56,7 @@ export default function StickyHeadTableUser() {
   const userList = allUsers.listOfUser;
   const numOfUser = allUsers.numOfUser;
   const currentUser = useAppSelector(selectCurrentUser);
-  const isAdmin = Boolean(currentUser.role === "ADMIN");
+  const isAdmin = Boolean(currentUser.role === "Admin");
 
   const [search, setSearch] = useState("");
 
