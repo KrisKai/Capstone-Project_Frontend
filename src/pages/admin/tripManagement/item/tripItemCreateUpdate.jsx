@@ -107,6 +107,7 @@ export default function TripItemCreate() {
         onSubmit={async (values, { setErrors, setStatus }) => {
           try {
             setStatus({ success: false });
+            console.log(values)
             let reponse;
             if (isEdit) {
               reponse = await tripItemApi.update(values);
@@ -171,7 +172,7 @@ export default function TripItemCreate() {
                 <TextField
                   id="fldItemName"
                   name="fldItemName"
-                  label="Item Name"
+                  label="Item Name *"
                   fullWidth
                   variant="standard"
                   value={values.fldItemName}
@@ -191,11 +192,13 @@ export default function TripItemCreate() {
                 <TextField
                   id="fldItemDescription"
                   name="fldItemDescription"
-                  label="Item Description"
+                  label="Item Description *"
                   fullWidth
                   variant="standard"
                   value={values.fldItemDescription}
                   onChange={handleChange}
+                  multiline
+                  maxRows={4}
                   error={Boolean(
                     touched.fldItemDescription && errors.fldItemDescription
                   )}
@@ -213,7 +216,7 @@ export default function TripItemCreate() {
                 <TextField
                   id="fldPriceMin"
                   name="fldPriceMin"
-                  label="Price Min"
+                  label="Price Min *"
                   fullWidth
                   variant="standard"
                   value={values.fldPriceMin}
@@ -233,7 +236,7 @@ export default function TripItemCreate() {
                 <TextField
                   id="fldPriceMax"
                   name="fldPriceMax"
-                  label="Price Max"
+                  label="Price Max *"
                   fullWidth
                   variant="standard"
                   value={values.fldPriceMax}
@@ -251,7 +254,7 @@ export default function TripItemCreate() {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <FormControl sx={{ mt: 1, minWidth: 400 }}>
-                  <InputLabel id="fldCategoryId">Category</InputLabel>
+                  <InputLabel id="fldCategoryId">Category *</InputLabel>
                   <Select
                     labelId="fldCategoryId"
                     id="fldCategoryId"
@@ -280,7 +283,7 @@ export default function TripItemCreate() {
                 <TextField
                   id="fldQuantity"
                   name="fldQuantity"
-                  label="Quantity"
+                  label="Quantity *"
                   type="number"
                   fullWidth
                   variant="standard"

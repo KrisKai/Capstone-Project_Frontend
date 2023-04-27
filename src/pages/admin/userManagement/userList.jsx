@@ -119,6 +119,7 @@ export default function StickyHeadTableUser() {
       default: {
         if (response > 0) {
           toast.success("Change Status Successed!");
+          window.location.reload(false);
         }
       }
     }
