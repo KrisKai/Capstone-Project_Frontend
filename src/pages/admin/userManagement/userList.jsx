@@ -102,6 +102,28 @@ export default function StickyHeadTableUser() {
     }
   };
 
+  const handleChangeStatus = async (id, status) => {
+    let response = await userApi.changeStatus({
+      fldUserId: id,
+      fldActiveStatus: status,
+    });
+    switch (response.Code) {
+      case "G001":
+        return toast.error(response.Message);
+      case "U001":
+        return toast.error(response.Message);
+      case "I001":
+        return toast.error(response.Message);
+      case "V001":
+        return toast.error(response.Message);
+      default: {
+        if (response > 0) {
+          toast.success("Change Status Successed!");
+        }
+      }
+    }
+  };
+
   const handleDelete = async (id) => {
     try {
       // Remove user API
@@ -169,9 +191,14 @@ export default function StickyHeadTableUser() {
                   </TableCell>
                 ))}
                 {isAdmin && (
-                  <TableCell key="reset" align="center">
-                    Reset Password
-                  </TableCell>
+                  <>
+                    <TableCell key="status" align="center">
+                      Change Status
+                    </TableCell>
+                    <TableCell key="reset" align="center">
+                      Reset Password
+                    </TableCell>
+                  </>
                 )}
                 <TableCell key="edit" align="center">
                   Edit || Delete
@@ -213,16 +240,56 @@ export default function StickyHeadTableUser() {
                       );
                     })}
                     {isAdmin && (
-                      <TableCell key="reset" align="center">
-                        <Button
-                          variant="outlined"
-                          value={row.fldUserId}
-                          onClick={(e) => handleReset(e.target.value)}
-                          color="primary"
-                        >
-                          Reset Password
-                        </Button>
-                      </TableCell>
+                      <>
+                        <TableCell key="status" align="center">
+                          {row.fldActiveStatus !== "ACTIVE" && (
+                            <Button
+                              variant="outlined"
+                              value={row.fldUserId}
+                              onClick={(e) =>
+                                handleChangeStatus(e.target.value, "ACTIVE")
+                              }
+                              color="primary"
+                            >
+                              Active
+                            </Button>
+                          )}
+                          {row.fldActiveStatus !== "INACTIVE" && (
+                            <Button
+                              variant="outlined"
+                              value={row.fldUserId}
+                              onClick={(e) =>
+                                handleChangeStatus(e.target.value, "INACTIVE")
+                              }
+                              color="warning"
+                            >
+                              Inactive
+                            </Button>
+                          )}
+                          {row.fldActiveStatus !== "BANNED" && (
+                            <Button
+                              variant="outlined"
+                              value={row.fldUserId}
+                              onClick={(e) =>
+                                handleChangeStatus(e.target.value, "BANNED")
+                              }
+                              color="error"
+                            >
+                              Banned
+                            </Button>
+                          )}
+                        </TableCell>
+                        <TableCell key="reset" align="center">
+                          <Button
+                            variant="outlined"
+                            value={row.fldUserId}
+                            onClick={(e) => handleReset(e.target.value)}
+                            color="primary"
+                          >
+                            Reset Password
+                          </Button>
+                        </TableCell>
+                      </>
                     )}
                     <TableCell key="edit" align="center">
                       <Button

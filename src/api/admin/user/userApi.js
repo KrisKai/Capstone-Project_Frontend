@@ -29,6 +29,10 @@ const userApi = {
     const url = "/users/change-password";
     return axiosInstance.put(url, data);
   },
+  changeStatus(data) {
+    const url = "/users/change-status";
+    return axiosInstance.put(url, data);
+  },
 };
 
 export default userApi;

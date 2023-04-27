@@ -330,37 +330,6 @@ export default function UserCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-
-              {isEdit ? (
-                <Grid item xs={12}>
-                  <FormControl sx={{ mt: 1, minWidth: 200 }}>
-                    <InputLabel id="fldActiveStatus">Status</InputLabel>
-                    <Select
-                      labelId="fldActiveStatus"
-                      id="fldActiveStatus"
-                      value={values.fldActiveStatus}
-                      label="fldActiveStatus"
-                      onChange={handleChange}
-                      name="fldActiveStatus"
-                    >
-                      <MenuItem value="ACTIVE">Active</MenuItem>
-                      <MenuItem value="INACTIVE">Inactive</MenuItem>
-                      <MenuItem value="BANNED">Banned</MenuItem>
-                    </Select>
-
-                    {touched.fldActiveStatus && errors.fldActiveStatus && (
-                      <FormHelperText
-                        error
-                        id="standard-weight-helper-fldActiveStatus"
-                      >
-                        {errors.fldActiveStatus}
-                      </FormHelperText>
-                    )}
-                  </FormControl>
-                </Grid>
-              ) : (
-                <Grid item xs={12}></Grid>
-              )}
               <Grid item xs={12} sm={6}>
                 <Button variant="outlined" onClick={gotoList}>
                   Return to List
