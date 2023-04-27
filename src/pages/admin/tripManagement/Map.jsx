@@ -10,7 +10,7 @@ import { GOOGLE_MAP_API } from "config";
 
 import { useRef, useState } from "react";
 
-const center = { lat: 48.8584, lng: 2.2945 };
+const center = { lat: 16.0545, lng: 108.0717 };
 
 export default function Map({ test1 }) {
   const { isLoaded } = useJsApiLoader({
@@ -69,7 +69,7 @@ export default function Map({ test1 }) {
   return (
     <>
       {/* Google Map Box */}
-      <Box height="500px" width="950px" position="relative">
+      <Box height="800px" width="1300px" position="relative">
         <Box display="flex" justifyContent="space-between" width="100%">
           <Box>
             <Autocomplete>
@@ -113,7 +113,7 @@ export default function Map({ test1 }) {
           <GoogleMap
             center={center}
             zoom={15}
-            mapContainerStyle={{ width: "100%", height: "100%" }}
+            mapContainerStyle={{ width: "1300px", height: "100%" }}
             options={{
               zoomControl: false,
               streetViewControl: false,
