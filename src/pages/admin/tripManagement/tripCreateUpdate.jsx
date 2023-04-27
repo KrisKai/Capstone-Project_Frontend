@@ -94,6 +94,9 @@ export default function TripCreate() {
   // })
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    "& .MuiPaper-root": {
+      minWidth: "1000px",
+    },
     "& .MuiDialogContent-root": {
       padding: theme.spacing(2),
       width: "100%",

@@ -69,13 +69,8 @@ export default function Map({ test1 }) {
   return (
     <>
       {/* Google Map Box */}
-      <Box height="800px" width="800px" position="relative">
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          width="100%"
-          position="absolute"
-        >
+      <Box height="500px" width="950px" position="relative">
+        <Box display="flex" justifyContent="space-between" width="100%">
           <Box>
             <Autocomplete>
               <Input type="text" placeholder="Origin" ref={originRef} />
