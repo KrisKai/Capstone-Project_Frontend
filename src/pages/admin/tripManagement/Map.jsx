@@ -13,7 +13,7 @@ const center = { lat: 48.8584, lng: 2.2945 };
 
 export default function Map({ test1 }) {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyDqeGMMEhU3IkZeul1IC1QPrwH0bX64biY55",
+    googleMapsApiKey: "AIzaSyDqeGMMEhU3IkZeul1IC1QPrwH0bX64biY",
     libraries: ["places"],
   });
 
@@ -68,13 +68,8 @@ export default function Map({ test1 }) {
   return (
     <>
       {/* Google Map Box */}
-      <Box height="800px" width="800px" position="relative">
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          width="100%"
-          position="absolute"
-        >
+      <Box height="500px" width="950px" position="relative">
+        <Box display="flex" justifyContent="space-between" width="100%">
           <Box>
             <Autocomplete>
               <Input type="text" placeholder="Origin" ref={originRef} />
