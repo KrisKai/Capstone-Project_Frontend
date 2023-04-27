@@ -6,6 +6,7 @@ import {
   Autocomplete,
   DirectionsRenderer,
 } from "@react-google-maps/api";
+import { GOOGLE_MAP_API } from "config";
 
 import { useRef, useState } from "react";
 
@@ -13,7 +14,7 @@ const center = { lat: 48.8584, lng: 2.2945 };
 
 export default function Map({ test1 }) {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyDqeGMMEhU3IkZeul1IC1QPrwH0bX64biY55",
+    googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
   });
 
