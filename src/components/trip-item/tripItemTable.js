@@ -20,7 +20,7 @@ const columns = [
     label: "Item Name",
     minWidth: 100,
     format: (value) => value.toLocaleString("en-US"),
-    onclick: true
+    onclick: true,
   },
   {
     id: "fldItemDescription",
@@ -38,7 +38,7 @@ const columns = [
   },
 ];
 
-export default function StickyHeadTableTripItem() {
+export default function StickyHeadTableTripItem(props) {
   let navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [allTripItems, setAllTripItems] = useState({
@@ -49,6 +49,7 @@ export default function StickyHeadTableTripItem() {
     pageIndex: 0,
     pageSize: 10,
     itemName: "",
+    categoryId: props.category.fldCategoryId,
   });
   const itemList = allTripItems.listOfItem;
   const numberOfItem = allTripItems.numOfItem;
@@ -134,19 +135,29 @@ export default function StickyHeadTableTripItem() {
   return (
     <>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <Box sx={{ mt: 1, mb: 1 }} textAlign="right">
-          <TextField
-            id="search"
-            type="search"
-            label="Search"
-            value={searchTerm}
-            onChange={handleChange}
-            sx={{ width: 400 }}
-          />
-          <Button variant="outlined" onClick={handleSearch} sx={{ height: 42 }}>
-            Search
-          </Button>
-        </Box>
+        <Grid container sx={{ mt: 1, mb: 1 }}>
+          <Grid xs={6} sx={{ pl: 1 }}>
+            <h2>{props.category.fldCategoryName}</h2>
+          </Grid>
+          <Grid xs={6} textAlign="right" sx={{ pr: 1 }}>
+            <TextField
+              id="search"
+              type="search"
+              label="Search"
+              value={searchTerm}
+              onChange={handleChange}
+              sx={{ width: 400 }}
+            />
+            <Button
+              variant="outlined"
+              onClick={handleSearch}
+              sx={{ height: 42 }}
+            >
+              Search
+            </Button>
+          </Grid>
+        </Grid>
+        <Box sx={{ mt: 1, mb: 1 }} textAlign="right"></Box>
 
         <TableContainer>
           <Table stickyHeader aria-label="sticky table">
@@ -233,18 +244,7 @@ export default function StickyHeadTableTripItem() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <Grid container sx={{ mt: 2 }}>
-        <Grid xs={6}>
-          <Button variant="outlined" onClick={gotoList} right>
-            Return to Detail
-          </Button>
-        </Grid>
-        <Grid xs={6} textAlign="right">
-          <Button variant="outlined" onClick={gotoCreate} right>
-            Create
-          </Button>
-        </Grid>
-      </Grid>
+      <Grid container sx={{ mt: 2 }}></Grid>
     </>
   );
 }

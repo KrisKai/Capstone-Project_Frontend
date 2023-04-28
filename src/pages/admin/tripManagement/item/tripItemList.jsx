@@ -105,8 +105,20 @@ export default function TripItem() {
   return (
     <>
       {categoryList.map((category) => (
-        <StickyHeadTableTripItem />
+        <StickyHeadTableTripItem category={category} />
       ))}
+      <Grid container sx={{ mt: 2 }}>
+        <Grid xs={6}>
+          <Button variant="outlined" onClick={gotoList} right>
+            Return to Detail
+          </Button>
+        </Grid>
+        <Grid xs={6} textAlign="right">
+          <Button variant="outlined" onClick={gotoCreate}>
+            Create
+          </Button>
+        </Grid>
+      </Grid>
     </>
   );
 }

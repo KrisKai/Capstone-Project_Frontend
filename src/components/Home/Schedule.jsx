@@ -4,7 +4,7 @@ import Icon2 from "assets/images/icon_2.svg";
 import Icon3 from "assets/images/icon_3.svg";
 import Icon4 from "assets/images/icon_4.svg";
 
-const list = [Icon1, Icon1, Icon3, Icon4];
+const list = [Icon1, Icon2, Icon3, Icon4];
 
 const Schedule = () => {
   return (
