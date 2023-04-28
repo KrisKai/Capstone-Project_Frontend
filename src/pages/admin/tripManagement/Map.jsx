@@ -72,7 +72,8 @@ export default function Map({ test1 }) {
       <Box height="800px" width="1300px" position="relative">
         <Box display="flex" justifyContent="space-between" width="100%">
           <Box>
-            <Autocomplete>
+            <Autocomplete
+            >
               <Input type="text" placeholder="Origin" ref={originRef} />
             </Autocomplete>
           </Box>
