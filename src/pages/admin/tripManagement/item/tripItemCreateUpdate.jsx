@@ -89,9 +89,7 @@ export default function TripItemCreate() {
     fldPriceMax: yup
       .string("Enter Price Max")
       .required("Price Max is required"),
-    fldCategoryId: yup
-      .string("Choose Category")
-      .required("Category is required"),
+    fldCategoryId: yup.number().min(1).required("Category is required"),
     fldQuantity: yup.number().min(1).required("Quantity is required"),
   });
 
