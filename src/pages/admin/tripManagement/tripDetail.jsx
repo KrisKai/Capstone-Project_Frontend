@@ -88,10 +88,10 @@ export default function StickyHeadTableTrip() {
               color="text.secondary"
               gutterBottom
             >
-              Trip Plan
+              Trip Route
             </Typography>
             <Typography variant="body2" sx={{ mt: 3 }}>
-              includes {planList} plan(s)
+              includes {planList} location(s)
             </Typography>
           </CardContent>
           <CardActions>
