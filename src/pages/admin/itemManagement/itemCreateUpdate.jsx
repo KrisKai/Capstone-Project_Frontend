@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { itemApi, userApi } from "api";
+import { itemApi, userApi, itemCategoryApi } from "api";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -50,6 +50,11 @@ export default function ItemCreate() {
         userName: "",
       });
       setUser(response.listOfUser);
+      const categoryList = await itemCategoryApi.getAll({
+        pageIndex: 0,
+        pageSize: 99999999,
+      });
+      setCategory(categoryList.listOfCategory);
       if (!itemId) return;
       try {
         const data = await itemApi.getById(itemId);
@@ -79,9 +84,9 @@ export default function ItemCreate() {
     fldItemDescription: yup
       .string("Enter Item Description")
       .required("Item Description is required"),
-    fldItemUsage: yup
-      .string("Enter Item Usage")
-      .required("Item Usage is required"),
+    // fldItemUsage: yup
+    //   .string("Enter Item Usage")
+    //   .required("Item Usage is required"),
     fldCategoryId: yup
       .string("Choose Category")
       .required("Category is required"),

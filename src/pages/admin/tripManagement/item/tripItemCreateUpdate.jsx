@@ -24,7 +24,12 @@ export default function TripItemCreate() {
   const isEdit = Boolean(itemId);
   const [item, setItem] = useState({
     fldTripId: tripId,
-    fldItemDescription: null,
+    fldItemName: "",
+    fldItemDescription: "",
+    fldPriceMin: "",
+    fldPriceMax: "",
+    fldQuantity: "",
+    fldCategoryId: "",
   });
   const [trip, setTrip] = useState({
     fldTripId: "",
