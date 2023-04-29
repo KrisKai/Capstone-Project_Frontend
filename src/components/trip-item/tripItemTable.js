@@ -30,8 +30,8 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "fldCategoryName",
-    label: "Category Name",
+    id: "fldQuantity",
+    label: "Quantity",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
