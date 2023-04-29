@@ -7,13 +7,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { tripItemApi } from "api";
+import { itemApi } from "api";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Grid from "@mui/material/Grid";
 
 const columns = [
+  // { id: "fldItemId", label: "Item Id", minWidth: 100, onclick: true },
   {
     id: "fldItemName",
     label: "Item Name",
@@ -29,6 +30,13 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
+    id: "fldCategoryName",
+    label: "Category Name",
+    minWidth: 100,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
     id: "fldQuantity",
     label: "Quantity",
     minWidth: 100,
@@ -37,10 +45,10 @@ const columns = [
   },
 ];
 
-export default function StickyHeadTableTripItem(props) {
+export default function StickyHeadTableItem(props) {
   let navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [allTripItems, setAllTripItems] = useState({
+  const [allItems, setAllItems] = useState({
     listOfItem: [],
     numOfItem: 0,
   });
@@ -48,11 +56,9 @@ export default function StickyHeadTableTripItem(props) {
     pageIndex: 0,
     pageSize: 10,
     itemName: "",
-    categoryId: props.category.fldCategoryId,
   });
-  const itemList = allTripItems.listOfItem;
-  const numberOfItem = allTripItems.numOfItem;
-  const { tripId } = useParams();
+  const itemList = allItems.listOfItem;
+  const numberOfItem = allItems.numOfItem;
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -88,22 +94,22 @@ export default function StickyHeadTableTripItem(props) {
 
   const handleUpdate = (id) => {
     // update
-    navigate(`/admin/tripItemUpdate/${tripId}/${id}`);
+    navigate(`/admin/itemUpdate/${id}`);
   };
 
   const handleDelete = async (id) => {
     try {
-      // Remove trip API
-      await tripItemApi.delete(id || "");
+      // Remove item API
+      await itemApi.delete(id || "");
 
-      toast.success("Remove trip item successfully!");
+      toast.success("Remove item successfully!");
 
       // Trigger to re-fetch student list with current filter
       const newFilter = { ...filter };
       setFilter(newFilter);
     } catch (error) {
       // Toast error
-      console.log("Failed to fetch trip", error);
+      console.log("Failed to fetch item", error);
       if (error.response.status == 401) {
         localStorage.removeItem("access_token");
         navigate("/auth/login");
@@ -112,13 +118,13 @@ export default function StickyHeadTableTripItem(props) {
   };
 
   function gotoView(id) {
-    navigate(`/admin/tripItemView/${id}`);
+    navigate(`/admin/itemView/${id}`);
   }
 
   useEffect(() => {
     async function getAllItems() {
-      const response = await tripItemApi.getAll(filter);
-      setAllTripItems(response);
+      const response = await itemApi.getAll(filter);
+      setAllItems(response);
     }
     getAllItems();
   }, [filter]);
@@ -148,8 +154,6 @@ export default function StickyHeadTableTripItem(props) {
             </Button>
           </Grid>
         </Grid>
-        <Box sx={{ mt: 1, mb: 1 }} textAlign="right"></Box>
-
         <TableContainer>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
