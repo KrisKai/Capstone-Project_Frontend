@@ -55,6 +55,7 @@ export default function Map({ test1 }) {
       distance: results.routes[0].legs[0].distance.text,
       duration: results.routes[0].legs[0].duration.text,
     };
+    console.log(a);
     test1(a);
   }
 
@@ -72,18 +73,24 @@ export default function Map({ test1 }) {
       <Box height="800px" width="1300px" position="relative">
         <Box display="flex" justifyContent="space-between" width="100%">
           <Box>
-            <Autocomplete
-            >
-              <Input type="text" placeholder="Origin" ref={originRef} />
+            <Autocomplete>
+              {/* <Input
+                type="text"
+                placeholder="Origin"
+                ref={originRef}
+                onChange={(e) => console.log(e.target.value)}
+              /> */}
+              <input type="text" ref={originRef} />
             </Autocomplete>
           </Box>
           <Box>
             <Autocomplete>
-              <Input
+              {/* <Input
                 type="text"
                 placeholder="Destination"
                 ref={destiantionRef}
-              />
+              /> */}
+              <input type="text" ref={destiantionRef} />
             </Autocomplete>
           </Box>
 
@@ -113,7 +120,7 @@ export default function Map({ test1 }) {
         <Box width="100%" height="100%">
           <GoogleMap
             center={center}
-            zoom={15}
+            zoom={10}
             mapContainerStyle={{ width: "1300px", height: "100%" }}
             options={{
               zoomControl: false,
