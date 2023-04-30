@@ -156,26 +156,26 @@ export default function Router() {
           ),
         },
         {
-          path: `tripPlanList/:tripId`,
+          path: `tripRouteList/:tripId`,
           element: (
             <AuthGuard>
-              <TripPlanList />
+              <TripRouteList />
             </AuthGuard>
           ),
         },
         {
-          path: `tripPlanCreate/:tripId`,
+          path: `tripRouteCreate/:tripId`,
           element: (
             <AuthGuard>
-              <TripPlanCreateUpdate />
+              <TripRouteCreateUpdate />
             </AuthGuard>
           ),
         },
         {
-          path: `tripPlanUpdate/:tripId/:planId`,
+          path: `tripRouteUpdate/:tripId/:routeId`,
           element: (
             <AuthGuard>
-              <TripPlanCreateUpdate />
+              <TripRouteCreateUpdate />
             </AuthGuard>
           ),
         },
@@ -357,11 +357,11 @@ const TripView = Loadable(
 const TripDetail = Loadable(
   lazy(() => import("../pages/admin/tripManagement/tripDetail"))
 );
-const TripPlanList = Loadable(
-  lazy(() => import("../pages/admin/tripManagement/plan/tripPlanList"))
+const TripRouteList = Loadable(
+  lazy(() => import("../pages/admin/tripManagement/route/tripRouteList"))
 );
-const TripPlanCreateUpdate = Loadable(
-  lazy(() => import("../pages/admin/tripManagement/plan/tripPlanCreateUpdate"))
+const TripRouteCreateUpdate = Loadable(
+  lazy(() => import("../pages/admin/tripManagement/route/tripRouteCreateUpdate"))
 );
 const TripMemberList = Loadable(
   lazy(() => import("../pages/admin/tripManagement/member/tripMemberList"))

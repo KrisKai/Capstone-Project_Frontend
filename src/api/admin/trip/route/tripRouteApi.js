@@ -1,26 +1,26 @@
 import axiosInstance from "utils/axios";
 
-const tripPlanApi = {
+const tripRouteApi = {
   getAll(params) {
-    const url = "/tripPlans";
+    const url = "/tripRoutes";
     return axiosInstance.get(url, { params });
   },
   getById(id) {
-    const url = `/tripPlans/${id}`;
+    const url = `/tripRoutes/${id}`;
     return axiosInstance.get(url);
   },
   create(data) {
-    const url = "/tripPlans";
+    const url = "/tripRoutes";
     return axiosInstance.post(url, data);
   },
   update(data) {
-    const url = "/tripPlans";
+    const url = "/tripRoutes";
     return axiosInstance.put(url, data);
   },
   delete(id) {
-    const url = `/tripPlans/${id}`;
+    const url = `/tripRoutes/${id}`;
     return axiosInstance.delete(url);
   },
 };
 
-export default tripPlanApi;
+export default tripRouteApi;

@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { tripPlanApi } from "api";
+import { tripRouteApi } from "api";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -16,30 +16,30 @@ import Grid from "@mui/material/Grid";
 // assets
 
 const columns = [
-  { id: "fldPlanId", label: "Plan Id", minWidth: 100, onclick: true },
+  { id: "fldRouteId", label: "Route Id", minWidth: 100, onclick: true },
   {
-    id: "fldPlanDescription",
-    label: "Plan Description",
+    id: "fldRouteDescription",
+    label: "Route Description",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
 ];
 
-export default function StickyHeadTableTrip() {
+export default function StickyHeadTableTripRoute() {
   let navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [allTripPlans, setAllTripPlans] = useState({
-    listOfPlan: [],
-    numOfPlan: 0,
+  const [allTripRoutes, setAllTripRoutes] = useState({
+    listOfRoute: [],
+    numOfRoute: 0,
   });
   const [filter, setFilter] = useState({
     pageIndex: 0,
     pageSize: 10,
     planName: "",
   });
-  const planList = allTripPlans.listOfPlan;
-  const numberOfPlan = allTripPlans.numOfPlan;
+  const planList = allTripRoutes.listOfRoute;
+  const numberOfRoute = allTripRoutes.numOfRoute;
   const { tripId } = useParams();
 
   const handleSearch = (event) => {
@@ -76,13 +76,13 @@ export default function StickyHeadTableTrip() {
 
   const handleUpdate = (id) => {
     // update
-    navigate(`/admin/tripPlanUpdate/${tripId}/${id}`);
+    navigate(`/admin/tripRouteUpdate/${tripId}/${id}`);
   };
 
   const handleDelete = async (id) => {
     try {
       // Remove trip API
-      await tripPlanApi.delete(id || "");
+      await tripRouteApi.delete(id || "");
 
       toast.success("Remove trip plan successfully!");
 
@@ -100,7 +100,7 @@ export default function StickyHeadTableTrip() {
   };
 
   function gotoCreate() {
-    navigate(`/admin/tripPlanCreate/${tripId}`);
+    navigate(`/admin/tripRouteCreate/${tripId}`);
   }
 
   function gotoList() {
@@ -108,15 +108,15 @@ export default function StickyHeadTableTrip() {
   }
 
   function gotoView(id) {
-    navigate(`/admin/tripPlanView/${id}`);
+    navigate(`/admin/tripRouteView/${id}`);
   }
 
   useEffect(() => {
-    async function getAllPlans() {
-      const response = await tripPlanApi.getAll(filter);
-      setAllTripPlans(response);
+    async function getAllRoutes() {
+      const response = await tripRouteApi.getAll(filter);
+      setAllTripRoutes(response);
     }
-    getAllPlans();
+    getAllRoutes();
   }, [filter]);
 
   return (
@@ -160,8 +160,8 @@ export default function StickyHeadTableTrip() {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldPlanId}
-                    key={row.fldPlanId}
+                    tabIndex={row.fldRouteId}
+                    key={row.fldRouteId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -171,7 +171,7 @@ export default function StickyHeadTableTrip() {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              onClick={() => gotoView(row.fldPlanId)}
+                              onClick={() => gotoView(row.fldRouteId)}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
@@ -190,7 +190,7 @@ export default function StickyHeadTableTrip() {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldPlanId}
+                        value={row.fldRouteId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -198,7 +198,7 @@ export default function StickyHeadTableTrip() {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.fldPlanId}
+                        value={row.fldRouteId}
                         onClick={(e) => handleDelete(e.target.value)}
                         color="secondary"
                       >
@@ -214,7 +214,7 @@ export default function StickyHeadTableTrip() {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={numberOfPlan}
+          count={numberOfRoute}
           rowsPerPage={filter.pageSize}
           page={filter.pageIndex}
           onPageChange={handleChangePage}

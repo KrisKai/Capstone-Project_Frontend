@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { tripPlanApi, tripApi } from "api";
+import { tripRouteApi, tripApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
@@ -18,13 +18,13 @@ import * as yup from "yup";
 
 dayjs.extend(utc);
 
-export default function UserCreate() {
+export default function RouteCreate() {
   let navigate = useNavigate();
-  const { tripId, planId } = useParams();
-  const isEdit = Boolean(planId);
-  const [plan, setPlan] = useState({
+  const { tripId, routeId } = useParams();
+  const isEdit = Boolean(routeId);
+  const [route, setRoute] = useState({
     fldTripId: "",
-    fldPlanDescription: null,
+    fldRouteDescription: null,
   });
   const [trip, setTrip] = useState({
     fldTripId: "",
@@ -39,17 +39,17 @@ export default function UserCreate() {
         tripName: "",
       });
       setTrip(response.listOfTrip);
-      if (!tripId || !planId) return;
+      if (!tripId || !routeId) return;
       try {
-        console.log(planId)
-        const data = await tripPlanApi.getById(planId);
+        console.log(routeId)
+        const data = await tripRouteApi.getById(routeId);
         if (data != null && data != "") {
-          setPlan(data);
+          setRoute(data);
         } else {
-          navigate(`/admin/tripPlanList/${tripId}`);
+          navigate(`/admin/tripRouteList/${tripId}`);
         }
       } catch (error) {
-        console.log("Failed to fetch trip plan", error);
+        console.log("Failed to fetch trip route", error);
         if (error.response.status == 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
@@ -59,22 +59,22 @@ export default function UserCreate() {
   }, [tripId]);
 
   function gotoList() {
-    navigate(`/admin/tripPlanList/${tripId}`);
+    navigate(`/admin/tripRouteList/${tripId}`);
   }
 
   const validationSchema = yup.object().shape({
-    fldPlanDescription: yup
-      .string("Enter Plan Description")
-      .required("Plan Description is required"),
+    fldRouteDescription: yup
+      .string("Enter Route Description")
+      .required("Route Description is required"),
   });
 
   return (
     <>
       <Typography variant="h6" gutterBottom>
-        {isEdit ? "Update Trip Plan" : "Create Trip Plan"}
+        {isEdit ? "Update Trip Route" : "Create Trip Route"}
       </Typography>
       <Formik
-        initialValues={plan}
+        initialValues={route}
         enableReinitialize={true}
         validationSchema={validationSchema}
         onSubmit={async (values, { setErrors, setStatus }) => {
@@ -84,9 +84,9 @@ export default function UserCreate() {
             console.log(1);
             let reponse;
             if (isEdit) {
-              reponse = await tripPlanApi.update(values);
+              reponse = await tripRouteApi.update(values);
             } else {
-              reponse = await tripPlanApi.create(values);
+              reponse = await tripRouteApi.create(values);
             }
 
             switch (reponse.Code) {
@@ -98,11 +98,11 @@ export default function UserCreate() {
                 return toast.error(reponse.Message);
               default: {
                 if (reponse > 0) {
-                  navigate(`/admin/tripPlanList/${tripId}`);
+                  navigate(`/admin/tripRouteList/${tripId}`);
                   if (isEdit) {
-                    toast.success("Update Trip Plan Successed!");
+                    toast.success("Update Trip Route Successed!");
                   } else {
-                    toast.success("Create Trip Plan Successed!");
+                    toast.success("Create Trip Route Successed!");
                   }
                 }
               }
@@ -145,23 +145,23 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  id="fldPlanDescription"
-                  name="fldPlanDescription"
-                  label="Plan Description"
+                  id="fldRouteDescription"
+                  name="fldRouteDescription"
+                  label="Route Description"
                   fullWidth
                   variant="standard"
-                  value={values.fldPlanDescription}
+                  value={values.fldRouteDescription}
                   onChange={handleChange}
                   error={Boolean(
-                    touched.fldPlanDescription && errors.fldPlanDescription
+                    touched.fldRouteDescription && errors.fldRouteDescription
                   )}
                 />
-                {touched.fldPlanDescription && errors.fldPlanDescription && (
+                {touched.fldRouteDescription && errors.fldRouteDescription && (
                   <FormHelperText
                     error
-                    id="standard-weight-helper-text-fldPlanDescription"
+                    id="standard-weight-helper-text-fldRouteDescription"
                   >
-                    {errors.fldPlanDescription}
+                    {errors.fldRouteDescription}
                   </FormHelperText>
                 )}
               </Grid>

@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import {
   tripApi,
   tripMemberApi,
-  tripPlanApi,
+  tripRouteApi,
   tripRoleApi,
   tripItemApi,
 } from "api";
@@ -18,13 +18,13 @@ import { toast } from "react-toastify";
 export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
   const { tripId } = useParams();
-  const [planList, setPlanList] = useState(0);
+  const [routeList, setRouteList] = useState(0);
   const [roleList, setRoleList] = useState(0);
   const [memberList, setMemberList] = useState(0);
   const [itemList, setItemList] = useState(0);
 
-  function gotoPlan() {
-    navigate(`/admin/tripPlanList/${tripId}`);
+  function gotoRoute() {
+    navigate(`/admin/tripRouteList/${tripId}`);
   }
 
   function gotoMember() {
@@ -54,11 +54,11 @@ export default function StickyHeadTableTrip() {
             pageIndex: 0,
             pageSize: 10,
           };
-          const plan = await tripPlanApi.getAll(filter);
+          const route = await tripRouteApi.getAll(filter);
           const role = await tripRoleApi.getAll(filter);
           const member = await tripMemberApi.getAll(filter);
           const item = await tripItemApi.getAll(filter);
-          setPlanList(plan.numOfPlan);
+          setRouteList(route.numOfRoute);
           setRoleList(role.numOfRole);
           setMemberList(member.numOfMember);
           setItemList(item.numOfItem);
@@ -91,11 +91,11 @@ export default function StickyHeadTableTrip() {
               Trip Route
             </Typography>
             <Typography variant="body2" sx={{ mt: 3 }}>
-              includes {planList} location(s)
+              includes {routeList} location(s)
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" onClick={gotoPlan}>
+            <Button size="small" onClick={gotoRoute}>
               More Details
             </Button>
           </CardActions>
