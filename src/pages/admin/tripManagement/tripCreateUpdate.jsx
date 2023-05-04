@@ -171,9 +171,8 @@ export default function TripCreate() {
     navigate("/admin/tripList");
   }
 
-  //đây là chỗ lấy dữ liệu từ map (mà api key bay màu rồi :v)
-  const test1 = (a) => {
-    console.log(a);
+  const getReturnData = (returnData) => {
+    console.log(returnData);
   };
 
   const validationSchema = yup.object().shape({
@@ -654,10 +653,9 @@ export default function TripCreate() {
             Pick the Departure and Destination from map
           </Typography>
         </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Map test={test1} />
-        </DialogContent>
+        <DialogContent dividers>a</DialogContent>
       </BootstrapDialog>
+      <Map getReturnData={getReturnData} />
     </>
   );
 }

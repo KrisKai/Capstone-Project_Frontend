@@ -12,7 +12,7 @@ import { useRef, useState } from "react";
 
 const center = { lat: 16.0545, lng: 108.0717 };
 
-export default function Map({ test1 }) {
+export default function Map({ getReturnData }) {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
@@ -44,18 +44,23 @@ export default function Map({ test1 }) {
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
     });
+    console.log(results);
     setDirectionsResponse(results);
     setDistance(results.routes[0].legs[0].distance.text);
     setDuration(results.routes[0].legs[0].duration.text);
 
     ///đây là chỗ đưa dữ liệu ra ngoài component cha
-    const a = {
+    const returnData = {
       origin: originRef.current.value,
+      originLat: results.routes[0].legs[0].start_location.lat(),
+      originLng: results.routes[0].legs[0].start_location.lng(),
       destination: destiantionRef.current.value,
+      destinationLat: results.routes[0].legs[0].end_location.lat(),
+      destinationLng: results.routes[0].legs[0].end_location.lng(),
       distance: results.routes[0].legs[0].distance.text,
       duration: results.routes[0].legs[0].duration.text,
     };
-    test1(a);
+    getReturnData(returnData);
   }
 
   function clearRoute() {
@@ -72,18 +77,24 @@ export default function Map({ test1 }) {
       <Box height="800px" width="1300px" position="relative">
         <Box display="flex" justifyContent="space-between" width="100%">
           <Box>
-            <Autocomplete
-            >
-              <Input type="text" placeholder="Origin" ref={originRef} />
+            <Autocomplete>
+              {/* <Input
+                type="text"
+                placeholder="Origin"
+                ref={originRef}
+                onChange={(e) => console.log(e.target.value)}
+              /> */}
+              <input type="text" ref={originRef} />
             </Autocomplete>
           </Box>
           <Box>
             <Autocomplete>
-              <Input
+              {/* <Input
                 type="text"
                 placeholder="Destination"
                 ref={destiantionRef}
-              />
+              /> */}
+              <input type="text" ref={destiantionRef} />
             </Autocomplete>
           </Box>
 
@@ -113,7 +124,7 @@ export default function Map({ test1 }) {
         <Box width="100%" height="100%">
           <GoogleMap
             center={center}
-            zoom={15}
+            zoom={10}
             mapContainerStyle={{ width: "1300px", height: "100%" }}
             options={{
               zoomControl: false,
