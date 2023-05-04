@@ -179,7 +179,7 @@ export default function TripCreate() {
     fldTripName: yup
       .string("Enter Trip Name")
       .required("Trip Name is required"),
-    fldTripBudget: yup.number().required("Trip Budget is required"),
+    // fldTripBudget: yup.number().required("Trip Budget is required"),
     fldTripDescription: yup
       .string("Enter Trip Description")
       .required("Trip Description is required"),
@@ -308,7 +308,7 @@ export default function TripCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   id="fldTripBudget"
                   name="fldTripBudget"
@@ -332,7 +332,7 @@ export default function TripCreate() {
                     {errors.fldTripBudget}
                   </FormHelperText>
                 )}
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} sm={4}>
                 <FormControl sx={{ mt: 1, minWidth: 400 }}>
                   <InputLabel id="fldTripPresenter">Trip Presenter</InputLabel>
@@ -361,7 +361,6 @@ export default function TripCreate() {
                   )}
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={2}></Grid>
               <Grid item xs={12} sm={2}>
                 <TextField
                   id="fldTripMember"
