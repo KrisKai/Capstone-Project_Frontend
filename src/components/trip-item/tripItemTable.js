@@ -39,7 +39,6 @@ const columns = [
 
 export default function StickyHeadTableTripItem(props) {
   let navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
   const [allTripItems, setAllTripItems] = useState({
     listOfItem: [],
     numOfItem: 0,
@@ -53,23 +52,6 @@ export default function StickyHeadTableTripItem(props) {
   const itemList = allTripItems.listOfItem;
   const numberOfItem = allTripItems.numOfItem;
   const { tripId } = useParams();
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    // call api
-    setFilter({
-      ...filter,
-      itemName: event.target.value,
-    });
-  };
-
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-    setFilter({
-      ...filter,
-      itemName: event.target.value,
-    });
-  };
 
   const handleChangePage = (event, newPage) => {
     setFilter({
@@ -129,23 +111,6 @@ export default function StickyHeadTableTripItem(props) {
         <Grid container sx={{ mt: 1, mb: 1 }}>
           <Grid xs={6} sx={{ pl: 1 }}>
             <h2>{props.category.fldCategoryName}</h2>
-          </Grid>
-          <Grid xs={6} textAlign="right" sx={{ pr: 1 }}>
-            <TextField
-              id="search"
-              type="search"
-              label="Search"
-              value={searchTerm}
-              onChange={handleChange}
-              sx={{ width: 400 }}
-            />
-            <Button
-              variant="outlined"
-              onClick={handleSearch}
-              sx={{ height: 42 }}
-            >
-              Search
-            </Button>
           </Grid>
         </Grid>
         <Box sx={{ mt: 1, mb: 1 }} textAlign="right"></Box>

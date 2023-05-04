@@ -27,7 +27,6 @@ export default function TripItemCreate() {
     fldItemName: "",
     fldItemDescription: "",
     fldPriceMin: "",
-    fldPriceMax: "",
     fldQuantity: "",
     fldCategoryId: "",
   });
@@ -89,11 +88,8 @@ export default function TripItemCreate() {
       .string("Enter Item Description")
       .required("Item Description is required"),
     fldPriceMin: yup
-      .string("Enter Price Min")
-      .required("Price Min is required"),
-    fldPriceMax: yup
-      .string("Enter Price Max")
-      .required("Price Max is required"),
+      .string("Enter Price")
+      .required("Price is required"),
     fldCategoryId: yup.number().min(1).required("Category is required"),
     fldQuantity: yup.number().min(1).required("Quantity is required"),
   });
@@ -215,43 +211,23 @@ export default function TripItemCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={4}>
                 <TextField
-                  id="fldPriceMin"
-                  name="fldPriceMin"
-                  label="Price Min *"
+                  id="fldPrice"
+                  name="fldPrice"
+                  label="Price *"
                   fullWidth
                   variant="standard"
                   value={values.fldPriceMin}
                   onChange={handleChange}
-                  error={Boolean(touched.fldPriceMin && errors.fldPriceMin)}
+                  error={Boolean(touched.fldPrice && errors.fldPrice)}
                 />
-                {touched.fldPriceMin && errors.fldPriceMin && (
+                {touched.fldPrice && errors.fldPrice && (
                   <FormHelperText
                     error
-                    id="standard-weight-helper-text-fldPriceMin"
+                    id="standard-weight-helper-text-fldPrice"
                   >
-                    {errors.fldPriceMin}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="fldPriceMax"
-                  name="fldPriceMax"
-                  label="Price Max *"
-                  fullWidth
-                  variant="standard"
-                  value={values.fldPriceMax}
-                  onChange={handleChange}
-                  error={Boolean(touched.fldPriceMax && errors.fldPriceMax)}
-                />
-                {touched.fldPriceMax && errors.fldPriceMax && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-text-fldPriceMax"
-                  >
-                    {errors.fldPriceMax}
+                    {errors.fldPrice}
                   </FormHelperText>
                 )}
               </Grid>
@@ -282,7 +258,7 @@ export default function TripItemCreate() {
                   )}
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={2}>
+              <Grid item xs={12} sm={4}>
                 <TextField
                   id="fldQuantity"
                   name="fldQuantity"
@@ -300,7 +276,6 @@ export default function TripItemCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}></Grid>
               <Grid item xs={12} sm={6}>
                 <Button variant="outlined" onClick={gotoList}>
                   Return to List
