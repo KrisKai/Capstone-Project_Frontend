@@ -171,8 +171,8 @@ export default function TripCreate() {
     navigate("/admin/tripList");
   }
 
-  const test1 = (a) => {
-    console.log(a);
+  const getReturnData = (returnData) => {
+    console.log(returnData);
   };
 
   const validationSchema = yup.object().shape({
@@ -655,7 +655,7 @@ export default function TripCreate() {
         </BootstrapDialogTitle>
         <DialogContent dividers>a</DialogContent>
       </BootstrapDialog>
-      <Map test={test1} />
+      <Map getReturnData={getReturnData} />
     </>
   );
 }
