@@ -25,6 +25,10 @@ const feedbackApi = {
     const url = `/feedbacks/${id}`;
     return axiosInstance.delete(url);
   },
+  increaseLike(params) {
+    const url = "/feedbacks/increase-like";
+    return axiosInstance.put(url, params);
+  }
 };
 
 export default feedbackApi;
