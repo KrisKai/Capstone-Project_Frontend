@@ -3,6 +3,7 @@ import { StarRounded } from "@material-ui/icons";
 import { useEffect, useRef, useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { feedbackApi } from "api";
 
 const RateCard = (props) => {
   return (
@@ -36,7 +37,19 @@ const Rate = () => {
   const x = useRef();
   const y = useRef();
 
+  const [allFeedbacks, setAllFeedbacks] = useState({
+    listOfFeedback: [],
+    numOfFeedback: 0,
+  });
+  const feedbackList = allFeedbacks.listOfFeedback;
+  const numOfFeedback = allFeedbacks.numOfFeedback;
+
   useEffect(() => {
+    async function getAllFeedbacks() {
+      const response = await feedbackApi.getTopFeedback();
+      setAllFeedbacks(response);
+    }
+    getAllFeedbacks();
     const r = x.current;
     // console.log(y.current.clientWidth / 3);
     // console.log((r.clientWidth - 15) / 4);

@@ -5,6 +5,10 @@ const feedbackApi = {
     const url = "/feedbacks";
     return axiosInstance.get(url, { params });
   },
+  getTopFeedback() {
+    const url = "/feedbacks/get-top-feedback";
+    return axiosInstance.get(url);
+  },
   getById(id) {
     const url = `/feedbacks/${id}`;
     return axiosInstance.get(url);
