@@ -1,27 +1,20 @@
+import CloseIcon from "@mui/icons-material/Close";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  FormHelperText,
+  IconButton,
+  Typography,
+  styled,
+} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
-import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import {
-  Button,
-  FormHelperText,
-  IconButton,
-  styled,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Typography,
-  Box,
-  ButtonGroup,
-  Stack,
-  Input,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import PropTypes from "prop-types";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -29,20 +22,14 @@ import { tripApi, userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
-import { useEffect, useState, useRef } from "react";
+import PropTypes from "prop-types";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 // import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 import * as yup from "yup";
-import Map from "./Map";
+
 // import gg map api
-import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
-  Autocomplete,
-  DirectionsRenderer,
-} from "@react-google-maps/api";
 
 dayjs.extend(utc);
 
@@ -654,7 +641,6 @@ export default function TripCreate() {
         </BootstrapDialogTitle>
         <DialogContent dividers>a</DialogContent>
       </BootstrapDialog>
-      <Map getReturnData={getReturnData} />
     </>
   );
 }

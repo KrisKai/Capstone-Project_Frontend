@@ -10,6 +10,7 @@ import { AuthGuardUser, GuestGuardUser } from "guards/user";
 import { Loadable } from "components/Loadable";
 import MainLayout from "layout/MainLayout/index";
 import Home from "pages/home/Home";
+import Map from "pages/map/Map";
 
 // ----------------------------------------------------------------------
 
@@ -21,9 +22,11 @@ export default function Router() {
       children: [
         {
           path: "/",
-          element: (
-            <Home />
-          ),
+          element: <Home />,
+        },
+        {
+          path: "/map",
+          element: <Map />,
         },
         {
           path: "login",
@@ -34,12 +37,12 @@ export default function Router() {
           ),
         },
         {
-          path: 'register',
+          path: "register",
           element: (
             <GuestGuardUser>
               <Register />
             </GuestGuardUser>
-          )
+          ),
         },
         {
           path: "dashboard",
@@ -267,7 +270,7 @@ export default function Router() {
             </AuthGuard>
           ),
         },
-        
+
         {
           path: "itemCreate",
           element: (
@@ -292,7 +295,7 @@ export default function Router() {
             </AuthGuard>
           ),
         },
-        
+
         {
           path: "categoryCreate",
           element: (
@@ -322,7 +325,9 @@ export default function Router() {
 const AuthLoginUser = Loadable(
   lazy(() => import("../pages/user/authentication/LoginUser"))
 );
-const Register = Loadable(lazy(() => import('../pages/user/authentication/Register')));
+const Register = Loadable(
+  lazy(() => import("../pages/user/authentication/Register"))
+);
 
 //     --------------ADMIN------------------
 // Authentication
@@ -361,7 +366,9 @@ const TripRouteList = Loadable(
   lazy(() => import("../pages/admin/tripManagement/route/tripRouteList"))
 );
 const TripRouteCreateUpdate = Loadable(
-  lazy(() => import("../pages/admin/tripManagement/route/tripRouteCreateUpdate"))
+  lazy(() =>
+    import("../pages/admin/tripManagement/route/tripRouteCreateUpdate")
+  )
 );
 const TripMemberList = Loadable(
   lazy(() => import("../pages/admin/tripManagement/member/tripMemberList"))
