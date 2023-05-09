@@ -20,12 +20,8 @@ const RateCard = (props) => {
           ))}
       </Box>
       <Box padding={1}>
-        Est sunt commodo ullamco voluptate fugiat voluptate laborum sint veniam
-        officia anim tempor. Reprehenderit aute aliquip exercitation velit
-        tempor nisi pariatur irure sit. Qui nostrud veniam deserunt fugiat. Sit
-        tempor ut do commodo cillum ea minim. Anim fugiat quis non id. Quis do
-        officia anim laborum deserunt nulla veniam officia est quis.
-        <div>asdasdasdasd</div>
+        {props.item.fldFeedback}
+        <div>{props.item.fldUsername}</div>
       </Box>
     </Card>
   );
@@ -53,13 +49,13 @@ const Rate = () => {
     const r = x.current;
     // console.log(y.current.clientWidth / 3);
     // console.log((r.clientWidth - 15) / 4);
-    const childCount = r.childElementCount;
-    const scrollWidth = r.childNodes[0].scrollWidth;
-    x.current.scrollTo({
-      top: 0,
-      left: (scrollWidth + 5) * a,
-      behavior: "smooth",
-    });
+    // const childCount = r.childElementCount;
+    // const scrollWidth = r.childNodes[0].scrollWidth;
+    // x.current.scrollTo({
+    //   top: 0,
+    //   left: (scrollWidth + 5) * a,
+    //   behavior: "smooth",
+    // });
   }, [a]);
 
   return (
@@ -95,11 +91,9 @@ const Rate = () => {
           }}
           ref={x}
         >
-          {Array(test)
-            .fill()
-            .map((_, idx) => {
-              return <RateCard idx={idx} />;
-            })}
+          {feedbackList.map((item) => {
+            return <RateCard item={item} />;
+          })}
         </Box>
 
         <Box position="absolute" right="-17px">
