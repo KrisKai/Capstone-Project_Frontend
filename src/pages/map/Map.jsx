@@ -42,7 +42,7 @@ function CardCustom() {
 
 export default function Map({ getReturnData }) {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "GOOGLE_MAP_API",
+    googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
   });
 
@@ -121,9 +121,6 @@ export default function Map({ getReturnData }) {
                   return <CardCustom></CardCustom>;
                 })} */}
               <Card sx={{ padding: "15px 10px" }}>
-                <Box textAlign="center" paddingBottom="10px">
-                  <Typography>Địa điểm: </Typography>
-                </Box>
                 <Box border="1px solid black" borderRadius="2px">
                   <Autocomplete>
                     <input ref={originRef} className="custom-input" />
@@ -135,9 +132,6 @@ export default function Map({ getReturnData }) {
                 </Box>
               </Card>
               <Card sx={{ padding: "15px 10px" }}>
-                <Box textAlign="center" paddingBottom="10px">
-                  <Typography>Địa điểm: </Typography>
-                </Box>
                 <Box border="1px solid black" borderRadius="2px">
                   <Autocomplete>
                     <input ref={destinationRef} className="custom-input" />
@@ -162,7 +156,7 @@ export default function Map({ getReturnData }) {
               <Button variant="contained" startIcon={<AddIcon />}>
                 Add new place
               </Button>
-              <Button variant="contained" onClick="calculateRoute">
+              <Button variant="contained" onClick={calculateRoute}>
                 Save
               </Button>
             </Box>
