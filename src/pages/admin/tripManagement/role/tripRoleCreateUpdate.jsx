@@ -27,7 +27,7 @@ export default function UserCreate() {
   const isEdit = Boolean(roleId);
   const [role, setRole] = useState({
     fldRoleName: "",
-    fldType: null,
+    fldType: "",
     fldDescription: "",
   });
 
@@ -119,13 +119,13 @@ export default function UserCreate() {
         }) => (
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   id="fldRoleName"
                   name="fldRoleName"
                   label="Role Name"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldRoleName}
                   onChange={handleChange}
                   error={Boolean(touched.fldRoleName && errors.fldRoleName)}
@@ -139,8 +139,8 @@ export default function UserCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12}>
-                <FormControl sx={{ mt: 1, minWidth: 400 }}>
+              <Grid item xs={12} sm={6}>
+                <FormControl sx={{ minWidth: 400 }}>
                   <InputLabel id="fldType">Role Type</InputLabel>
                   <Select
                     labelId="fldType"
@@ -169,9 +169,11 @@ export default function UserCreate() {
                   label="Role Description"
                   fullWidth
                   autoComplete=""
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldDescription}
                   onChange={handleChange}
+                  multiline
+                  maxRows={4}
                   error={Boolean(
                     touched.fldDescription && errors.fldDescription
                   )}

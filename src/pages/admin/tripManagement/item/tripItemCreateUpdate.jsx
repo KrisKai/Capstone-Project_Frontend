@@ -154,7 +154,7 @@ export default function TripItemCreate() {
                   name="fldTripId"
                   label="Trip Name"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldTripId}
                   error={Boolean(touched.fldTripId && errors.fldTripId)}
                 />
@@ -173,7 +173,7 @@ export default function TripItemCreate() {
                   name="fldItemName"
                   label="Item Name *"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldItemName}
                   onChange={handleChange}
                   error={Boolean(touched.fldItemName && errors.fldItemName)}
@@ -193,7 +193,7 @@ export default function TripItemCreate() {
                   name="fldItemDescription"
                   label="Item Description *"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldItemDescription}
                   onChange={handleChange}
                   multiline
@@ -217,7 +217,7 @@ export default function TripItemCreate() {
                   name="fldPrice"
                   label="Price *"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldPriceMin}
                   onChange={handleChange}
                   error={Boolean(touched.fldPrice && errors.fldPrice)}
@@ -265,7 +265,7 @@ export default function TripItemCreate() {
                   label="Quantity *"
                   type="number"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldQuantity}
                   onChange={handleChange}
                   error={Boolean(touched.fldQuantity && errors.fldQuantity)}

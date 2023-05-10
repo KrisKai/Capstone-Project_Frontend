@@ -97,14 +97,14 @@ export default function UserCreate() {
   const validationSchema = yup.object().shape({
     fldUserId: yup.string("Enter User").required("User is required"),
     fldMemberRoleId: yup
-      .string("Enter Estimate Start Time")
-      .required("Estimate Start Time is required"),
+      .string("Enter Member Role")
+      .required("Member Role is required"),
     fldNickName: yup
-      .string("Enter Estimate Arrival Time")
-      .required("Estimate Arrival Time is required"),
-    fldStatus: yup
-      .string("Enter Trip Presenter")
-      .required("Trip Presenter is required"),
+      .string("Enter Nick Name")
+      .required("Nick Name is required"),
+    // fldStatus: yup
+    //   .string("Enter Status")
+    //   .required("Status is required"),
   });
 
   return (

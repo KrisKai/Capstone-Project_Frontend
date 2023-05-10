@@ -123,7 +123,7 @@ export default function CategoryCreate() {
                   name="fldCategoryName"
                   label="Category Name"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldCategoryName}
                   onChange={handleChange}
                   error={Boolean(touched.fldCategoryName && errors.fldCategoryName)}
@@ -144,7 +144,7 @@ export default function CategoryCreate() {
                   label="Category Description"
                   fullWidth
                   autoComplete=""
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldCategoryDescription}
                   onChange={handleChange}
                   error={Boolean(

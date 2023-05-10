@@ -154,7 +154,7 @@ export default function UserCreate() {
                   label="Username"
                   fullWidth
                   value={values.fldUsername}
-                  variant="standard"
+                  variant="outlined"
                   onChange={handleChange}
                   InputProps={{
                     readOnly: isEdit,
@@ -173,7 +173,7 @@ export default function UserCreate() {
                   label="Full name"
                   fullWidth
                   value={values.fldFullname}
-                  variant="standard"
+                  variant="outlined"
                   onChange={handleChange}
                 />
                 {touched.fldFullname && errors.fldFullname && (
@@ -192,7 +192,7 @@ export default function UserCreate() {
                       fullWidth
                       type="password"
                       value={values.fldPassword}
-                      variant="standard"
+                      variant="outlined"
                       onChange={handleChange}
                     />
                     {touched.fldPassword && errors.fldPassword && (
@@ -212,7 +212,7 @@ export default function UserCreate() {
                       fullWidth
                       type="password"
                       value={values.fldRetypePassword}
-                      variant="standard"
+                      variant="outlined"
                       onChange={handleChange}
                     />
                     {touched.fldRetypePassword && errors.fldRetypePassword && (
@@ -230,7 +230,7 @@ export default function UserCreate() {
                   name="fldAddress"
                   label="Address"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldAddress}
                   onChange={handleChange}
                 />
@@ -246,7 +246,7 @@ export default function UserCreate() {
                   name="fldPhone"
                   label="Phone Number"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldPhone}
                   onChange={handleChange}
                 />
@@ -320,7 +320,7 @@ export default function UserCreate() {
                   name="fldEmail"
                   label="Email"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldEmail}
                   onChange={handleChange}
                 />

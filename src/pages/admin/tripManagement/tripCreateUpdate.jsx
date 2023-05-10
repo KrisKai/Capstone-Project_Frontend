@@ -281,7 +281,7 @@ export default function TripCreate() {
                   name="fldTripName"
                   label="Trip Name"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldTripName}
                   onChange={handleChange}
                   error={Boolean(touched.fldTripName && errors.fldTripName)}
@@ -306,7 +306,7 @@ export default function TripCreate() {
                       <InputAdornment position="start">VND</InputAdornment>
                     ),
                   }}
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldTripBudget}
                   onChange={handleChange}
                   error={Boolean(touched.fldTripBudget && errors.fldTripBudget)}
@@ -320,8 +320,8 @@ export default function TripCreate() {
                   </FormHelperText>
                 )}
               </Grid> */}
-              <Grid item xs={12} sm={4}>
-                <FormControl sx={{ mt: 1, minWidth: 400 }}>
+              <Grid item xs={12} sm={3}>
+                <FormControl sx={{ minWidth: 400 }}>
                   <InputLabel id="fldTripPresenter">Trip Presenter</InputLabel>
                   <Select
                     labelId="fldTripPresenter"
@@ -348,14 +348,14 @@ export default function TripCreate() {
                   )}
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={2}>
+              <Grid item xs={12} sm={3}>
                 <TextField
                   id="fldTripMember"
                   name="fldTripMember"
                   label="Trip Member"
                   type="number"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldTripMember}
                   onChange={handleChange}
                   error={Boolean(touched.fldTripMember && errors.fldTripMember)}
@@ -376,7 +376,7 @@ export default function TripCreate() {
                   label="Trip Description"
                   fullWidth
                   autoComplete=""
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldTripDescription}
                   onChange={handleChange}
                   error={Boolean(
@@ -537,7 +537,7 @@ export default function TripCreate() {
                   name="fldStartLocationName"
                   label="Trip Start Location Name"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldStartLocationName}
                   onChange={handleChange}
                   InputProps={{
@@ -563,7 +563,7 @@ export default function TripCreate() {
                   name="fldEndLocationName"
                   label="Trip Destination Location Name"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldEndLocationName}
                   onChange={handleChange}
                   InputProps={{

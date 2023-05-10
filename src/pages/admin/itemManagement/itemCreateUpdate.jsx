@@ -152,7 +152,7 @@ export default function ItemCreate() {
                   name="fldItemName"
                   label="Item Name *"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldItemName}
                   onChange={handleChange}
                   error={Boolean(touched.fldItemName && errors.fldItemName)}
@@ -166,56 +166,13 @@ export default function ItemCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="fldItemDescription"
-                  name="fldItemDescription"
-                  label="Item Description *"
-                  fullWidth
-                  autoComplete=""
-                  variant="standard"
-                  value={values.fldItemDescription}
-                  onChange={handleChange}
-                  error={Boolean(
-                    touched.fldItemDescription && errors.fldItemDescription
-                  )}
-                />
-                {touched.fldItemDescription && errors.fldItemDescription && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldItemDescription"
-                  >
-                    {errors.fldItemDescription}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="fldItemUsage"
-                  name="fldItemUsage"
-                  label="Item Usage"
-                  fullWidth
-                  variant="standard"
-                  value={values.fldItemUsage}
-                  onChange={handleChange}
-                  error={Boolean(touched.fldItemUsage && errors.fldItemUsage)}
-                />
-                {touched.fldItemUsage && errors.fldItemUsage && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldItemUsage"
-                  >
-                    {errors.fldItemUsage}
-                  </FormHelperText>
-                )}
-              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   id="fldPriceMin"
                   name="fldPriceMin"
                   label="Price *"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldPriceMin}
                   onChange={handleChange}
                   error={Boolean(touched.fldPriceMin && errors.fldPriceMin)}
@@ -229,8 +186,8 @@ export default function ItemCreate() {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12} sm={4}>
-                <FormControl sx={{ mt: 1, minWidth: 400 }}>
+              <Grid item xs={12} sm={3}>
+                <FormControl sx={{ minWidth: 400 }}>
                   <InputLabel id="fldCategoryId">Category *</InputLabel>
                   <Select
                     labelId="fldCategoryId"
@@ -257,14 +214,14 @@ export default function ItemCreate() {
                   )}
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={2}>
+              <Grid item xs={12} sm={3}>
                 <TextField
                   id="fldQuantity"
                   name="fldQuantity"
                   label="Quantity *"
                   type="number"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldQuantity}
                   onChange={handleChange}
                   error={Boolean(touched.fldQuantity && errors.fldQuantity)}
@@ -272,6 +229,53 @@ export default function ItemCreate() {
                 {touched.fldQuantity && errors.fldQuantity && (
                   <FormHelperText error id="standard-weight-helper-fldQuantity">
                     {errors.fldQuantity}
+                  </FormHelperText>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="fldItemDescription"
+                  name="fldItemDescription"
+                  label="Item Description *"
+                  fullWidth
+                  autoComplete=""
+                  variant="outlined"
+                  multiline
+                  maxRows={4}
+                  value={values.fldItemDescription}
+                  onChange={handleChange}
+                  error={Boolean(
+                    touched.fldItemDescription && errors.fldItemDescription
+                  )}
+                />
+                {touched.fldItemDescription && errors.fldItemDescription && (
+                  <FormHelperText
+                    error
+                    id="standard-weight-helper-fldItemDescription"
+                  >
+                    {errors.fldItemDescription}
+                  </FormHelperText>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="fldItemUsage"
+                  name="fldItemUsage"
+                  label="Item Usage"
+                  fullWidth
+                  variant="outlined"
+                  multiline
+                  maxRows={4}
+                  value={values.fldItemUsage}
+                  onChange={handleChange}
+                  error={Boolean(touched.fldItemUsage && errors.fldItemUsage)}
+                />
+                {touched.fldItemUsage && errors.fldItemUsage && (
+                  <FormHelperText
+                    error
+                    id="standard-weight-helper-fldItemUsage"
+                  >
+                    {errors.fldItemUsage}
                   </FormHelperText>
                 )}
               </Grid>
