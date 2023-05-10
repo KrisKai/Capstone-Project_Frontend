@@ -1,4 +1,4 @@
-import { Button, FormHelperText } from "@mui/material";
+import { Button, Card, Container, FormHelperText } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -100,199 +100,208 @@ export default function ItemCreate() {
       <Typography variant="h4" gutterBottom color="primary">
         {isEdit ? "Update Item" : "Create Item"}
       </Typography>
-      <Formik
-        initialValues={item}
-        enableReinitialize={true}
-        validationSchema={validationSchema}
-        onSubmit={async (values, { setErrors, setStatus }) => {
-          try {
-            setStatus({ success: false });
-            let reponse;
-            if (isEdit) {
-              reponse = await itemApi.update(values);
-            } else {
-              reponse = await itemApi.create(values);
-            }
+      <Container>
+        <Formik
+          initialValues={item}
+          enableReinitialize={true}
+          validationSchema={validationSchema}
+          onSubmit={async (values, { setErrors, setStatus }) => {
+            try {
+              setStatus({ success: false });
+              let reponse;
+              if (isEdit) {
+                reponse = await itemApi.update(values);
+              } else {
+                reponse = await itemApi.create(values);
+              }
 
-            switch (reponse.Code) {
-              case "G001":
-                return toast.error(reponse.Message);
-              case "U001":
-                return toast.error(reponse.Message);
-              case "I001":
-                return toast.error(reponse.Message);
-              default: {
-                navigate("/admin/itemList");
-                if (isEdit) {
-                  toast.success("Update Item Successed!");
-                } else {
-                  toast.success("Create Item Successed!");
+              switch (reponse.Code) {
+                case "G001":
+                  return toast.error(reponse.Message);
+                case "U001":
+                  return toast.error(reponse.Message);
+                case "I001":
+                  return toast.error(reponse.Message);
+                default: {
+                  navigate("/admin/itemList");
+                  if (isEdit) {
+                    toast.success("Update Item Successed!");
+                  } else {
+                    toast.success("Create Item Successed!");
+                  }
                 }
               }
+            } catch (err) {
+              setStatus({ success: false });
+              setErrors({ submit: err.message });
             }
-          } catch (err) {
-            setStatus({ success: false });
-            setErrors({ submit: err.message });
-          }
-        }}
-      >
-        {({
-          errors,
-          touched,
-          handleChange,
-          handleSubmit,
-          values,
-          setFieldValue,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="fldItemName"
-                  name="fldItemName"
-                  label="Item Name *"
-                  fullWidth
-                  variant="outlined"
-                  value={values.fldItemName}
-                  onChange={handleChange}
-                  error={Boolean(touched.fldItemName && errors.fldItemName)}
-                />
-                {touched.fldItemName && errors.fldItemName && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-text-fldItemName"
-                  >
-                    {errors.fldItemName}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="fldPriceMin"
-                  name="fldPriceMin"
-                  label="Price *"
-                  fullWidth
-                  variant="outlined"
-                  value={values.fldPriceMin}
-                  onChange={handleChange}
-                  error={Boolean(touched.fldPriceMin && errors.fldPriceMin)}
-                />
-                {touched.fldPriceMin && errors.fldPriceMin && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-text-fldPriceMin"
-                  >
-                    {errors.fldPriceMin}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={3}>
-                <FormControl sx={{ minWidth: 400 }}>
-                  <InputLabel id="fldCategoryId">Category *</InputLabel>
-                  <Select
-                    labelId="fldCategoryId"
-                    id="fldCategoryId"
-                    value={values.fldCategoryId}
-                    label="Role"
-                    onChange={handleChange}
-                    name="fldCategoryId"
-                  >
-                    {category.map((item) => (
-                      <MenuItem value={item.fldCategoryId}>
-                        {item.fldCategoryName}
-                      </MenuItem>
-                    ))}
-                  </Select>
+          }}
+        >
+          {({
+            errors,
+            touched,
+            handleChange,
+            handleSubmit,
+            values,
+            setFieldValue,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <Card sx={{ padding: 8, gap: 2 }}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="fldItemName"
+                      name="fldItemName"
+                      label="Item Name *"
+                      fullWidth
+                      variant="outlined"
+                      value={values.fldItemName}
+                      onChange={handleChange}
+                      error={Boolean(touched.fldItemName && errors.fldItemName)}
+                    />
+                    {touched.fldItemName && errors.fldItemName && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-text-fldItemName"
+                      >
+                        {errors.fldItemName}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="fldPriceMin"
+                      name="fldPriceMin"
+                      label="Price *"
+                      fullWidth
+                      variant="outlined"
+                      value={values.fldPriceMin}
+                      onChange={handleChange}
+                      error={Boolean(touched.fldPriceMin && errors.fldPriceMin)}
+                    />
+                    {touched.fldPriceMin && errors.fldPriceMin && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-text-fldPriceMin"
+                      >
+                        {errors.fldPriceMin}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl sx={{ minWidth: 530 }}>
+                      <InputLabel id="fldCategoryId">Category *</InputLabel>
+                      <Select
+                        labelId="fldCategoryId"
+                        id="fldCategoryId"
+                        value={values.fldCategoryId}
+                        label="Role"
+                        onChange={handleChange}
+                        name="fldCategoryId"
+                      >
+                        {category.map((item) => (
+                          <MenuItem value={item.fldCategoryId}>
+                            {item.fldCategoryName}
+                          </MenuItem>
+                        ))}
+                      </Select>
 
-                  {touched.fldCategoryId && errors.fldCategoryId && (
-                    <FormHelperText
-                      error
-                      id="standard-weight-helper-fldCategoryId"
-                    >
-                      {errors.fldCategoryId}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={3}>
-                <TextField
-                  id="fldQuantity"
-                  name="fldQuantity"
-                  label="Quantity *"
-                  type="number"
-                  fullWidth
-                  variant="outlined"
-                  value={values.fldQuantity}
-                  onChange={handleChange}
-                  error={Boolean(touched.fldQuantity && errors.fldQuantity)}
-                />
-                {touched.fldQuantity && errors.fldQuantity && (
-                  <FormHelperText error id="standard-weight-helper-fldQuantity">
-                    {errors.fldQuantity}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="fldItemDescription"
-                  name="fldItemDescription"
-                  label="Item Description *"
-                  fullWidth
-                  autoComplete=""
-                  variant="outlined"
-                  multiline
-                  maxRows={4}
-                  value={values.fldItemDescription}
-                  onChange={handleChange}
-                  error={Boolean(
-                    touched.fldItemDescription && errors.fldItemDescription
-                  )}
-                />
-                {touched.fldItemDescription && errors.fldItemDescription && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldItemDescription"
-                  >
-                    {errors.fldItemDescription}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="fldItemUsage"
-                  name="fldItemUsage"
-                  label="Item Usage"
-                  fullWidth
-                  variant="outlined"
-                  multiline
-                  maxRows={4}
-                  value={values.fldItemUsage}
-                  onChange={handleChange}
-                  error={Boolean(touched.fldItemUsage && errors.fldItemUsage)}
-                />
-                {touched.fldItemUsage && errors.fldItemUsage && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldItemUsage"
-                  >
-                    {errors.fldItemUsage}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Button variant="outlined" onClick={gotoList}>
-                  Return to List
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6} textAlign="right">
-                <Button type="submit" variant="contained">
-                  {isEdit ? "Update" : "Create"}
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        )}
-      </Formik>
+                      {touched.fldCategoryId && errors.fldCategoryId && (
+                        <FormHelperText
+                          error
+                          id="standard-weight-helper-fldCategoryId"
+                        >
+                          {errors.fldCategoryId}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="fldQuantity"
+                      name="fldQuantity"
+                      label="Quantity *"
+                      type="number"
+                      fullWidth
+                      variant="outlined"
+                      value={values.fldQuantity}
+                      onChange={handleChange}
+                      error={Boolean(touched.fldQuantity && errors.fldQuantity)}
+                    />
+                    {touched.fldQuantity && errors.fldQuantity && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-fldQuantity"
+                      >
+                        {errors.fldQuantity}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="fldItemDescription"
+                      name="fldItemDescription"
+                      label="Item Description *"
+                      fullWidth
+                      autoComplete=""
+                      variant="outlined"
+                      multiline
+                      maxRows={4}
+                      value={values.fldItemDescription}
+                      onChange={handleChange}
+                      error={Boolean(
+                        touched.fldItemDescription && errors.fldItemDescription
+                      )}
+                    />
+                    {touched.fldItemDescription && errors.fldItemDescription && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-fldItemDescription"
+                      >
+                        {errors.fldItemDescription}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="fldItemUsage"
+                      name="fldItemUsage"
+                      label="Item Usage"
+                      fullWidth
+                      variant="outlined"
+                      multiline
+                      maxRows={4}
+                      value={values.fldItemUsage}
+                      onChange={handleChange}
+                      error={Boolean(
+                        touched.fldItemUsage && errors.fldItemUsage
+                      )}
+                    />
+                    {touched.fldItemUsage && errors.fldItemUsage && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-fldItemUsage"
+                      >
+                        {errors.fldItemUsage}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Button variant="outlined" onClick={gotoList}>
+                      Return to List
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={6} textAlign="right">
+                    <Button type="submit" variant="contained">
+                      {isEdit ? "Update" : "Create"}
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Card>
+            </form>
+          )}
+        </Formik>
+      </Container>
     </>
   );
 }

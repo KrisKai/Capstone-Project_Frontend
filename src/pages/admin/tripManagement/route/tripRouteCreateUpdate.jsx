@@ -1,4 +1,4 @@
-import { Button, FormHelperText } from "@mui/material";
+import { Button, Card, Container, FormHelperText } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -41,7 +41,7 @@ export default function RouteCreate() {
       setTrip(response.listOfTrip);
       if (!tripId || !routeId) return;
       try {
-        console.log(routeId)
+        console.log(routeId);
         const data = await tripRouteApi.getById(routeId);
         if (data != null && data != "") {
           setRoute(data);
@@ -73,112 +73,117 @@ export default function RouteCreate() {
       <Typography variant="h4" gutterBottom color="primary">
         {isEdit ? "Update Trip Route" : "Create Trip Route"}
       </Typography>
-      <Formik
-        initialValues={route}
-        enableReinitialize={true}
-        validationSchema={validationSchema}
-        onSubmit={async (values, { setErrors, setStatus }) => {
-          try {
-            setStatus({ success: false });
+      <Container>
+        <Formik
+          initialValues={route}
+          enableReinitialize={true}
+          validationSchema={validationSchema}
+          onSubmit={async (values, { setErrors, setStatus }) => {
+            try {
+              setStatus({ success: false });
 
-            console.log(1);
-            let reponse;
-            if (isEdit) {
-              reponse = await tripRouteApi.update(values);
-            } else {
-              reponse = await tripRouteApi.create(values);
-            }
+              console.log(1);
+              let reponse;
+              if (isEdit) {
+                reponse = await tripRouteApi.update(values);
+              } else {
+                reponse = await tripRouteApi.create(values);
+              }
 
-            switch (reponse.Code) {
-              case "G001":
-                return toast.error(reponse.Message);
-              case "U001":
-                return toast.error(reponse.Message);
-              case "I001":
-                return toast.error(reponse.Message);
-              default: {
-                if (reponse > 0) {
-                  navigate(`/admin/tripRouteList/${tripId}`);
-                  if (isEdit) {
-                    toast.success("Update Trip Route Successed!");
-                  } else {
-                    toast.success("Create Trip Route Successed!");
+              switch (reponse.Code) {
+                case "G001":
+                  return toast.error(reponse.Message);
+                case "U001":
+                  return toast.error(reponse.Message);
+                case "I001":
+                  return toast.error(reponse.Message);
+                default: {
+                  if (reponse > 0) {
+                    navigate(`/admin/tripRouteList/${tripId}`);
+                    if (isEdit) {
+                      toast.success("Update Trip Route Successed!");
+                    } else {
+                      toast.success("Create Trip Route Successed!");
+                    }
                   }
                 }
               }
+            } catch (err) {
+              setStatus({ success: false });
+              setErrors({ submit: err.message });
             }
-          } catch (err) {
-            setStatus({ success: false });
-            setErrors({ submit: err.message });
-          }
-        }}
-      >
-        {({
-          errors,
-          touched,
-          handleChange,
-          handleSubmit,
-          values,
-          setFieldValue,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="fldTripId"
-                  name="fldTripId"
-                  label="Trip Name"
-                  fullWidth
-                  variant="standard"
-                  value={tripId}
-                  onChange={handleChange}
-                  error={Boolean(touched.fldTripId && errors.fldTripId)}
-                />
-                {touched.fldTripId && errors.fldTripId && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-text-fldTripId"
-                  >
-                    {errors.fldTripId}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="fldRouteDescription"
-                  name="fldRouteDescription"
-                  label="Route Description"
-                  fullWidth
-                  variant="standard"
-                  value={values.fldRouteDescription}
-                  onChange={handleChange}
-                  error={Boolean(
-                    touched.fldRouteDescription && errors.fldRouteDescription
-                  )}
-                />
-                {touched.fldRouteDescription && errors.fldRouteDescription && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-text-fldRouteDescription"
-                  >
-                    {errors.fldRouteDescription}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Button variant="outlined" onClick={gotoList}>
-                  Return to List
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6} textAlign="right">
-                <Button type="submit" variant="contained">
-                  {isEdit ? "Update" : "Create"}
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        )}
-      </Formik>
+          }}
+        >
+          {({
+            errors,
+            touched,
+            handleChange,
+            handleSubmit,
+            values,
+            setFieldValue,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <Card sx={{ padding: 8, gap: 2 }}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="fldTripId"
+                      name="fldTripId"
+                      label="Trip Name"
+                      fullWidth
+                      variant="outlined"
+                      value={tripId}
+                      onChange={handleChange}
+                      error={Boolean(touched.fldTripId && errors.fldTripId)}
+                    />
+                    {touched.fldTripId && errors.fldTripId && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-text-fldTripId"
+                      >
+                        {errors.fldTripId}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="fldRouteDescription"
+                      name="fldRouteDescription"
+                      label="Route Description"
+                      fullWidth
+                      variant="outlined"
+                      value={values.fldRouteDescription}
+                      onChange={handleChange}
+                      error={Boolean(
+                        touched.fldRouteDescription &&
+                          errors.fldRouteDescription
+                      )}
+                    />
+                    {touched.fldRouteDescription && errors.fldRouteDescription && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-text-fldRouteDescription"
+                      >
+                        {errors.fldRouteDescription}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Button variant="outlined" onClick={gotoList}>
+                      Return to List
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={6} textAlign="right">
+                    <Button type="submit" variant="contained">
+                      {isEdit ? "Update" : "Create"}
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Card>
+            </form>
+          )}
+        </Formik>
+      </Container>
     </>
   );
 }

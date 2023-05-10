@@ -1,4 +1,4 @@
-import { Button, FormHelperText } from "@mui/material";
+import { Button, Card, Container, FormHelperText } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
@@ -74,7 +74,10 @@ export default function UserCreate() {
       .string()
       .email("Enter Valid Email")
       .required("Email is required"),
-    fldPhone: yup.string().matches("^[0-9]{10,11}","Invalid number phone").required("Phone is required"),
+    fldPhone: yup
+      .string()
+      .matches("^[0-9]{10,11}", "Invalid number phone")
+      .required("Phone is required"),
     fldAddress: yup.string("Enter Address").required("Address is required"),
     fldBirthday: yup.string("Enter Birthday").required("Birthday is required"),
     fldRole: yup.string("Enter Role").required("Role is required"),
@@ -97,253 +100,268 @@ export default function UserCreate() {
       <Typography variant="h4" gutterBottom color="primary">
         {isEdit ? "Update User" : "Create User"}
       </Typography>
-      <Formik
-        initialValues={user}
-        validationSchema={validationSchema}
-        enableReinitialize={true}
-        onSubmit={async (values, { setErrors, setStatus }) => {
-          try {
-            setStatus({ success: false });
-            let reponse;
-            if (isEdit) {
-              console.log(values);
-              reponse = await userApi.update(values);
-            } else {
-              reponse = await userApi.create(values);
-            }
-            switch (reponse.Code) {
-              case "G001":
-                return toast.error(reponse.Message);
-              case "U001":
-                return toast.error(reponse.Message);
-              case "I001":
-                return toast.error(reponse.Message);
-              case "V001":
-                return toast.error(reponse.Message);
-              default: {
-                // if (reponse > 0) {
-                navigate("/admin/userList");
-                if (isEdit) {
-                  toast.success("Update User Successed!");
-                } else {
-                  toast.success("Create User Successed!");
-                }
-                // }
+      <Container>
+        <Formik
+          initialValues={user}
+          validationSchema={validationSchema}
+          enableReinitialize={true}
+          onSubmit={async (values, { setErrors, setStatus }) => {
+            try {
+              setStatus({ success: false });
+              let reponse;
+              if (isEdit) {
+                console.log(values);
+                reponse = await userApi.update(values);
+              } else {
+                reponse = await userApi.create(values);
               }
+              switch (reponse.Code) {
+                case "G001":
+                  return toast.error(reponse.Message);
+                case "U001":
+                  return toast.error(reponse.Message);
+                case "I001":
+                  return toast.error(reponse.Message);
+                case "V001":
+                  return toast.error(reponse.Message);
+                default: {
+                  // if (reponse > 0) {
+                  navigate("/admin/userList");
+                  if (isEdit) {
+                    toast.success("Update User Successed!");
+                  } else {
+                    toast.success("Create User Successed!");
+                  }
+                  // }
+                }
+              }
+            } catch (err) {
+              setStatus({ success: false });
+              setErrors({ submit: err.message });
             }
-          } catch (err) {
-            setStatus({ success: false });
-            setErrors({ submit: err.message });
-          }
-        }}
-      >
-        {({
-          errors,
-          touched,
-          handleChange,
-          handleSubmit,
-          values,
-          setFieldValue,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="fldUsername"
-                  name="fldUsername"
-                  label="Username"
-                  fullWidth
-                  value={values.fldUsername}
-                  variant="outlined"
-                  onChange={handleChange}
-                  InputProps={{
-                    readOnly: isEdit,
-                  }}
-                />
-                {touched.fldUsername && errors.fldUsername && (
-                  <FormHelperText error id="standard-weight-helper-nickName">
-                    {errors.fldUsername}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="fldFullname"
-                  name="fldFullname"
-                  label="Full name"
-                  fullWidth
-                  value={values.fldFullname}
-                  variant="outlined"
-                  onChange={handleChange}
-                />
-                {touched.fldFullname && errors.fldFullname && (
-                  <FormHelperText error id="standard-weight-helper-name">
-                    {errors.fldFullname}
-                  </FormHelperText>
-                )}
-              </Grid>
-              {!isEdit && (
-                <>
+          }}
+        >
+          {({
+            errors,
+            touched,
+            handleChange,
+            handleSubmit,
+            values,
+            setFieldValue,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <Card sx={{ padding: 8, gap: 2 }}>
+                <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="fldPassword"
-                      name="fldPassword"
-                      label="Password"
+                      id="fldUsername"
+                      name="fldUsername"
+                      label="Username"
                       fullWidth
-                      type="password"
-                      value={values.fldPassword}
+                      value={values.fldUsername}
                       variant="outlined"
                       onChange={handleChange}
+                      InputProps={{
+                        readOnly: isEdit,
+                      }}
                     />
-                    {touched.fldPassword && errors.fldPassword && (
+                    {touched.fldUsername && errors.fldUsername && (
                       <FormHelperText
                         error
-                        id="standard-weight-helper-password"
+                        id="standard-weight-helper-nickName"
                       >
-                        {errors.fldPassword}
+                        {errors.fldUsername}
                       </FormHelperText>
                     )}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="fldRetypePassword"
-                      name="fldRetypePassword"
-                      label="Retype Password"
+                      id="fldFullname"
+                      name="fldFullname"
+                      label="Full name"
                       fullWidth
-                      type="password"
-                      value={values.fldRetypePassword}
+                      value={values.fldFullname}
                       variant="outlined"
                       onChange={handleChange}
                     />
-                    {touched.fldRetypePassword && errors.fldRetypePassword && (
-                      <FormHelperText error id="standard-weight-helper-repass">
-                        {errors.fldRetypePassword}
+                    {touched.fldFullname && errors.fldFullname && (
+                      <FormHelperText error id="standard-weight-helper-name">
+                        {errors.fldFullname}
                       </FormHelperText>
                     )}
                   </Grid>
-                </>
-              )}
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="fldAddress"
-                  name="fldAddress"
-                  label="Address"
-                  fullWidth
-                  variant="outlined"
-                  value={values.fldAddress}
-                  onChange={handleChange}
-                />
-                {touched.fldAddress && errors.fldAddress && (
-                  <FormHelperText error id="standard-weight-helper-address">
-                    {errors.fldAddress}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="fldPhone"
-                  name="fldPhone"
-                  label="Phone Number"
-                  fullWidth
-                  variant="outlined"
-                  value={values.fldPhone}
-                  onChange={handleChange}
-                />
-                {touched.fldPhone && errors.fldPhone && (
-                  <FormHelperText error id="standard-weight-helper-phone">
-                    {errors.fldPhone}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={3}>
-                <FormControl sx={{ mt: 1, minWidth: 200 }}>
-                  <InputLabel id="fldRole">Role</InputLabel>
-                  <Select
-                    labelId="fldRole"
-                    id="fldRole"
-                    value={values.fldRole}
-                    label="Role"
-                    onChange={handleChange}
-                    name="fldRole"
-                  >
-                    <MenuItem value="USER">User</MenuItem>
-                    {currentUser.role === "Admin" && (
-                      <MenuItem value="ADMIN">Admin</MenuItem>
-                    )}
-                    <MenuItem value="EMPL">Employee</MenuItem>
-                  </Select>
-
-                  {touched.fldRole && errors.fldRole && (
-                    <FormHelperText error id="standard-weight-helper-role">
-                      {errors.fldRole}
-                    </FormHelperText>
+                  {!isEdit && (
+                    <>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          id="fldPassword"
+                          name="fldPassword"
+                          label="Password"
+                          fullWidth
+                          type="password"
+                          value={values.fldPassword}
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
+                        {touched.fldPassword && errors.fldPassword && (
+                          <FormHelperText
+                            error
+                            id="standard-weight-helper-password"
+                          >
+                            {errors.fldPassword}
+                          </FormHelperText>
+                        )}
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          id="fldRetypePassword"
+                          name="fldRetypePassword"
+                          label="Retype Password"
+                          fullWidth
+                          type="password"
+                          value={values.fldRetypePassword}
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
+                        {touched.fldRetypePassword && errors.fldRetypePassword && (
+                          <FormHelperText
+                            error
+                            id="standard-weight-helper-repass"
+                          >
+                            {errors.fldRetypePassword}
+                          </FormHelperText>
+                        )}
+                      </Grid>
+                    </>
                   )}
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={3}>
-                <LocalizationProvider
-                  dateAdapter={AdapterDayjs}
-                  dateLibInstance={dayjs.utc}
-                >
-                  <DatePicker
-                    required
-                    sx={{
-                      "& .MuiInputBase-root": {
-                        paddingY: 1,
-                        paddingX: 3,
-                      },
-                      "& .MuiFormLabel-root": {
-                        paddingY: 1,
-                      },
-                    }}
-                    label="Birthday"
-                    id="fldBirthday"
-                    name="fldBirthday"
-                    fullWidth
-                    value={values.fldBirthday}
-                    onChange={(value) => {
-                      setFieldValue("fldBirthday", value);
-                    }}
-                    error={Boolean(touched.fldBirthday && errors.fldBirthday)}
-                  />
-                </LocalizationProvider>
-                {touched.fldBirthday && errors.fldBirthday && (
-                  <FormHelperText error id="standard-weight-helper-fldBirthday">
-                    {errors.fldBirthday}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="fldEmail"
-                  name="fldEmail"
-                  label="Email"
-                  fullWidth
-                  variant="outlined"
-                  value={values.fldEmail}
-                  onChange={handleChange}
-                />
-                {touched.fldEmail && errors.fldEmail && (
-                  <FormHelperText error id="standard-weight-helper-email">
-                    {errors.fldEmail}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Button variant="outlined" onClick={gotoList}>
-                  Return to List
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6} textAlign="right">
-                <Button type="submit" variant="contained">
-                  {isEdit ? "Update " : "Create "}
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        )}
-      </Formik>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="fldAddress"
+                      name="fldAddress"
+                      label="Address"
+                      fullWidth
+                      variant="outlined"
+                      value={values.fldAddress}
+                      onChange={handleChange}
+                    />
+                    {touched.fldAddress && errors.fldAddress && (
+                      <FormHelperText error id="standard-weight-helper-address">
+                        {errors.fldAddress}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="fldPhone"
+                      name="fldPhone"
+                      label="Phone Number"
+                      fullWidth
+                      variant="outlined"
+                      value={values.fldPhone}
+                      onChange={handleChange}
+                    />
+                    {touched.fldPhone && errors.fldPhone && (
+                      <FormHelperText error id="standard-weight-helper-phone">
+                        {errors.fldPhone}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} sm={3}>
+                    <FormControl sx={{ mt: 1, minWidth: 200 }}>
+                      <InputLabel id="fldRole">Role</InputLabel>
+                      <Select
+                        labelId="fldRole"
+                        id="fldRole"
+                        value={values.fldRole}
+                        label="Role"
+                        onChange={handleChange}
+                        name="fldRole"
+                      >
+                        <MenuItem value="USER">User</MenuItem>
+                        {currentUser.role === "Admin" && (
+                          <MenuItem value="ADMIN">Admin</MenuItem>
+                        )}
+                        <MenuItem value="EMPL">Employee</MenuItem>
+                      </Select>
+
+                      {touched.fldRole && errors.fldRole && (
+                        <FormHelperText error id="standard-weight-helper-role">
+                          {errors.fldRole}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={3}>
+                    <LocalizationProvider
+                      dateAdapter={AdapterDayjs}
+                      dateLibInstance={dayjs.utc}
+                    >
+                      <DatePicker
+                        required
+                        sx={{
+                          "& .MuiInputBase-root": {
+                            paddingY: 1,
+                            paddingX: 3,
+                          },
+                          "& .MuiFormLabel-root": {
+                            paddingY: 1,
+                          },
+                        }}
+                        label="Birthday"
+                        id="fldBirthday"
+                        name="fldBirthday"
+                        fullWidth
+                        value={values.fldBirthday}
+                        onChange={(value) => {
+                          setFieldValue("fldBirthday", value);
+                        }}
+                        error={Boolean(
+                          touched.fldBirthday && errors.fldBirthday
+                        )}
+                      />
+                    </LocalizationProvider>
+                    {touched.fldBirthday && errors.fldBirthday && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-fldBirthday"
+                      >
+                        {errors.fldBirthday}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="fldEmail"
+                      name="fldEmail"
+                      label="Email"
+                      fullWidth
+                      variant="outlined"
+                      value={values.fldEmail}
+                      onChange={handleChange}
+                    />
+                    {touched.fldEmail && errors.fldEmail && (
+                      <FormHelperText error id="standard-weight-helper-email">
+                        {errors.fldEmail}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Button variant="outlined" onClick={gotoList}>
+                      Return to List
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={6} textAlign="right">
+                    <Button type="submit" variant="contained">
+                      {isEdit ? "Update " : "Create "}
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Card>
+            </form>
+          )}
+        </Formik>
+      </Container>
     </>
   );
 }

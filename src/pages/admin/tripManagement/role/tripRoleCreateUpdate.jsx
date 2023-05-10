@@ -1,15 +1,11 @@
 import { Button, Card, Container, FormHelperText } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
-import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { tripRoleApi, userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -119,7 +115,7 @@ export default function UserCreate() {
             setFieldValue,
           }) => (
             <form onSubmit={handleSubmit}>
-              <Card sx={{padding:8 , gap: 2}}>
+              <Card sx={{ padding: 8, gap: 2 }}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
@@ -189,24 +185,22 @@ export default function UserCreate() {
                       </FormHelperText>
                     )}
                   </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Button variant="outlined" onClick={gotoList}>
+                      Return to List
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={6} textAlign="right">
+                    <Button type="submit" variant="contained">
+                      {isEdit ? "Update" : "Create"}
+                    </Button>
+                  </Grid>
                 </Grid>
               </Card>
             </form>
           )}
         </Formik>
       </Container>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <Button variant="outlined" onClick={gotoList}>
-            Return to List
-          </Button>
-        </Grid>
-        <Grid item xs={12} sm={6} textAlign="right">
-          <Button type="submit" variant="contained">
-            {isEdit ? "Update" : "Create"}
-          </Button>
-        </Grid>
-      </Grid>
     </>
   );
 }
