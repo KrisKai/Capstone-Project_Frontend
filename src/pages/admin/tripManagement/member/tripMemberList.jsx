@@ -222,7 +222,7 @@ export default function StickyHeadTableTrip() {
                         variant="outlined"
                         value={row.fldMemberId}
                         onClick={(e) => handleDelete(e.target.value)}
-                        color="secondary"
+                        color="error"
                       >
                         Delete
                       </Button>
@@ -250,7 +250,7 @@ export default function StickyHeadTableTrip() {
           </Button>
         </Grid>
         <Grid xs={6} textAlign="right">
-          <Button variant="outlined" onClick={gotoCreate} right>
+          <Button variant="contained" onClick={gotoCreate} right>
             Create
           </Button>
         </Grid>

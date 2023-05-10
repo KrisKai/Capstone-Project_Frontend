@@ -70,7 +70,7 @@ export default function RouteCreate() {
 
   return (
     <>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h4" gutterBottom color="primary">
         {isEdit ? "Update Trip Route" : "Create Trip Route"}
       </Typography>
       <Formik
@@ -171,7 +171,7 @@ export default function RouteCreate() {
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6} textAlign="right">
-                <Button type="submit" variant="outlined">
+                <Button type="submit" variant="contained">
                   {isEdit ? "Update" : "Create"}
                 </Button>
               </Grid>

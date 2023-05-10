@@ -179,7 +179,7 @@ export default function StickyHeadTableTripItem(props) {
                         variant="outlined"
                         value={row.fldItemId}
                         onClick={(e) => handleDelete(e.target.value)}
-                        color="secondary"
+                        color="error"
                       >
                         Delete
                       </Button>

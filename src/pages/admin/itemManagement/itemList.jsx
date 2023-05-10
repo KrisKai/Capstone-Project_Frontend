@@ -64,7 +64,7 @@ export default function ItemList() {
       <Grid container sx={{ mt: 2 }}>
         <Grid xs={6}></Grid>
         <Grid xs={6} textAlign="right">
-          <Button variant="outlined" onClick={gotoCreate} right>
+          <Button variant="contained" onClick={gotoCreate} right>
             Create
           </Button>
         </Grid>

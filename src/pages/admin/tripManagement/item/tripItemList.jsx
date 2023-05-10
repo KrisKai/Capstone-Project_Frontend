@@ -41,7 +41,7 @@ export default function TripItem() {
           </Button>
         </Grid>
         <Grid xs={6} textAlign="right">
-          <Button variant="outlined" onClick={gotoCreate}>
+          <Button variant="contained" onClick={gotoCreate}>
             Create
           </Button>
         </Grid>

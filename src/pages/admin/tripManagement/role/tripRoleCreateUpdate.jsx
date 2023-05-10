@@ -1,4 +1,4 @@
-import { Button, FormHelperText } from "@mui/material";
+import { Button, Card, Container, FormHelperText } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -68,139 +68,145 @@ export default function UserCreate() {
 
   return (
     <>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h4" gutterBottom color="primary">
         {isEdit ? "Update Trip Role" : "Create Trip Role"}
       </Typography>
-      <Formik
-        initialValues={role}
-        enableReinitialize={true}
-        validationSchema={validationSchema}
-        onSubmit={async (values, { setErrors, setStatus }) => {
-          try {
-            setStatus({ success: false });
-            let reponse;
-            if (isEdit) {
-              reponse = await tripRoleApi.update(values);
-            } else {
-              reponse = await tripRoleApi.create(values);
-            }
+      <Container>
+        <Formik
+          initialValues={role}
+          enableReinitialize={true}
+          validationSchema={validationSchema}
+          onSubmit={async (values, { setErrors, setStatus }) => {
+            try {
+              setStatus({ success: false });
+              let reponse;
+              if (isEdit) {
+                reponse = await tripRoleApi.update(values);
+              } else {
+                reponse = await tripRoleApi.create(values);
+              }
 
-            switch (reponse.Code) {
-              case "G001":
-                return toast.error(reponse.Message);
-              case "U001":
-                return toast.error(reponse.Message);
-              case "I001":
-                return toast.error(reponse.Message);
-              default: {
-                if (reponse > 0) {
-                  navigate(`/admin/tripRoleList/${tripId}`);
-                  if (isEdit) {
-                    toast.success("Update Trip Role Successed!");
-                  } else {
-                    toast.success("Create Trip Role Successed!");
+              switch (reponse.Code) {
+                case "G001":
+                  return toast.error(reponse.Message);
+                case "U001":
+                  return toast.error(reponse.Message);
+                case "I001":
+                  return toast.error(reponse.Message);
+                default: {
+                  if (reponse > 0) {
+                    navigate(`/admin/tripRoleList/${tripId}`);
+                    if (isEdit) {
+                      toast.success("Update Trip Role Successed!");
+                    } else {
+                      toast.success("Create Trip Role Successed!");
+                    }
                   }
                 }
               }
+            } catch (err) {
+              setStatus({ success: false });
+              setErrors({ submit: err.message });
             }
-          } catch (err) {
-            setStatus({ success: false });
-            setErrors({ submit: err.message });
-          }
-        }}
-      >
-        {({
-          errors,
-          touched,
-          handleChange,
-          handleSubmit,
-          values,
-          setFieldValue,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="fldRoleName"
-                  name="fldRoleName"
-                  label="Role Name"
-                  fullWidth
-                  variant="outlined"
-                  value={values.fldRoleName}
-                  onChange={handleChange}
-                  error={Boolean(touched.fldRoleName && errors.fldRoleName)}
-                />
-                {touched.fldRoleName && errors.fldRoleName && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-text-fldRoleName"
-                  >
-                    {errors.fldRoleName}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl sx={{ minWidth: 400 }}>
-                  <InputLabel id="fldType">Role Type</InputLabel>
-                  <Select
-                    labelId="fldType"
-                    id="fldType"
-                    value={values.fldType}
-                    label="Role"
-                    onChange={handleChange}
-                    name="fldType"
-                  >
-                    <MenuItem value="HOST">Host</MenuItem>
-                    <MenuItem value="MEMBER">Member</MenuItem>
-                    <MenuItem value="OTHER">Other</MenuItem>
-                  </Select>
+          }}
+        >
+          {({
+            errors,
+            touched,
+            handleChange,
+            handleSubmit,
+            values,
+            setFieldValue,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <Card sx={{padding:8 , gap: 2}}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="fldRoleName"
+                      name="fldRoleName"
+                      label="Role Name"
+                      fullWidth
+                      variant="outlined"
+                      value={values.fldRoleName}
+                      onChange={handleChange}
+                      error={Boolean(touched.fldRoleName && errors.fldRoleName)}
+                    />
+                    {touched.fldRoleName && errors.fldRoleName && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-text-fldRoleName"
+                      >
+                        {errors.fldRoleName}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl sx={{ minWidth: 530 }}>
+                      <InputLabel id="fldType">Role Type</InputLabel>
+                      <Select
+                        labelId="fldType"
+                        id="fldType"
+                        value={values.fldType}
+                        label="Role"
+                        onChange={handleChange}
+                        name="fldType"
+                      >
+                        <MenuItem value="HOST">Host</MenuItem>
+                        <MenuItem value="MEMBER">Member</MenuItem>
+                        <MenuItem value="OTHER">Other</MenuItem>
+                      </Select>
 
-                  {touched.fldType && errors.fldType && (
-                    <FormHelperText error id="standard-weight-helper-role">
-                      {errors.fldType}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="fldDescription"
-                  name="fldDescription"
-                  label="Role Description"
-                  fullWidth
-                  autoComplete=""
-                  variant="outlined"
-                  value={values.fldDescription}
-                  onChange={handleChange}
-                  multiline
-                  maxRows={4}
-                  error={Boolean(
-                    touched.fldDescription && errors.fldDescription
-                  )}
-                />
-                {touched.fldDescription && errors.fldDescription && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-fldDescription"
-                  >
-                    {errors.fldDescription}
-                  </FormHelperText>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Button variant="outlined" onClick={gotoList}>
-                  Return to List
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6} textAlign="right">
-                <Button type="submit" variant="outlined">
-                  {isEdit ? "Update" : "Create"}
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        )}
-      </Formik>
+                      {touched.fldType && errors.fldType && (
+                        <FormHelperText error id="standard-weight-helper-role">
+                          {errors.fldType}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="fldDescription"
+                      name="fldDescription"
+                      label="Role Description"
+                      fullWidth
+                      autoComplete=""
+                      variant="outlined"
+                      value={values.fldDescription}
+                      onChange={handleChange}
+                      multiline
+                      maxRows={4}
+                      error={Boolean(
+                        touched.fldDescription && errors.fldDescription
+                      )}
+                    />
+                    {touched.fldDescription && errors.fldDescription && (
+                      <FormHelperText
+                        error
+                        id="standard-weight-helper-fldDescription"
+                      >
+                        {errors.fldDescription}
+                      </FormHelperText>
+                    )}
+                  </Grid>
+                </Grid>
+              </Card>
+            </form>
+          )}
+        </Formik>
+      </Container>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
+          <Button variant="outlined" onClick={gotoList}>
+            Return to List
+          </Button>
+        </Grid>
+        <Grid item xs={12} sm={6} textAlign="right">
+          <Button type="submit" variant="contained">
+            {isEdit ? "Update" : "Create"}
+          </Button>
+        </Grid>
+      </Grid>
     </>
   );
 }

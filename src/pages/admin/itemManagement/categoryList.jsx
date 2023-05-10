@@ -207,7 +207,7 @@ export default function StickyHeadTableCategory() {
                         variant="outlined"
                         value={row.fldCategoryId}
                         onClick={(e) => handleDelete(e.target.value)}
-                        color="secondary"
+                        color="error"
                       >
                         Delete
                       </Button>
@@ -231,7 +231,7 @@ export default function StickyHeadTableCategory() {
       <Grid container sx={{ mt: 2 }}>
         <Grid xs={6}></Grid>
         <Grid xs={6} textAlign="right">
-          <Button variant="outlined" onClick={gotoCreate} right>
+          <Button variant="contained" onClick={gotoCreate} right>
             Create
           </Button>
         </Grid>

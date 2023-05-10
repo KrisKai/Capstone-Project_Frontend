@@ -200,7 +200,7 @@ export default function StickyHeadTableTripRoute() {
                         variant="outlined"
                         value={row.fldRouteId}
                         onClick={(e) => handleDelete(e.target.value)}
-                        color="secondary"
+                        color="error"
                       >
                         Delete
                       </Button>
@@ -228,7 +228,7 @@ export default function StickyHeadTableTripRoute() {
           </Button>
         </Grid>
         <Grid xs={6} textAlign="right">
-          <Button variant="outlined" onClick={gotoCreate} right>
+          <Button variant="contained" onClick={gotoCreate} right>
             Create
           </Button>
         </Grid>

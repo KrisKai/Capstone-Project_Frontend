@@ -285,7 +285,7 @@ export default function StickyHeadTableUser() {
                             variant="outlined"
                             value={row.fldUserId}
                             onClick={(e) => handleReset(e.target.value)}
-                            color="primary"
+                            color="success"
                           >
                             Reset Password
                           </Button>
@@ -305,7 +305,7 @@ export default function StickyHeadTableUser() {
                         variant="outlined"
                         value={row.fldUserId}
                         onClick={(e) => handleDelete(e.target.value)}
-                        color="secondary"
+                        color="error"
                       >
                         Delete
                       </Button>
@@ -327,7 +327,7 @@ export default function StickyHeadTableUser() {
         />
       </Paper>
       <Box sx={{ mt: 2 }} textAlign="right">
-        <Button variant="outlined" onClick={gotoCreate} right>
+        <Button variant="contained" onClick={gotoCreate} right>
           Create
         </Button>
       </Box>

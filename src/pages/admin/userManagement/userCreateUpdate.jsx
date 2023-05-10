@@ -94,7 +94,7 @@ export default function UserCreate() {
 
   return (
     <>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h4" gutterBottom color="primary">
         {isEdit ? "Update User" : "Create User"}
       </Typography>
       <Formik
@@ -336,7 +336,7 @@ export default function UserCreate() {
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6} textAlign="right">
-                <Button type="submit" variant="outlined">
+                <Button type="submit" variant="contained">
                   {isEdit ? "Update " : "Create "}
                 </Button>
               </Grid>

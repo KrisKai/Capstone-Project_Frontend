@@ -109,7 +109,7 @@ export default function UserCreate() {
 
   return (
     <>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h4" gutterBottom color="primary">
         {isEdit ? "Update Trip Member" : "Create Trip Member"}
       </Typography>
       <Formik
@@ -195,7 +195,7 @@ export default function UserCreate() {
                   name="name"
                   label="Member Name"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={name}
                   InputProps={{
                     readOnly: true,
@@ -208,7 +208,7 @@ export default function UserCreate() {
                   name="fldUserName"
                   label="Email"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   value={email}
                   InputProps={{
                     readOnly: true,
@@ -222,7 +222,7 @@ export default function UserCreate() {
                   label="Nickname"
                   fullWidth
                   autoComplete=""
-                  variant="standard"
+                  variant="outlined"
                   value={values.fldNickName}
                   onChange={handleChange}
                   error={Boolean(touched.fldNickName && errors.fldNickName)}
@@ -298,7 +298,7 @@ export default function UserCreate() {
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6} textAlign="right">
-                <Button type="submit" variant="outlined">
+                <Button type="submit" variant="contained">
                   {isEdit ? "Update" : "Create"}
                 </Button>
               </Grid>
