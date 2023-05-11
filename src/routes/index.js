@@ -315,7 +315,8 @@ export default function Router() {
         // { path: 'verify', element: <VerifyCode /> }
       ],
     },
-    { path: "*", element: <Navigate to="/404" replace /> },
+    { path: '404', element: <NotFound /> },
+    { path: "*", element: <Navigate to="404" replace /> },
   ]);
 }
 

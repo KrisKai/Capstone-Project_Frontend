@@ -21,6 +21,10 @@ const tripApi = {
     const url = `/trips/${id}`;
     return axiosInstance.delete(url);
   },
+  countThisMonth() {
+    const url = `/trips/count-this-month`;
+    return axiosInstance.get(url);
+  }
 };
 
 export default tripApi;

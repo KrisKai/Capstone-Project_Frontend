@@ -39,7 +39,6 @@ export default function UserCreate() {
           navigate(`/admin/tripRoleList/${tripId}`);
         }
       } catch (error) {
-        console.log("Failed to fetch trip details", error);
         if (error.response.status == 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
