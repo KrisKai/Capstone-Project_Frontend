@@ -8,6 +8,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
 import { userApi } from "api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -44,6 +47,8 @@ const columns = [
 
 export default function StickyHeadTableUser() {
   let navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
   const [filter, setFilter] = useState({
     pageIndex: 0,
     pageSize: 10,
@@ -62,6 +67,15 @@ export default function StickyHeadTableUser() {
 
   const onSearchChange = (e) => {
     setSearch(e.target.value);
+  };
+
+  const handleClickOpen = (e) => {
+    setOpen(true);
+    setDeleteId(e);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const handleChange = (event) => {
@@ -125,15 +139,16 @@ export default function StickyHeadTableUser() {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
       // Remove user API
-      await userApi.delete(id || "");
+      await userApi.delete(deleteId || "");
       toast.success("Remove user successfully!");
 
       // Trigger to re-fetch student list with current filter
       const newFilter = { ...filter };
       setFilter(newFilter);
+      setOpen(false);
     } catch (error) {
       // Toast error
       console.log("Failed to fetch user", error);
@@ -304,7 +319,7 @@ export default function StickyHeadTableUser() {
                       <Button
                         variant="outlined"
                         value={row.fldUserId}
-                        onClick={(e) => handleDelete(e.target.value)}
+                        onClick={(e) => handleClickOpen(e.target.value)}
                         color="error"
                       >
                         Delete
@@ -331,6 +346,29 @@ export default function StickyHeadTableUser() {
           Create
         </Button>
       </Box>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Do you want to delete this user?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button variant="contained" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleDelete}
+            autoFocus
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

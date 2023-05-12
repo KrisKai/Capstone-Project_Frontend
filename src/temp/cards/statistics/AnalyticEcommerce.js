@@ -60,7 +60,7 @@ const AnalyticEcommerce = ({
     </Stack>
     <Box sx={{ pt: 2.25 }}>
       <Typography variant="caption" color="textSecondary">
-        You made an extra{" "}
+        Tổng số của năm nay{" "}
         <Typography
           component="span"
           variant="caption"
@@ -68,7 +68,6 @@ const AnalyticEcommerce = ({
         >
           {extra}
         </Typography>{" "}
-        this year
       </Typography>
     </Box>
   </MainCard>

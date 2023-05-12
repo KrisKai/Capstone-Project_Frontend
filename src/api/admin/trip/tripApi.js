@@ -21,8 +21,8 @@ const tripApi = {
     const url = `/trips/${id}`;
     return axiosInstance.delete(url);
   },
-  countThisMonth() {
-    const url = `/trips/count-this-month`;
+  tripStatistic() {
+    const url = `/trips/trip-statistic`;
     return axiosInstance.get(url);
   }
 };

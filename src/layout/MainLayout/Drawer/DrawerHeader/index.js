@@ -14,7 +14,7 @@ const DrawerHeader = ({ open }) => {
 
   return (
     <DrawerHeaderStyled theme={theme} open={open}>
-      <Typography>Journey Sick</Typography>
+      <h1>Journey Sick</h1>
     </DrawerHeaderStyled>
   );
 };

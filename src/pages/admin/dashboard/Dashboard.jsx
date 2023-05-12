@@ -24,7 +24,6 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 
-
 import { getCurrentUser } from "redux/modules/admin/authenticate/authSlice";
 import { tripApi } from "api";
 import { useNavigate, useParams } from "react-router-dom";
@@ -66,15 +65,20 @@ const status = [
 
 const DashboardDefault = () => {
   let navigate = useNavigate();
-  const [tripCountThisMonth, setTripCountThisMonth] = useState(0);
+  const [tripStatistic, setTripStatistic] = useState({
+    tripCountThisMonth: 0,
+    countDiff: 0,
+    trendStatus: "",
+  });
   const [value, setValue] = useState("today");
   const [slot, setSlot] = useState("week");
   useEffect(() => {
     (async () => {
       try {
-        const tripCountThisMonth = await tripApi.countThisMonth();
-        if (tripCountThisMonth != null && tripCountThisMonth != "") {
-          setTripCountThisMonth(tripCountThisMonth);
+        const tripStatistic = await tripApi.tripStatistic();
+        console.log(tripStatistic);
+        if (tripStatistic != null && tripStatistic != "") {
+          setTripStatistic(tripStatistic);
         }
       } catch (error) {
         if (error.response.status == 401) {
@@ -83,7 +87,7 @@ const DashboardDefault = () => {
         }
       }
     })();
-  },[])
+  }, []);
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {/* row 1 */}
@@ -101,9 +105,11 @@ const DashboardDefault = () => {
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
           title="Tổng số chuyến đi được đăng kí trong tháng này"
-          count={tripCountThisMonth}
-          percentage={70.5}
-          extra="8,900"
+          count={tripStatistic.tripCountThisMonth}
+          percentage={tripStatistic.countDiff}
+          isLoss={tripStatistic.trendStatus === "L"}
+          color={tripStatistic.trendStatus === "L" ? "warning" : "primary"}
+          extra={tripStatistic.tripCountThisYear}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
