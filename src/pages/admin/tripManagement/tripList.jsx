@@ -112,14 +112,21 @@ export default function StickyHeadTableTrip() {
   const handleDelete = async () => {
     try {
       // Remove trip API
-      await tripApi.delete(deleteId || "");
+      const data = await tripApi.delete(deleteId || "");
+      switch (data.Code) {
+        case "G001":
+          return toast.error(data.Message);
+        case "D001":
+          return toast.error(data.Message);
+        default:
+          toast.success("Remove trip successfully!");
 
-      toast.success("Remove trip successfully!");
-
-      // Trigger to re-fetch student list with current filter
-      const newFilter = { ...filter };
-      setFilter(newFilter);
-      setOpen(false);
+          // Trigger to re-fetch student list with current filter
+          const newFilter = { ...filter };
+          setFilter(newFilter);
+          setOpen(false);
+          setDeleteId(null);
+      }
     } catch (error) {
       // Toast error
       console.log("Failed to fetch trip", error);

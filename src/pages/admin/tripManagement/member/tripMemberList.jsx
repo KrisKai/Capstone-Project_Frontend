@@ -7,6 +7,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
 import { tripMemberApi } from "api";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -46,15 +49,23 @@ const columns = [
     minWidth: 130,
     align: "center",
   },
+  {
+    id: "fldConfirmation",
+    label: "Confirmed",
+    minWidth: 130,
+    align: "center",
+  },
 ];
 
 export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
   const [searchTerm, setSearchTerm] = React.useState("");
-  const [allMembers,setAllMembers] = useState({
+  const [allMembers, setAllMembers] = useState({
     listOfMember: [],
     numOfMember: 0,
   });
+  const [deleteId, setDeleteId] = useState("");
+  const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState({
     pageIndex: 0,
     pageSize: 10,
@@ -63,6 +74,15 @@ export default function StickyHeadTableTrip() {
   const memberList = allMembers.listOfMember;
   const numOfMember = allMembers.numOfMember;
   const { tripId } = useParams();
+
+  const handleClickOpen = (e) => {
+    setOpen(true);
+    setDeleteId(e);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -101,19 +121,27 @@ export default function StickyHeadTableTrip() {
     navigate(`/admin/tripMemberUpdate/${tripId}/${id}`);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
       // Remove trip API
-      await tripMemberApi.delete(id || "");
+      const data = await tripMemberApi.delete(deleteId || "");
+      switch (data.Code) {
+        case "G001":
+          return toast.error(data.Message);
+        case "D001":
+          return toast.error(data.Message);
+        default:
+          toast.success("Remove trip member successfully!");
 
-      toast.success("Remove trip successfully!");
-
-      // Trigger to re-fetch student list with current filter
-      const newFilter = { ...filter };
-      setFilter(newFilter);
+          // Trigger to re-fetch student list with current filter
+          const newFilter = { ...filter };
+          setFilter(newFilter);
+          setOpen(false);
+          setDeleteId(null);
+      }
     } catch (error) {
       // Toast error
-      console.log("Failed to fetch trip", error);
+      console.log("Failed to fetch trip member", error);
       if (error.response.status == 401) {
         localStorage.removeItem("access_token");
         navigate("/auth/login");
@@ -138,7 +166,7 @@ export default function StickyHeadTableTrip() {
       const response = await tripMemberApi.getAll(filter);
       setAllMembers(response);
     }
-    getAllMembers()
+    getAllMembers();
   }, [filter]);
 
   return (
@@ -221,7 +249,7 @@ export default function StickyHeadTableTrip() {
                       <Button
                         variant="outlined"
                         value={row.fldMemberId}
-                        onClick={(e) => handleDelete(e.target.value)}
+                        onClick={(e) => handleClickOpen(e.target.value)}
                         color="error"
                       >
                         Delete
@@ -255,6 +283,29 @@ export default function StickyHeadTableTrip() {
           </Button>
         </Grid>
       </Grid>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Do you want to delete this member?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button variant="contained" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleDelete}
+            autoFocus
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
