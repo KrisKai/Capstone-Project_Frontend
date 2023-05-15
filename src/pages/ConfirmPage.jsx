@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import Link from 'themes/overrides/Link';
 import { useNavigate, useParams } from 'react-router-dom';
 import { tripMemberApi } from "api";
+import { toast } from "react-toastify";
 
 export default function ConfirmPage() {
   let navigate = useNavigate();
@@ -14,12 +15,15 @@ export default function ConfirmPage() {
       if (!memberId) return;
       try {
         const data = await tripMemberApi.confirmTrip(memberId);
-        // if (data != null && data != "") {
-        //   // setMember(data);
-        //   // setName(data.fldFullname);
-        //   // setEmail(data.fldEmail);
-        // } else {
-        // }
+        switch (data.Code) {
+          case "G001":
+            navigate("/auth/login");
+            return toast.error(data.Message);
+          case "D001":
+            return toast.error(data.Message);
+          default:
+            // toast.success("Remove trip successfully!");
+        }
       } catch (error) {
         console.log("Failed to fetch trip member", error);
         if (error.response.status == 401) {
