@@ -19,7 +19,8 @@ export default function ConfirmPage() {
           case "G001":
             navigate("/auth/login");
             return toast.error(data.Message);
-          case "D001":
+          case "U001":
+            navigate("/auth/login");
             return toast.error(data.Message);
           default:
             // toast.success("Remove trip successfully!");
