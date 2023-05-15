@@ -13,7 +13,7 @@ export default function ConfirmPage() {
     (async () => {
       if (!memberId) return;
       try {
-        const data = await tripMemberApi.con(memberId);
+        const data = await tripMemberApi.confirmTrip(memberId);
         // if (data != null && data != "") {
         //   // setMember(data);
         //   // setName(data.fldFullname);

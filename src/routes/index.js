@@ -312,19 +312,19 @@ export default function Router() {
             </AuthGuard>
           ),
         },
-        
-        {
-          path: `confirmPage/:memberId`,
-          element: (
-            <AuthGuard>
-              <ConfirmPage />
-            </AuthGuard>
-          ),
-        },
         // { path: 'verify', element: <VerifyCode /> }
       ],
     },
     { path: "404", element: <NotFound /> },
+    {
+      path: `confirmPage/:memberId`,
+      element: (
+        // check lai guard
+        <AuthGuard>
+          <ConfirmPage />
+        </AuthGuard>
+      ),
+    },
     { path: "*", element: <Navigate to="404" replace /> },
   ]);
 }
