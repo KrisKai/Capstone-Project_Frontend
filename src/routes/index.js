@@ -312,10 +312,19 @@ export default function Router() {
             </AuthGuard>
           ),
         },
+        
+        {
+          path: `confirmPage/:memberId`,
+          element: (
+            <AuthGuard>
+              <ConfirmPage />
+            </AuthGuard>
+          ),
+        },
         // { path: 'verify', element: <VerifyCode /> }
       ],
     },
-    { path: '404', element: <NotFound /> },
+    { path: "404", element: <NotFound /> },
     { path: "*", element: <Navigate to="404" replace /> },
   ]);
 }
@@ -406,6 +415,7 @@ const CategoryList = Loadable(
 const CategoryCreateUpdate = Loadable(
   lazy(() => import("../pages/admin/itemManagement/categoryCreateUpdate"))
 );
+const ConfirmPage = Loadable(lazy(() => import("../pages/ConfirmPage")));
 const Maintenance = Loadable(lazy(() => import("../pages/Maintenance")));
 const Page500 = Loadable(lazy(() => import("../pages/Page500")));
 const NotFound = Loadable(lazy(() => import("../pages/Page404")));
