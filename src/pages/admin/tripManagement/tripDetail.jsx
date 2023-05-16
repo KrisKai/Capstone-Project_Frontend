@@ -155,7 +155,7 @@ export default function StickyHeadTableTrip() {
         </Card>
         <Grid container sx={{ mt: 2 }}>
           <Grid xs={6}>
-            <Button variant="outlined" onClick={gotoList} right>
+            <Button variant="outlined" onClick={gotoList}>
               Return to Detail
             </Button>
           </Grid>

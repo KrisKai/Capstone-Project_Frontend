@@ -342,7 +342,7 @@ export default function StickyHeadTableUser() {
         />
       </Paper>
       <Box sx={{ mt: 2 }} textAlign="right">
-        <Button variant="contained" onClick={gotoCreate} right>
+        <Button variant="contained" onClick={gotoCreate}>
           Create
         </Button>
       </Box>

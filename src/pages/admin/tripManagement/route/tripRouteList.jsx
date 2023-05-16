@@ -223,12 +223,12 @@ export default function StickyHeadTableTripRoute() {
       </Paper>
       <Grid container sx={{ mt: 2 }}>
         <Grid xs={6}>
-          <Button variant="outlined" onClick={gotoList} right>
+          <Button variant="outlined" onClick={gotoList}>
             Return to Detail
           </Button>
         </Grid>
         <Grid xs={6} textAlign="right">
-          <Button variant="contained" onClick={gotoCreate} right>
+          <Button variant="contained" onClick={gotoCreate}>
             Create
           </Button>
         </Grid>

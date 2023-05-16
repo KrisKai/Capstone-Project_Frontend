@@ -49,12 +49,6 @@ const columns = [
     minWidth: 130,
     align: "center",
   },
-  {
-    id: "fldConfirmation",
-    label: "Confirmed",
-    minWidth: 130,
-    align: "center",
-  },
 ];
 
 export default function StickyHeadTableTrip() {
@@ -119,6 +113,34 @@ export default function StickyHeadTableTrip() {
   const handleUpdate = (id) => {
     // update
     navigate(`/admin/tripMemberUpdate/${tripId}/${id}`);
+  };
+
+  const handleSendMail = async () => {
+    try {
+      // Remove trip API
+      const data = await tripMemberApi.delete(deleteId || "");
+      switch (data.Code) {
+        case "G001":
+          return toast.error(data.Message);
+        case "D001":
+          return toast.error(data.Message);
+        default:
+          toast.success("Remove trip member successfully!");
+
+          // Trigger to re-fetch student list with current filter
+          const newFilter = { ...filter };
+          setFilter(newFilter);
+          setOpen(false);
+          setDeleteId(null);
+      }
+    } catch (error) {
+      // Toast error
+      console.log("Failed to fetch trip member", error);
+      if (error.response.status == 401) {
+        localStorage.removeItem("access_token");
+        navigate("/auth/login");
+      }
+    }
   };
 
   const handleDelete = async () => {
@@ -199,6 +221,9 @@ export default function StickyHeadTableTrip() {
                     {column.label}
                   </TableCell>
                 ))}
+                <TableCell key="confirm" align="center">
+                  Confirmed
+                </TableCell>
                 <TableCell key="edit" align="center">
                   Edit || Delete
                 </TableCell>
@@ -215,29 +240,47 @@ export default function StickyHeadTableTrip() {
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
+
+                      if (column.onclick) {
+                        return (
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            onClick={() => gotoView(row.fldMemberId)}
+                          >
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </TableCell>
+                        );
+                      }
+
                       return (
-                        <>
-                          {column.onclick ? (
-                            <TableCell
-                              key={column.id}
-                              align={column.align}
-                              onClick={() => gotoView(row.fldMemberId)}
-                            >
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          ) : (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          )}
-                        </>
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
                       );
                     })}
-                    <TableCell key="edit" align="center">
+                    <TableCell
+                      key={`confirm_${row.fldMemberId}`}
+                      align="center"
+                    >
+                      {row.fldConfirmation === "Y" ? (
+                        "Yes"
+                      ) : (
+                        <Button
+                          variant="outlined"
+                          value={row.fldMemberId}
+                          onClick={(e) => handleSendMail(e.target.value)}
+                          color="primary"
+                        >
+                          Send confirm mail
+                        </Button>
+                      )}
+                    </TableCell>
+                    <TableCell key={`edit_${row.fldMemberId}`} align="center">
                       <Button
                         variant="outlined"
                         value={row.fldMemberId}
@@ -272,13 +315,13 @@ export default function StickyHeadTableTrip() {
         />
       </Paper>
       <Grid container sx={{ mt: 2 }}>
-        <Grid xs={6}>
-          <Button variant="outlined" onClick={gotoList} right>
+        <Grid item xs={6}>
+          <Button variant="outlined" onClick={gotoList}>
             Return to Detail
           </Button>
         </Grid>
-        <Grid xs={6} textAlign="right">
-          <Button variant="contained" onClick={gotoCreate} right>
+        <Grid item xs={6} textAlign="right">
+          <Button variant="contained" onClick={gotoCreate}>
             Create
           </Button>
         </Grid>
