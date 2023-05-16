@@ -96,7 +96,15 @@ const AuthRegister = () => {
             dispatch(handleRegister(values))
               .unwrap()
               .then((res) => {
-                toast("Vui lòng xác thực email của bạn!", toast.success);
+                console.log(res)
+                switch (res.Code) {
+                  case "R001":
+                    return toast.error(res.Message);
+                  case "U002":
+                    return toast.error(res.Message);
+                  default:
+                    toast("Đăng kí thành công! Vui lòng xác thực email của bạn!", toast.success);
+                }
               });
             console.log(values);
             setStatus({ success: false });
