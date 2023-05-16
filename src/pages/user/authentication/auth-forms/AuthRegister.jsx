@@ -106,7 +106,6 @@ const AuthRegister = () => {
                     toast("Đăng kí thành công! Vui lòng xác thực email của bạn!", toast.success);
                 }
               });
-            console.log(values);
             setStatus({ success: false });
             setSubmitting(false);
           } catch (err) {
