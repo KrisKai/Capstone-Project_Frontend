@@ -17,7 +17,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 // third party
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -31,7 +35,7 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { useAppDispatch } from "redux/hooks";
 import { handleRegister } from "redux/modules/user/authenticate/authUserSlice";
 import { toast } from "react-toastify";
-
+dayjs.extend(utc);
 // ============================|| FIREBASE - REGISTER ||============================ //
 
 const AuthRegister = () => {
@@ -82,7 +86,7 @@ const AuthRegister = () => {
           password: Yup.string().max(255).required("Password is required"),
           rePassword: Yup.string()
             .required("Is required")
-            .oneOf([Yup.ref("password")], "asdasasdasasdasdasdasd"),
+            .oneOf([Yup.ref("password")], "Repassword is not matched"),
           phone: Yup.string().min(10).max(11).required("Is required"),
           address: Yup.string().required("Is required"),
           birthday: Yup.string().required("Is required"),
@@ -113,6 +117,7 @@ const AuthRegister = () => {
           isSubmitting,
           touched,
           values,
+          setFieldValue
         }) => (
           <form noValidate onSubmit={handleSubmit}>
             <Grid container spacing={3}>
@@ -352,17 +357,34 @@ const AuthRegister = () => {
               <Grid item xs={12}>
                 <Stack spacing={1}>
                   <InputLabel htmlFor="birthday-signup">Birthday*</InputLabel>
-                  <OutlinedInput
-                    fullWidth
-                    error={Boolean(touched.birthday && errors.birthday)}
-                    id="birthday-signup"
-                    value={values.birthday}
-                    name="birthday"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Birthday"
-                    inputProps={{}}
-                  />
+                  <LocalizationProvider
+                      dateAdapter={AdapterDayjs}
+                      dateLibInstance={dayjs.utc}
+                    >
+                      <DatePicker
+                        required
+                        sx={{
+                          "& .MuiInputBase-root": {
+                            paddingY: 1,
+                            paddingX: 3,
+                          },
+                          "& .MuiFormLabel-root": {
+                            paddingY: 1,
+                          },
+                        }}
+                        id="birthday"
+                        name="birthday"
+                        fullWidth
+                        value={values.birthday}
+                        onChange={(value) => {
+                          setFieldValue("birthday", value);
+                        }}
+                        error={Boolean(
+                          touched.birthday &&
+                            errors.birthday
+                        )}
+                      />
+                    </LocalizationProvider>
                   {touched.birthday && errors.birthday && (
                     <FormHelperText error id="helper-text-birthday-signup">
                       {errors.birthday}
