@@ -96,7 +96,7 @@ const AuthRegister = () => {
             dispatch(handleRegister(values))
               .unwrap()
               .then((res) => {
-                toast("Register success", toast.success);
+                toast("Vui lòng xác thực email của bạn!", toast.success);
               });
             console.log(values);
             setStatus({ success: false });
