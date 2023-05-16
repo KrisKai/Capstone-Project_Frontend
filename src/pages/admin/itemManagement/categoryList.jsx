@@ -231,7 +231,7 @@ export default function StickyHeadTableCategory() {
       <Grid container sx={{ mt: 2 }}>
         <Grid xs={6}></Grid>
         <Grid xs={6} textAlign="right">
-          <Button variant="contained" onClick={gotoCreate} right>
+          <Button variant="contained" onClick={gotoCreate}>
             Create
           </Button>
         </Grid>

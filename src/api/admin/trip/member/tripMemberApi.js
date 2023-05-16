@@ -21,6 +21,10 @@ const tripMemberApi = {
     const url = "/tripMembers/confirm-trip";
     return axiosInstance.put(url, data);
   },
+  sendMail(data) {
+    const url = "/tripMembers/send-mail";
+    return axiosInstance.put(url, data);
+  },
   delete(id) {
     const url = `/tripMembers/${id}`;
     return axiosInstance.delete(url);

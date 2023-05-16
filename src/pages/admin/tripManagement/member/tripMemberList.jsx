@@ -115,23 +115,17 @@ export default function StickyHeadTableTrip() {
     navigate(`/admin/tripMemberUpdate/${tripId}/${id}`);
   };
 
-  const handleSendMail = async () => {
+  const handleSendMail = async (id) => {
     try {
       // Remove trip API
-      const data = await tripMemberApi.delete(deleteId || "");
+      const data = await tripMemberApi.sendMail(id || "");
       switch (data.Code) {
         case "G001":
           return toast.error(data.Message);
-        case "D001":
+        case "U001":
           return toast.error(data.Message);
         default:
-          toast.success("Remove trip member successfully!");
-
-          // Trigger to re-fetch student list with current filter
-          const newFilter = { ...filter };
-          setFilter(newFilter);
-          setOpen(false);
-          setDeleteId(null);
+          toast.success("Send mail successfully!");
       }
     } catch (error) {
       // Toast error
@@ -240,7 +234,6 @@ export default function StickyHeadTableTrip() {
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
-
                       if (column.onclick) {
                         return (
                           <TableCell
@@ -254,7 +247,6 @@ export default function StickyHeadTableTrip() {
                           </TableCell>
                         );
                       }
-
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {column.format && typeof value === "number"

@@ -232,27 +232,27 @@ export default function StickyHeadTableUser() {
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
+
+                      if (column.onclick) {
+                        return (
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            style={{ textDecoration: "underline" }}
+                            onClick={() => gotoView(row.fldUserId)}
+                          >
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </TableCell>
+                        );
+                      }
                       return (
-                        <>
-                          {column.onclick ? (
-                            <TableCell
-                              key={column.id}
-                              align={column.align}
-                              style={{ textDecoration: "underline" }}
-                              onClick={() => gotoView(row.fldUserId)}
-                            >
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          ) : (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          )}
-                        </>
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
                       );
                     })}
                     {isAdmin && (

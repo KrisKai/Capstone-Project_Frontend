@@ -36,7 +36,7 @@ export default function TripItem() {
       ))}
       <Grid container sx={{ mt: 2 }}>
         <Grid xs={6}>
-          <Button variant="outlined" onClick={gotoList} right>
+          <Button variant="outlined" onClick={gotoList} >
             Return to Detail
           </Button>
         </Grid>
