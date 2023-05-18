@@ -25,8 +25,9 @@ import * as Yup from "yup";
 // project import
 import { AnimateButton } from "components/Extend";
 import { useAppDispatch } from "redux/hooks";
-import { handleLogin } from "redux/modules/admin/authenticate/authSlice";
+import { handleLogin } from "redux/modules/user/authenticate/authUserSlice";
 import FirebaseSocial from "./FirebaseSocial";
+import { toast } from "react-toastify";
 // assets
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
@@ -58,8 +59,14 @@ const AuthLogin = () => {
     )
       .unwrap()
       .then((data) => {
-        localStorage.setItem("access_token_user", data.token);
-        navigate("/dashboard");
+        if (data.Code != "L001") {
+          localStorage.setItem("access_token_user", data.token);
+          navigate("/dashboard");
+        } else {
+          toast.error(data.Message, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
       });
   };
   return (

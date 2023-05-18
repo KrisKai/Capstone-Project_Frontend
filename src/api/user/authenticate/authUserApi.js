@@ -2,6 +2,10 @@ import axiosInstance from "utils/axios";
 
 const authUserApi = {
   login(params) {
+    const url = "/authenticate/login";
+    return axiosInstance.post(url, params);
+  },
+  loginUser(params) {
     const url = "/authenticate/login-user";
     return axiosInstance.post(url, params);
   },

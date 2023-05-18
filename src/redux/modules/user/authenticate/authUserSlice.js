@@ -15,7 +15,7 @@ const initialState = {
 export const handleLogin = createAsyncThunk(
   "authUser/handleLogin",
   async (payload, thunkApi) => {
-    const response = await authUserApi.login(payload);
+    const response = await authUserApi.loginUser(payload);
     return response;
   }
 );
