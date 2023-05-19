@@ -21,6 +21,10 @@ const authUserApi = {
     const url = "/authenticate/getCurrentInfo";
     return axiosInstance.get(url);
   },
+  confirm() {
+    const url = "/users/confirm-user";
+    return axiosInstance.put(url);
+  },
 };
 
 export default authUserApi;
