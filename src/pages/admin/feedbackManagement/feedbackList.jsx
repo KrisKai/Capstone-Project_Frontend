@@ -13,39 +13,39 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const columns = [
-  { id: "fldTripId", label: "Trip Id", minWidth: 100, onclick: true },
+  { id: "TripId", label: "Trip Id", minWidth: 100, onclick: true },
   {
-    id: "fldUserId",
+    id: "UserId",
     label: "User Id",
     minWidth: 150,
     align: "center",
   },
   {
-    id: "fldFeedback",
+    id: "Feedback",
     label: "Feedback",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "fldRate",
+    id: "Rate",
     label: "Rate",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "fldLike",
+    id: "Like",
     label: "Like",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "fldDislike",
+    id: "Dislike",
     label: "Dislike",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "fldLocationName",
+    id: "LocationName",
     label: "Location Name",
     minWidth: 100,
     align: "center",
@@ -169,8 +169,8 @@ export default function StickyHeadTableFeedback() {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldFeedbackId}
-                    key={row.fldFeedbackId}
+                    tabIndex={row.FeedbackId}
+                    key={row.FeedbackId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -181,7 +181,7 @@ export default function StickyHeadTableFeedback() {
                               key={column.id}
                               align={column.align}
                               style={{ textDecoration: "underline" }}
-                              onClick={() => gotoView(row.fldFeedbackId)}
+                              onClick={() => gotoView(row.FeedbackId)}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
@@ -200,7 +200,7 @@ export default function StickyHeadTableFeedback() {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldFeedbackId}
+                        value={row.FeedbackId}
                         onClick={(e) => handleDelete(e.target.value)}
                         color="secondary"
                       >

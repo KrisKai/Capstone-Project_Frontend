@@ -14,23 +14,23 @@ import { toast } from "react-toastify";
 import Grid from "@mui/material/Grid";
 
 const columns = [
-  // { id: "fldCategoryId", label: "Category Id", minWidth: 100, onclick: true },
+  // { id: "CategoryId", label: "Category Id", minWidth: 100, onclick: true },
   {
-    id: "fldCategoryName",
+    id: "CategoryName",
     label: "Category Name",
     minWidth: 100,
     format: (value) => value.toLocaleString("en-US"),
     onclick: true,
   },
   {
-    id: "fldCategoryDescription",
+    id: "CategoryDescription",
     label: "Category Description",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "fldCategoryName",
+    id: "CategoryName",
     label: "Category Name",
     minWidth: 100,
     align: "center",
@@ -167,8 +167,8 @@ export default function StickyHeadTableCategory() {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldCategoryId}
-                    key={row.fldCategoryId}
+                    tabIndex={row.CategoryId}
+                    key={row.CategoryId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -178,7 +178,7 @@ export default function StickyHeadTableCategory() {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              onClick={() => gotoView(row.fldCategoryId)}
+                              onClick={() => gotoView(row.CategoryId)}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
@@ -197,7 +197,7 @@ export default function StickyHeadTableCategory() {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldCategoryId}
+                        value={row.CategoryId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -205,7 +205,7 @@ export default function StickyHeadTableCategory() {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.fldCategoryId}
+                        value={row.CategoryId}
                         onClick={(e) => handleDelete(e.target.value)}
                         color="error"
                       >

@@ -18,27 +18,27 @@ import { useAppSelector } from "redux/hooks";
 import { selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
 
 const columns = [
-  { id: "fldUsername", label: "UserName", minWidth: 100, onclick: true },
+  { id: "Username", label: "UserName", minWidth: 100, onclick: true },
   {
-    id: "fldFullname",
+    id: "Fullname",
     label: "Full Name",
     minWidth: 150,
     align: "center",
   },
   {
-    id: "fldRole",
+    id: "Role",
     label: "Role",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "fldEmail",
+    id: "Email",
     label: "Email",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "fldActiveStatus",
+    id: "ActiveStatus",
     label: "Active Status",
     minWidth: 100,
     align: "center",
@@ -118,8 +118,8 @@ export default function StickyHeadTableUser() {
 
   const handleChangeStatus = async (id, status) => {
     let response = await userApi.changeStatus({
-      fldUserId: id,
-      fldActiveStatus: status,
+      UserId: id,
+      ActiveStatus: status,
     });
     switch (response.Code) {
       case "G001":
@@ -227,8 +227,8 @@ export default function StickyHeadTableUser() {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldUserId}
-                    key={row.fldUserId}
+                    tabIndex={row.UserId}
+                    key={row.UserId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -239,7 +239,7 @@ export default function StickyHeadTableUser() {
                             key={column.id}
                             align={column.align}
                             style={{ textDecoration: "underline" }}
-                            onClick={() => gotoView(row.fldUserId)}
+                            onClick={() => gotoView(row.UserId)}
                           >
                             {column.format && typeof value === "number"
                               ? column.format(value)
@@ -258,10 +258,10 @@ export default function StickyHeadTableUser() {
                     {isAdmin && (
                       <>
                         <TableCell key="status" align="center">
-                          {row.fldActiveStatus !== "ACTIVE" && (
+                          {row.ActiveStatus !== "ACTIVE" && (
                             <Button
                               variant="outlined"
-                              value={row.fldUserId}
+                              value={row.UserId}
                               onClick={(e) =>
                                 handleChangeStatus(e.target.value, "ACTIVE")
                               }
@@ -270,10 +270,10 @@ export default function StickyHeadTableUser() {
                               Active
                             </Button>
                           )}
-                          {row.fldActiveStatus !== "INACTIVE" && (
+                          {row.ActiveStatus !== "INACTIVE" && (
                             <Button
                               variant="outlined"
-                              value={row.fldUserId}
+                              value={row.UserId}
                               onClick={(e) =>
                                 handleChangeStatus(e.target.value, "INACTIVE")
                               }
@@ -282,10 +282,10 @@ export default function StickyHeadTableUser() {
                               Inactive
                             </Button>
                           )}
-                          {row.fldActiveStatus !== "BANNED" && (
+                          {row.ActiveStatus !== "BANNED" && (
                             <Button
                               variant="outlined"
-                              value={row.fldUserId}
+                              value={row.UserId}
                               onClick={(e) =>
                                 handleChangeStatus(e.target.value, "BANNED")
                               }
@@ -298,7 +298,7 @@ export default function StickyHeadTableUser() {
                         <TableCell key="reset" align="center">
                           <Button
                             variant="outlined"
-                            value={row.fldUserId}
+                            value={row.UserId}
                             onClick={(e) => handleReset(e.target.value)}
                             color="success"
                           >
@@ -310,7 +310,7 @@ export default function StickyHeadTableUser() {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldUserId}
+                        value={row.UserId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -318,7 +318,7 @@ export default function StickyHeadTableUser() {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.fldUserId}
+                        value={row.UserId}
                         onClick={(e) => handleClickOpen(e.target.value)}
                         color="error"
                       >

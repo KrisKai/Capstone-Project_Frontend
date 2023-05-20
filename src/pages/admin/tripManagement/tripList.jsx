@@ -16,28 +16,28 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const columns = [
-  { id: "fldTripName", label: "Trip Name", minWidth: 100, onclick: true },
+  { id: "TripName", label: "Trip Name", minWidth: 100, onclick: true },
   {
-    id: "fldTripBudget",
+    id: "TripBudget",
     label: "Trip Budget",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "fldStartLocationName",
+    id: "StartLocationName",
     label: "Departure",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "fldEndLocationName",
+    id: "EndLocationName",
     label: "Destination",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "fldTripStatus",
+    id: "TripStatus",
     label: "Trip Status",
     minWidth: 130,
     align: "center",
@@ -197,8 +197,8 @@ export default function StickyHeadTableTrip() {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldTripId}
-                    key={row.fldTripId}
+                    tabIndex={row.TripId}
+                    key={row.TripId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -208,7 +208,7 @@ export default function StickyHeadTableTrip() {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              onClick={() => gotoView(row.fldTripId)}
+                              onClick={() => gotoView(row.TripId)}
                               style={{ textDecoration: "underline" }}
                             >
                               {column.format && typeof value === "number"
@@ -228,7 +228,7 @@ export default function StickyHeadTableTrip() {
                     <TableCell key="detail" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldTripId}
+                        value={row.TripId}
                         onClick={(e) => handleDetail(e.target.value)}
                         color="primary"
                       >
@@ -238,7 +238,7 @@ export default function StickyHeadTableTrip() {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldTripId}
+                        value={row.TripId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -246,7 +246,7 @@ export default function StickyHeadTableTrip() {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.fldTripId}
+                        value={row.TripId}
                         onClick={(e) => handleClickOpen(e.target.value)}
                         color="error"
                       >

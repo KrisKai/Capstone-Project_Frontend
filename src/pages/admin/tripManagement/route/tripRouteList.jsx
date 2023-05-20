@@ -16,9 +16,9 @@ import Grid from "@mui/material/Grid";
 // assets
 
 const columns = [
-  { id: "fldRouteId", label: "Route Id", minWidth: 100, onclick: true },
+  { id: "RouteId", label: "Route Id", minWidth: 100, onclick: true },
   {
-    id: "fldRouteDescription",
+    id: "RouteDescription",
     label: "Route Description",
     minWidth: 100,
     align: "center",
@@ -160,8 +160,8 @@ export default function StickyHeadTableTripRoute() {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldRouteId}
-                    key={row.fldRouteId}
+                    tabIndex={row.RouteId}
+                    key={row.RouteId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -171,7 +171,7 @@ export default function StickyHeadTableTripRoute() {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              onClick={() => gotoView(row.fldRouteId)}
+                              onClick={() => gotoView(row.RouteId)}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
@@ -190,7 +190,7 @@ export default function StickyHeadTableTripRoute() {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldRouteId}
+                        value={row.RouteId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -198,7 +198,7 @@ export default function StickyHeadTableTripRoute() {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.fldRouteId}
+                        value={row.RouteId}
                         onClick={(e) => handleDelete(e.target.value)}
                         color="error"
                       >

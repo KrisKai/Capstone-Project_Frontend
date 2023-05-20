@@ -20,8 +20,8 @@ const RateCard = (props) => {
           ))}
       </Box>
       <Box padding={1}>
-        {props.item.fldFeedback}
-        <div>{props.item.fldUsername}</div>
+        {props.item.Feedback}
+        <div>{props.item.Username}</div>
       </Box>
     </Card>
   );

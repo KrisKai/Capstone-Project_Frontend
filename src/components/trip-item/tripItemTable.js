@@ -15,21 +15,21 @@ import Grid from "@mui/material/Grid";
 
 const columns = [
   {
-    id: "fldItemName",
+    id: "ItemName",
     label: "Item Name",
     minWidth: 100,
     format: (value) => value.toLocaleString("en-US"),
     onclick: true,
   },
   {
-    id: "fldItemDescription",
+    id: "ItemDescription",
     label: "Item Description",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "fldQuantity",
+    id: "Quantity",
     label: "Quantity",
     minWidth: 100,
     align: "center",
@@ -47,7 +47,7 @@ export default function StickyHeadTableTripItem(props) {
     pageIndex: 0,
     pageSize: 10,
     itemName: "",
-    categoryId: props.category.fldCategoryId,
+    categoryId: props.category.CategoryId,
   });
   const itemList = allTripItems.listOfItem;
   const numberOfItem = allTripItems.numOfItem;
@@ -110,7 +110,7 @@ export default function StickyHeadTableTripItem(props) {
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <Grid container sx={{ mt: 1, mb: 1 }}>
           <Grid xs={6} sx={{ pl: 1 }}>
-            <h2>{props.category.fldCategoryName}</h2>
+            <h2>{props.category.CategoryName}</h2>
           </Grid>
         </Grid>
         <Box sx={{ mt: 1, mb: 1 }} textAlign="right"></Box>
@@ -139,8 +139,8 @@ export default function StickyHeadTableTripItem(props) {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldItemId}
-                    key={row.fldItemId}
+                    tabIndex={row.ItemId}
+                    key={row.ItemId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -150,7 +150,7 @@ export default function StickyHeadTableTripItem(props) {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              onClick={() => gotoView(row.fldItemId)}
+                              onClick={() => gotoView(row.ItemId)}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
@@ -169,7 +169,7 @@ export default function StickyHeadTableTripItem(props) {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldItemId}
+                        value={row.ItemId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -177,7 +177,7 @@ export default function StickyHeadTableTripItem(props) {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.fldItemId}
+                        value={row.ItemId}
                         onClick={(e) => handleDelete(e.target.value)}
                         color="error"
                       >

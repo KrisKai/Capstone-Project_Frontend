@@ -16,15 +16,15 @@ import Grid from "@mui/material/Grid";
 // assets
 
 const columns = [
-  { id: "fldRoleName", label: "Role Name", minWidth: 100, onclick: true },
+  { id: "RoleName", label: "Role Name", minWidth: 100, onclick: true },
   {
-    id: "fldType",
+    id: "Type",
     label: "Type",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "fldDescription",
+    id: "Description",
     label: "Description",
     minWidth: 170,
     align: "center",
@@ -165,8 +165,8 @@ export default function StickyHeadTableTrip() {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldRoleId}
-                    key={row.fldRoleId}
+                    tabIndex={row.RoleId}
+                    key={row.RoleId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -176,7 +176,7 @@ export default function StickyHeadTableTrip() {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              onClick={() => gotoView(row.fldRoleId)}
+                              onClick={() => gotoView(row.RoleId)}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
@@ -195,7 +195,7 @@ export default function StickyHeadTableTrip() {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldRoleId}
+                        value={row.RoleId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -203,7 +203,7 @@ export default function StickyHeadTableTrip() {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.fldRoleId}
+                        value={row.RoleId}
                         onClick={(e) => handleDelete(e.target.value)}
                         color="error"
                       >

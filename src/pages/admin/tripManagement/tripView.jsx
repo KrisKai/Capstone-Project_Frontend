@@ -22,13 +22,13 @@ export default function UserCreate() {
   const dispatch = useAppDispatch();
   const { tripId } = useParams();
   const [trip, setTrip] = useState({
-    fldTripName: "",
-    fldTripBudget: null,
-    fldTripDescription: "",
-    fldEstimateStartTime: null,
-    fldEstimateArrivalTime: null,
-    fldTripMember: 0,
-    fldTripStatus: "",
+    TripName: "",
+    TripBudget: null,
+    TripDescription: "",
+    EstimateStartTime: null,
+    EstimateArrivalTime: null,
+    TripMember: 0,
+    TripStatus: "",
   });
 
   useEffect(() => {
@@ -38,8 +38,8 @@ export default function UserCreate() {
       try {
         const data = await tripApi.getById(tripId);
         if (data != null && data != "") {
-          data.fldEstimateArrivalTime = dayjs.utc(data.fldEstimateArrivalTime);
-          data.fldEstimateStartTime = dayjs.utc(data.fldEstimateStartTime);
+          data.EstimateArrivalTime = dayjs.utc(data.EstimateArrivalTime);
+          data.EstimateStartTime = dayjs.utc(data.EstimateStartTime);
           setTrip(data);
         } else {
           navigate("/admin/tripList");
@@ -69,12 +69,12 @@ export default function UserCreate() {
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  id="fldTripName"
-                  name="fldTripName"
+                  id="TripName"
+                  name="TripName"
                   label="Trip Name"
                   fullWidth
                   variant="outlined"
-                  value={values.fldTripName}
+                  value={values.TripName}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -82,8 +82,8 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  id="fldTripBudget"
-                  name="fldTripBudget"
+                  id="TripBudget"
+                  name="TripBudget"
                   label="Trip Budget"
                   fullWidth
                   InputProps={{
@@ -93,18 +93,18 @@ export default function UserCreate() {
                     readOnly: true,
                   }}
                   variant="outlined"
-                  value={values.fldTripBudget}
+                  value={values.TripBudget}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  id="fldTripDescription"
-                  name="fldTripDescription"
+                  id="TripDescription"
+                  name="TripDescription"
                   label="Trip Description"
                   fullWidth
                   autoComplete=""
                   variant="outlined"
-                  value={values.fldTripDescription}
+                  value={values.TripDescription}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -126,10 +126,10 @@ export default function UserCreate() {
                       },
                     }}
                     label="Estimate Start Time"
-                    id="fldEstimateStartTime"
-                    name="fldEstimateStartTime"
+                    id="EstimateStartTime"
+                    name="EstimateStartTime"
                     fullWidth
-                    value={values.fldEstimateStartTime}
+                    value={values.EstimateStartTime}
                     InputProps={{
                       readOnly: true,
                     }}
@@ -151,11 +151,11 @@ export default function UserCreate() {
                         paddingY: 1,
                       },
                     }}
-                    id="fldEstimateArrivalTime"
-                    name="fldEstimateArrivalTime"
+                    id="EstimateArrivalTime"
+                    name="EstimateArrivalTime"
                     label="Estimate Arrival Time"
                     fullWidth
-                    value={values.fldEstimateArrivalTime}
+                    value={values.EstimateArrivalTime}
                     InputProps={{
                       readOnly: true,
                     }}
@@ -164,13 +164,13 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  id="fldTripMember"
-                  name="fldTripMember"
+                  id="TripMember"
+                  name="TripMember"
                   label="Trip Member"
                   type="number"
                   fullWidth
                   variant="outlined"
-                  value={values.fldTripMember}
+                  value={values.TripMember}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -178,13 +178,13 @@ export default function UserCreate() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  id="fldTripStatus"
-                  name="fldTripStatus"
+                  id="TripStatus"
+                  name="TripStatus"
                   label="Trip Status"
                   fullWidth
                   autoComplete=""
                   variant="outlined"
-                  value={values.fldTripStatus}
+                  value={values.TripStatus}
                   InputProps={{
                     readOnly: true,
                   }}

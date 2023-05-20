@@ -53,24 +53,24 @@ export default function TripCreate() {
   const destiantionRef = useRef();
 
   const [trip, setTrip] = useState({
-    fldTripName: "",
-    fldTripBudget: null,
-    fldTripDescription: "",
-    fldEstimateStartDate: null,
-    fldEstimateEndDate: null,
-    fldEstimateStartTime: null,
-    fldEstimateEndTime: null,
-    fldTripMember: "",
-    fldTripPresenter: "",
-    fldStartLocationName: "",
-    fldEndLocationName: "",
-    fldTripStatus: "ACTIVE",
+    TripName: "",
+    TripBudget: null,
+    TripDescription: "",
+    EstimateStartDate: null,
+    EstimateEndDate: null,
+    EstimateStartTime: null,
+    EstimateEndTime: null,
+    TripMember: "",
+    TripPresenter: "",
+    StartLocationName: "",
+    EndLocationName: "",
+    TripStatus: "ACTIVE",
   });
   const [user, setUser] = useState([
     {
-      fldUserId: "",
-      fldEmail: "",
-      fldFullname: "",
+      UserId: "",
+      Email: "",
+      Fullname: "",
     },
   ]);
   const [openView, setOpenView] = useState(false);
@@ -140,8 +140,8 @@ export default function TripCreate() {
       try {
         const data = await tripApi.getById(tripId);
         if (data != null && data != "") {
-          data.fldEstimateEndDate = dayjs.utc(data.fldEstimateEndDate);
-          data.fldEstimateStartDate = dayjs.utc(data.fldEstimateStartDate);
+          data.EstimateEndDate = dayjs.utc(data.EstimateEndDate);
+          data.EstimateStartDate = dayjs.utc(data.EstimateStartDate);
           setTrip(data);
         } else {
           navigate("/admin/tripList");
@@ -165,33 +165,33 @@ export default function TripCreate() {
   };
 
   const validationSchema = yup.object().shape({
-    fldTripName: yup
+    TripName: yup
       .string("Enter Trip Name")
       .required("Trip Name is required"),
-    // fldTripBudget: yup.number().required("Trip Budget is required"),
-    fldTripDescription: yup
+    // TripBudget: yup.number().required("Trip Budget is required"),
+    TripDescription: yup
       .string("Enter Trip Description")
       .required("Trip Description is required"),
-    fldEstimateStartDate: yup
+    EstimateStartDate: yup
       .string("Enter Estimate Start Time")
       .required("Estimate Start Time is required"),
-    fldEstimateEndDate: yup
+    EstimateEndDate: yup
       .string("Enter Estimate End Time")
       .required("Estimate End Time is required"),
-    fldTripMember: yup.number().min(1).required("Trip Member is required"),
-    fldTripPresenter: yup
+    TripMember: yup.number().min(1).required("Trip Member is required"),
+    TripPresenter: yup
       .string("Enter Trip Presenter")
       .required("Trip Presenter is required"),
-    fldStartLocationName: yup
+    StartLocationName: yup
       .string("Enter Trip Start Location Name")
       .required("Trip Start Location Name is required"),
-    fldTripStartLocationAddress: yup
+    TripStartLocationAddress: yup
       .string("Enter Trip Start Location Address")
       .required("Trip Start Location Address is required"),
-    fldEndLocationName: yup
+    EndLocationName: yup
       .string("Enter Trip Destination Location Name")
       .required("Trip Destination Location Name is required"),
-    fldTripDestinationLocationAddress: yup
+    TripDestinationLocationAddress: yup
       .string("Enter Trip Destination Location Address")
       .required("Trip Destination Location Address is required"),
   });
@@ -281,28 +281,28 @@ export default function TripCreate() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="fldTripName"
-                      name="fldTripName"
+                      id="TripName"
+                      name="TripName"
                       label="Trip Name"
                       fullWidth
                       variant="outlined"
-                      value={values.fldTripName}
+                      value={values.TripName}
                       onChange={handleChange}
-                      error={Boolean(touched.fldTripName && errors.fldTripName)}
+                      error={Boolean(touched.TripName && errors.TripName)}
                     />
-                    {touched.fldTripName && errors.fldTripName && (
+                    {touched.TripName && errors.TripName && (
                       <FormHelperText
                         error
-                        id="standard-weight-helper-text-fldTripName"
+                        id="standard-weight-helper-text-TripName"
                       >
-                        {errors.fldTripName}
+                        {errors.TripName}
                       </FormHelperText>
                     )}
                   </Grid>
                   {/* <Grid item xs={12} sm={6}>
                 <TextField
-                  id="fldTripBudget"
-                  name="fldTripBudget"
+                  id="TripBudget"
+                  name="TripBudget"
                   label="Trip Budget"
                   fullWidth
                   InputProps={{
@@ -311,92 +311,92 @@ export default function TripCreate() {
                     ),
                   }}
                   variant="outlined"
-                  value={values.fldTripBudget}
+                  value={values.TripBudget}
                   onChange={handleChange}
-                  error={Boolean(touched.fldTripBudget && errors.fldTripBudget)}
+                  error={Boolean(touched.TripBudget && errors.TripBudget)}
                 />
-                {touched.fldTripBudget && errors.fldTripBudget && (
+                {touched.TripBudget && errors.TripBudget && (
                   <FormHelperText
                     error
-                    id="standard-weight-helper-text-fldTripName"
+                    id="standard-weight-helper-text-TripName"
                   >
-                    {errors.fldTripBudget}
+                    {errors.TripBudget}
                   </FormHelperText>
                 )}
               </Grid> */}
                   <Grid item xs={12} sm={6}>
                     <FormControl sx={{ minWidth: 530 }}>
-                      <InputLabel id="fldTripPresenter">
+                      <InputLabel id="TripPresenter">
                         Trip Presenter
                       </InputLabel>
                       <Select
-                        labelId="fldTripPresenter"
-                        id="fldTripPresenter"
-                        value={values.fldTripPresenter}
+                        labelId="TripPresenter"
+                        id="TripPresenter"
+                        value={values.TripPresenter}
                         label="Role"
                         onChange={handleChange}
-                        name="fldTripPresenter"
+                        name="TripPresenter"
                       >
                         {user.map((item) => (
-                          <MenuItem value={item.fldUserId}>
-                            {item.fldFullname} ({item.fldEmail})
+                          <MenuItem value={item.UserId}>
+                            {item.Fullname} ({item.Email})
                           </MenuItem>
                         ))}
                       </Select>
 
-                      {touched.fldTripPresenter && errors.fldTripPresenter && (
+                      {touched.TripPresenter && errors.TripPresenter && (
                         <FormHelperText
                           error
-                          id="standard-weight-helper-fldTripPresenter"
+                          id="standard-weight-helper-TripPresenter"
                         >
-                          {errors.fldTripPresenter}
+                          {errors.TripPresenter}
                         </FormHelperText>
                       )}
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="fldTripMember"
-                      name="fldTripMember"
+                      id="TripMember"
+                      name="TripMember"
                       label="Trip Member"
                       type="number"
                       fullWidth
                       variant="outlined"
-                      value={values.fldTripMember}
+                      value={values.TripMember}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.fldTripMember && errors.fldTripMember
+                        touched.TripMember && errors.TripMember
                       )}
                     />
-                    {touched.fldTripMember && errors.fldTripMember && (
+                    {touched.TripMember && errors.TripMember && (
                       <FormHelperText
                         error
-                        id="standard-weight-helper-fldTripMember"
+                        id="standard-weight-helper-TripMember"
                       >
-                        {errors.fldTripMember}
+                        {errors.TripMember}
                       </FormHelperText>
                     )}
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      id="fldTripDescription"
-                      name="fldTripDescription"
+                      id="TripDescription"
+                      name="TripDescription"
                       label="Trip Description"
                       fullWidth
                       autoComplete=""
                       variant="outlined"
-                      value={values.fldTripDescription}
+                      value={values.TripDescription}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.fldTripDescription && errors.fldTripDescription
+                        touched.TripDescription && errors.TripDescription
                       )}
                     />
-                    {touched.fldTripDescription && errors.fldTripDescription && (
+                    {touched.TripDescription && errors.TripDescription && (
                       <FormHelperText
                         error
-                        id="standard-weight-helper-fldTripDescription"
+                        id="standard-weight-helper-TripDescription"
                       >
-                        {errors.fldTripDescription}
+                        {errors.TripDescription}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -417,54 +417,54 @@ export default function TripCreate() {
                           },
                         }}
                         label="Estimate Start Date"
-                        id="fldEstimateStartDate"
-                        name="fldEstimateStartDate"
+                        id="EstimateStartDate"
+                        name="EstimateStartDate"
                         fullWidth
-                        value={values.fldEstimateStartDate}
+                        value={values.EstimateStartDate}
                         onChange={(value) => {
-                          setFieldValue("fldEstimateStartDate", value);
+                          setFieldValue("EstimateStartDate", value);
                         }}
                         error={Boolean(
-                          touched.fldEstimateStartDate &&
-                            errors.fldEstimateStartDate
+                          touched.EstimateStartDate &&
+                            errors.EstimateStartDate
                         )}
                       />
                     </LocalizationProvider>
-                    {touched.fldEstimateStartDate &&
-                      errors.fldEstimateStartDate && (
+                    {touched.EstimateStartDate &&
+                      errors.EstimateStartDate && (
                         <FormHelperText
                           error
-                          id="standard-weight-helper-fldEstimateStartDate"
+                          id="standard-weight-helper-EstimateStartDate"
                         >
-                          {errors.fldEstimateStartDate}
+                          {errors.EstimateStartDate}
                         </FormHelperText>
                       )}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl sx={{ minWidth: 530 }}>
-                      <InputLabel id="fldEstimateStartTime">
+                      <InputLabel id="EstimateStartTime">
                         Estimate Start Time
                       </InputLabel>
                       <Select
-                        labelId="fldEstimateStartTime"
-                        id="fldEstimateStartTime"
-                        value={values.fldEstimateStartTime}
-                        label="fldEstimateStartTime"
+                        labelId="EstimateStartTime"
+                        id="EstimateStartTime"
+                        value={values.EstimateStartTime}
+                        label="EstimateStartTime"
                         onChange={handleChange}
-                        name="fldEstimateStartTime"
+                        name="EstimateStartTime"
                       >
                         {hours.map((item) => (
                           <MenuItem value={item}>{item}</MenuItem>
                         ))}
                       </Select>
 
-                      {touched.fldEstimateStartTime &&
-                        errors.fldEstimateStartTime && (
+                      {touched.EstimateStartTime &&
+                        errors.EstimateStartTime && (
                           <FormHelperText
                             error
-                            id="standard-weight-helper-fldEstimateStartTime"
+                            id="standard-weight-helper-EstimateStartTime"
                           >
-                            {errors.fldEstimateStartTime}
+                            {errors.EstimateStartTime}
                           </FormHelperText>
                         )}
                     </FormControl>
@@ -485,53 +485,53 @@ export default function TripCreate() {
                             paddingY: 1,
                           },
                         }}
-                        id="fldEstimateEndDate"
-                        name="fldEstimateEndDate"
+                        id="EstimateEndDate"
+                        name="EstimateEndDate"
                         label="Estimate End Date"
                         fullWidth
-                        value={values.fldEstimateEndDate}
+                        value={values.EstimateEndDate}
                         onChange={(value) =>
-                          setFieldValue("fldEstimateEndDate", value)
+                          setFieldValue("EstimateEndDate", value)
                         }
                         error={Boolean(
-                          touched.fldEstimateEndDate &&
-                            errors.fldEstimateEndDate
+                          touched.EstimateEndDate &&
+                            errors.EstimateEndDate
                         )}
                       />
-                      {touched.fldEstimateEndDate && errors.fldEstimateEndDate && (
+                      {touched.EstimateEndDate && errors.EstimateEndDate && (
                         <FormHelperText
                           error
-                          id="standard-weight-helper-fldEstimateEndDate"
+                          id="standard-weight-helper-EstimateEndDate"
                         >
-                          {errors.fldEstimateEndDate}
+                          {errors.EstimateEndDate}
                         </FormHelperText>
                       )}
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl sx={{ minWidth: 530 }}>
-                      <InputLabel id="fldEstimateEndTime">
+                      <InputLabel id="EstimateEndTime">
                         Estimate End Time
                       </InputLabel>
                       <Select
-                        labelId="fldEstimateEndTime"
-                        id="fldEstimateEndTime"
-                        value={values.fldEstimateEndTime}
-                        label="fldEstimateEndTime"
+                        labelId="EstimateEndTime"
+                        id="EstimateEndTime"
+                        value={values.EstimateEndTime}
+                        label="EstimateEndTime"
                         onChange={handleChange}
-                        name="fldEstimateEndTime"
+                        name="EstimateEndTime"
                       >
                         {hours.map((item) => (
                           <MenuItem value={item}>{item}</MenuItem>
                         ))}
                       </Select>
 
-                      {touched.fldEstimateEndTime && errors.fldEstimateEndTime && (
+                      {touched.EstimateEndTime && errors.EstimateEndTime && (
                         <FormHelperText
                           error
-                          id="standard-weight-helper-fldEstimateEndTime"
+                          id="standard-weight-helper-EstimateEndTime"
                         >
-                          {errors.fldEstimateEndTime}
+                          {errors.EstimateEndTime}
                         </FormHelperText>
                       )}
                     </FormControl>
@@ -542,79 +542,79 @@ export default function TripCreate() {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="fldStartLocationName"
-                      name="fldStartLocationName"
+                      id="StartLocationName"
+                      name="StartLocationName"
                       label="Trip Start Location Name"
                       fullWidth
                       variant="outlined"
-                      value={values.fldStartLocationName}
+                      value={values.StartLocationName}
                       onChange={handleChange}
                       InputProps={{
                         readOnly: true,
                       }}
                       error={Boolean(
-                        touched.fldStartLocationName &&
-                          errors.fldStartLocationName
+                        touched.StartLocationName &&
+                          errors.StartLocationName
                       )}
                     />
-                    {touched.fldStartLocationName &&
-                      errors.fldStartLocationName && (
+                    {touched.StartLocationName &&
+                      errors.StartLocationName && (
                         <FormHelperText
                           error
-                          id="standard-weight-helper-fldStartLocationName"
+                          id="standard-weight-helper-StartLocationName"
                         >
-                          {errors.fldStartLocationName}
+                          {errors.StartLocationName}
                         </FormHelperText>
                       )}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="fldEndLocationName"
-                      name="fldEndLocationName"
+                      id="EndLocationName"
+                      name="EndLocationName"
                       label="Trip Destination Location Name"
                       fullWidth
                       variant="outlined"
-                      value={values.fldEndLocationName}
+                      value={values.EndLocationName}
                       onChange={handleChange}
                       InputProps={{
                         readOnly: true,
                       }}
                       error={Boolean(
-                        touched.fldEndLocationName && errors.fldEndLocationName
+                        touched.EndLocationName && errors.EndLocationName
                       )}
                     />
-                    {touched.fldEndLocationName && errors.fldEndLocationName && (
+                    {touched.EndLocationName && errors.EndLocationName && (
                       <FormHelperText
                         error
-                        id="standard-weight-helper-fldEndLocationName"
+                        id="standard-weight-helper-EndLocationName"
                       >
-                        {errors.fldEndLocationName}
+                        {errors.EndLocationName}
                       </FormHelperText>
                     )}
                   </Grid>
                   {isEdit ? (
                     <Grid item xs={12}>
                       <FormControl sx={{ mt: 1, minWidth: 200 }}>
-                        <InputLabel id="fldTripStatus">Status</InputLabel>
+                        <InputLabel id="TripStatus">Status</InputLabel>
                         <Select
-                          labelId="fldTripStatus"
-                          id="fldTripStatus"
-                          value={values.fldTripStatus}
-                          label="fldTripStatus"
+                          labelId="TripStatus"
+                          id="TripStatus"
+                          value={values.TripStatus}
+                          label="TripStatus"
                           onChange={handleChange}
-                          name="fldTripStatus"
+                          name="TripStatus"
                         >
                           <MenuItem value="ACTIVE">Active</MenuItem>
                           <MenuItem value="INACTIVE">Inactive</MenuItem>
                           <MenuItem value="BANNED">Banned</MenuItem>
                         </Select>
 
-                        {touched.fldTripStatus && errors.fldTripStatus && (
+                        {touched.TripStatus && errors.TripStatus && (
                           <FormHelperText
                             error
-                            id="standard-weight-helper-fldTripStatus"
+                            id="standard-weight-helper-TripStatus"
                           >
-                            {errors.fldTripStatus}
+                            {errors.TripStatus}
                           </FormHelperText>
                         )}
                       </FormControl>

@@ -15,14 +15,14 @@ export default function CategoryCreate() {
   const { categoryId } = useParams();
   const isEdit = Boolean(categoryId);
   const [category, setCategory] = useState({
-    fldCategoryName: "",
-    fldCategoryBudget: null,
+    CategoryName: "",
+    CategoryBudget: null,
   });
   const [user, setUser] = useState([
     {
-      fldUserId: "",
-      fldEmail: "",
-      fldFullname: "",
+      UserId: "",
+      Email: "",
+      Fullname: "",
     },
   ]);
 
@@ -58,10 +58,10 @@ export default function CategoryCreate() {
   }
 
   const validationSchema = yup.object().shape({
-    fldCategoryName: yup
+    CategoryName: yup
       .string("Enter Category Name")
       .required("Category Name is required"),
-    fldCategoryDescription: yup
+    CategoryDescription: yup
       .string("Enter Category Description")
       .required("Category Description is required"),
   });
@@ -121,48 +121,48 @@ export default function CategoryCreate() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="fldCategoryName"
-                      name="fldCategoryName"
+                      id="CategoryName"
+                      name="CategoryName"
                       label="Category Name"
                       fullWidth
                       variant="outlined"
-                      value={values.fldCategoryName}
+                      value={values.CategoryName}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.fldCategoryName && errors.fldCategoryName
+                        touched.CategoryName && errors.CategoryName
                       )}
                     />
-                    {touched.fldCategoryName && errors.fldCategoryName && (
+                    {touched.CategoryName && errors.CategoryName && (
                       <FormHelperText
                         error
-                        id="standard-weight-helper-text-fldCategoryName"
+                        id="standard-weight-helper-text-CategoryName"
                       >
-                        {errors.fldCategoryName}
+                        {errors.CategoryName}
                       </FormHelperText>
                     )}
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      id="fldCategoryDescription"
-                      name="fldCategoryDescription"
+                      id="CategoryDescription"
+                      name="CategoryDescription"
                       label="Category Description"
                       fullWidth
                       autoComplete=""
                       variant="outlined"
-                      value={values.fldCategoryDescription}
+                      value={values.CategoryDescription}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.fldCategoryDescription &&
-                          errors.fldCategoryDescription
+                        touched.CategoryDescription &&
+                          errors.CategoryDescription
                       )}
                     />
-                    {touched.fldCategoryDescription &&
-                      errors.fldCategoryDescription && (
+                    {touched.CategoryDescription &&
+                      errors.CategoryDescription && (
                         <FormHelperText
                           error
-                          id="standard-weight-helper-fldCategoryDescription"
+                          id="standard-weight-helper-CategoryDescription"
                         >
-                          {errors.fldCategoryDescription}
+                          {errors.CategoryDescription}
                         </FormHelperText>
                       )}
                   </Grid>

@@ -28,22 +28,22 @@ dayjs.extend(utc);
 const ProfileEdit = (props) => {
   const navigate = useNavigate();
   const [currentInfo, setCurrentInfo] = useState({
-    fldUsername: "",
-    fldRole: "",
-    fldBirthday: "",
-    fldEmail: "",
-    fldFullname: "",
-    fldPhone: "",
-    fldAddress: "",
-    fldCreateDate: "",
+    Username: "",
+    Role: "",
+    Birthday: "",
+    Email: "",
+    Fullname: "",
+    Phone: "",
+    Address: "",
+    CreateDate: "",
   });
 
   useEffect(() => {
     async function getInfo() {
       const response = await authApi.getCurrentInfo();
-      if (response.fldBirthday) {
-        response.fldBirthday = dayjs.utc(response.fldBirthday);
-        response.fldCreateDate = response.fldCreateDate.substring(0, 10);
+      if (response.Birthday) {
+        response.Birthday = dayjs.utc(response.Birthday);
+        response.CreateDate = response.CreateDate.substring(0, 10);
       }
       setCurrentInfo(response);
     }
@@ -51,20 +51,20 @@ const ProfileEdit = (props) => {
   }, []);
 
   const validationSchema = yup.object().shape({
-    fldUsername: yup
+    Username: yup
       .string("Enter User Name")
       .matches(/\S/, "User Name is invalid")
       .required("User Name is required"),
-    fldFullname: yup
+    Fullname: yup
       .string("Enter Full Name")
       .required("Full Name is required"),
-    fldEmail: yup
+    Email: yup
       .string()
       .email("Enter Valid Email")
       .required("Email is required"),
-    fldPhone: yup.number().required("Phone is required"),
-    fldAddress: yup.string("Enter Address").required("Address is required"),
-    fldBirthday: yup.string("Enter Birthday").required("Birthday is required"),
+    Phone: yup.number().required("Phone is required"),
+    Address: yup.string("Enter Address").required("Address is required"),
+    Birthday: yup.string("Enter Birthday").required("Birthday is required"),
   });
 
   return (
@@ -113,85 +113,85 @@ const ProfileEdit = (props) => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="fldUsername"
-                  name="fldUsername"
+                  id="Username"
+                  name="Username"
                   label="Username"
                   fullWidth
-                  value={values.fldUsername}
+                  value={values.Username}
                   variant="standard"
                 />
-                {touched.fldUsername && errors.fldUsername && (
+                {touched.Username && errors.Username && (
                   <FormHelperText error id="standard-weight-helper-nickName">
-                    {errors.fldUsername}
+                    {errors.Username}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="fldFullname"
-                  name="fldFullname"
+                  id="Fullname"
+                  name="Fullname"
                   label="Full name"
                   fullWidth
-                  value={values.fldFullname}
+                  value={values.Fullname}
                   variant="standard"
                   onChange={handleChange}
                 />
-                {touched.fldFullname && errors.fldFullname && (
+                {touched.Fullname && errors.Fullname && (
                   <FormHelperText error id="standard-weight-helper-name">
-                    {errors.fldFullname}
+                    {errors.Fullname}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="fldAddress"
-                  name="fldAddress"
+                  id="Address"
+                  name="Address"
                   label="Address"
                   fullWidth
                   variant="standard"
-                  value={values.fldAddress}
+                  value={values.Address}
                   onChange={handleChange}
                 />
-                {touched.fldAddress && errors.fldAddress && (
+                {touched.Address && errors.Address && (
                   <FormHelperText error id="standard-weight-helper-address">
-                    {errors.fldAddress}
+                    {errors.Address}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="fldPhone"
-                  name="fldPhone"
+                  id="Phone"
+                  name="Phone"
                   label="Phone Number"
                   fullWidth
                   variant="standard"
-                  value={values.fldPhone}
+                  value={values.Phone}
                   onChange={handleChange}
                 />
-                {touched.fldPhone && errors.fldPhone && (
+                {touched.Phone && errors.Phone && (
                   <FormHelperText error id="standard-weight-helper-phone">
-                    {errors.fldPhone}
+                    {errors.Phone}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12} sm={10}>
                 <TextField
                   required
-                  id="fldEmail"
-                  name="fldEmail"
+                  id="Email"
+                  name="Email"
                   label="Email"
                   fullWidth
                   variant="standard"
                   type="email"
-                  value={values.fldEmail}
+                  value={values.Email}
                   onChange={handleChange}
                 />
-                {touched.fldEmail && errors.fldEmail && (
+                {touched.Email && errors.Email && (
                   <FormHelperText error id="standard-weight-helper-email">
-                    {errors.fldEmail}
+                    {errors.Email}
                   </FormHelperText>
                 )}
               </Grid>
@@ -212,19 +212,19 @@ const ProfileEdit = (props) => {
                       },
                     }}
                     label="Birthday"
-                    id="fldBirthday"
-                    name="fldBirthday"
+                    id="Birthday"
+                    name="Birthday"
                     fullWidth
-                    value={values.fldBirthday}
+                    value={values.Birthday}
                     onChange={(value) => {
-                      setFieldValue("fldBirthday", value);
+                      setFieldValue("Birthday", value);
                     }}
-                    error={Boolean(touched.fldBirthday && errors.fldBirthday)}
+                    error={Boolean(touched.Birthday && errors.Birthday)}
                   />
                 </LocalizationProvider>
-                {touched.fldBirthday && errors.fldBirthday && (
-                  <FormHelperText error id="standard-weight-helper-fldBirthday">
-                    {errors.fldBirthday}
+                {touched.Birthday && errors.Birthday && (
+                  <FormHelperText error id="standard-weight-helper-Birthday">
+                    {errors.Birthday}
                   </FormHelperText>
                 )}
               </Grid>

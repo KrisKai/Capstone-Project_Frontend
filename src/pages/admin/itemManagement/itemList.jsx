@@ -8,28 +8,28 @@ import StickyHeadTableItem from "components/item/itemTable";
 
 const columns = [
   {
-    id: "fldItemName",
+    id: "ItemName",
     label: "Item Name",
     minWidth: 100,
     format: (value) => value.toLocaleString("en-US"),
     onclick: true,
   },
   {
-    id: "fldItemDescription",
+    id: "ItemDescription",
     label: "Item Description",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "fldCategoryName",
+    id: "CategoryName",
     label: "Category Name",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "fldQuantity",
+    id: "Quantity",
     label: "Quantity",
     minWidth: 100,
     align: "center",

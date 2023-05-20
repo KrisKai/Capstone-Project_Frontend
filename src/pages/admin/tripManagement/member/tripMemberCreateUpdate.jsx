@@ -22,26 +22,26 @@ export default function UserCreate() {
   let { tripId, memberId } = useParams();
   const isEdit = Boolean(memberId);
   const [member, setMember] = useState({
-    fldUserId: "",
-    fldTripId: tripId,
-    fldMemberRoleId: "",
-    fldNickName: "",
-    fldStatus: "Active",
+    UserId: "",
+    TripId: tripId,
+    MemberRoleId: "",
+    NickName: "",
+    Status: "Active",
   });
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [user, setUser] = useState([
     {
-      fldUserId: "",
-      fldEmail: "",
-      fldFullname: "",
+      UserId: "",
+      Email: "",
+      Fullname: "",
     },
   ]);
 
   const [role, setRole] = useState([
     {
-      fldRoleName: "",
-      fldDescription: "",
+      RoleName: "",
+      Description: "",
     },
   ]);
   const ref = useRef(null);
@@ -66,8 +66,8 @@ export default function UserCreate() {
         const data = await tripMemberApi.getById(memberId);
         if (data != null && data != "") {
           setMember(data);
-          setName(data.fldFullname);
-          setEmail(data.fldEmail);
+          setName(data.Fullname);
+          setEmail(data.Email);
         } else {
           navigate(`/admin/tripMemberList/${tripId}`);
         }
@@ -85,24 +85,24 @@ export default function UserCreate() {
     navigate(`/admin/tripMemberList/${tripId}`);
   }
 
-  function handleChangeSelect(fldUserId) {
+  function handleChangeSelect(UserId) {
     user.forEach((item) => {
-      if (item.fldUserId === fldUserId) {
-        setName(item.fldFullname);
-        setEmail(item.fldEmail);
+      if (item.UserId === UserId) {
+        setName(item.Fullname);
+        setEmail(item.Email);
       }
     });
   }
 
   const validationSchema = yup.object().shape({
-    fldUserId: yup.string("Enter User").required("User is required"),
-    fldMemberRoleId: yup
+    UserId: yup.string("Enter User").required("User is required"),
+    MemberRoleId: yup
       .string("Enter Member Role")
       .required("Member Role is required"),
-    fldNickName: yup
+    NickName: yup
       .string("Enter Nick Name")
       .required("Nick Name is required"),
-    // fldStatus: yup
+    // Status: yup
     //   .string("Enter Status")
     //   .required("Status is required"),
   });
@@ -166,28 +166,28 @@ export default function UserCreate() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <FormControl sx={{ minWidth: 530 }}>
-                      <InputLabel id="fldUserId">Trip Member Id</InputLabel>
+                      <InputLabel id="UserId">Trip Member Id</InputLabel>
                       <Select
-                        labelId="fldUserId"
-                        id="fldUserId"
-                        value={values.fldUserId}
+                        labelId="UserId"
+                        id="UserId"
+                        value={values.UserId}
                         label="Role"
                         onChange={(event) => {
-                          setFieldValue("fldUserId", event.target.value);
+                          setFieldValue("UserId", event.target.value);
                           handleChangeSelect(event.target.value);
                         }}
-                        name="fldUserId"
+                        name="UserId"
                       >
                         {user.map((item) => (
-                          <MenuItem value={item.fldUserId}>
-                            {item.fldFullname} ({item.fldEmail})
+                          <MenuItem value={item.UserId}>
+                            {item.Fullname} ({item.Email})
                           </MenuItem>
                         ))}
                       </Select>
 
-                      {touched.fldTripPresenter && errors.fldTripPresenter && (
+                      {touched.TripPresenter && errors.TripPresenter && (
                         <FormHelperText error id="standard-weight-helper-role">
-                          {errors.fldTripPresenter}
+                          {errors.TripPresenter}
                         </FormHelperText>
                       )}
                     </FormControl>
@@ -208,7 +208,7 @@ export default function UserCreate() {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       id="email"
-                      name="fldUserName"
+                      name="UserName"
                       label="Email"
                       fullWidth
                       variant="outlined"
@@ -220,52 +220,52 @@ export default function UserCreate() {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="fldNickName"
-                      name="fldNickName"
+                      id="NickName"
+                      name="NickName"
                       label="Nickname"
                       fullWidth
                       autoComplete=""
                       variant="outlined"
-                      value={values.fldNickName}
+                      value={values.NickName}
                       onChange={handleChange}
-                      error={Boolean(touched.fldNickName && errors.fldNickName)}
+                      error={Boolean(touched.NickName && errors.NickName)}
                     />
-                    {touched.fldNickName && errors.fldNickName && (
+                    {touched.NickName && errors.NickName && (
                       <FormHelperText
                         error
-                        id="standard-weight-helper-fldNickName"
+                        id="standard-weight-helper-NickName"
                       >
-                        {errors.fldNickName}
+                        {errors.NickName}
                       </FormHelperText>
                     )}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl sx={{ minWidth: 530 }}>
-                      <InputLabel id="fldMemberRoleId">Trip Role</InputLabel>
+                      <InputLabel id="MemberRoleId">Trip Role</InputLabel>
                       <Select
-                        labelId="fldMemberRoleId"
-                        id="fldMemberRoleId"
-                        value={values.fldMemberRoleId}
-                        label="fldMemberRoleId"
+                        labelId="MemberRoleId"
+                        id="MemberRoleId"
+                        value={values.MemberRoleId}
+                        label="MemberRoleId"
                         onChange={handleChange}
-                        name="fldMemberRoleId"
+                        name="MemberRoleId"
                       >
                         {role.map((item) => (
                           <MenuItem
-                            value={item.fldRoleId}
+                            value={item.RoleId}
                             onClick={handleChangeSelect}
                           >
-                            {item.fldRoleName}
+                            {item.RoleName}
                           </MenuItem>
                         ))}
                       </Select>
 
-                      {touched.fldUserId && errors.fldUserId && (
+                      {touched.UserId && errors.UserId && (
                         <FormHelperText
                           error
-                          id="standard-weight-helper-fldUserId"
+                          id="standard-weight-helper-UserId"
                         >
-                          {errors.fldUserId}
+                          {errors.UserId}
                         </FormHelperText>
                       )}
                     </FormControl>
@@ -273,26 +273,26 @@ export default function UserCreate() {
                   {isEdit ? (
                     <Grid item xs={12} sm={6}>
                       <FormControl sx={{ minWidth: 530 }}>
-                        <InputLabel id="fldStatus">Status</InputLabel>
+                        <InputLabel id="Status">Status</InputLabel>
                         <Select
-                          labelId="fldStatus"
-                          id="fldStatus"
-                          value={values.fldStatus}
+                          labelId="Status"
+                          id="Status"
+                          value={values.Status}
                           label="Status"
                           onChange={handleChange}
-                          name="fldStatus"
+                          name="Status"
                         >
                           <MenuItem value="ACTIVE">Active</MenuItem>
                           <MenuItem value="INACTIVE">Inactive</MenuItem>
                           <MenuItem value="BANNED">Banned</MenuItem>
                         </Select>
 
-                        {touched.fldStatus && errors.fldStatus && (
+                        {touched.Status && errors.Status && (
                           <FormHelperText
                             error
-                            id="standard-weight-helper-fldStatus"
+                            id="standard-weight-helper-Status"
                           >
-                            {errors.fldStatus}
+                            {errors.Status}
                           </FormHelperText>
                         )}
                       </FormControl>

@@ -23,21 +23,21 @@ export default function TripItemCreate() {
   const { tripId, itemId } = useParams();
   const isEdit = Boolean(itemId);
   const [item, setItem] = useState({
-    fldTripId: tripId,
-    fldItemName: "",
-    fldItemDescription: "",
-    fldPriceMin: "",
-    fldQuantity: "",
-    fldCategoryId: "",
+    TripId: tripId,
+    ItemName: "",
+    ItemDescription: "",
+    PriceMin: "",
+    Quantity: "",
+    CategoryId: "",
   });
   const [trip, setTrip] = useState({
-    fldTripId: "",
-    fldTripName: "",
+    TripId: "",
+    TripName: "",
   });
   const [category, setCategory] = useState([
     {
-      fldCategoryId: "",
-      fldCategoryName: "",
+      CategoryId: "",
+      CategoryName: "",
     },
   ]);
 
@@ -78,20 +78,20 @@ export default function TripItemCreate() {
   }
 
   const validationSchema = yup.object().shape({
-    // fldTripId: yup
+    // TripId: yup
     //   .string("Choose Trip")
     //   .required("Trip is required"),
-    fldItemName: yup
+    ItemName: yup
       .string("Enter Item Name")
       .required("Item Name is required"),
-    fldItemDescription: yup
+    ItemDescription: yup
       .string("Enter Item Description")
       .required("Item Description is required"),
-    fldPriceMin: yup
+    PriceMin: yup
       .string("Enter Price")
       .required("Price is required"),
-    fldCategoryId: yup.number().min(1).required("Category is required"),
-    fldQuantity: yup.number().min(1).required("Quantity is required"),
+    CategoryId: yup.number().min(1).required("Category is required"),
+    Quantity: yup.number().min(1).required("Quantity is required"),
   });
 
   return (
@@ -150,129 +150,129 @@ export default function TripItemCreate() {
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  id="fldTripId"
-                  name="fldTripId"
+                  id="TripId"
+                  name="TripId"
                   label="Trip Name"
                   fullWidth
                   variant="outlined"
-                  value={values.fldTripId}
-                  error={Boolean(touched.fldTripId && errors.fldTripId)}
+                  value={values.TripId}
+                  error={Boolean(touched.TripId && errors.TripId)}
                 />
-                {touched.fldTripId && errors.fldTripId && (
+                {touched.TripId && errors.TripId && (
                   <FormHelperText
                     error
-                    id="standard-weight-helper-text-fldTripId"
+                    id="standard-weight-helper-text-TripId"
                   >
-                    {errors.fldTripId}
+                    {errors.TripId}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  id="fldItemName"
-                  name="fldItemName"
+                  id="ItemName"
+                  name="ItemName"
                   label="Item Name *"
                   fullWidth
                   variant="outlined"
-                  value={values.fldItemName}
+                  value={values.ItemName}
                   onChange={handleChange}
-                  error={Boolean(touched.fldItemName && errors.fldItemName)}
+                  error={Boolean(touched.ItemName && errors.ItemName)}
                 />
-                {touched.fldItemName && errors.fldItemName && (
+                {touched.ItemName && errors.ItemName && (
                   <FormHelperText
                     error
-                    id="standard-weight-helper-text-fldItemName"
+                    id="standard-weight-helper-text-ItemName"
                   >
-                    {errors.fldItemName}
+                    {errors.ItemName}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  id="fldItemDescription"
-                  name="fldItemDescription"
+                  id="ItemDescription"
+                  name="ItemDescription"
                   label="Item Description *"
                   fullWidth
                   variant="outlined"
-                  value={values.fldItemDescription}
+                  value={values.ItemDescription}
                   onChange={handleChange}
                   multiline
                   maxRows={4}
                   error={Boolean(
-                    touched.fldItemDescription && errors.fldItemDescription
+                    touched.ItemDescription && errors.ItemDescription
                   )}
                 />
-                {touched.fldItemDescription && errors.fldItemDescription && (
+                {touched.ItemDescription && errors.ItemDescription && (
                   <FormHelperText
                     error
-                    id="standard-weight-helper-text-fldItemDescription"
+                    id="standard-weight-helper-text-ItemDescription"
                   >
-                    {errors.fldItemDescription}
+                    {errors.ItemDescription}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  id="fldPrice"
-                  name="fldPrice"
+                  id="Price"
+                  name="Price"
                   label="Price *"
                   fullWidth
                   variant="outlined"
-                  value={values.fldPriceMin}
+                  value={values.PriceMin}
                   onChange={handleChange}
-                  error={Boolean(touched.fldPrice && errors.fldPrice)}
+                  error={Boolean(touched.Price && errors.Price)}
                 />
-                {touched.fldPrice && errors.fldPrice && (
+                {touched.Price && errors.Price && (
                   <FormHelperText
                     error
-                    id="standard-weight-helper-text-fldPrice"
+                    id="standard-weight-helper-text-Price"
                   >
-                    {errors.fldPrice}
+                    {errors.Price}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12} sm={4}>
                 <FormControl sx={{ mt: 1, minWidth: 400 }}>
-                  <InputLabel id="fldCategoryId">Category *</InputLabel>
+                  <InputLabel id="CategoryId">Category *</InputLabel>
                   <Select
-                    labelId="fldCategoryId"
-                    id="fldCategoryId"
-                    value={values.fldCategoryId}
-                    label="fldCategoryId"
+                    labelId="CategoryId"
+                    id="CategoryId"
+                    value={values.CategoryId}
+                    label="CategoryId"
                     onChange={handleChange}
-                    name="fldCategoryId"
+                    name="CategoryId"
                   >
                     {category.map((item) => (
-                      <MenuItem value={item.fldCategoryId}>
-                        {item.fldCategoryName}
+                      <MenuItem value={item.CategoryId}>
+                        {item.CategoryName}
                       </MenuItem>
                     ))}
                   </Select>
-                  {touched.fldCategoryId && errors.fldCategoryId && (
+                  {touched.CategoryId && errors.CategoryId && (
                     <FormHelperText
                       error
-                      id="standard-weight-helper-fldCategoryId"
+                      id="standard-weight-helper-CategoryId"
                     >
-                      {errors.fldCategoryId}
+                      {errors.CategoryId}
                     </FormHelperText>
                   )}
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  id="fldQuantity"
-                  name="fldQuantity"
+                  id="Quantity"
+                  name="Quantity"
                   label="Quantity *"
                   type="number"
                   fullWidth
                   variant="outlined"
-                  value={values.fldQuantity}
+                  value={values.Quantity}
                   onChange={handleChange}
-                  error={Boolean(touched.fldQuantity && errors.fldQuantity)}
+                  error={Boolean(touched.Quantity && errors.Quantity)}
                 />
-                {touched.fldQuantity && errors.fldQuantity && (
-                  <FormHelperText error id="standard-weight-helper-fldQuantity">
-                    {errors.fldQuantity}
+                {touched.Quantity && errors.Quantity && (
+                  <FormHelperText error id="standard-weight-helper-Quantity">
+                    {errors.Quantity}
                   </FormHelperText>
                 )}
               </Grid>

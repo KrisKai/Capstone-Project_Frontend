@@ -23,12 +23,12 @@ export default function RouteCreate() {
   const { tripId, routeId } = useParams();
   const isEdit = Boolean(routeId);
   const [route, setRoute] = useState({
-    fldTripId: "",
-    fldRouteDescription: null,
+    TripId: "",
+    RouteDescription: null,
   });
   const [trip, setTrip] = useState({
-    fldTripId: "",
-    fldTripName: "",
+    TripId: "",
+    TripName: "",
   });
   useEffect(() => {
     // IFFE
@@ -63,7 +63,7 @@ export default function RouteCreate() {
   }
 
   const validationSchema = yup.object().shape({
-    fldRouteDescription: yup
+    RouteDescription: yup
       .string("Enter Route Description")
       .required("Route Description is required"),
   });
@@ -127,44 +127,44 @@ export default function RouteCreate() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="fldTripId"
-                      name="fldTripId"
+                      id="TripId"
+                      name="TripId"
                       label="Trip Name"
                       fullWidth
                       variant="outlined"
                       value={tripId}
                       onChange={handleChange}
-                      error={Boolean(touched.fldTripId && errors.fldTripId)}
+                      error={Boolean(touched.TripId && errors.TripId)}
                     />
-                    {touched.fldTripId && errors.fldTripId && (
+                    {touched.TripId && errors.TripId && (
                       <FormHelperText
                         error
-                        id="standard-weight-helper-text-fldTripId"
+                        id="standard-weight-helper-text-TripId"
                       >
-                        {errors.fldTripId}
+                        {errors.TripId}
                       </FormHelperText>
                     )}
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      id="fldRouteDescription"
-                      name="fldRouteDescription"
+                      id="RouteDescription"
+                      name="RouteDescription"
                       label="Route Description"
                       fullWidth
                       variant="outlined"
-                      value={values.fldRouteDescription}
+                      value={values.RouteDescription}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.fldRouteDescription &&
-                          errors.fldRouteDescription
+                        touched.RouteDescription &&
+                          errors.RouteDescription
                       )}
                     />
-                    {touched.fldRouteDescription && errors.fldRouteDescription && (
+                    {touched.RouteDescription && errors.RouteDescription && (
                       <FormHelperText
                         error
-                        id="standard-weight-helper-text-fldRouteDescription"
+                        id="standard-weight-helper-text-RouteDescription"
                       >
-                        {errors.fldRouteDescription}
+                        {errors.RouteDescription}
                       </FormHelperText>
                     )}
                   </Grid>

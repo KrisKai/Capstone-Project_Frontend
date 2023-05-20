@@ -14,23 +14,23 @@ import { toast } from "react-toastify";
 import Grid from "@mui/material/Grid";
 
 const columns = [
-  // { id: "fldItemId", label: "Item Id", minWidth: 100, onclick: true },
+  // { id: "ItemId", label: "Item Id", minWidth: 100, onclick: true },
   {
-    id: "fldItemName",
+    id: "ItemName",
     label: "Item Name",
     minWidth: 100,
     format: (value) => value.toLocaleString("en-US"),
     onclick: true,
   },
   {
-    id: "fldCategoryName",
+    id: "CategoryName",
     label: "Category Name",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "fldQuantity",
+    id: "Quantity",
     label: "Quantity",
     minWidth: 100,
     align: "center",
@@ -49,7 +49,7 @@ export default function StickyHeadTableItem(props) {
     pageIndex: 0,
     pageSize: 10,
     itemName: "",
-    categoryId: props.category.fldCategoryId,
+    categoryId: props.category.CategoryId,
   });
   const itemList = allItems.listOfItem;
   const numberOfItem = allItems.numOfItem;
@@ -111,7 +111,7 @@ export default function StickyHeadTableItem(props) {
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <Grid container sx={{ mt: 1, mb: 1 }}>
           <Grid xs={6} sx={{ pl: 1 }}>
-            <h2>{props.category.fldCategoryName}</h2>
+            <h2>{props.category.CategoryName}</h2>
           </Grid>
         </Grid>
         <TableContainer>
@@ -138,8 +138,8 @@ export default function StickyHeadTableItem(props) {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldItemId}
-                    key={row.fldItemId}
+                    tabIndex={row.ItemId}
+                    key={row.ItemId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -149,7 +149,7 @@ export default function StickyHeadTableItem(props) {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              onClick={() => gotoView(row.fldItemId)}
+                              onClick={() => gotoView(row.ItemId)}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
@@ -168,7 +168,7 @@ export default function StickyHeadTableItem(props) {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldItemId}
+                        value={row.ItemId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -176,7 +176,7 @@ export default function StickyHeadTableItem(props) {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.fldItemId}
+                        value={row.ItemId}
                         onClick={(e) => handleDelete(e.target.value)}
                         color="error"
                       >

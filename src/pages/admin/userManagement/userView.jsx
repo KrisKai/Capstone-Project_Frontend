@@ -13,19 +13,19 @@ export default function UserCreate() {
   const { userId } = useParams();
   const isEdit = Boolean(userId);
   const [user, setUser] = useState({
-    fldUsername: "",
-    fldPassword: "",
-    fldRetypePassword: "",
-    fldRole: "",
-    fldBirthday: "",
-    fldEmail: "",
-    fldFullname: "",
-    fldPhone: "",
-    fldAddress: "",
-    fldCreateDate: "",
-    fldCreateBy: "",
-    fldUpdateDate: "",
-    fldUpdateBy: "",
+    Username: "",
+    Password: "",
+    RetypePassword: "",
+    Role: "",
+    Birthday: "",
+    Email: "",
+    Fullname: "",
+    Phone: "",
+    Address: "",
+    CreateDate: "",
+    CreateBy: "",
+    UpdateDate: "",
+    UpdateBy: "",
   });
 
   useEffect(() => {
@@ -36,8 +36,8 @@ export default function UserCreate() {
         const data = await userApi.getById(userId);
         console.log(data)
         if (data !== null && data !== "") {
-          data.fldBirthday = data.fldBirthday.substring(0, 10);
-          data.fldRetypePassword = data.fldPassword;
+          data.Birthday = data.Birthday.substring(0, 10);
+          data.RetypePassword = data.Password;
           setUser(data);
         } else {
           navigate("/admin/userList");
@@ -66,11 +66,11 @@ export default function UserCreate() {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="fldUsername"
-            name="fldUsername"
+            id="Username"
+            name="Username"
             label="Username"
             fullWidth
-            value={user.fldUsername}
+            value={user.Username}
             variant="outlined"
             InputProps={{
               readOnly: true,
@@ -79,11 +79,11 @@ export default function UserCreate() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="fldFullname"
-            name="fldFullname"
+            id="Fullname"
+            name="Fullname"
             label="Full name"
             fullWidth
-            value={user.fldFullname}
+            value={user.Fullname}
             variant="outlined"
             InputProps={{
               readOnly: true,
@@ -92,12 +92,12 @@ export default function UserCreate() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="fldAddress"
-            name="fldAddress"
+            id="Address"
+            name="Address"
             label="Address"
             fullWidth
             variant="outlined"
-            value={user.fldAddress}
+            value={user.Address}
             InputProps={{
               readOnly: true,
             }}
@@ -105,12 +105,12 @@ export default function UserCreate() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="fldPhone"
-            name="fldPhone"
+            id="Phone"
+            name="Phone"
             label="Phone Number"
             fullWidth
             variant="outlined"
-            value={user.fldPhone}
+            value={user.Phone}
             InputProps={{
               readOnly: true,
             }}
@@ -118,12 +118,12 @@ export default function UserCreate() {
         </Grid>
         <Grid item xs={12} sm={2}>
           <TextField
-            id="fldRole"
-            name="fldRole"
+            id="Role"
+            name="Role"
             label="Role"
             fullWidth
             variant="outlined"
-            value={user.fldRole}
+            value={user.Role}
             InputProps={{
               readOnly: true,
             }}
@@ -131,12 +131,12 @@ export default function UserCreate() {
         </Grid>
         <Grid item xs={12} sm={4}>
           <TextField
-            id="fldBirthday"
-            name="fldBirthday"
+            id="Birthday"
+            name="Birthday"
             label="Birthday"
             fullWidth
             variant="outlined"
-            value={user.fldBirthday}
+            value={user.Birthday}
             InputProps={{
               readOnly: true,
             }}
@@ -144,13 +144,13 @@ export default function UserCreate() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="fldEmail"
-            name="fldEmail"
+            id="Email"
+            name="Email"
             label="Email"
             fullWidth
             variant="outlined"
             type="email"
-            value={user.fldEmail}
+            value={user.Email}
             InputProps={{
               readOnly: true,
             }}
@@ -158,12 +158,12 @@ export default function UserCreate() {
         </Grid>
         <Grid item xs={12} sm={3}>
           <TextField
-            id="fldCreateBy"
-            name="fldCreateBy"
+            id="CreateBy"
+            name="CreateBy"
             label="Create By"
             fullWidth
             variant="outlined"
-            value={user.fldCreateBy}
+            value={user.CreateBy}
             InputProps={{
               readOnly: true,
             }}
@@ -171,27 +171,27 @@ export default function UserCreate() {
         </Grid>
         <Grid item xs={12} sm={3}>
           <TextField
-            id="fldCreateDate"
-            name="fldCreateDate"
+            id="CreateDate"
+            name="CreateDate"
             label="Create Date"
             fullWidth
             variant="outlined"
-            value={user.fldCreateDate}
+            value={user.CreateDate}
             InputProps={{
               readOnly: true,
             }}
           />
         </Grid>
-        {user.fldUpdateBy !== null ? (
+        {user.UpdateBy !== null ? (
           <>
             <Grid item xs={12} sm={3}>
               <TextField
-                id="fldUpdateBy"
-                name="fldUpdateBy"
+                id="UpdateBy"
+                name="UpdateBy"
                 label="Update By"
                 fullWidth
                 variant="outlined"
-                value={user.fldUpdateBy}
+                value={user.UpdateBy}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -199,12 +199,12 @@ export default function UserCreate() {
             </Grid>
             <Grid item xs={12} sm={3}>
               <TextField
-                id="fldUpdateDate"
-                name="fldUpdateDate"
+                id="UpdateDate"
+                name="UpdateDate"
                 label="Update Date"
                 fullWidth
                 variant="outlined"
-                value={user.fldUpdateDate}
+                value={user.UpdateDate}
                 InputProps={{
                   readOnly: true,
                 }}

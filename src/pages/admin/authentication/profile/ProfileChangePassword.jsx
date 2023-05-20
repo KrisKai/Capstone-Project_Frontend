@@ -16,20 +16,20 @@ const ProfileChangePassword = (props) => {
   const currentUser = useAppSelector(selectCurrentUser);
   console.log(currentUser);
   const [currentInfo, setCurrentInfo] = useState({
-    fldUserId: currentUser.userId,
-    fldOldPassword: null,
-    fldPassword: null,
-    fldRetypePassword: null,
+    UserId: currentUser.userId,
+    OldPassword: null,
+    Password: null,
+    RetypePassword: null,
   });
 
   const validationSchema = yup.object().shape({
-    fldPassword: yup
+    Password: yup
       .string("Enter Password")
       .min(8, "Must be atleast 8 digits")
       .required("Password is required"),
-    fldRetypePassword: yup
+    RetypePassword: yup
       .string("Enter Retype Password")
-      .oneOf([yup.ref("fldPassword"), null], "Passwords don't match!")
+      .oneOf([yup.ref("Password"), null], "Passwords don't match!")
       .required("Retype Password is required"),
   });
 
@@ -43,9 +43,9 @@ const ProfileChangePassword = (props) => {
           try {
             setStatus({ success: false });
             let response = await userApi.changePassword({
-              fldUserId: values.fldUserId,
-              fldOldPassword: values.fldOldPassword,
-              fldPassword: values.fldPassword,
+              UserId: values.UserId,
+              OldPassword: values.OldPassword,
+              Password: values.Password,
             });
             switch (response.Code) {
               case "G001":
@@ -82,54 +82,54 @@ const ProfileChangePassword = (props) => {
               <Grid item xs={12}>
                 <TextField
                   required
-                  id="fldOldPassword"
-                  name="fldOldPassword"
+                  id="OldPassword"
+                  name="OldPassword"
                   label="Old Password"
                   fullWidth
                   type="password"
-                  value={values.fldOldPassword}
+                  value={values.OldPassword}
                   variant="standard"
                   onChange={handleChange}
                 />
-                {/* {touched.fldOldPassword && errors.fldPassword && (
+                {/* {touched.OldPassword && errors.Password && (
                   <FormHelperText error id="standard-weight-helper-password">
-                    {errors.fldPassword}
+                    {errors.Password}
                   </FormHelperText>
                 )} */}
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
-                  id="fldPassword"
-                  name="fldPassword"
+                  id="Password"
+                  name="Password"
                   label="New Password"
                   fullWidth
                   type="password"
-                  value={values.fldPassword}
+                  value={values.Password}
                   variant="standard"
                   onChange={handleChange}
                 />
-                {touched.fldPassword && errors.fldPassword && (
+                {touched.Password && errors.Password && (
                   <FormHelperText error id="standard-weight-helper-password">
-                    {errors.fldPassword}
+                    {errors.Password}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
-                  id="fldRetypePassword"
-                  name="fldRetypePassword"
+                  id="RetypePassword"
+                  name="RetypePassword"
                   label="Retype new Password"
                   fullWidth
                   type="password"
-                  value={values.fldRetypePassword}
+                  value={values.RetypePassword}
                   variant="standard"
                   onChange={handleChange}
                 />
-                {touched.fldRetypePassword && errors.fldRetypePassword && (
+                {touched.RetypePassword && errors.RetypePassword && (
                   <FormHelperText error id="standard-weight-helper-repass">
-                    {errors.fldRetypePassword}
+                    {errors.RetypePassword}
                   </FormHelperText>
                 )}
               </Grid>

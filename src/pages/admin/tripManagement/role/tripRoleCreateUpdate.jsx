@@ -22,9 +22,9 @@ export default function UserCreate() {
   const { tripId, roleId } = useParams();
   const isEdit = Boolean(roleId);
   const [role, setRole] = useState({
-    fldRoleName: "",
-    fldType: "",
-    fldDescription: "",
+    RoleName: "",
+    Type: "",
+    Description: "",
   });
 
   useEffect(() => {
@@ -52,11 +52,11 @@ export default function UserCreate() {
   }
 
   const validationSchema = yup.object().shape({
-    fldRoleName: yup
+    RoleName: yup
       .string("Enter Role Name")
       .required("Role Name is required"),
-    fldType: yup.string("Enter Type").required("Type is required"),
-    fldDescription: yup
+    Type: yup.string("Enter Type").required("Type is required"),
+    Description: yup
       .string("Enter Role Description Time")
       .required("Role Description is required"),
   });
@@ -118,69 +118,69 @@ export default function UserCreate() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="fldRoleName"
-                      name="fldRoleName"
+                      id="RoleName"
+                      name="RoleName"
                       label="Role Name"
                       fullWidth
                       variant="outlined"
-                      value={values.fldRoleName}
+                      value={values.RoleName}
                       onChange={handleChange}
-                      error={Boolean(touched.fldRoleName && errors.fldRoleName)}
+                      error={Boolean(touched.RoleName && errors.RoleName)}
                     />
-                    {touched.fldRoleName && errors.fldRoleName && (
+                    {touched.RoleName && errors.RoleName && (
                       <FormHelperText
                         error
-                        id="standard-weight-helper-text-fldRoleName"
+                        id="standard-weight-helper-text-RoleName"
                       >
-                        {errors.fldRoleName}
+                        {errors.RoleName}
                       </FormHelperText>
                     )}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl sx={{ minWidth: 530 }}>
-                      <InputLabel id="fldType">Role Type</InputLabel>
+                      <InputLabel id="Type">Role Type</InputLabel>
                       <Select
-                        labelId="fldType"
-                        id="fldType"
-                        value={values.fldType}
+                        labelId="Type"
+                        id="Type"
+                        value={values.Type}
                         label="Role"
                         onChange={handleChange}
-                        name="fldType"
+                        name="Type"
                       >
                         <MenuItem value="HOST">Host</MenuItem>
                         <MenuItem value="MEMBER">Member</MenuItem>
                         <MenuItem value="OTHER">Other</MenuItem>
                       </Select>
 
-                      {touched.fldType && errors.fldType && (
+                      {touched.Type && errors.Type && (
                         <FormHelperText error id="standard-weight-helper-role">
-                          {errors.fldType}
+                          {errors.Type}
                         </FormHelperText>
                       )}
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      id="fldDescription"
-                      name="fldDescription"
+                      id="Description"
+                      name="Description"
                       label="Role Description"
                       fullWidth
                       autoComplete=""
                       variant="outlined"
-                      value={values.fldDescription}
+                      value={values.Description}
                       onChange={handleChange}
                       multiline
                       maxRows={4}
                       error={Boolean(
-                        touched.fldDescription && errors.fldDescription
+                        touched.Description && errors.Description
                       )}
                     />
-                    {touched.fldDescription && errors.fldDescription && (
+                    {touched.Description && errors.Description && (
                       <FormHelperText
                         error
-                        id="standard-weight-helper-fldDescription"
+                        id="standard-weight-helper-Description"
                       >
-                        {errors.fldDescription}
+                        {errors.Description}
                       </FormHelperText>
                     )}
                   </Grid>
