@@ -96,15 +96,15 @@ const DashboardDefault = () => {
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Total Page Views"
-          count="4,42,236"
+          title="Tổng lượt truy cập vào trang"
+          count="442,236"
           percentage={59.3}
           extra="35,000"
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Tổng số chuyến đi được đăng kí trong tháng này"
+          title="Tổng số chuyến đi được đăng kí trong tháng"
           count={tripStatistic.tripCountThisMonth}
           percentage={tripStatistic.countDiff}
           isLoss={tripStatistic.trendStatus === "L"}
