@@ -3,18 +3,18 @@ import { Box, Button, Container, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Link from 'themes/overrides/Link';
 import { useNavigate, useParams } from 'react-router-dom';
-import { tripMemberApi } from "api";
+import { userApi } from "api";
 import { toast } from "react-toastify";
 
-export default function ConfirmPage() {
+export default function ConfirmPageUser() {
   let navigate = useNavigate();
-  let {  memberId } = useParams();
+  let {  userId } = useParams();
   useEffect(() => {
     // IFFE
     (async () => {
-      if (!memberId) return;
+      if (!userId) return;
       try {
-        const data = await tripMemberApi.confirmTrip(memberId);
+        const data = await userApi.confirm(userId);
         switch (data.Code) {
           case "G001":
             navigate("/auth/login");

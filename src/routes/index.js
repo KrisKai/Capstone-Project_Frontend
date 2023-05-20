@@ -321,7 +321,16 @@ export default function Router() {
       element: (
         // check lai guard
         <AuthGuard>
-          <ConfirmPage />
+          <ConfirmPageTrip />
+        </AuthGuard>
+      ),
+    },
+    {
+      path: `confirmPageUser/:userId`,
+      element: (
+        // check lai guard
+        <AuthGuard>
+          <ConfirmPageUser />
         </AuthGuard>
       ),
     },
@@ -415,7 +424,8 @@ const CategoryList = Loadable(
 const CategoryCreateUpdate = Loadable(
   lazy(() => import("../pages/admin/itemManagement/categoryCreateUpdate"))
 );
-const ConfirmPage = Loadable(lazy(() => import("../pages/ConfirmPage")));
+const ConfirmPageTrip = Loadable(lazy(() => import("../pages/ConfirmPageTrip")));
+const ConfirmPageUser = Loadable(lazy(() => import("../pages/ConfirmPageUser")));
 const Maintenance = Loadable(lazy(() => import("../pages/Maintenance")));
 const Page500 = Loadable(lazy(() => import("../pages/Page500")));
 const NotFound = Loadable(lazy(() => import("../pages/Page404")));
