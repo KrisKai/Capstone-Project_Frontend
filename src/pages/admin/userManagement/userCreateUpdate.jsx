@@ -27,16 +27,16 @@ export default function UserCreate() {
   const { userId } = useParams();
   const isEdit = Boolean(userId);
   const [user, setUser] = useState({
-    Username: "",
-    Password: null,
-    RetypePassword: null,
-    Role: "",
-    Birthday: "",
-    Email: "",
-    Fullname: "",
-    Phone: "",
-    Address: "",
-    ActiveStatus: "ACTIVE",
+    username: "",
+    password: null,
+    retypePassword: null,
+    role: "",
+    birthday: "",
+    email: "",
+    fullname: "",
+    phone: "",
+    address: "",
+    activeStatus: "ACTIVE",
   });
   const currentUser = useAppSelector(selectCurrentUser);
 
@@ -47,7 +47,7 @@ export default function UserCreate() {
       try {
         const data = await userApi.getById(userId);
         if (data != null && data != "") {
-          data.Birthday = dayjs.utc(data.Birthday);
+          data.birthday = dayjs.utc(data.birthday);
           setUser(data);
         } else {
           navigate("/admin/userList");
@@ -63,24 +63,24 @@ export default function UserCreate() {
   }, [userId]);
 
   const validationSchema = yup.object().shape({
-    Username: yup
+    username: yup
       .string("Enter User Name")
       .matches(/\S/, "User Name is invalid")
       .required("User Name is required"),
-    Fullname: yup
+    fullname: yup
       .string("Enter Full Name")
       .required("Full Name is required"),
-    Email: yup
+    email: yup
       .string()
       .email("Enter Valid Email")
       .required("Email is required"),
-    Phone: yup
+    phone: yup
       .string()
       .matches("^[0-9]{10,11}", "Invalid number phone")
       .required("Phone is required"),
-    Address: yup.string("Enter Address").required("Address is required"),
-    Birthday: yup.string("Enter Birthday").required("Birthday is required"),
-    Role: yup.string("Enter Role").required("Role is required"),
+    address: yup.string("Enter Address").required("Address is required"),
+    birthday: yup.string("Enter Birthday").required("Birthday is required"),
+    role: yup.string("Enter Role").required("Role is required"),
     // Password: yup
     //   .string("Enter Password")
     //   .min(8, "Must be atleast 8 digits")
@@ -154,39 +154,39 @@ export default function UserCreate() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="Username"
-                      name="Username"
+                      id="username"
+                      name="username"
                       label="Username"
                       fullWidth
-                      value={values.Username}
+                      value={values.username}
                       variant="outlined"
                       onChange={handleChange}
                       InputProps={{
                         readOnly: isEdit,
                       }}
                     />
-                    {touched.Username && errors.Username && (
+                    {touched.username && errors.username && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-nickName"
                       >
-                        {errors.Username}
+                        {errors.username}
                       </FormHelperText>
                     )}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="Fullname"
-                      name="Fullname"
+                      id="fullname"
+                      name="fullname"
                       label="Full name"
                       fullWidth
                       value={values.Fullname}
                       variant="outlined"
                       onChange={handleChange}
                     />
-                    {touched.Fullname && errors.Fullname && (
+                    {touched.fullname && errors.fullname && (
                       <FormHelperText error id="standard-weight-helper-name">
-                        {errors.Fullname}
+                        {errors.fullname}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -194,41 +194,41 @@ export default function UserCreate() {
                     <>
                       <Grid item xs={12} sm={6}>
                         <TextField
-                          id="Password"
-                          name="Password"
+                          id="password"
+                          name="password"
                           label="Password"
                           fullWidth
                           type="password"
-                          value={values.Password}
+                          value={values.password}
                           variant="outlined"
                           onChange={handleChange}
                         />
-                        {touched.Password && errors.Password && (
+                        {touched.password && errors.password && (
                           <FormHelperText
                             error
                             id="standard-weight-helper-password"
                           >
-                            {errors.Password}
+                            {errors.password}
                           </FormHelperText>
                         )}
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <TextField
-                          id="RetypePassword"
-                          name="RetypePassword"
+                          id="retypePassword"
+                          name="retypePassword"
                           label="Retype Password"
                           fullWidth
                           type="password"
-                          value={values.RetypePassword}
+                          value={values.retypePassword}
                           variant="outlined"
                           onChange={handleChange}
                         />
-                        {touched.RetypePassword && errors.RetypePassword && (
+                        {touched.retypePassword && errors.retypePassword && (
                           <FormHelperText
                             error
                             id="standard-weight-helper-repass"
                           >
-                            {errors.RetypePassword}
+                            {errors.retypePassword}
                           </FormHelperText>
                         )}
                       </Grid>
@@ -237,43 +237,43 @@ export default function UserCreate() {
 
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="Address"
-                      name="Address"
+                      id="address"
+                      name="address"
                       label="Address"
                       fullWidth
                       variant="outlined"
-                      value={values.Address}
+                      value={values.address}
                       onChange={handleChange}
                     />
-                    {touched.Address && errors.Address && (
+                    {touched.address && errors.address && (
                       <FormHelperText error id="standard-weight-helper-address">
-                        {errors.Address}
+                        {errors.address}
                       </FormHelperText>
                     )}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="Phone"
-                      name="Phone"
+                      id="phone"
+                      name="phone"
                       label="Phone Number"
                       fullWidth
                       variant="outlined"
-                      value={values.Phone}
+                      value={values.phone}
                       onChange={handleChange}
                     />
-                    {touched.Phone && errors.Phone && (
+                    {touched.phone && errors.phone && (
                       <FormHelperText error id="standard-weight-helper-phone">
-                        {errors.Phone}
+                        {errors.phone}
                       </FormHelperText>
                     )}
                   </Grid>
                   <Grid item xs={12} sm={3}>
                     <FormControl sx={{ mt: 1, minWidth: 200 }}>
-                      <InputLabel id="Role">Role</InputLabel>
+                      <InputLabel id="role">Role</InputLabel>
                       <Select
-                        labelId="Role"
-                        id="Role"
-                        value={values.Role}
+                        labelId="role"
+                        id="role"
+                        value={values.role}
                         label="Role"
                         onChange={handleChange}
                         name="Role"
@@ -285,9 +285,9 @@ export default function UserCreate() {
                         <MenuItem value="EMPL">Employee</MenuItem>
                       </Select>
 
-                      {touched.Role && errors.Role && (
+                      {touched.role && errors.role && (
                         <FormHelperText error id="standard-weight-helper-role">
-                          {errors.Role}
+                          {errors.role}
                         </FormHelperText>
                       )}
                     </FormControl>
@@ -309,40 +309,40 @@ export default function UserCreate() {
                           },
                         }}
                         label="Birthday"
-                        id="Birthday"
-                        name="Birthday"
+                        id="birthday"
+                        name="birthday"
                         fullWidth
-                        value={values.Birthday}
+                        value={values.birthday}
                         onChange={(value) => {
-                          setFieldValue("Birthday", value);
+                          setFieldValue("birthday", value);
                         }}
                         error={Boolean(
-                          touched.Birthday && errors.Birthday
+                          touched.birthday && errors.birthday
                         )}
                       />
                     </LocalizationProvider>
-                    {touched.Birthday && errors.Birthday && (
+                    {touched.birthday && errors.birthday && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-Birthday"
                       >
-                        {errors.Birthday}
+                        {errors.birthday}
                       </FormHelperText>
                     )}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="Email"
-                      name="Email"
+                      id="email"
+                      name="email"
                       label="Email"
                       fullWidth
                       variant="outlined"
-                      value={values.Email}
+                      value={values.email}
                       onChange={handleChange}
                     />
-                    {touched.Email && errors.Email && (
+                    {touched.email && errors.email && (
                       <FormHelperText error id="standard-weight-helper-email">
-                        {errors.Email}
+                        {errors.email}
                       </FormHelperText>
                     )}
                   </Grid>

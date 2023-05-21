@@ -15,14 +15,14 @@ export default function CategoryCreate() {
   const { categoryId } = useParams();
   const isEdit = Boolean(categoryId);
   const [category, setCategory] = useState({
-    CategoryName: "",
-    CategoryBudget: null,
+    categoryName: "",
+    categoryBudget: null,
   });
   const [user, setUser] = useState([
     {
-      UserId: "",
-      Email: "",
-      Fullname: "",
+      userId: "",
+      email: "",
+      fullname: "",
     },
   ]);
 
@@ -58,10 +58,10 @@ export default function CategoryCreate() {
   }
 
   const validationSchema = yup.object().shape({
-    CategoryName: yup
+    categoryName: yup
       .string("Enter Category Name")
       .required("Category Name is required"),
-    CategoryDescription: yup
+    categoryDescription: yup
       .string("Enter Category Description")
       .required("Category Description is required"),
   });
@@ -126,18 +126,18 @@ export default function CategoryCreate() {
                       label="Category Name"
                       fullWidth
                       variant="outlined"
-                      value={values.CategoryName}
+                      value={values.categoryName}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.CategoryName && errors.CategoryName
+                        touched.categoryName && errors.categoryName
                       )}
                     />
-                    {touched.CategoryName && errors.CategoryName && (
+                    {touched.categoryName && errors.categoryName && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-text-CategoryName"
                       >
-                        {errors.CategoryName}
+                        {errors.categoryName}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -149,20 +149,20 @@ export default function CategoryCreate() {
                       fullWidth
                       autoComplete=""
                       variant="outlined"
-                      value={values.CategoryDescription}
+                      value={values.categoryDescription}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.CategoryDescription &&
-                          errors.CategoryDescription
+                        touched.categoryDescription &&
+                          errors.categoryDescription
                       )}
                     />
-                    {touched.CategoryDescription &&
-                      errors.CategoryDescription && (
+                    {touched.categoryDescription &&
+                      errors.categoryDescription && (
                         <FormHelperText
                           error
                           id="standard-weight-helper-CategoryDescription"
                         >
-                          {errors.CategoryDescription}
+                          {errors.categoryDescription}
                         </FormHelperText>
                       )}
                   </Grid>

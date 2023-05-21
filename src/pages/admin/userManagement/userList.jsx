@@ -18,27 +18,27 @@ import { useAppSelector } from "redux/hooks";
 import { selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
 
 const columns = [
-  { id: "Username", label: "UserName", minWidth: 100, onclick: true },
+  { id: "username", label: "UserName", minWidth: 100, onclick: true },
   {
-    id: "Fullname",
+    id: "fullname",
     label: "Full Name",
     minWidth: 150,
     align: "center",
   },
   {
-    id: "Role",
+    id: "role",
     label: "Role",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "Email",
+    id: "email",
     label: "Email",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "ActiveStatus",
+    id: "activeStatus",
     label: "Active Status",
     minWidth: 100,
     align: "center",
@@ -118,7 +118,7 @@ export default function StickyHeadTableUser() {
 
   const handleChangeStatus = async (id, status) => {
     let response = await userApi.changeStatus({
-      UserId: id,
+      userId: id,
       ActiveStatus: status,
     });
     switch (response.Code) {
@@ -227,8 +227,8 @@ export default function StickyHeadTableUser() {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.UserId}
-                    key={row.UserId}
+                    tabIndex={row.userId}
+                    key={row.userId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -239,7 +239,7 @@ export default function StickyHeadTableUser() {
                             key={column.id}
                             align={column.align}
                             style={{ textDecoration: "underline" }}
-                            onClick={() => gotoView(row.UserId)}
+                            onClick={() => gotoView(row.userId)}
                           >
                             {column.format && typeof value === "number"
                               ? column.format(value)
@@ -261,7 +261,7 @@ export default function StickyHeadTableUser() {
                           {row.ActiveStatus !== "ACTIVE" && (
                             <Button
                               variant="outlined"
-                              value={row.UserId}
+                              value={row.userId}
                               onClick={(e) =>
                                 handleChangeStatus(e.target.value, "ACTIVE")
                               }
@@ -273,7 +273,7 @@ export default function StickyHeadTableUser() {
                           {row.ActiveStatus !== "INACTIVE" && (
                             <Button
                               variant="outlined"
-                              value={row.UserId}
+                              value={row.userId}
                               onClick={(e) =>
                                 handleChangeStatus(e.target.value, "INACTIVE")
                               }
@@ -285,7 +285,7 @@ export default function StickyHeadTableUser() {
                           {row.ActiveStatus !== "BANNED" && (
                             <Button
                               variant="outlined"
-                              value={row.UserId}
+                              value={row.userId}
                               onClick={(e) =>
                                 handleChangeStatus(e.target.value, "BANNED")
                               }
@@ -298,7 +298,7 @@ export default function StickyHeadTableUser() {
                         <TableCell key="reset" align="center">
                           <Button
                             variant="outlined"
-                            value={row.UserId}
+                            value={row.userId}
                             onClick={(e) => handleReset(e.target.value)}
                             color="success"
                           >
@@ -310,7 +310,7 @@ export default function StickyHeadTableUser() {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.UserId}
+                        value={row.userId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -318,7 +318,7 @@ export default function StickyHeadTableUser() {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.UserId}
+                        value={row.userId}
                         onClick={(e) => handleClickOpen(e.target.value)}
                         color="error"
                       >

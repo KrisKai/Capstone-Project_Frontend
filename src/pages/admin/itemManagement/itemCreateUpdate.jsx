@@ -19,24 +19,24 @@ export default function ItemCreate() {
   const { itemId } = useParams();
   const isEdit = Boolean(itemId);
   const [item, setItem] = useState({
-    ItemName: "",
-    ItemDescription: "",
-    ItemUsage: "",
-    CategoryId: "",
-    PriceMin: "",
-    Quantity: "",
+    itemName: "",
+    itemDescription: "",
+    itemUsage: "",
+    categoryId: "",
+    priceMin: "",
+    quantity: "",
   });
   const [user, setUser] = useState([
     {
-      UserId: "",
-      Email: "",
-      Fullname: "",
+      userId: "",
+      email: "",
+      fullname: "",
     },
   ]);
   const [category, setCategory] = useState([
     {
-      CategoryId: "",
-      CategoryName: "",
+      categoryId: "",
+      categoryName: "",
     },
   ]);
 
@@ -77,22 +77,22 @@ export default function ItemCreate() {
   }
 
   const validationSchema = yup.object().shape({
-    ItemName: yup
+    itemName: yup
       .string("Enter Item Name")
       .required("Item Name is required"),
-    ItemDescription: yup
+    itemDescription: yup
       .string("Enter Item Description")
       .required("Item Description is required"),
     // ItemUsage: yup
     //   .string("Enter Item Usage")
     //   .required("Item Usage is required"),
-    CategoryId: yup
+    categoryId: yup
       .string("Choose Category")
       .required("Category is required"),
-    PriceMin: yup
+    priceMin: yup
       .string("Enter Price Min")
       .required("Price Min is required"),
-    Quantity: yup.number().min(1).required("Quantity is required"),
+    quantity: yup.number().min(1).required("Quantity is required"),
   });
 
   return (
@@ -155,16 +155,16 @@ export default function ItemCreate() {
                       label="Item Name *"
                       fullWidth
                       variant="outlined"
-                      value={values.ItemName}
+                      value={values.itemName}
                       onChange={handleChange}
-                      error={Boolean(touched.ItemName && errors.ItemName)}
+                      error={Boolean(touched.itemName && errors.itemName)}
                     />
-                    {touched.ItemName && errors.ItemName && (
+                    {touched.itemName && errors.itemName && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-text-ItemName"
                       >
-                        {errors.ItemName}
+                        {errors.itemName}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -175,43 +175,43 @@ export default function ItemCreate() {
                       label="Price *"
                       fullWidth
                       variant="outlined"
-                      value={values.PriceMin}
+                      value={values.priceMin}
                       onChange={handleChange}
-                      error={Boolean(touched.PriceMin && errors.PriceMin)}
+                      error={Boolean(touched.priceMin && errors.priceMin)}
                     />
-                    {touched.PriceMin && errors.PriceMin && (
+                    {touched.priceMin && errors.priceMin && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-text-PriceMin"
                       >
-                        {errors.PriceMin}
+                        {errors.priceMin}
                       </FormHelperText>
                     )}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl sx={{ minWidth: 530 }}>
-                      <InputLabel id="CategoryId">Category *</InputLabel>
+                      <InputLabel id="categoryId">Category *</InputLabel>
                       <Select
-                        labelId="CategoryId"
-                        id="CategoryId"
-                        value={values.CategoryId}
+                        labelId="categoryId"
+                        id="categoryId"
+                        value={values.categoryId}
                         label="Role"
                         onChange={handleChange}
-                        name="CategoryId"
+                        name="categoryId"
                       >
                         {category.map((item) => (
-                          <MenuItem value={item.CategoryId}>
-                            {item.CategoryName}
+                          <MenuItem value={item.categoryId}>
+                            {item.categoryName}
                           </MenuItem>
                         ))}
                       </Select>
 
-                      {touched.CategoryId && errors.CategoryId && (
+                      {touched.categoryId && errors.categoryId && (
                         <FormHelperText
                           error
-                          id="standard-weight-helper-CategoryId"
+                          id="standard-weight-helper-categoryId"
                         >
-                          {errors.CategoryId}
+                          {errors.categoryId}
                         </FormHelperText>
                       )}
                     </FormControl>
@@ -224,16 +224,16 @@ export default function ItemCreate() {
                       type="number"
                       fullWidth
                       variant="outlined"
-                      value={values.Quantity}
+                      value={values.quantity}
                       onChange={handleChange}
-                      error={Boolean(touched.Quantity && errors.Quantity)}
+                      error={Boolean(touched.quantity && errors.quantity)}
                     />
-                    {touched.Quantity && errors.Quantity && (
+                    {touched.quantity && errors.quantity && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-Quantity"
                       >
-                        {errors.Quantity}
+                        {errors.quantity}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -247,18 +247,18 @@ export default function ItemCreate() {
                       variant="outlined"
                       multiline
                       maxRows={4}
-                      value={values.ItemDescription}
+                      value={values.itemDescription}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.ItemDescription && errors.ItemDescription
+                        touched.itemDescription && errors.itemDescription
                       )}
                     />
-                    {touched.ItemDescription && errors.ItemDescription && (
+                    {touched.itemDescription && errors.itemDescription && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-ItemDescription"
                       >
-                        {errors.ItemDescription}
+                        {errors.itemDescription}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -271,18 +271,18 @@ export default function ItemCreate() {
                       variant="outlined"
                       multiline
                       maxRows={4}
-                      value={values.ItemUsage}
+                      value={values.itemUsage}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.ItemUsage && errors.ItemUsage
+                        touched.itemUsage && errors.itemUsage
                       )}
                     />
-                    {touched.ItemUsage && errors.ItemUsage && (
+                    {touched.itemUsage && errors.itemUsage && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-ItemUsage"
                       >
-                        {errors.ItemUsage}
+                        {errors.itemUsage}
                       </FormHelperText>
                     )}
                   </Grid>

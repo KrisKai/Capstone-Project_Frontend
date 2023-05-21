@@ -15,21 +15,21 @@ import Grid from "@mui/material/Grid";
 
 const columns = [
   {
-    id: "ItemName",
+    id: "itemName",
     label: "Item Name",
     minWidth: 100,
     format: (value) => value.toLocaleString("en-US"),
     onclick: true,
   },
   {
-    id: "ItemDescription",
+    id: "itemDescription",
     label: "Item Description",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "Quantity",
+    id: "quantity",
     label: "Quantity",
     minWidth: 100,
     align: "center",
@@ -139,8 +139,8 @@ export default function StickyHeadTableTripItem(props) {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.ItemId}
-                    key={row.ItemId}
+                    tabIndex={row.itemId}
+                    key={row.itemId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -150,7 +150,7 @@ export default function StickyHeadTableTripItem(props) {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              onClick={() => gotoView(row.ItemId)}
+                              onClick={() => gotoView(row.itemId)}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
@@ -169,7 +169,7 @@ export default function StickyHeadTableTripItem(props) {
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.ItemId}
+                        value={row.itemId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -177,7 +177,7 @@ export default function StickyHeadTableTripItem(props) {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.ItemId}
+                        value={row.itemId}
                         onClick={(e) => handleDelete(e.target.value)}
                         color="error"
                       >

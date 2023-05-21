@@ -22,26 +22,26 @@ export default function UserCreate() {
   let { tripId, memberId } = useParams();
   const isEdit = Boolean(memberId);
   const [member, setMember] = useState({
-    UserId: "",
-    TripId: tripId,
-    MemberRoleId: "",
-    NickName: "",
-    Status: "Active",
+    userId: "",
+    tripId: tripId,
+    memberRoleId: "",
+    nickName: "",
+    status: "Active",
   });
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [user, setUser] = useState([
     {
-      UserId: "",
-      Email: "",
-      Fullname: "",
+      userId: "",
+      email: "",
+      fullname: "",
     },
   ]);
 
   const [role, setRole] = useState([
     {
-      RoleName: "",
-      Description: "",
+      roleName: "",
+      description: "",
     },
   ]);
   const ref = useRef(null);
@@ -85,21 +85,21 @@ export default function UserCreate() {
     navigate(`/admin/tripMemberList/${tripId}`);
   }
 
-  function handleChangeSelect(UserId) {
+  function handleChangeSelect(userId) {
     user.forEach((item) => {
-      if (item.UserId === UserId) {
-        setName(item.Fullname);
-        setEmail(item.Email);
+      if (item.userId === userId) {
+        setName(item.fullname);
+        setEmail(item.email);
       }
     });
   }
 
   const validationSchema = yup.object().shape({
-    UserId: yup.string("Enter User").required("User is required"),
-    MemberRoleId: yup
+    userId: yup.string("Enter User").required("User is required"),
+    memberRoleId: yup
       .string("Enter Member Role")
       .required("Member Role is required"),
-    NickName: yup
+    nickName: yup
       .string("Enter Nick Name")
       .required("Nick Name is required"),
     // Status: yup
@@ -166,21 +166,21 @@ export default function UserCreate() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <FormControl sx={{ minWidth: 530 }}>
-                      <InputLabel id="UserId">Trip Member Id</InputLabel>
+                      <InputLabel id="userId">Trip Member Id</InputLabel>
                       <Select
-                        labelId="UserId"
-                        id="UserId"
-                        value={values.UserId}
+                        labelId="userId"
+                        id="userId"
+                        value={values.userId}
                         label="Role"
                         onChange={(event) => {
-                          setFieldValue("UserId", event.target.value);
+                          setFieldValue("userId", event.target.value);
                           handleChangeSelect(event.target.value);
                         }}
-                        name="UserId"
+                        name="userId"
                       >
                         {user.map((item) => (
-                          <MenuItem value={item.UserId}>
-                            {item.Fullname} ({item.Email})
+                          <MenuItem value={item.userId}>
+                            {item.fullname} ({item.email})
                           </MenuItem>
                         ))}
                       </Select>
@@ -226,16 +226,16 @@ export default function UserCreate() {
                       fullWidth
                       autoComplete=""
                       variant="outlined"
-                      value={values.NickName}
+                      value={values.nickName}
                       onChange={handleChange}
-                      error={Boolean(touched.NickName && errors.NickName)}
+                      error={Boolean(touched.nickName && errors.nickName)}
                     />
-                    {touched.NickName && errors.NickName && (
+                    {touched.nickName && errors.nickName && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-NickName"
                       >
-                        {errors.NickName}
+                        {errors.nickName}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -245,27 +245,27 @@ export default function UserCreate() {
                       <Select
                         labelId="MemberRoleId"
                         id="MemberRoleId"
-                        value={values.MemberRoleId}
+                        value={values.memberRoleId}
                         label="MemberRoleId"
                         onChange={handleChange}
                         name="MemberRoleId"
                       >
                         {role.map((item) => (
                           <MenuItem
-                            value={item.RoleId}
+                            value={item.roleId}
                             onClick={handleChangeSelect}
                           >
-                            {item.RoleName}
+                            {item.roleName}
                           </MenuItem>
                         ))}
                       </Select>
 
-                      {touched.UserId && errors.UserId && (
+                      {touched.userId && errors.userId && (
                         <FormHelperText
                           error
-                          id="standard-weight-helper-UserId"
+                          id="standard-weight-helper-userId"
                         >
-                          {errors.UserId}
+                          {errors.userId}
                         </FormHelperText>
                       )}
                     </FormControl>
@@ -277,7 +277,7 @@ export default function UserCreate() {
                         <Select
                           labelId="Status"
                           id="Status"
-                          value={values.Status}
+                          value={values.status}
                           label="Status"
                           onChange={handleChange}
                           name="Status"
@@ -287,12 +287,12 @@ export default function UserCreate() {
                           <MenuItem value="BANNED">Banned</MenuItem>
                         </Select>
 
-                        {touched.Status && errors.Status && (
+                        {touched.status && errors.status && (
                           <FormHelperText
                             error
                             id="standard-weight-helper-Status"
                           >
-                            {errors.Status}
+                            {errors.status}
                           </FormHelperText>
                         )}
                       </FormControl>

@@ -22,9 +22,9 @@ export default function UserCreate() {
   const { tripId, roleId } = useParams();
   const isEdit = Boolean(roleId);
   const [role, setRole] = useState({
-    RoleName: "",
-    Type: "",
-    Description: "",
+    roleName: "",
+    type: "",
+    description: "",
   });
 
   useEffect(() => {
@@ -52,11 +52,11 @@ export default function UserCreate() {
   }
 
   const validationSchema = yup.object().shape({
-    RoleName: yup
+    roleName: yup
       .string("Enter Role Name")
       .required("Role Name is required"),
-    Type: yup.string("Enter Type").required("Type is required"),
-    Description: yup
+    type: yup.string("Enter Type").required("Type is required"),
+    description: yup
       .string("Enter Role Description Time")
       .required("Role Description is required"),
   });
@@ -123,16 +123,16 @@ export default function UserCreate() {
                       label="Role Name"
                       fullWidth
                       variant="outlined"
-                      value={values.RoleName}
+                      value={values.roleName}
                       onChange={handleChange}
-                      error={Boolean(touched.RoleName && errors.RoleName)}
+                      error={Boolean(touched.roleName && errors.roleName)}
                     />
-                    {touched.RoleName && errors.RoleName && (
+                    {touched.roleName && errors.roleName && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-text-RoleName"
                       >
-                        {errors.RoleName}
+                        {errors.roleName}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -142,7 +142,7 @@ export default function UserCreate() {
                       <Select
                         labelId="Type"
                         id="Type"
-                        value={values.Type}
+                        value={values.type}
                         label="Role"
                         onChange={handleChange}
                         name="Type"
@@ -152,9 +152,9 @@ export default function UserCreate() {
                         <MenuItem value="OTHER">Other</MenuItem>
                       </Select>
 
-                      {touched.Type && errors.Type && (
+                      {touched.type && errors.type && (
                         <FormHelperText error id="standard-weight-helper-role">
-                          {errors.Type}
+                          {errors.type}
                         </FormHelperText>
                       )}
                     </FormControl>
@@ -167,20 +167,20 @@ export default function UserCreate() {
                       fullWidth
                       autoComplete=""
                       variant="outlined"
-                      value={values.Description}
+                      value={values.description}
                       onChange={handleChange}
                       multiline
                       maxRows={4}
                       error={Boolean(
-                        touched.Description && errors.Description
+                        touched.description && errors.description
                       )}
                     />
-                    {touched.Description && errors.Description && (
+                    {touched.description && errors.description && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-Description"
                       >
-                        {errors.Description}
+                        {errors.description}
                       </FormHelperText>
                     )}
                   </Grid>

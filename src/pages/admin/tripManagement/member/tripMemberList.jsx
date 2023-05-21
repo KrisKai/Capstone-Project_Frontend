@@ -17,34 +17,34 @@ import { toast } from "react-toastify";
 import Grid from "@mui/material/Grid";
 
 const columns = [
-  { id: "NickName", label: "Nick Name", minWidth: 100, onclick: true },
+  { id: "nickName", label: "Nick Name", minWidth: 100, onclick: true },
   {
-    id: "Fullname",
+    id: "fullname",
     label: "Fullname",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "Email",
+    id: "email",
     label: "Email",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "Phone",
+    id: "phone",
     label: "Phone",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "RoleName",
+    id: "roleName",
     label: "Role",
     minWidth: 130,
     align: "center",
   },
   {
-    id: "Status",
+    id: "status",
     label: "Status",
     minWidth: 130,
     align: "center",
@@ -229,8 +229,8 @@ export default function StickyHeadTableTrip() {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.MemberId}
-                    key={row.MemberId}
+                    tabIndex={row.memberId}
+                    key={row.memberId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -239,7 +239,7 @@ export default function StickyHeadTableTrip() {
                           <TableCell
                             key={column.id}
                             align={column.align}
-                            onClick={() => gotoView(row.MemberId)}
+                            onClick={() => gotoView(row.memberId)}
                           >
                             {column.format && typeof value === "number"
                               ? column.format(value)
@@ -256,7 +256,7 @@ export default function StickyHeadTableTrip() {
                       );
                     })}
                     <TableCell
-                      key={`confirm_${row.MemberId}`}
+                      key={`confirm_${row.memberId}`}
                       align="center"
                     >
                       {row.Confirmation === "Y" ? (
@@ -264,7 +264,7 @@ export default function StickyHeadTableTrip() {
                       ) : (
                         <Button
                           variant="outlined"
-                          value={row.MemberId}
+                          value={row.memberId}
                           onClick={(e) => handleSendMail(e.target.value)}
                           color="primary"
                         >
@@ -272,10 +272,10 @@ export default function StickyHeadTableTrip() {
                         </Button>
                       )}
                     </TableCell>
-                    <TableCell key={`edit_${row.MemberId}`} align="center">
+                    <TableCell key={`edit_${row.memberId}`} align="center">
                       <Button
                         variant="outlined"
-                        value={row.MemberId}
+                        value={row.memberId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -283,7 +283,7 @@ export default function StickyHeadTableTrip() {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.MemberId}
+                        value={row.memberId}
                         onClick={(e) => handleClickOpen(e.target.value)}
                         color="error"
                       >

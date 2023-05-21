@@ -23,12 +23,12 @@ export default function TripItemCreate() {
   const { tripId, itemId } = useParams();
   const isEdit = Boolean(itemId);
   const [item, setItem] = useState({
-    TripId: tripId,
-    ItemName: "",
-    ItemDescription: "",
-    PriceMin: "",
-    Quantity: "",
-    CategoryId: "",
+    tripId: tripId,
+    itemName: "",
+    itemDescription: "",
+    priceMin: "",
+    quantity: "",
+    categoryId: "",
   });
   const [trip, setTrip] = useState({
     TripId: "",
@@ -36,7 +36,7 @@ export default function TripItemCreate() {
   });
   const [category, setCategory] = useState([
     {
-      CategoryId: "",
+      categoryId: "",
       CategoryName: "",
     },
   ]);
@@ -81,17 +81,17 @@ export default function TripItemCreate() {
     // TripId: yup
     //   .string("Choose Trip")
     //   .required("Trip is required"),
-    ItemName: yup
+    itemName: yup
       .string("Enter Item Name")
       .required("Item Name is required"),
-    ItemDescription: yup
+    itemDescription: yup
       .string("Enter Item Description")
       .required("Item Description is required"),
-    PriceMin: yup
+    priceMin: yup
       .string("Enter Price")
       .required("Price is required"),
-    CategoryId: yup.number().min(1).required("Category is required"),
-    Quantity: yup.number().min(1).required("Quantity is required"),
+    categoryId: yup.number().min(1).required("Category is required"),
+    quantity: yup.number().min(1).required("Quantity is required"),
   });
 
   return (
@@ -156,14 +156,14 @@ export default function TripItemCreate() {
                   fullWidth
                   variant="outlined"
                   value={values.TripId}
-                  error={Boolean(touched.TripId && errors.TripId)}
+                  error={Boolean(touched.tripId && errors.tripId)}
                 />
-                {touched.TripId && errors.TripId && (
+                {touched.tripId && errors.tripId && (
                   <FormHelperText
                     error
                     id="standard-weight-helper-text-TripId"
                   >
-                    {errors.TripId}
+                    {errors.tripId}
                   </FormHelperText>
                 )}
               </Grid>
@@ -174,16 +174,16 @@ export default function TripItemCreate() {
                   label="Item Name *"
                   fullWidth
                   variant="outlined"
-                  value={values.ItemName}
+                  value={values.itemName}
                   onChange={handleChange}
-                  error={Boolean(touched.ItemName && errors.ItemName)}
+                  error={Boolean(touched.itemName && errors.itemName)}
                 />
-                {touched.ItemName && errors.ItemName && (
+                {touched.itemName && errors.itemName && (
                   <FormHelperText
                     error
                     id="standard-weight-helper-text-ItemName"
                   >
-                    {errors.ItemName}
+                    {errors.itemName}
                   </FormHelperText>
                 )}
               </Grid>
@@ -194,12 +194,12 @@ export default function TripItemCreate() {
                   label="Item Description *"
                   fullWidth
                   variant="outlined"
-                  value={values.ItemDescription}
+                  value={values.itemDescription}
                   onChange={handleChange}
                   multiline
                   maxRows={4}
                   error={Boolean(
-                    touched.ItemDescription && errors.ItemDescription
+                    touched.itemDescription && errors.itemDescription
                   )}
                 />
                 {touched.ItemDescription && errors.ItemDescription && (
@@ -207,7 +207,7 @@ export default function TripItemCreate() {
                     error
                     id="standard-weight-helper-text-ItemDescription"
                   >
-                    {errors.ItemDescription}
+                    {errors.itemDescription}
                   </FormHelperText>
                 )}
               </Grid>
@@ -218,42 +218,42 @@ export default function TripItemCreate() {
                   label="Price *"
                   fullWidth
                   variant="outlined"
-                  value={values.PriceMin}
+                  value={values.priceMin}
                   onChange={handleChange}
-                  error={Boolean(touched.Price && errors.Price)}
+                  error={Boolean(touched.priceMin && errors.priceMin)}
                 />
-                {touched.Price && errors.Price && (
+                {touched.priceMin && errors.priceMin && (
                   <FormHelperText
                     error
                     id="standard-weight-helper-text-Price"
                   >
-                    {errors.Price}
+                    {errors.priceMin}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12} sm={4}>
                 <FormControl sx={{ mt: 1, minWidth: 400 }}>
-                  <InputLabel id="CategoryId">Category *</InputLabel>
+                  <InputLabel id="categoryId">Category *</InputLabel>
                   <Select
-                    labelId="CategoryId"
-                    id="CategoryId"
-                    value={values.CategoryId}
-                    label="CategoryId"
+                    labelId="categoryId"
+                    id="categoryId"
+                    value={values.categoryId}
+                    label="categoryId"
                     onChange={handleChange}
-                    name="CategoryId"
+                    name="categoryId"
                   >
                     {category.map((item) => (
-                      <MenuItem value={item.CategoryId}>
-                        {item.CategoryName}
+                      <MenuItem value={item.categoryId}>
+                        {item.categoryName}
                       </MenuItem>
                     ))}
                   </Select>
-                  {touched.CategoryId && errors.CategoryId && (
+                  {touched.categoryId && errors.categoryId && (
                     <FormHelperText
                       error
-                      id="standard-weight-helper-CategoryId"
+                      id="standard-weight-helper-categoryId"
                     >
-                      {errors.CategoryId}
+                      {errors.categoryId}
                     </FormHelperText>
                   )}
                 </FormControl>
@@ -266,13 +266,13 @@ export default function TripItemCreate() {
                   type="number"
                   fullWidth
                   variant="outlined"
-                  value={values.Quantity}
+                  value={values.quantity}
                   onChange={handleChange}
-                  error={Boolean(touched.Quantity && errors.Quantity)}
+                  error={Boolean(touched.quantity && errors.quantity)}
                 />
-                {touched.Quantity && errors.Quantity && (
+                {touched.quantity && errors.quantity && (
                   <FormHelperText error id="standard-weight-helper-Quantity">
-                    {errors.Quantity}
+                    {errors.quantity}
                   </FormHelperText>
                 )}
               </Grid>

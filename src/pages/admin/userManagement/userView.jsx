@@ -13,19 +13,19 @@ export default function UserCreate() {
   const { userId } = useParams();
   const isEdit = Boolean(userId);
   const [user, setUser] = useState({
-    Username: "",
-    Password: "",
-    RetypePassword: "",
-    Role: "",
-    Birthday: "",
-    Email: "",
-    Fullname: "",
-    Phone: "",
-    Address: "",
-    CreateDate: "",
-    CreateBy: "",
-    UpdateDate: "",
-    UpdateBy: "",
+    username: "",
+    password: "",
+    retypePassword: "",
+    role: "",
+    birthday: "",
+    email: "",
+    fullname: "",
+    phone: "",
+    address: "",
+    createDate: "",
+    createBy: "",
+    updateDate: "",
+    updateBy: "",
   });
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function UserCreate() {
         const data = await userApi.getById(userId);
         console.log(data)
         if (data !== null && data !== "") {
-          data.Birthday = data.Birthday.substring(0, 10);
+          data.Birthday = data.Birthday.substring(0, 2);
           data.RetypePassword = data.Password;
           setUser(data);
         } else {
@@ -70,7 +70,7 @@ export default function UserCreate() {
             name="Username"
             label="Username"
             fullWidth
-            value={user.Username}
+            value={user.username}
             variant="outlined"
             InputProps={{
               readOnly: true,
@@ -83,7 +83,7 @@ export default function UserCreate() {
             name="Fullname"
             label="Full name"
             fullWidth
-            value={user.Fullname}
+            value={user.fullname}
             variant="outlined"
             InputProps={{
               readOnly: true,
@@ -97,7 +97,7 @@ export default function UserCreate() {
             label="Address"
             fullWidth
             variant="outlined"
-            value={user.Address}
+            value={user.address}
             InputProps={{
               readOnly: true,
             }}
@@ -110,7 +110,7 @@ export default function UserCreate() {
             label="Phone Number"
             fullWidth
             variant="outlined"
-            value={user.Phone}
+            value={user.phone}
             InputProps={{
               readOnly: true,
             }}
@@ -123,7 +123,7 @@ export default function UserCreate() {
             label="Role"
             fullWidth
             variant="outlined"
-            value={user.Role}
+            value={user.role}
             InputProps={{
               readOnly: true,
             }}
@@ -136,7 +136,7 @@ export default function UserCreate() {
             label="Birthday"
             fullWidth
             variant="outlined"
-            value={user.Birthday}
+            value={user.birthday}
             InputProps={{
               readOnly: true,
             }}
@@ -150,7 +150,7 @@ export default function UserCreate() {
             fullWidth
             variant="outlined"
             type="email"
-            value={user.Email}
+            value={user.email}
             InputProps={{
               readOnly: true,
             }}
@@ -163,7 +163,7 @@ export default function UserCreate() {
             label="Create By"
             fullWidth
             variant="outlined"
-            value={user.CreateBy}
+            value={user.createBy}
             InputProps={{
               readOnly: true,
             }}
@@ -176,7 +176,7 @@ export default function UserCreate() {
             label="Create Date"
             fullWidth
             variant="outlined"
-            value={user.CreateDate}
+            value={user.createDate}
             InputProps={{
               readOnly: true,
             }}
@@ -191,7 +191,7 @@ export default function UserCreate() {
                 label="Update By"
                 fullWidth
                 variant="outlined"
-                value={user.UpdateBy}
+                value={user.updateBy}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -204,7 +204,7 @@ export default function UserCreate() {
                 label="Update Date"
                 fullWidth
                 variant="outlined"
-                value={user.UpdateDate}
+                value={user.updateDate}
                 InputProps={{
                   readOnly: true,
                 }}

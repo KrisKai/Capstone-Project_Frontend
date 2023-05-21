@@ -53,24 +53,24 @@ export default function TripCreate() {
   const destiantionRef = useRef();
 
   const [trip, setTrip] = useState({
-    TripName: "",
-    TripBudget: null,
-    TripDescription: "",
-    EstimateStartDate: null,
-    EstimateEndDate: null,
-    EstimateStartTime: null,
-    EstimateEndTime: null,
-    TripMember: "",
-    TripPresenter: "",
-    StartLocationName: "",
-    EndLocationName: "",
-    TripStatus: "ACTIVE",
+    tripName: "",
+    tripBudget: null,
+    tripDescription: "",
+    estimateStartDate: null,
+    estimateEndDate: null,
+    estimateStartTime: null,
+    estimateEndTime: null,
+    tripMember: "",
+    tripPresenter: "",
+    startLocationName: "",
+    endLocationName: "",
+    tripStatus: "ACTIVE",
   });
   const [user, setUser] = useState([
     {
-      UserId: "",
-      Email: "",
-      Fullname: "",
+      userId: "",
+      email: "",
+      fullname: "",
     },
   ]);
   const [openView, setOpenView] = useState(false);
@@ -140,8 +140,8 @@ export default function TripCreate() {
       try {
         const data = await tripApi.getById(tripId);
         if (data != null && data != "") {
-          data.EstimateEndDate = dayjs.utc(data.EstimateEndDate);
-          data.EstimateStartDate = dayjs.utc(data.EstimateStartDate);
+          data.estimateEndDate = dayjs.utc(data.estimateEndDate);
+          data.estimateStartDate = dayjs.utc(data.estimateStartDate);
           setTrip(data);
         } else {
           navigate("/admin/tripList");
@@ -165,33 +165,33 @@ export default function TripCreate() {
   };
 
   const validationSchema = yup.object().shape({
-    TripName: yup
+    tripName: yup
       .string("Enter Trip Name")
       .required("Trip Name is required"),
     // TripBudget: yup.number().required("Trip Budget is required"),
-    TripDescription: yup
+    tripDescription: yup
       .string("Enter Trip Description")
       .required("Trip Description is required"),
-    EstimateStartDate: yup
+    estimateStartDate: yup
       .string("Enter Estimate Start Time")
       .required("Estimate Start Time is required"),
-    EstimateEndDate: yup
+    estimateEndDate: yup
       .string("Enter Estimate End Time")
       .required("Estimate End Time is required"),
-    TripMember: yup.number().min(1).required("Trip Member is required"),
-    TripPresenter: yup
+    tripMember: yup.number().min(1).required("Trip Member is required"),
+    tripPresenter: yup
       .string("Enter Trip Presenter")
       .required("Trip Presenter is required"),
-    StartLocationName: yup
+    startLocationName: yup
       .string("Enter Trip Start Location Name")
       .required("Trip Start Location Name is required"),
-    TripStartLocationAddress: yup
+    tripStartLocationAddress: yup
       .string("Enter Trip Start Location Address")
       .required("Trip Start Location Address is required"),
-    EndLocationName: yup
+    endLocationName: yup
       .string("Enter Trip Destination Location Name")
       .required("Trip Destination Location Name is required"),
-    TripDestinationLocationAddress: yup
+    tripDestinationLocationAddress: yup
       .string("Enter Trip Destination Location Address")
       .required("Trip Destination Location Address is required"),
   });
@@ -286,16 +286,16 @@ export default function TripCreate() {
                       label="Trip Name"
                       fullWidth
                       variant="outlined"
-                      value={values.TripName}
+                      value={values.tripName}
                       onChange={handleChange}
-                      error={Boolean(touched.TripName && errors.TripName)}
+                      error={Boolean(touched.tripName && errors.tripName)}
                     />
-                    {touched.TripName && errors.TripName && (
+                    {touched.tripName && errors.tripName && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-text-TripName"
                       >
-                        {errors.TripName}
+                        {errors.tripName}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -332,24 +332,24 @@ export default function TripCreate() {
                       <Select
                         labelId="TripPresenter"
                         id="TripPresenter"
-                        value={values.TripPresenter}
+                        value={values.tripPresenter}
                         label="Role"
                         onChange={handleChange}
                         name="TripPresenter"
                       >
                         {user.map((item) => (
-                          <MenuItem value={item.UserId}>
-                            {item.Fullname} ({item.Email})
+                          <MenuItem value={item.userId}>
+                            {item.fullname} ({item.email})
                           </MenuItem>
                         ))}
                       </Select>
 
-                      {touched.TripPresenter && errors.TripPresenter && (
+                      {touched.tripPresenter && errors.tripPresenter && (
                         <FormHelperText
                           error
                           id="standard-weight-helper-TripPresenter"
                         >
-                          {errors.TripPresenter}
+                          {errors.tripPresenter}
                         </FormHelperText>
                       )}
                     </FormControl>
@@ -362,18 +362,18 @@ export default function TripCreate() {
                       type="number"
                       fullWidth
                       variant="outlined"
-                      value={values.TripMember}
+                      value={values.tripMember}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.TripMember && errors.TripMember
+                        touched.tripMember && errors.tripMember
                       )}
                     />
-                    {touched.TripMember && errors.TripMember && (
+                    {touched.tripMember && errors.tripMember && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-TripMember"
                       >
-                        {errors.TripMember}
+                        {errors.tripMember}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -385,18 +385,18 @@ export default function TripCreate() {
                       fullWidth
                       autoComplete=""
                       variant="outlined"
-                      value={values.TripDescription}
+                      value={values.tripDescription}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.TripDescription && errors.TripDescription
+                        touched.tripDescription && errors.tripDescription
                       )}
                     />
-                    {touched.TripDescription && errors.TripDescription && (
+                    {touched.tripDescription && errors.tripDescription && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-TripDescription"
                       >
-                        {errors.TripDescription}
+                        {errors.tripDescription}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -420,23 +420,23 @@ export default function TripCreate() {
                         id="EstimateStartDate"
                         name="EstimateStartDate"
                         fullWidth
-                        value={values.EstimateStartDate}
+                        value={values.estimateStartDate}
                         onChange={(value) => {
-                          setFieldValue("EstimateStartDate", value);
+                          setFieldValue("estimateStartDate", value);
                         }}
                         error={Boolean(
-                          touched.EstimateStartDate &&
-                            errors.EstimateStartDate
+                          touched.estimateStartDate &&
+                            errors.estimateStartDate
                         )}
                       />
                     </LocalizationProvider>
-                    {touched.EstimateStartDate &&
-                      errors.EstimateStartDate && (
+                    {touched.estimateStartDate &&
+                      errors.estimateStartDate && (
                         <FormHelperText
                           error
                           id="standard-weight-helper-EstimateStartDate"
                         >
-                          {errors.EstimateStartDate}
+                          {errors.estimateStartDate}
                         </FormHelperText>
                       )}
                   </Grid>
@@ -448,7 +448,7 @@ export default function TripCreate() {
                       <Select
                         labelId="EstimateStartTime"
                         id="EstimateStartTime"
-                        value={values.EstimateStartTime}
+                        value={values.estimateStartTime}
                         label="EstimateStartTime"
                         onChange={handleChange}
                         name="EstimateStartTime"
@@ -458,13 +458,13 @@ export default function TripCreate() {
                         ))}
                       </Select>
 
-                      {touched.EstimateStartTime &&
-                        errors.EstimateStartTime && (
+                      {touched.estimateStartTime &&
+                        errors.estimateStartTime && (
                           <FormHelperText
                             error
                             id="standard-weight-helper-EstimateStartTime"
                           >
-                            {errors.EstimateStartTime}
+                            {errors.estimateStartTime}
                           </FormHelperText>
                         )}
                     </FormControl>
@@ -489,21 +489,21 @@ export default function TripCreate() {
                         name="EstimateEndDate"
                         label="Estimate End Date"
                         fullWidth
-                        value={values.EstimateEndDate}
+                        value={values.estimateEndDate}
                         onChange={(value) =>
                           setFieldValue("EstimateEndDate", value)
                         }
                         error={Boolean(
-                          touched.EstimateEndDate &&
-                            errors.EstimateEndDate
+                          touched.estimateEndDate &&
+                            errors.estimateEndDate
                         )}
                       />
-                      {touched.EstimateEndDate && errors.EstimateEndDate && (
+                      {touched.estimateEndDate && errors.estimateEndDate && (
                         <FormHelperText
                           error
                           id="standard-weight-helper-EstimateEndDate"
                         >
-                          {errors.EstimateEndDate}
+                          {errors.estimateEndDate}
                         </FormHelperText>
                       )}
                     </LocalizationProvider>
@@ -516,7 +516,7 @@ export default function TripCreate() {
                       <Select
                         labelId="EstimateEndTime"
                         id="EstimateEndTime"
-                        value={values.EstimateEndTime}
+                        value={values.estimateEndTime}
                         label="EstimateEndTime"
                         onChange={handleChange}
                         name="EstimateEndTime"
@@ -526,12 +526,12 @@ export default function TripCreate() {
                         ))}
                       </Select>
 
-                      {touched.EstimateEndTime && errors.EstimateEndTime && (
+                      {touched.estimateEndTime && errors.estimateEndTime && (
                         <FormHelperText
                           error
                           id="standard-weight-helper-EstimateEndTime"
                         >
-                          {errors.EstimateEndTime}
+                          {errors.estimateEndTime}
                         </FormHelperText>
                       )}
                     </FormControl>
@@ -547,23 +547,23 @@ export default function TripCreate() {
                       label="Trip Start Location Name"
                       fullWidth
                       variant="outlined"
-                      value={values.StartLocationName}
+                      value={values.startLocationName}
                       onChange={handleChange}
                       InputProps={{
                         readOnly: true,
                       }}
                       error={Boolean(
-                        touched.StartLocationName &&
-                          errors.StartLocationName
+                        touched.startLocationName &&
+                          errors.startLocationName
                       )}
                     />
-                    {touched.StartLocationName &&
-                      errors.StartLocationName && (
+                    {touched.startLocationName &&
+                      errors.startLocationName && (
                         <FormHelperText
                           error
                           id="standard-weight-helper-StartLocationName"
                         >
-                          {errors.StartLocationName}
+                          {errors.startLocationName}
                         </FormHelperText>
                       )}
                   </Grid>
@@ -574,21 +574,21 @@ export default function TripCreate() {
                       label="Trip Destination Location Name"
                       fullWidth
                       variant="outlined"
-                      value={values.EndLocationName}
+                      value={values.endLocationName}
                       onChange={handleChange}
                       InputProps={{
                         readOnly: true,
                       }}
                       error={Boolean(
-                        touched.EndLocationName && errors.EndLocationName
+                        touched.endLocationName && errors.endLocationName
                       )}
                     />
-                    {touched.EndLocationName && errors.EndLocationName && (
+                    {touched.endLocationName && errors.endLocationName && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-EndLocationName"
                       >
-                        {errors.EndLocationName}
+                        {errors.endLocationName}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -599,7 +599,7 @@ export default function TripCreate() {
                         <Select
                           labelId="TripStatus"
                           id="TripStatus"
-                          value={values.TripStatus}
+                          value={values.tripStatus}
                           label="TripStatus"
                           onChange={handleChange}
                           name="TripStatus"
@@ -609,12 +609,12 @@ export default function TripCreate() {
                           <MenuItem value="BANNED">Banned</MenuItem>
                         </Select>
 
-                        {touched.TripStatus && errors.TripStatus && (
+                        {touched.tripStatus && errors.tripStatus && (
                           <FormHelperText
                             error
                             id="standard-weight-helper-TripStatus"
                           >
-                            {errors.TripStatus}
+                            {errors.tripStatus}
                           </FormHelperText>
                         )}
                       </FormControl>

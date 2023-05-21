@@ -23,12 +23,12 @@ export default function RouteCreate() {
   const { tripId, routeId } = useParams();
   const isEdit = Boolean(routeId);
   const [route, setRoute] = useState({
-    TripId: "",
-    RouteDescription: null,
+    tripId: "",
+    routeDescription: null,
   });
   const [trip, setTrip] = useState({
-    TripId: "",
-    TripName: "",
+    tripId: "",
+    tripName: "",
   });
   useEffect(() => {
     // IFFE
@@ -63,7 +63,7 @@ export default function RouteCreate() {
   }
 
   const validationSchema = yup.object().shape({
-    RouteDescription: yup
+    routeDescription: yup
       .string("Enter Route Description")
       .required("Route Description is required"),
   });
@@ -134,14 +134,14 @@ export default function RouteCreate() {
                       variant="outlined"
                       value={tripId}
                       onChange={handleChange}
-                      error={Boolean(touched.TripId && errors.TripId)}
+                      error={Boolean(touched.tripId && errors.tripId)}
                     />
-                    {touched.TripId && errors.TripId && (
+                    {touched.tripId && errors.tripId && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-text-TripId"
                       >
-                        {errors.TripId}
+                        {errors.tripId}
                       </FormHelperText>
                     )}
                   </Grid>
@@ -152,19 +152,19 @@ export default function RouteCreate() {
                       label="Route Description"
                       fullWidth
                       variant="outlined"
-                      value={values.RouteDescription}
+                      value={values.routeDescription}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.RouteDescription &&
-                          errors.RouteDescription
+                        touched.routeDescription &&
+                          errors.routeDescription
                       )}
                     />
-                    {touched.RouteDescription && errors.RouteDescription && (
+                    {touched.routeDescription && errors.routeDescription && (
                       <FormHelperText
                         error
                         id="standard-weight-helper-text-RouteDescription"
                       >
-                        {errors.RouteDescription}
+                        {errors.routeDescription}
                       </FormHelperText>
                     )}
                   </Grid>

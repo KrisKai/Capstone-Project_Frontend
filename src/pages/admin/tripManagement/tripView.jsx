@@ -22,13 +22,13 @@ export default function UserCreate() {
   const dispatch = useAppDispatch();
   const { tripId } = useParams();
   const [trip, setTrip] = useState({
-    TripName: "",
-    TripBudget: null,
-    TripDescription: "",
-    EstimateStartTime: null,
-    EstimateArrivalTime: null,
-    TripMember: 0,
-    TripStatus: "",
+    tripName: "",
+    tripBudget: null,
+    tripDescription: "",
+    estimateStartTime: null,
+    estimateArrivalTime: null,
+    tripMember: 0,
+    tripStatus: "",
   });
 
   useEffect(() => {
@@ -38,8 +38,8 @@ export default function UserCreate() {
       try {
         const data = await tripApi.getById(tripId);
         if (data != null && data != "") {
-          data.EstimateArrivalTime = dayjs.utc(data.EstimateArrivalTime);
-          data.EstimateStartTime = dayjs.utc(data.EstimateStartTime);
+          data.estimateArrivalTime = dayjs.utc(data.estimateArrivalTime);
+          data.estimateStartTime = dayjs.utc(data.estimateStartTime);
           setTrip(data);
         } else {
           navigate("/admin/tripList");
@@ -74,7 +74,7 @@ export default function UserCreate() {
                   label="Trip Name"
                   fullWidth
                   variant="outlined"
-                  value={values.TripName}
+                  value={values.tripName}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -93,7 +93,7 @@ export default function UserCreate() {
                     readOnly: true,
                   }}
                   variant="outlined"
-                  value={values.TripBudget}
+                  value={values.tripBudget}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -104,7 +104,7 @@ export default function UserCreate() {
                   fullWidth
                   autoComplete=""
                   variant="outlined"
-                  value={values.TripDescription}
+                  value={values.tripDescription}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -129,7 +129,7 @@ export default function UserCreate() {
                     id="EstimateStartTime"
                     name="EstimateStartTime"
                     fullWidth
-                    value={values.EstimateStartTime}
+                    value={values.estimateStartTime}
                     InputProps={{
                       readOnly: true,
                     }}
@@ -155,7 +155,7 @@ export default function UserCreate() {
                     name="EstimateArrivalTime"
                     label="Estimate Arrival Time"
                     fullWidth
-                    value={values.EstimateArrivalTime}
+                    value={values.estimateArrivalTime}
                     InputProps={{
                       readOnly: true,
                     }}
@@ -170,7 +170,7 @@ export default function UserCreate() {
                   type="number"
                   fullWidth
                   variant="outlined"
-                  value={values.TripMember}
+                  value={values.tripMember}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -184,7 +184,7 @@ export default function UserCreate() {
                   fullWidth
                   autoComplete=""
                   variant="outlined"
-                  value={values.TripStatus}
+                  value={values.tripStatus}
                   InputProps={{
                     readOnly: true,
                   }}

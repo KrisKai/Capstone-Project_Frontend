@@ -13,39 +13,39 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const columns = [
-  { id: "TripId", label: "Trip Id", minWidth: 100, onclick: true },
+  { id: "tripId", label: "Trip Id", minWidth: 100, onclick: true },
   {
-    id: "UserId",
+    id: "userId",
     label: "User Id",
     minWidth: 150,
     align: "center",
   },
   {
-    id: "Feedback",
+    id: "feedbackDescription",
     label: "Feedback",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "Rate",
+    id: "rate",
     label: "Rate",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "Like",
+    id: "like",
     label: "Like",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "Dislike",
+    id: "dislike",
     label: "Dislike",
     minWidth: 100,
     align: "center",
   },
   {
-    id: "LocationName",
+    id: "locationName",
     label: "Location Name",
     minWidth: 100,
     align: "center",
