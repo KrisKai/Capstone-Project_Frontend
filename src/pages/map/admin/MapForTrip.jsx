@@ -105,7 +105,9 @@ export default function MapForTrip({ getReturnData }) {
     
       {/* Google Map Box */}
       <Box height="100%" width="100%" display="flex">
-      <Box display="flex" justifyContent="space-between" width="100%">
+        
+        <Box height="100%" flex="1 1 0">
+        <Box display="flex" justifyContent="space-between" width="100%">
           <Box>
             <Autocomplete>
               <input type="text" ref={originRef} />
@@ -136,8 +138,6 @@ export default function MapForTrip({ getReturnData }) {
             Center
           </Button>
         </Box>
-        <Box height="100%" flex="1 1 0">
-          
           <GoogleMap
             center={center}
             zoom={10}
