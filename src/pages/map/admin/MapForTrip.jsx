@@ -104,13 +104,6 @@ export default function MapForTrip({ getReturnData }) {
     <>
       {/* Google Map Box */}
       <Box height="100%" width="100%" display="flex">
-<<<<<<< HEAD
-        <Box height="100%" flex="1 1 0">
-          <Box display="flex" justifyContent="space-between" width="100%">
-            <Box>
-              <Autocomplete>
-                <TextField type="text" ref={originRef} label="Trip Departure" />
-=======
         <Box height="100%" flex="1 1 0" position="relative">
           <Box
             display="flex"
@@ -128,42 +121,26 @@ export default function MapForTrip({ getReturnData }) {
                   ref={originRef}
                   placeholder="Trip Start Location"
                 />
->>>>>>> 8f657ebae44f6696e1ce965013bbe5b2ca712498
               </Autocomplete>
             </Box>
             <Box>
               <Autocomplete>
-<<<<<<< HEAD
-                <TextField
-                  type="text"
-                  ref={destinationRef}
-                  label="Trip Destination"
-=======
                 <input
                   className="custom-input"
                   type="text"
                   ref={destinationRef}
                   placeholder="Destination Start Location"
->>>>>>> 8f657ebae44f6696e1ce965013bbe5b2ca712498
                 />
               </Autocomplete>
             </Box>
 
             <ButtonGroup>
-<<<<<<< HEAD
               <Button colorScheme="pink" type="button" onClick={calculateRoute}>
-=======
-              <Button colorScheme="pink" type="submit" onClick={calculateRoute}>
->>>>>>> 8f657ebae44f6696e1ce965013bbe5b2ca712498
                 Calculate Route
               </Button>
             </ButtonGroup>
 
-<<<<<<< HEAD
-            <Typography>Distance: {distance} </Typography>
-=======
             {/* <Typography>Distance: {distance} </Typography>
->>>>>>> 8f657ebae44f6696e1ce965013bbe5b2ca712498
             <Typography>Duration: {duration} </Typography>
             <Button
               aria-label="center back"
@@ -173,11 +150,7 @@ export default function MapForTrip({ getReturnData }) {
               }}
             >
               Center
-<<<<<<< HEAD
-            </Button>
-=======
             </Button> */}
->>>>>>> 8f657ebae44f6696e1ce965013bbe5b2ca712498
           </Box>
           <GoogleMap
             center={center}
