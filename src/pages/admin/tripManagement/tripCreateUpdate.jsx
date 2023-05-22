@@ -25,7 +25,8 @@ import { tripApi, userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
-import Map from "pages/map/Map";
+import Map from "pages/map/admin/Map";
+import MapForTrip from "pages/map/admin/MapForTrip";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -302,7 +303,7 @@ export default function TripCreate() {
                         )}
                       </Grid>
                       <Grid item xs={12}>
-                        <FormControl sx={{ minWidth: 390 }}>
+                        <FormControl sx={{ minWidth: "100%" }}>
                           <InputLabel id="TripPresenter">
                             Trip Presenter
                           </InputLabel>
@@ -576,17 +577,17 @@ export default function TripCreate() {
                     </Grid>
                   </Card>
                 </Grid>
-                <Grid item xs={12} sm={9}>
-                  <Map></Map>
+                <Grid item xs={12} sm={9} paddingLeft={1}>
+                  <MapForTrip/>
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item xs={12}>
+              <Grid container marginTop={2}>
+                <Grid item xs={6}>
                   <Button variant="outlined" onClick={gotoList}>
                     Return to List
                   </Button>
                 </Grid>
-                <Grid item xs={12} textAlign="right">
+                <Grid item xs={6} textAlign="right">
                   <Button type="submit" variant="contained">
                     {isEdit ? "Update" : "Create"}
                   </Button>
