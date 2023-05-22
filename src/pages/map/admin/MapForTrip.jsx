@@ -59,7 +59,7 @@ export default function MapForTrip({ getReturnData }) {
   const destinationRef = useRef();
 
   if (!isLoaded) {
-    return "â";
+    return "Map is loading";
   }
 
   async function calculateRoute() {
@@ -102,42 +102,56 @@ export default function MapForTrip({ getReturnData }) {
 
   return (
     <>
-    
       {/* Google Map Box */}
       <Box height="100%" width="100%" display="flex">
-        
-        <Box height="100%" flex="1 1 0">
-        <Box display="flex" justifyContent="space-between" width="100%">
-          <Box>
-            <Autocomplete>
-              <input type="text" ref={originRef} />
-            </Autocomplete>
-          </Box>
-          <Box>
-            <Autocomplete>
-              <input type="text" ref={destinationRef} />
-            </Autocomplete>
-          </Box>
-
-          <ButtonGroup>
-            <Button colorScheme="pink" type="submit" onClick={calculateRoute}>
-              Calculate Route
-            </Button>
-
-          </ButtonGroup>
-
-          <Typography>Distance: {distance} </Typography>
-          <Typography>Duration: {duration} </Typography>
-          <Button
-            aria-label="center back"
-            onClick={() => {
-              map.panTo(center);
-              map.setZoom(15);
-            }}
+        <Box height="100%" flex="1 1 0" position="relative">
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            width="100%"
+            position="absolute"
+            zIndex={100}
+            padding={1}
           >
-            Center
-          </Button>
-        </Box>
+            <Box>
+              <Autocomplete>
+                <input
+                  className="custom-input"
+                  type="text"
+                  ref={originRef}
+                  placeholder="Trip Start Location"
+                />
+              </Autocomplete>
+            </Box>
+            <Box>
+              <Autocomplete>
+                <input
+                  className="custom-input"
+                  type="text"
+                  ref={destinationRef}
+                  placeholder="Destination Start Location"
+                />
+              </Autocomplete>
+            </Box>
+
+            <ButtonGroup>
+              <Button colorScheme="pink" type="submit" onClick={calculateRoute}>
+                Calculate Route
+              </Button>
+            </ButtonGroup>
+
+            {/* <Typography>Distance: {distance} </Typography>
+            <Typography>Duration: {duration} </Typography>
+            <Button
+              aria-label="center back"
+              onClick={() => {
+                map.panTo(center);
+                map.setZoom(15);
+              }}
+            >
+              Center
+            </Button> */}
+          </Box>
           <GoogleMap
             center={center}
             zoom={10}
@@ -162,5 +176,4 @@ export default function MapForTrip({ getReturnData }) {
 }
 
 {
-  
 }

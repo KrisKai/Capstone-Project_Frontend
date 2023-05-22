@@ -1,6 +1,6 @@
 .custom-input {
   width: 100%;
-  border: 0px;
+  border-radius: 1px;
   padding: 8px 5px;
   font-size: 14px;
 }
