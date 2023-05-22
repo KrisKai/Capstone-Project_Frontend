@@ -17,20 +17,14 @@ export default function ConfirmPageUser() {
         const data = await userApi.confirm(userId);
         switch (data.Code) {
           case "G001":
-            navigate("/auth/login");
             return toast.error(data.Message);
           case "U001":
-            navigate("/auth/login");
             return toast.error(data.Message);
           default:
+            navigate("/");
             // toast.success("Remove trip successfully!");
         }
       } catch (error) {
-        console.log("Failed to fetch trip member", error);
-        if (error.response.status == 401) {
-          localStorage.removeItem("access_token");
-          navigate("/auth/login");
-        }
       }
     })();
   }, []);
@@ -47,11 +41,11 @@ export default function ConfirmPageUser() {
         <Grid container spacing={2}>
           <Grid>
             <Typography variant="h1">
-              Bạn đã trở thành viên của chuyến đi này.
+              Chào mừng bạn tới JourneySick
             </Typography>
-            {/* <Link href="#">
-                Bấm vào đây trở về chuyến đi.
-            </Link> */}
+            <a href="http://localhost:3000/">
+                Bấm vào đây trở về trang chủ.
+            </a>
           </Grid>
         </Grid>
       </Container>

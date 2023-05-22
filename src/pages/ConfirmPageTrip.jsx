@@ -17,20 +17,15 @@ export default function ConfirmPageTrip() {
         const data = await tripMemberApi.confirmTrip(memberId);
         switch (data.Code) {
           case "G001":
-            navigate("/auth/login");
+            navigate("/");
             return toast.error(data.Message);
           case "U001":
-            navigate("/auth/login");
+            navigate("/");
             return toast.error(data.Message);
           default:
             // toast.success("Remove trip successfully!");
         }
       } catch (error) {
-        console.log("Failed to fetch trip member", error);
-        if (error.response.status == 401) {
-          localStorage.removeItem("access_token");
-          navigate("/auth/login");
-        }
       }
     })();
   }, []);
