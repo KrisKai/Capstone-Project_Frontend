@@ -102,42 +102,43 @@ export default function MapForTrip({ getReturnData }) {
 
   return (
     <>
-    
       {/* Google Map Box */}
       <Box height="100%" width="100%" display="flex">
-        
         <Box height="100%" flex="1 1 0">
-        <Box display="flex" justifyContent="space-between" width="100%">
-          <Box>
-            <Autocomplete>
-              <input type="text" ref={originRef} />
-            </Autocomplete>
-          </Box>
-          <Box>
-            <Autocomplete>
-              <input type="text" ref={destinationRef} />
-            </Autocomplete>
-          </Box>
+          <Box display="flex" justifyContent="space-between" width="100%">
+            <Box>
+              <Autocomplete>
+                <TextField type="text" ref={originRef} label="Trip Departure" />
+              </Autocomplete>
+            </Box>
+            <Box>
+              <Autocomplete>
+                <TextField
+                  type="text"
+                  ref={destinationRef}
+                  label="Trip Destination"
+                />
+              </Autocomplete>
+            </Box>
 
-          <ButtonGroup>
-            <Button colorScheme="pink" type="submit" onClick={calculateRoute}>
-              Calculate Route
+            <ButtonGroup>
+              <Button colorScheme="pink" type="button" onClick={calculateRoute}>
+                Calculate Route
+              </Button>
+            </ButtonGroup>
+
+            <Typography>Distance: {distance} </Typography>
+            <Typography>Duration: {duration} </Typography>
+            <Button
+              aria-label="center back"
+              onClick={() => {
+                map.panTo(center);
+                map.setZoom(15);
+              }}
+            >
+              Center
             </Button>
-
-          </ButtonGroup>
-
-          <Typography>Distance: {distance} </Typography>
-          <Typography>Duration: {duration} </Typography>
-          <Button
-            aria-label="center back"
-            onClick={() => {
-              map.panTo(center);
-              map.setZoom(15);
-            }}
-          >
-            Center
-          </Button>
-        </Box>
+          </Box>
           <GoogleMap
             center={center}
             zoom={10}
@@ -162,5 +163,4 @@ export default function MapForTrip({ getReturnData }) {
 }
 
 {
-  
 }
