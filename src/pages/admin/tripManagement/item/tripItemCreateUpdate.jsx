@@ -150,8 +150,8 @@ export default function TripItemCreate() {
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  id="TripId"
-                  name="TripId"
+                  id="tripId"
+                  name="tripId"
                   label="Trip Name"
                   fullWidth
                   variant="outlined"
@@ -169,8 +169,8 @@ export default function TripItemCreate() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  id="ItemName"
-                  name="ItemName"
+                  id="itemName"
+                  name="itemName"
                   label="Item Name *"
                   fullWidth
                   variant="outlined"
@@ -189,8 +189,8 @@ export default function TripItemCreate() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  id="ItemDescription"
-                  name="ItemDescription"
+                  id="itemDescription"
+                  name="itemDescription"
                   label="Item Description *"
                   fullWidth
                   variant="outlined"
@@ -213,8 +213,8 @@ export default function TripItemCreate() {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  id="Price"
-                  name="Price"
+                  id="priceMin"
+                  name="priceMin"
                   label="Price *"
                   fullWidth
                   variant="outlined"
@@ -260,8 +260,8 @@ export default function TripItemCreate() {
               </Grid>
               <Grid item xs={12} sm={4}>
                 <TextField
-                  id="Quantity"
-                  name="Quantity"
+                  id="quantity"
+                  name="quantity"
                   label="Quantity *"
                   type="number"
                   fullWidth

@@ -150,8 +150,8 @@ export default function ItemCreate() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="ItemName"
-                      name="ItemName"
+                      id="itemName"
+                      name="itemName"
                       label="Item Name *"
                       fullWidth
                       variant="outlined"
@@ -170,8 +170,8 @@ export default function ItemCreate() {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="PriceMin"
-                      name="PriceMin"
+                      id="priceMin"
+                      name="priceMin"
                       label="Price *"
                       fullWidth
                       variant="outlined"
@@ -218,8 +218,8 @@ export default function ItemCreate() {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="Quantity"
-                      name="Quantity"
+                      id="quantity"
+                      name="quantity"
                       label="Quantity *"
                       type="number"
                       fullWidth
@@ -239,8 +239,8 @@ export default function ItemCreate() {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      id="ItemDescription"
-                      name="ItemDescription"
+                      id="itemDescription"
+                      name="itemDescription"
                       label="Item Description *"
                       fullWidth
                       autoComplete=""
@@ -264,8 +264,8 @@ export default function ItemCreate() {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      id="ItemUsage"
-                      name="ItemUsage"
+                      id="itemUsage"
+                      name="itemUsage"
                       label="Item Usage"
                       fullWidth
                       variant="outlined"

@@ -127,8 +127,8 @@ export default function RouteCreate() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="TripId"
-                      name="TripId"
+                      id="tripId"
+                      name="tripId"
                       label="Trip Name"
                       fullWidth
                       variant="outlined"
@@ -147,8 +147,8 @@ export default function RouteCreate() {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      id="RouteDescription"
-                      name="RouteDescription"
+                      id="routeDescription"
+                      name="routeDescription"
                       label="Route Description"
                       fullWidth
                       variant="outlined"
