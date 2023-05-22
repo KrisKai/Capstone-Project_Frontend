@@ -155,8 +155,7 @@ export default function RouteCreate() {
                       value={values.routeDescription}
                       onChange={handleChange}
                       error={Boolean(
-                        touched.routeDescription &&
-                          errors.routeDescription
+                        touched.routeDescription && errors.routeDescription
                       )}
                     />
                     {touched.routeDescription && errors.routeDescription && (

@@ -1,5 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 import {
+  Box,
   Button,
   Card,
   Container,
@@ -61,7 +62,6 @@ export default function TripCreate() {
     estimateEndDate: null,
     estimateStartTime: null,
     estimateEndTime: null,
-    tripMember: "",
     tripPresenter: "",
     startLocationName: "",
     endLocationName: "",
@@ -177,7 +177,6 @@ export default function TripCreate() {
     estimateEndDate: yup
       .string("Enter Estimate End Time")
       .required("Estimate End Time is required"),
-    tripMember: yup.number().min(1).required("Trip Member is required"),
     tripPresenter: yup
       .string("Enter Trip Presenter")
       .required("Trip Presenter is required"),
@@ -230,7 +229,6 @@ export default function TripCreate() {
       <Typography variant="h4" gutterBottom color="primary">
         {isEdit ? "Update Trip" : "Create Trip"}
       </Typography>
-      <Container>
         <Formik
           initialValues={trip}
           enableReinitialize={true}
@@ -279,6 +277,9 @@ export default function TripCreate() {
               <Grid container>
                 <Grid item xs={12} sm={3}>
                   <Card sx={{ padding: 2, gap: 2 }}>
+                    <Box paddingBottom={2}>
+                      <Typography variant="h5">Basic Information</Typography>
+                    </Box>
                     <Grid container spacing={3}>
                       <Grid item xs={12}>
                         <TextField
@@ -300,33 +301,8 @@ export default function TripCreate() {
                           </FormHelperText>
                         )}
                       </Grid>
-                      {/* <Grid item xs={12}>
-                <TextField
-                  id="TripBudget"
-                  name="TripBudget"
-                  label="Trip Budget"
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">VND</InputAdornment>
-                    ),
-                  }}
-                  variant="outlined"
-                  value={values.TripBudget}
-                  onChange={handleChange}
-                  error={Boolean(touched.TripBudget && errors.TripBudget)}
-                />
-                {touched.TripBudget && errors.TripBudget && (
-                  <FormHelperText
-                    error
-                    id="standard-weight-helper-text-TripName"
-                  >
-                    {errors.TripBudget}
-                  </FormHelperText>
-                )}
-              </Grid> */}
                       <Grid item xs={12}>
-                        <FormControl sx={{ minWidth: 370 }}>
+                        <FormControl sx={{ minWidth: 390 }}>
                           <InputLabel id="TripPresenter">
                             Trip Presenter
                           </InputLabel>
@@ -354,29 +330,6 @@ export default function TripCreate() {
                             </FormHelperText>
                           )}
                         </FormControl>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          id="tripMember"
-                          name="TripMember"
-                          label="Trip Member"
-                          type="number"
-                          fullWidth
-                          variant="outlined"
-                          value={values.tripMember}
-                          onChange={handleChange}
-                          error={Boolean(
-                            touched.tripMember && errors.tripMember
-                          )}
-                        />
-                        {touched.tripMember && errors.tripMember && (
-                          <FormHelperText
-                            error
-                            id="standard-weight-helper-TripMember"
-                          >
-                            {errors.tripMember}
-                          </FormHelperText>
-                        )}
                       </Grid>
                       <Grid item xs={12}>
                         <TextField
@@ -642,7 +595,6 @@ export default function TripCreate() {
             </form>
           )}
         </Formik>
-      </Container>
       <BootstrapDialog
         onClose={handleCloseView}
         aria-labelledby="customized-dialog-title"
