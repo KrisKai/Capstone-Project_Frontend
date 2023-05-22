@@ -33,6 +33,10 @@ const userApi = {
     const url = "/users/change-status";
     return axiosInstance.put(url, data);
   },
+  confirm(data) {
+    const url = "/users/confirm-user";
+    return axiosInstance.put(url, data);
+  },
 };
 
 export default userApi;
