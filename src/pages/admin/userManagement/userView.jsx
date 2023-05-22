@@ -36,8 +36,8 @@ export default function UserCreate() {
         const data = await userApi.getById(userId);
         console.log(data)
         if (data !== null && data !== "") {
-          data.Birthday = data.Birthday.substring(0, 2);
-          data.RetypePassword = data.Password;
+          data.birthday = data.birthday.substring(0, 10);
+          data.retypePassword = data.password;
           setUser(data);
         } else {
           navigate("/admin/userList");
