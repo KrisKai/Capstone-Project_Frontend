@@ -118,8 +118,8 @@ export default function UserCreate() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="RoleName"
-                      name="RoleName"
+                      id="roleName"
+                      name="roleName"
                       label="Role Name"
                       fullWidth
                       variant="outlined"
@@ -141,11 +141,11 @@ export default function UserCreate() {
                       <InputLabel id="Type">Role Type</InputLabel>
                       <Select
                         labelId="Type"
-                        id="Type"
+                        id="type"
                         value={values.type}
-                        label="Role"
+                        label="type"
                         onChange={handleChange}
-                        name="Type"
+                        name="type"
                       >
                         <MenuItem value="HOST">Host</MenuItem>
                         <MenuItem value="MEMBER">Member</MenuItem>
@@ -161,8 +161,8 @@ export default function UserCreate() {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      id="Description"
-                      name="Description"
+                      id="description"
+                      name="description"
                       label="Role Description"
                       fullWidth
                       autoComplete=""

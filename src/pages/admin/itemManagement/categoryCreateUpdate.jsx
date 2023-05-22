@@ -121,8 +121,8 @@ export default function CategoryCreate() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="CategoryName"
-                      name="CategoryName"
+                      id="categoryName"
+                      name="categoryName"
                       label="Category Name"
                       fullWidth
                       variant="outlined"
@@ -143,8 +143,8 @@ export default function CategoryCreate() {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      id="CategoryDescription"
-                      name="CategoryDescription"
+                      id="categoryDescription"
+                      name="categoryDescription"
                       label="Category Description"
                       fullWidth
                       autoComplete=""

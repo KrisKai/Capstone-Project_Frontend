@@ -24,6 +24,7 @@ import { tripApi, userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
+import Map from "pages/map/Map";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -165,9 +166,7 @@ export default function TripCreate() {
   };
 
   const validationSchema = yup.object().shape({
-    tripName: yup
-      .string("Enter Trip Name")
-      .required("Trip Name is required"),
+    tripName: yup.string("Enter Trip Name").required("Trip Name is required"),
     // TripBudget: yup.number().required("Trip Budget is required"),
     tripDescription: yup
       .string("Enter Trip Description")
@@ -277,29 +276,31 @@ export default function TripCreate() {
             setFieldValue,
           }) => (
             <form onSubmit={handleSubmit}>
-              <Card sx={{ padding: 8, gap: 2 }}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      id="TripName"
-                      name="TripName"
-                      label="Trip Name"
-                      fullWidth
-                      variant="outlined"
-                      value={values.tripName}
-                      onChange={handleChange}
-                      error={Boolean(touched.tripName && errors.tripName)}
-                    />
-                    {touched.tripName && errors.tripName && (
-                      <FormHelperText
-                        error
-                        id="standard-weight-helper-text-TripName"
-                      >
-                        {errors.tripName}
-                      </FormHelperText>
-                    )}
-                  </Grid>
-                  {/* <Grid item xs={12} sm={6}>
+              <Grid container>
+                <Grid item xs={12} sm={3}>
+                  <Card sx={{ padding: 2, gap: 2 }}>
+                    <Grid container spacing={3}>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="tripName"
+                          name="tripName"
+                          label="Trip Name"
+                          fullWidth
+                          variant="outlined"
+                          value={values.tripName}
+                          onChange={handleChange}
+                          error={Boolean(touched.tripName && errors.tripName)}
+                        />
+                        {touched.tripName && errors.tripName && (
+                          <FormHelperText
+                            error
+                            id="standard-weight-helper-text-TripName"
+                          >
+                            {errors.tripName}
+                          </FormHelperText>
+                        )}
+                      </Grid>
+                      {/* <Grid item xs={12}>
                 <TextField
                   id="TripBudget"
                   name="TripBudget"
@@ -324,316 +325,320 @@ export default function TripCreate() {
                   </FormHelperText>
                 )}
               </Grid> */}
-                  <Grid item xs={12} sm={6}>
-                    <FormControl sx={{ minWidth: 530 }}>
-                      <InputLabel id="TripPresenter">
-                        Trip Presenter
-                      </InputLabel>
-                      <Select
-                        labelId="TripPresenter"
-                        id="TripPresenter"
-                        value={values.tripPresenter}
-                        label="Role"
-                        onChange={handleChange}
-                        name="TripPresenter"
-                      >
-                        {user.map((item) => (
-                          <MenuItem value={item.userId}>
-                            {item.fullname} ({item.email})
-                          </MenuItem>
-                        ))}
-                      </Select>
-
-                      {touched.tripPresenter && errors.tripPresenter && (
-                        <FormHelperText
-                          error
-                          id="standard-weight-helper-TripPresenter"
-                        >
-                          {errors.tripPresenter}
-                        </FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      id="TripMember"
-                      name="TripMember"
-                      label="Trip Member"
-                      type="number"
-                      fullWidth
-                      variant="outlined"
-                      value={values.tripMember}
-                      onChange={handleChange}
-                      error={Boolean(
-                        touched.tripMember && errors.tripMember
-                      )}
-                    />
-                    {touched.tripMember && errors.tripMember && (
-                      <FormHelperText
-                        error
-                        id="standard-weight-helper-TripMember"
-                      >
-                        {errors.tripMember}
-                      </FormHelperText>
-                    )}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      id="TripDescription"
-                      name="TripDescription"
-                      label="Trip Description"
-                      fullWidth
-                      autoComplete=""
-                      variant="outlined"
-                      value={values.tripDescription}
-                      onChange={handleChange}
-                      error={Boolean(
-                        touched.tripDescription && errors.tripDescription
-                      )}
-                    />
-                    {touched.tripDescription && errors.tripDescription && (
-                      <FormHelperText
-                        error
-                        id="standard-weight-helper-TripDescription"
-                      >
-                        {errors.tripDescription}
-                      </FormHelperText>
-                    )}
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <LocalizationProvider
-                      dateAdapter={AdapterDayjs}
-                      dateLibInstance={dayjs.utc}
-                    >
-                      <DatePicker
-                        required
-                        sx={{
-                          "& .MuiInputBase-root": {
-                            paddingY: 1,
-                            paddingX: 3,
-                          },
-                          "& .MuiFormLabel-root": {
-                            paddingY: 1,
-                          },
-                        }}
-                        label="Estimate Start Date"
-                        id="EstimateStartDate"
-                        name="EstimateStartDate"
-                        fullWidth
-                        value={values.estimateStartDate}
-                        onChange={(value) => {
-                          setFieldValue("estimateStartDate", value);
-                        }}
-                        error={Boolean(
-                          touched.estimateStartDate &&
-                            errors.estimateStartDate
-                        )}
-                      />
-                    </LocalizationProvider>
-                    {touched.estimateStartDate &&
-                      errors.estimateStartDate && (
-                        <FormHelperText
-                          error
-                          id="standard-weight-helper-EstimateStartDate"
-                        >
-                          {errors.estimateStartDate}
-                        </FormHelperText>
-                      )}
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormControl sx={{ minWidth: 530 }}>
-                      <InputLabel id="EstimateStartTime">
-                        Estimate Start Time
-                      </InputLabel>
-                      <Select
-                        labelId="EstimateStartTime"
-                        id="EstimateStartTime"
-                        value={values.estimateStartTime}
-                        label="EstimateStartTime"
-                        onChange={handleChange}
-                        name="EstimateStartTime"
-                      >
-                        {hours.map((item) => (
-                          <MenuItem value={item}>{item}</MenuItem>
-                        ))}
-                      </Select>
-
-                      {touched.estimateStartTime &&
-                        errors.estimateStartTime && (
-                          <FormHelperText
-                            error
-                            id="standard-weight-helper-EstimateStartTime"
+                      <Grid item xs={12}>
+                        <FormControl sx={{ minWidth: 370 }}>
+                          <InputLabel id="TripPresenter">
+                            Trip Presenter
+                          </InputLabel>
+                          <Select
+                            labelId="TripPresenter"
+                            id="tripPresenter"
+                            value={values.tripPresenter}
+                            label="TripPresenter"
+                            onChange={handleChange}
+                            name="tripPresenter"
                           >
-                            {errors.estimateStartTime}
-                          </FormHelperText>
-                        )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <LocalizationProvider
-                      dateAdapter={AdapterDayjs}
-                      dateLibInstance={dayjs.utc}
-                    >
-                      <DatePicker
-                        required
-                        sx={{
-                          "& .MuiInputBase-root": {
-                            paddingY: 1,
-                            paddingX: 3,
-                          },
-                          "& .MuiFormLabel-root": {
-                            paddingY: 1,
-                          },
-                        }}
-                        id="EstimateEndDate"
-                        name="EstimateEndDate"
-                        label="Estimate End Date"
-                        fullWidth
-                        value={values.estimateEndDate}
-                        onChange={(value) =>
-                          setFieldValue("EstimateEndDate", value)
-                        }
-                        error={Boolean(
-                          touched.estimateEndDate &&
-                            errors.estimateEndDate
-                        )}
-                      />
-                      {touched.estimateEndDate && errors.estimateEndDate && (
-                        <FormHelperText
-                          error
-                          id="standard-weight-helper-EstimateEndDate"
-                        >
-                          {errors.estimateEndDate}
-                        </FormHelperText>
-                      )}
-                    </LocalizationProvider>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormControl sx={{ minWidth: 530 }}>
-                      <InputLabel id="EstimateEndTime">
-                        Estimate End Time
-                      </InputLabel>
-                      <Select
-                        labelId="EstimateEndTime"
-                        id="EstimateEndTime"
-                        value={values.estimateEndTime}
-                        label="EstimateEndTime"
-                        onChange={handleChange}
-                        name="EstimateEndTime"
-                      >
-                        {hours.map((item) => (
-                          <MenuItem value={item}>{item}</MenuItem>
-                        ))}
-                      </Select>
+                            {user.map((item) => (
+                              <MenuItem value={item.userId}>
+                                {item.fullname} ({item.email})
+                              </MenuItem>
+                            ))}
+                          </Select>
 
-                      {touched.estimateEndTime && errors.estimateEndTime && (
-                        <FormHelperText
-                          error
-                          id="standard-weight-helper-EstimateEndTime"
-                        >
-                          {errors.estimateEndTime}
-                        </FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12}>
-                    Choose from map
-                    <Button onClick={handleOpenView}>Open Map</Button>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      id="StartLocationName"
-                      name="StartLocationName"
-                      label="Trip Start Location Name"
-                      fullWidth
-                      variant="outlined"
-                      value={values.startLocationName}
-                      onChange={handleChange}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                      error={Boolean(
-                        touched.startLocationName &&
-                          errors.startLocationName
-                      )}
-                    />
-                    {touched.startLocationName &&
-                      errors.startLocationName && (
-                        <FormHelperText
-                          error
-                          id="standard-weight-helper-StartLocationName"
-                        >
-                          {errors.startLocationName}
-                        </FormHelperText>
-                      )}
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      id="EndLocationName"
-                      name="EndLocationName"
-                      label="Trip Destination Location Name"
-                      fullWidth
-                      variant="outlined"
-                      value={values.endLocationName}
-                      onChange={handleChange}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                      error={Boolean(
-                        touched.endLocationName && errors.endLocationName
-                      )}
-                    />
-                    {touched.endLocationName && errors.endLocationName && (
-                      <FormHelperText
-                        error
-                        id="standard-weight-helper-EndLocationName"
-                      >
-                        {errors.endLocationName}
-                      </FormHelperText>
-                    )}
-                  </Grid>
-                  {isEdit ? (
-                    <Grid item xs={12}>
-                      <FormControl sx={{ mt: 1, minWidth: 200 }}>
-                        <InputLabel id="TripStatus">Status</InputLabel>
-                        <Select
-                          labelId="TripStatus"
-                          id="TripStatus"
-                          value={values.tripStatus}
-                          label="TripStatus"
+                          {touched.tripPresenter && errors.tripPresenter && (
+                            <FormHelperText
+                              error
+                              id="standard-weight-helper-TripPresenter"
+                            >
+                              {errors.tripPresenter}
+                            </FormHelperText>
+                          )}
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="tripMember"
+                          name="TripMember"
+                          label="Trip Member"
+                          type="number"
+                          fullWidth
+                          variant="outlined"
+                          value={values.tripMember}
                           onChange={handleChange}
-                          name="TripStatus"
-                        >
-                          <MenuItem value="ACTIVE">Active</MenuItem>
-                          <MenuItem value="INACTIVE">Inactive</MenuItem>
-                          <MenuItem value="BANNED">Banned</MenuItem>
-                        </Select>
-
-                        {touched.tripStatus && errors.tripStatus && (
+                          error={Boolean(
+                            touched.tripMember && errors.tripMember
+                          )}
+                        />
+                        {touched.tripMember && errors.tripMember && (
                           <FormHelperText
                             error
-                            id="standard-weight-helper-TripStatus"
+                            id="standard-weight-helper-TripMember"
                           >
-                            {errors.tripStatus}
+                            {errors.tripMember}
                           </FormHelperText>
                         )}
-                      </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="tripDescription"
+                          name="tripDescription"
+                          label="Trip Description"
+                          fullWidth
+                          autoComplete=""
+                          variant="outlined"
+                          value={values.tripDescription}
+                          onChange={handleChange}
+                          error={Boolean(
+                            touched.tripDescription && errors.tripDescription
+                          )}
+                        />
+                        {touched.tripDescription && errors.tripDescription && (
+                          <FormHelperText
+                            error
+                            id="standard-weight-helper-TripDescription"
+                          >
+                            {errors.tripDescription}
+                          </FormHelperText>
+                        )}
+                      </Grid>
+                      <Grid item xs={12}>
+                        <LocalizationProvider
+                          dateAdapter={AdapterDayjs}
+                          dateLibInstance={dayjs.utc}
+                        >
+                          <DatePicker
+                            required
+                            sx={{
+                              "& .MuiInputBase-root": {
+                                paddingY: 1,
+                                paddingX: 3,
+                              },
+                              "& .MuiFormLabel-root": {
+                                paddingY: 1,
+                              },
+                            }}
+                            label="Estimate Start Date"
+                            id="estimateStartDate"
+                            name="3stimateStartDate"
+                            fullWidth
+                            value={values.estimateStartDate}
+                            onChange={(value) => {
+                              setFieldValue("estimateStartDate", value);
+                            }}
+                            error={Boolean(
+                              touched.estimateStartDate &&
+                                errors.estimateStartDate
+                            )}
+                          />
+                        </LocalizationProvider>
+                        {touched.estimateStartDate && errors.estimateStartDate && (
+                          <FormHelperText
+                            error
+                            id="standard-weight-helper-EstimateStartDate"
+                          >
+                            {errors.estimateStartDate}
+                          </FormHelperText>
+                        )}
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl sx={{ minWidth: 250 }}>
+                          <InputLabel id="EstimateStartTime">
+                            Estimate Start Time
+                          </InputLabel>
+                          <Select
+                            labelId="EstimateStartTime"
+                            id="estimateStartTime"
+                            value={values.estimateStartTime}
+                            label="EstimateStartTime"
+                            onChange={handleChange}
+                            name="estimateStartTime"
+                          >
+                            {hours.map((item) => (
+                              <MenuItem value={item}>{item}</MenuItem>
+                            ))}
+                          </Select>
+
+                          {touched.estimateStartTime &&
+                            errors.estimateStartTime && (
+                              <FormHelperText
+                                error
+                                id="standard-weight-helper-EstimateStartTime"
+                              >
+                                {errors.estimateStartTime}
+                              </FormHelperText>
+                            )}
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <LocalizationProvider
+                          dateAdapter={AdapterDayjs}
+                          dateLibInstance={dayjs.utc}
+                        >
+                          <DatePicker
+                            required
+                            sx={{
+                              "& .MuiInputBase-root": {
+                                paddingY: 1,
+                                paddingX: 3,
+                              },
+                              "& .MuiFormLabel-root": {
+                                paddingY: 1,
+                              },
+                            }}
+                            id="estimateEndDate"
+                            name="estimateEndDate"
+                            label="Estimate End Date"
+                            fullWidth
+                            value={values.estimateEndDate}
+                            onChange={(value) =>
+                              setFieldValue("EstimateEndDate", value)
+                            }
+                            error={Boolean(
+                              touched.estimateEndDate && errors.estimateEndDate
+                            )}
+                          />
+                          {touched.estimateEndDate && errors.estimateEndDate && (
+                            <FormHelperText
+                              error
+                              id="standard-weight-helper-EstimateEndDate"
+                            >
+                              {errors.estimateEndDate}
+                            </FormHelperText>
+                          )}
+                        </LocalizationProvider>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl sx={{ minWidth: 250 }}>
+                          <InputLabel id="EstimateEndTime">
+                            Estimate End Time
+                          </InputLabel>
+                          <Select
+                            labelId="EstimateEndTime"
+                            id="estimateEndTime"
+                            value={values.estimateEndTime}
+                            label="estimateEndTime"
+                            onChange={handleChange}
+                            name="estimateEndTime"
+                          >
+                            {hours.map((item) => (
+                              <MenuItem value={item}>{item}</MenuItem>
+                            ))}
+                          </Select>
+
+                          {touched.estimateEndTime && errors.estimateEndTime && (
+                            <FormHelperText
+                              error
+                              id="standard-weight-helper-EstimateEndTime"
+                            >
+                              {errors.estimateEndTime}
+                            </FormHelperText>
+                          )}
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        Choose from map
+                        <Button onClick={handleOpenView}>Open Map</Button>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="startLocationName"
+                          name="startLocationName"
+                          label="Trip Start Location Name"
+                          fullWidth
+                          variant="outlined"
+                          value={values.startLocationName}
+                          onChange={handleChange}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          error={Boolean(
+                            touched.startLocationName &&
+                              errors.startLocationName
+                          )}
+                        />
+                        {touched.startLocationName && errors.startLocationName && (
+                          <FormHelperText
+                            error
+                            id="standard-weight-helper-StartLocationName"
+                          >
+                            {errors.startLocationName}
+                          </FormHelperText>
+                        )}
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="endLocationName"
+                          name="endLocationName"
+                          label="Trip Destination Location Name"
+                          fullWidth
+                          variant="outlined"
+                          value={values.endLocationName}
+                          onChange={handleChange}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          error={Boolean(
+                            touched.endLocationName && errors.endLocationName
+                          )}
+                        />
+                        {touched.endLocationName && errors.endLocationName && (
+                          <FormHelperText
+                            error
+                            id="standard-weight-helper-EndLocationName"
+                          >
+                            {errors.endLocationName}
+                          </FormHelperText>
+                        )}
+                      </Grid>
+                      {isEdit ? (
+                        <Grid item xs={12}>
+                          <FormControl sx={{ mt: 1, minWidth: 200 }}>
+                            <InputLabel id="TripStatus">Status</InputLabel>
+                            <Select
+                              labelId="TripStatus"
+                              id="tripStatus"
+                              value={values.tripStatus}
+                              label="TripStatus"
+                              onChange={handleChange}
+                              name="TripStatus"
+                            >
+                              <MenuItem value="ACTIVE">Active</MenuItem>
+                              <MenuItem value="INACTIVE">Inactive</MenuItem>
+                              <MenuItem value="BANNED">Banned</MenuItem>
+                            </Select>
+
+                            {touched.tripStatus && errors.tripStatus && (
+                              <FormHelperText
+                                error
+                                id="standard-weight-helper-TripStatus"
+                              >
+                                {errors.tripStatus}
+                              </FormHelperText>
+                            )}
+                          </FormControl>
+                        </Grid>
+                      ) : (
+                        <></>
+                      )}
                     </Grid>
-                  ) : (
-                    <></>
-                  )}
-                  <Grid item xs={12} sm={6}>
-                    <Button variant="outlined" onClick={gotoList}>
-                      Return to List
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} sm={6} textAlign="right">
-                    <Button type="submit" variant="contained">
-                      {isEdit ? "Update" : "Create"}
-                    </Button>
-                  </Grid>
+                  </Card>
                 </Grid>
-              </Card>
+                <Grid item xs={12} sm={9}>
+                  <Map></Map>
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Button variant="outlined" onClick={gotoList}>
+                    Return to List
+                  </Button>
+                </Grid>
+                <Grid item xs={12} textAlign="right">
+                  <Button type="submit" variant="contained">
+                    {isEdit ? "Update" : "Create"}
+                  </Button>
+                </Grid>
+              </Grid>
             </form>
           )}
         </Formik>

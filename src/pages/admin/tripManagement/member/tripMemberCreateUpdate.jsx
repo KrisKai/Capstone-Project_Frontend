@@ -220,8 +220,8 @@ export default function UserCreate() {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      id="NickName"
-                      name="NickName"
+                      id="nickName"
+                      name="nickName"
                       label="Nickname"
                       fullWidth
                       autoComplete=""
@@ -244,11 +244,11 @@ export default function UserCreate() {
                       <InputLabel id="MemberRoleId">Trip Role</InputLabel>
                       <Select
                         labelId="MemberRoleId"
-                        id="MemberRoleId"
+                        id="memberRoleId"
                         value={values.memberRoleId}
                         label="MemberRoleId"
                         onChange={handleChange}
-                        name="MemberRoleId"
+                        name="memberRoleId"
                       >
                         {role.map((item) => (
                           <MenuItem
@@ -276,11 +276,11 @@ export default function UserCreate() {
                         <InputLabel id="Status">Status</InputLabel>
                         <Select
                           labelId="Status"
-                          id="Status"
+                          id="status"
                           value={values.status}
                           label="Status"
                           onChange={handleChange}
-                          name="Status"
+                          name="status"
                         >
                           <MenuItem value="ACTIVE">Active</MenuItem>
                           <MenuItem value="INACTIVE">Inactive</MenuItem>
