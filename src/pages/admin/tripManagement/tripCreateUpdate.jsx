@@ -100,6 +100,7 @@ export default function TripCreate() {
       justifyContent: "center",
     },
   }));
+
   function BootstrapDialogTitle(props) {
     const { children, onClose, ...other } = props;
 
@@ -491,7 +492,7 @@ export default function TripCreate() {
                       </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h5">Location Information</Typography>
+                      <Typography variant="h5">Location Information</Typography>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
@@ -578,7 +579,7 @@ export default function TripCreate() {
                 </Card>
               </Grid>
               <Grid item xs={12} sm={9} paddingLeft={1}>
-                {/* <MapForTrip /> */}
+                <MapForTrip getReturnData={getReturnData} />
               </Grid>
             </Grid>
             <Grid container marginTop={2}>
