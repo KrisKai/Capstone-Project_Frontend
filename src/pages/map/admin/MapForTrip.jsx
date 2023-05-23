@@ -1,18 +1,10 @@
+import { Box, Button, ButtonGroup, Card, Typography } from "@mui/material";
 import {
-  Box,
-  Button,
-  ButtonGroup,
-  Typography,
-  Card,
-  TextField,
-} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
   Autocomplete,
   DirectionsRenderer,
+  GoogleMap,
+  Marker,
+  useJsApiLoader,
 } from "@react-google-maps/api";
 import { GOOGLE_MAP_API } from "config";
 import "./map.css";
@@ -80,15 +72,16 @@ export default function MapForTrip({ getReturnData }) {
 
     ///đây là chỗ đưa dữ liệu ra ngoài component cha
     const returnData = {
-      origin: originRef.current.value,
-      originLat: results.routes[0].legs[0].start_location.lat(),
-      originLng: results.routes[0].legs[0].start_location.lng(),
-      destination: destinationRef.current.value,
-      destinationLat: results.routes[0].legs[0].end_location.lat(),
-      destinationLng: results.routes[0].legs[0].end_location.lng(),
+      startLocationName: originRef.current.value,
+      startLatitude: results.routes[0].legs[0].start_location.lat(),
+      startLongitude: results.routes[0].legs[0].start_location.lng(),
+      endLocatioName: destinationRef.current.value,
+      endLatitude: results.routes[0].legs[0].end_location.lat(),
+      endLongitude: results.routes[0].legs[0].end_location.lng(),
       distance: results.routes[0].legs[0].distance.text,
       duration: results.routes[0].legs[0].duration.text,
     };
+
     getReturnData(returnData);
   }
 
