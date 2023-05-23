@@ -181,18 +181,18 @@ export default function TripCreate() {
     tripPresenter: yup
       .string("Enter Trip Presenter")
       .required("Trip Presenter is required"),
-    startLocationName: yup
-      .string("Enter Trip Start Location Name")
-      .required("Trip Start Location Name is required"),
-    tripStartLocationAddress: yup
-      .string("Enter Trip Start Location Address")
-      .required("Trip Start Location Address is required"),
-    endLocationName: yup
-      .string("Enter Trip Destination Location Name")
-      .required("Trip Destination Location Name is required"),
-    tripDestinationLocationAddress: yup
-      .string("Enter Trip Destination Location Address")
-      .required("Trip Destination Location Address is required"),
+    // startLocationName: yup
+    //   .string("Enter Trip Start Location Name")
+    //   .required("Trip Start Location Name is required"),
+    // tripStartLocationAddress: yup
+    //   .string("Enter Trip Start Location Address")
+    //   .required("Trip Start Location Address is required"),
+    // endLocationName: yup
+    //   .string("Enter Trip Destination Location Name")
+    //   .required("Trip Destination Location Name is required"),
+    // tripDestinationLocationAddress: yup
+    //   .string("Enter Trip Destination Location Address")
+    //   .required("Trip Destination Location Address is required"),
   });
 
   let hours = [];
@@ -373,7 +373,7 @@ export default function TripCreate() {
                           }}
                           label="Estimate Start Date"
                           id="estimateStartDate"
-                          name="3stimateStartDate"
+                          name="estimateStartDate"
                           fullWidth
                           value={values.estimateStartDate}
                           onChange={(value) => {
@@ -446,7 +446,7 @@ export default function TripCreate() {
                           fullWidth
                           value={values.estimateEndDate}
                           onChange={(value) =>
-                            setFieldValue("EstimateEndDate", value)
+                            setFieldValue("estimateEndDate", value)
                           }
                           error={Boolean(
                             touched.estimateEndDate && errors.estimateEndDate
@@ -455,7 +455,7 @@ export default function TripCreate() {
                         {touched.estimateEndDate && errors.estimateEndDate && (
                           <FormHelperText
                             error
-                            id="standard-weight-helper-EstimateEndDate"
+                            id="standard-weight-helper-estimateEndDate"
                           >
                             {errors.estimateEndDate}
                           </FormHelperText>
@@ -578,7 +578,7 @@ export default function TripCreate() {
                 </Card>
               </Grid>
               <Grid item xs={12} sm={9} paddingLeft={1}>
-                <MapForTrip />
+                {/* <MapForTrip /> */}
               </Grid>
             </Grid>
             <Grid container marginTop={2}>

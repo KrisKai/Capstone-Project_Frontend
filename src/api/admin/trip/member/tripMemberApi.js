@@ -1,4 +1,6 @@
 import axiosInstance from "utils/axios";
+import axiosInstanceImage from "utils/axiosForImage";
+import qs from 'qs';
 
 const tripMemberApi = {
   getAll(params) {
@@ -11,7 +13,7 @@ const tripMemberApi = {
   },
   create(data) {
     const url = "/tripMembers";
-    return axiosInstance.post(url, data);
+    return axiosInstanceImage.post(url, qs.stringify(data));
   },
   update(data) {
     const url = "/tripMembers";
