@@ -1,7 +1,5 @@
-import Header from "./Header";
-import Rate from "./Rate";
-import Schedule from "./Schedule";
-import Explore from "./Explore";
 import Footer from "./Footer";
+import Header from "./HomeUser/Header";
+import HomeUser from "./HomeUser";
 
-export { Header, Rate, Schedule, Explore, Footer };
+export { Header, HomeUser, Footer };

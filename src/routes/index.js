@@ -9,7 +9,6 @@ import { AuthGuardUser, GuestGuardUser } from "guards/user";
 // project import
 import { Loadable } from "components/Loadable";
 import MainLayout from "layout/MainLayout/index";
-import Home from "pages/home/Home";
 
 // ----------------------------------------------------------------------
 
@@ -19,10 +18,10 @@ export default function Router() {
     {
       path: "/",
       children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
+        // {
+        //   path: "/",
+        //   element: <Home />,
+        // },
         {
           path: "login",
           element: (
@@ -313,15 +312,11 @@ export default function Router() {
     { path: "404", element: <NotFound /> },
     {
       path: `confirmPage/:memberId`,
-      element: (
-        <ConfirmPageTrip />
-      ),
+      element: <ConfirmPageTrip />,
     },
     {
       path: `confirmPageUser/:userId`,
-      element: (
-        <ConfirmPageUser />
-      ),
+      element: <ConfirmPageUser />,
     },
     { path: "*", element: <Navigate to="404" replace /> },
   ]);
@@ -413,8 +408,12 @@ const CategoryList = Loadable(
 const CategoryCreateUpdate = Loadable(
   lazy(() => import("../pages/admin/itemManagement/categoryCreateUpdate"))
 );
-const ConfirmPageTrip = Loadable(lazy(() => import("../pages/ConfirmPageTrip")));
-const ConfirmPageUser = Loadable(lazy(() => import("../pages/ConfirmPageUser")));
+const ConfirmPageTrip = Loadable(
+  lazy(() => import("../pages/ConfirmPageTrip"))
+);
+const ConfirmPageUser = Loadable(
+  lazy(() => import("../pages/ConfirmPageUser"))
+);
 const Maintenance = Loadable(lazy(() => import("../pages/Maintenance")));
 const Page500 = Loadable(lazy(() => import("../pages/Page500")));
 const NotFound = Loadable(lazy(() => import("../pages/Page404")));
