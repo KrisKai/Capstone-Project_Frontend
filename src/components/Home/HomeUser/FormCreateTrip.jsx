@@ -11,7 +11,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import SearchIcon from "@mui/icons-material/Search";
 
 const FormCreateTrip = () => {
-  const onSubmit = (formData) => {};
+  const onSubmit = (e) => {
+    e.target.preventDefault();
+  };
 
   return (
     <>

@@ -133,8 +133,8 @@ export default function MapForTrip({ getReturnData }) {
               </Button>
             </ButtonGroup>
 
-            {/* <Typography>Distance: {distance} </Typography>
-            <Typography>Duration: {duration} </Typography>
+            <Typography>Distance: {distance} </Typography>
+            {/* <Typography>Duration: {duration} </Typography>
             <Button
               aria-label="center back"
               onClick={() => {
