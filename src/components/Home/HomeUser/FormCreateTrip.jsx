@@ -1,30 +1,40 @@
-import {
-  Box,
-  TextField,
-  Typography,
-  Button,
-  InputAdornment,
-} from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers";
 import SearchIcon from "@mui/icons-material/Search";
 import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
-  Autocomplete,
-  DirectionsRenderer,
-} from "@react-google-maps/api";
+  Box,
+  Button,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 import { GOOGLE_MAP_API } from "config";
+
 const FormCreateTrip = () => {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
   });
+
   const onSubmit = (e) => {
     e.target.preventDefault();
   };
+
+  if (!isLoaded) {
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        flexDirection="column"
+        backgroundColor="rgba(212, 212, 215, 0.9)"
+        paddingY={5}
+        borderRadius="5px"
+      >
+        Hãy đợi 1 chút
+      </Box>
+    );
+  }
 
   return (
     <>
