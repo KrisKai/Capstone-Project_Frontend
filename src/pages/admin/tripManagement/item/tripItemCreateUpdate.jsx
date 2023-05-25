@@ -155,7 +155,7 @@ export default function TripItemCreate() {
                   label="Trip Name"
                   fullWidth
                   variant="outlined"
-                  value={values.TripId}
+                  value={values.tripId}
                   error={Boolean(touched.tripId && errors.tripId)}
                 />
                 {touched.tripId && errors.tripId && (
@@ -202,7 +202,7 @@ export default function TripItemCreate() {
                     touched.itemDescription && errors.itemDescription
                   )}
                 />
-                {touched.ItemDescription && errors.ItemDescription && (
+                {touched.itemDescription && errors.itemDescription && (
                   <FormHelperText
                     error
                     id="standard-weight-helper-text-ItemDescription"

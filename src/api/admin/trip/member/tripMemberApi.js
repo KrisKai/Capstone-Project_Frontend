@@ -13,7 +13,7 @@ const tripMemberApi = {
   },
   create(data) {
     const url = "/tripMembers";
-    return axiosInstanceImage.post(url, qs.stringify(data));
+    return axiosInstance.post(url, data);
   },
   update(data) {
     const url = "/tripMembers";

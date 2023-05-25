@@ -276,7 +276,7 @@ export default function UserCreate() {
                         value={values.role}
                         label="Role"
                         onChange={handleChange}
-                        name="Role"
+                        name="role"
                       >
                         <MenuItem value="USER">User</MenuItem>
                         {currentUser.role === "Admin" && (

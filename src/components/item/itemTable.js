@@ -49,7 +49,7 @@ export default function StickyHeadTableItem(props) {
     pageIndex: 0,
     pageSize: 10,
     itemName: "",
-    categoryId: props.category.CategoryId,
+    categoryId: props.category.categoryId,
   });
   const itemList = allItems.listOfItem;
   const numberOfItem = allItems.numOfItem;

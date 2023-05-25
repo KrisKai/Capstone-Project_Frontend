@@ -47,7 +47,7 @@ export default function StickyHeadTableTripItem(props) {
     pageIndex: 0,
     pageSize: 10,
     itemName: "",
-    categoryId: props.category.CategoryId,
+    categoryId: props.category.categoryId,
   });
   const itemList = allTripItems.listOfItem;
   const numberOfItem = allTripItems.numOfItem;
@@ -110,7 +110,7 @@ export default function StickyHeadTableTripItem(props) {
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <Grid container sx={{ mt: 1, mb: 1 }}>
           <Grid xs={6} sx={{ pl: 1 }}>
-            <h2>{props.category.CategoryName}</h2>
+            <h2>{props.category.categoryName}</h2>
           </Grid>
         </Grid>
         <Box sx={{ mt: 1, mb: 1 }} textAlign="right"></Box>
