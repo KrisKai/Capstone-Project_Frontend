@@ -4,7 +4,19 @@ import Icon2 from "assets/images/icon_2.svg";
 import Icon3 from "assets/images/icon_3.svg";
 import Icon4 from "assets/images/icon_4.svg";
 
-const list = [Icon1, Icon2, Icon3, Icon4];
+const list = [{
+  image: Icon1,
+  title: "Khám phá nhiều địa điểm thú vị",
+},{
+  image: Icon2,
+  title: "Chọn cụ thể từ map",
+},{
+  image: Icon3,
+  title: "Kết nối được nhiều người mới",
+},{
+  image: Icon4,
+  title: "Quản lí lịch trình cụ thể",
+}];
 
 const Schedule = () => {
   return (
@@ -18,10 +30,10 @@ const Schedule = () => {
             key={idx}
           >
             <Box sx={{ display: "flex" }}>
-              <Card sx={{ border: "1px solid black", width: 150, height: 150 }}>
-                <CardMedia image={data} sx={{ height: "100%" }}></CardMedia>
+              <Card sx={{ width: 300, height: 300 }}>
+                <CardMedia image={data.image} sx={{ height: "100%" }}></CardMedia>
               </Card>
-              <div>Lên lịch đi bạn ơi</div>
+              <div>{data.title}</div>
             </Box>
           </Grid>
         );
