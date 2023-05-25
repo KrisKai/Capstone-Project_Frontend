@@ -16,25 +16,25 @@ import { authApi } from "api";
 
 const ProfileView = (props) => {
   const [currentInfo, setCurrentInfo] = useState({
-    Username: "",
-    Role: "",
-    Birthday: "",
-    Email: "",
-    Fullname: "",
-    Phone: "",
-    Address: "",
-    CreateDate: "",
+    username: "",
+    role: "",
+    birthday: "",
+    email: "",
+    fullname: "",
+    phone: "",
+    address: "",
+    createDate: "",
   });
 
   useEffect(() => {
     async function getInfo() {
       const response = await authApi.getCurrentInfo();
-      if (response.Birthday) {
-        response.Birthday = response.Birthday.substring(0, 10);
+      if (response.birthday) {
+        response.birthday = response.birthday.substring(0, 10);
 
         //temp
-        // response.CreateDate = response.CreateDate.substring(0, 10);
-        response.CreateDate = "2023-12-12";
+        response.createDate = response.createDate.substring(0, 10);
+        // response.CreateDate = "2023-12-12";
       }
       setCurrentInfo(response);
     }
@@ -66,22 +66,22 @@ const ProfileView = (props) => {
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <PersonIcon /> {currentInfo.Fullname}
+          <PersonIcon /> {currentInfo.fullname}
         </Typography>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <EmailIcon /> {currentInfo.Email}
+          <EmailIcon /> {currentInfo.email}
         </Typography>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <PhoneIcon /> {currentInfo.Phone}
+          <PhoneIcon /> {currentInfo.phone}
         </Typography>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <HomeIcon /> {currentInfo.Address}
+          <HomeIcon /> {currentInfo.address}
         </Typography>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <CakeIcon /> {currentInfo.Birthday}
+          <CakeIcon /> {currentInfo.birthday}
         </Typography>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <AccessTimeFilledRoundedIcon /> {currentInfo.CreateDate}
+          <AccessTimeFilledRoundedIcon /> {currentInfo.createDate}
         </Typography>
       </Box>
     </>

@@ -28,22 +28,22 @@ dayjs.extend(utc);
 const ProfileEdit = (props) => {
   const navigate = useNavigate();
   const [currentInfo, setCurrentInfo] = useState({
-    Username: "",
-    Role: "",
-    Birthday: "",
-    Email: "",
-    Fullname: "",
-    Phone: "",
-    Address: "",
-    CreateDate: "",
+    username: "",
+    role: "",
+    birthday: "",
+    email: "",
+    fullname: "",
+    phone: "",
+    address: "",
+    createDate: "",
   });
 
   useEffect(() => {
     async function getInfo() {
       const response = await authApi.getCurrentInfo();
-      if (response.Birthday) {
-        response.Birthday = dayjs.utc(response.Birthday);
-        response.CreateDate = response.CreateDate.substring(0, 10);
+      if (response.birthday) {
+        response.birthday = dayjs.utc(response.birthday);
+        response.createDate = response.createDate.substring(0, 10);
       }
       setCurrentInfo(response);
     }
@@ -51,20 +51,20 @@ const ProfileEdit = (props) => {
   }, []);
 
   const validationSchema = yup.object().shape({
-    Username: yup
+    username: yup
       .string("Enter User Name")
       .matches(/\S/, "User Name is invalid")
       .required("User Name is required"),
-    Fullname: yup
+    fullname: yup
       .string("Enter Full Name")
       .required("Full Name is required"),
-    Email: yup
+    email: yup
       .string()
       .email("Enter Valid Email")
       .required("Email is required"),
-    Phone: yup.number().required("Phone is required"),
-    Address: yup.string("Enter Address").required("Address is required"),
-    Birthday: yup.string("Enter Birthday").required("Birthday is required"),
+    phone: yup.number().required("Phone is required"),
+    address: yup.string("Enter Address").required("Address is required"),
+    birthday: yup.string("Enter Birthday").required("Birthday is required"),
   });
 
   return (
