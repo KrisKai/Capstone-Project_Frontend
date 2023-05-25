@@ -43,7 +43,7 @@ export default function Router() {
           path: "dashboard",
           element: (
             <AuthGuardUser>
-              <AuthLoginUser />
+              <UserHome />
             </AuthGuardUser>
           ),
         },
@@ -332,7 +332,10 @@ const AuthLoginUser = Loadable(
 const Register = Loadable(
   lazy(() => import("../pages/user/authentication/Register"))
 );
-
+// Dashboard
+const UserHome  = Loadable(
+  lazy(() => import("../pages/home/UserHome/UserHome"))
+);
 //     --------------ADMIN------------------
 // Authentication
 const AuthLogin = Loadable(
