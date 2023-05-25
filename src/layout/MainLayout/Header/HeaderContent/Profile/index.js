@@ -190,7 +190,7 @@ const Profile = () => {
                     </CardContent>
                     {open && (
                       <>
-                        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                        {/* <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                           <Tabs
                             variant="fullWidth"
                             value={value}
@@ -236,13 +236,13 @@ const Profile = () => {
                               {...a11yProps(1)}
                             />
                           </Tabs>
-                        </Box>
+                        </Box> */}
                         <TabPanel value={value} index={0} dir={theme.direction}>
                           <ProfileTab handleLogout={handleLogout} />
                         </TabPanel>
-                        <TabPanel value={value} index={1} dir={theme.direction}>
+                        {/* <TabPanel value={value} index={1} dir={theme.direction}>
                           <SettingTab />
-                        </TabPanel>
+                        </TabPanel> */}
                       </>
                     )}
                   </MainCard>
