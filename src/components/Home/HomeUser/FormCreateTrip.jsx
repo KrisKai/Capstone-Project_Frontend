@@ -16,9 +16,25 @@ const FormCreateTrip = () => {
     googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
   });
+
   const onSubmit = (e) => {
     e.target.preventDefault();
   };
+
+  if (!isLoaded) {
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        flexDirection="column"
+        backgroundColor="rgba(212, 212, 215, 0.9)"
+        paddingY={5}
+        borderRadius="5px"
+      >
+        Hãy đợi 1 chút
+      </Box>
+    );
+  }
 
   return (
     <>
