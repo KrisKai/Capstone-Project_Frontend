@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import Carousel from "react-bootstrap/Carousel";
 
-const Suggest = () => {
+const UserSuggest = () => {
   return (
     <Box width="100%">
       <Box display="flex" alignItems="center" gap={5} width="100%">
@@ -66,4 +66,4 @@ const Suggest = () => {
   );
 };
 
-export default Suggest;
+export default UserSuggest;

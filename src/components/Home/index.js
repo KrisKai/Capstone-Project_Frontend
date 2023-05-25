@@ -1,5 +1,4 @@
-import Footer from "./Footer";
-import Header from "./HomeUser/Header";
-import HomeUser from "./HomeUser";
+import * as HomeUser from "./HomeUser";
+import * as MainHome from "./MainHome";
 
-export { Header, HomeUser, Footer };
+export { MainHome, HomeUser };
