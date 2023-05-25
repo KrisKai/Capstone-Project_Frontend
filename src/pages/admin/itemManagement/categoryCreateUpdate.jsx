@@ -16,7 +16,7 @@ export default function CategoryCreate() {
   const isEdit = Boolean(categoryId);
   const [category, setCategory] = useState({
     categoryName: "",
-    categoryBudget: null,
+    categoryDescription: "",
   });
   const [user, setUser] = useState([
     {
