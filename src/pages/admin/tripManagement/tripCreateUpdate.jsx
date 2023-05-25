@@ -59,10 +59,10 @@ export default function TripCreate() {
     tripName: "",
     tripBudget: null,
     tripDescription: "",
-    estimateStartDate: null,
-    estimateEndDate: null,
-    estimateStartTime: null,
-    estimateEndTime: null,
+    estimateStartDate: "",
+    estimateEndDate: "",
+    estimateStartTime: "",
+    estimateEndTime: "",
     tripPresenter: "",
     startLocationName: "",
     endLocationName: "",
@@ -491,6 +491,36 @@ export default function TripCreate() {
                         )}
                       </FormControl>
                     </Grid>
+                    {isEdit ? (
+                      <Grid item xs={12}>
+                        <FormControl sx={{ mt: 1, minWidth: 200 }}>
+                          <InputLabel id="TripStatus">Status</InputLabel>
+                          <Select
+                            labelId="TripStatus"
+                            id="tripStatus"
+                            value={values.tripStatus}
+                            label="TripStatus"
+                            onChange={handleChange}
+                            name="TripStatus"
+                          >
+                            <MenuItem value="ACTIVE">Active</MenuItem>
+                            <MenuItem value="INACTIVE">Inactive</MenuItem>
+                            <MenuItem value="BANNED">Banned</MenuItem>
+                          </Select>
+
+                          {touched.tripStatus && errors.tripStatus && (
+                            <FormHelperText
+                              error
+                              id="standard-weight-helper-TripStatus"
+                            >
+                              {errors.tripStatus}
+                            </FormHelperText>
+                          )}
+                        </FormControl>
+                      </Grid>
+                    ) : (
+                      <></>
+                    )}
                     <Grid item xs={12}>
                       <Typography variant="h5">Location Information</Typography>
                     </Grid>
@@ -545,36 +575,6 @@ export default function TripCreate() {
                         </FormHelperText>
                       )}
                     </Grid>
-                    {isEdit ? (
-                      <Grid item xs={12}>
-                        <FormControl sx={{ mt: 1, minWidth: 200 }}>
-                          <InputLabel id="TripStatus">Status</InputLabel>
-                          <Select
-                            labelId="TripStatus"
-                            id="tripStatus"
-                            value={values.tripStatus}
-                            label="TripStatus"
-                            onChange={handleChange}
-                            name="TripStatus"
-                          >
-                            <MenuItem value="ACTIVE">Active</MenuItem>
-                            <MenuItem value="INACTIVE">Inactive</MenuItem>
-                            <MenuItem value="BANNED">Banned</MenuItem>
-                          </Select>
-
-                          {touched.tripStatus && errors.tripStatus && (
-                            <FormHelperText
-                              error
-                              id="standard-weight-helper-TripStatus"
-                            >
-                              {errors.tripStatus}
-                            </FormHelperText>
-                          )}
-                        </FormControl>
-                      </Grid>
-                    ) : (
-                      <></>
-                    )}
                   </Grid>
                 </Card>
               </Grid>
@@ -597,21 +597,6 @@ export default function TripCreate() {
           </form>
         )}
       </Formik>
-      <BootstrapDialog
-        onClose={handleCloseView}
-        aria-labelledby="customized-dialog-title"
-        open={openView}
-      >
-        <BootstrapDialogTitle
-          id="customized-dialog-title"
-          onClose={handleCloseView}
-        >
-          <Typography variant="h4">
-            Pick the Departure and Destination from map
-          </Typography>
-        </BootstrapDialogTitle>
-        <DialogContent dividers>a</DialogContent>
-      </BootstrapDialog>
     </>
   );
 }

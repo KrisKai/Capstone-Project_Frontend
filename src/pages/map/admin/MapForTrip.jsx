@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Card, Typography } from "@mui/material";
+import { Box, Button, ButtonGroup, Card, TextField, Typography } from "@mui/material";
 import {
   Autocomplete,
   DirectionsRenderer,
@@ -13,23 +13,8 @@ import { useRef, useState } from "react";
 
 const center = { lat: 16.0545, lng: 108.0717 };
 
-function CardCustom() {
-  return (
-    <>
-      <Card sx={{ padding: "15px 10px" }}>
-        <Box textAlign="center" paddingBottom="10px">
-          <Typography>Địa điểm: asd</Typography>
-        </Box>
-        <Box border="1px solid black" borderRadius="2px">
-          <input className="custom-input" />
-        </Box>
-        <Box display="flex" mt="5px">
-          <Button sx={{ width: "50%" }}>Delete</Button>
-          <Button sx={{ width: "50%" }}>Move up</Button>
-        </Box>
-      </Card>
-    </>
-  );
+const restrictions = {
+  country: 'vn',
 }
 
 export default function MapForTrip({ getReturnData }) {
@@ -99,15 +84,16 @@ export default function MapForTrip({ getReturnData }) {
       <Box height="100%" width="100%" display="flex">
         <Box height="100%" flex="1 1 0" position="relative">
           <Box
+            bgcolor={"white"}
             display="flex"
             justifyContent="space-between"
-            width="100%"
+            width="80%"
             position="absolute"
             zIndex={100}
             padding={1}
           >
             <Box>
-              <Autocomplete>
+              <Autocomplete restrictions={restrictions}>
                 <input
                   className="custom-input"
                   type="text"
@@ -117,7 +103,7 @@ export default function MapForTrip({ getReturnData }) {
               </Autocomplete>
             </Box>
             <Box>
-              <Autocomplete>
+              <Autocomplete restrictions={restrictions}>
                 <input
                   className="custom-input"
                   type="text"
