@@ -15,7 +15,7 @@ import Logo from "assets/images/logo.svg";
 const listNavItems = [
   {
     display: "Trang chủ",
-    link: "",
+    link: "/",
   },
   {
     display: "Cẩm nang đi phượt",
@@ -24,12 +24,12 @@ const listNavItems = [
   ,
   {
     display: "Đăng nhập",
-    link: "",
+    link: "/login",
   },
   ,
   {
     display: "Đăng ký",
-    link: "",
+    link: "/register",
   },
 ];
 
@@ -103,10 +103,11 @@ const Header = () => {
                 },
               }}
             >
-              {listNavItems.map((item) => {
+              {listNavItems.map((item, idx) => {
                 return (
                   <>
                     <ListItem
+                      key={idx}
                       sx={{ display: "flex", justifyContent: "center" }}
                     >
                       <Link
@@ -116,6 +117,7 @@ const Header = () => {
                           textDecoration: "none",
                           color: "black",
                         }}
+                        to={item.link}
                       >
                         {item.display}
                       </Link>
