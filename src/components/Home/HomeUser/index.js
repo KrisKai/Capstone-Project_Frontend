@@ -1,27 +1,6 @@
 import FormCreateTrip from "./FormCreateTrip";
-import Suggest from "./Suggest";
-import Header from "./Header";
-import { Footer } from "..";
+import Footer from "./Footer";
+import UserHeader from "./UserHeader";
+import UserSuggest from "./UserSuggest";
 
-const HomeUser = () => {
-  return (
-    <Box>
-      <Header />
-      <Container>
-        <Box mt={10}>
-          <Suggest />
-        </Box>
-        {/* <Box mt={10}>
-          <Rate />
-        </Box> */}
-        <Box mt={10}>
-          <FormCreateTrip />
-        </Box>
-      </Container>
-      <Box mt={10}>
-        <Footer />
-      </Box>
-    </Box>
-  );
-};
-export default HomeUser;
+export { FormCreateTrip, Footer, UserHeader, UserSuggest };

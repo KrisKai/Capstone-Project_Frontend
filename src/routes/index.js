@@ -9,6 +9,7 @@ import { AuthGuardUser, GuestGuardUser } from "guards/user";
 // project import
 import { Loadable } from "components/Loadable";
 import MainLayout from "layout/MainLayout/index";
+import MainHome from "pages/home/MainHome/MainHome";
 
 // ----------------------------------------------------------------------
 
@@ -18,10 +19,10 @@ export default function Router() {
     {
       path: "/",
       children: [
-        // {
-        //   path: "/",
-        //   element: <Home />,
-        // },
+        {
+          path: "/",
+          element: <MainHome />,
+        },
         {
           path: "login",
           element: (

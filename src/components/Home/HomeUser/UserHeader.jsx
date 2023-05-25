@@ -34,7 +34,7 @@ const listNavItems = [
   // },
 ];
 
-const Header = () => {
+const UserHeader = () => {
   return (
     <Box
       sx={{
@@ -148,4 +148,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default UserHeader;
