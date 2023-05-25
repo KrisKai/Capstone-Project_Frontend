@@ -9,8 +9,19 @@ import { DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import SearchIcon from "@mui/icons-material/Search";
-
+import {
+  useJsApiLoader,
+  GoogleMap,
+  Marker,
+  Autocomplete,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
+import { GOOGLE_MAP_API } from "config";
 const FormCreateTrip = () => {
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: GOOGLE_MAP_API,
+    libraries: ["places"],
+  });
   const onSubmit = (e) => {
     e.target.preventDefault();
   };
@@ -38,21 +49,23 @@ const FormCreateTrip = () => {
                     borderRadius: "8px",
                   }}
                 >
-                  <TextField
-                    sx={{
-                      width: "100%",
-                      background: "white",
-                      borderRadius: "8px",
-                    }}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <SearchIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    placeholder="Điểm đến"
-                  ></TextField>
+                  <Autocomplete>
+                    <TextField
+                      sx={{
+                        width: "100%",
+                        background: "white",
+                        borderRadius: "8px",
+                      }}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      placeholder="Điểm đến"
+                    ></TextField>
+                  </Autocomplete>
                 </Box>
                 <Box display="flex" gap={2}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
