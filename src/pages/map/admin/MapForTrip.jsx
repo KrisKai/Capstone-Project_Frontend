@@ -60,7 +60,7 @@ export default function MapForTrip({ getReturnData }) {
       startLocationName: originRef.current.value,
       startLatitude: results.routes[0].legs[0].start_location.lat(),
       startLongitude: results.routes[0].legs[0].start_location.lng(),
-      endLocatioName: destinationRef.current.value,
+      endLocationName: destinationRef.current.value,
       endLatitude: results.routes[0].legs[0].end_location.lat(),
       endLongitude: results.routes[0].legs[0].end_location.lng(),
       distance: results.routes[0].legs[0].distance.text,

@@ -57,7 +57,6 @@ export default function TripCreate() {
 
   const [trip, setTrip] = useState({
     tripName: "",
-    tripBudget: null,
     tripDescription: "",
     estimateStartDate: "",
     estimateEndDate: "",
@@ -66,7 +65,15 @@ export default function TripCreate() {
     tripPresenter: "",
     startLocationName: "",
     endLocationName: "",
+    startLocationName: "",
+    startLatitude: "",
+    startLongitude: "",
+    endLocationName: "",
+    endLatitude: "",
+    endLongitude: "",
+    distance: "",
     tripStatus: "ACTIVE",
+    tripId: ""
   });
   const [user, setUser] = useState([
     {
@@ -165,8 +172,18 @@ export default function TripCreate() {
 
   const getReturnData = (returnData) => {
     console.log(returnData);
+    setTrip({
+      ...trip,
+      distance: returnData.distance.toString(),
+      endLatitude: returnData.endLatitude.toString(),
+      endLocationName: returnData.endLocationName,
+      endLongitude: returnData.endLongitude.toString(),
+      startLatitude: returnData.startLatitude.toString(),
+      startLocationName: returnData.startLocationName,
+      startLongitude: returnData.startLongitude.toString(),
+    });
   };
-
+  console.log(trip);
   const validationSchema = yup.object().shape({
     tripName: yup.string("Enter Trip Name").required("Trip Name is required"),
     // TripBudget: yup.number().required("Trip Budget is required"),
