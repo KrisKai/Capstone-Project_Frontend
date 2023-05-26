@@ -26,7 +26,7 @@ const listNavItems = [
   },
   {
     display: "Cẩm nang đi phượt",
-    link: "/login",
+    link: "/",
   },
   // {
   //   display: "Đăng ký",
@@ -100,7 +100,7 @@ const UserHeader = () => {
             })}
           </List>
         </Grid>
-        <Grid
+        {/* <Grid
           item
           xs={4}
           sx={{
@@ -113,7 +113,7 @@ const UserHeader = () => {
             <Button>Đăng nhập</Button>
             <Button>Đăng ký</Button>
           </Box>
-        </Grid>
+        </Grid> */}
       </Grid>
       <Container
         sx={{

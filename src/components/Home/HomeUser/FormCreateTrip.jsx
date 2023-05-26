@@ -16,6 +16,9 @@ const FormCreateTrip = () => {
     googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
   });
+  const restrictions = {
+    country: 'vn',
+  }
 
   const onSubmit = (e) => {
     e.target.preventDefault();
@@ -59,7 +62,7 @@ const FormCreateTrip = () => {
                     borderRadius: "8px",
                   }}
                 >
-                  <Autocomplete>
+                  <Autocomplete restrictions={restrictions}>
                     <TextField
                       sx={{
                         width: "100%",

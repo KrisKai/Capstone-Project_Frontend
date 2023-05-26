@@ -34,6 +34,9 @@ const listNavItems = [
 ];
 
 const Header = () => {
+  const goToLogin = () => {
+    window.location.href = "/login";
+  }
   return (
     <Box
       sx={{
@@ -152,6 +155,7 @@ const Header = () => {
                 fontWeight: 900,
                 fontSize: "20px",
               }}
+              onClick={goToLogin}
             >
               Bắt Đầu
             </Button>
