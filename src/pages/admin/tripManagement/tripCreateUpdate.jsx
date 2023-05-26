@@ -183,7 +183,6 @@ export default function TripCreate() {
       startLongitude: returnData.startLongitude.toString(),
     });
   };
-  console.log(trip);
   const validationSchema = yup.object().shape({
     tripName: yup.string("Enter Trip Name").required("Trip Name is required"),
     // TripBudget: yup.number().required("Trip Budget is required"),

@@ -28,10 +28,10 @@ const listNavItems = [
     display: "Cẩm nang đi phượt",
     link: "/",
   },
-  // {
-  //   display: "Đăng ký",
-  //   link: "/register",
-  // },
+  {
+    display: "Quản lí chuyến đi",
+    link: "/tripManagement",
+  },
 ];
 
 const UserHeader = () => {
