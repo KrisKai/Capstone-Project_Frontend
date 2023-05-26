@@ -7,7 +7,9 @@ import {
 } from "components/Home/HomeUser";
 import { Box, Container } from "@mui/material";
 import authUserApi from "api/user/authenticate/authUserApi";
+
 import { useNavigate } from "react-router-dom";
+import userTripApi from "api/user/trip/userTripApi";
 
 const HomeUser = () => {
   let navigate = useNavigate();
@@ -15,8 +17,9 @@ const HomeUser = () => {
     (async () => {
       try {
         const response = await authUserApi.getCurrentUser();
+        console.log(response)
         if (response === null && response === "") {
-          navigate("/");
+          const tripHistory = await userTripApi.tripHistory();
         }
       } catch (error) {
         console.log("Authenticate!", error);

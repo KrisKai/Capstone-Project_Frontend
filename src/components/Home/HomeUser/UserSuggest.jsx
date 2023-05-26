@@ -24,10 +24,6 @@ const UserSuggest = () => {
                       style={{ width: "100%" }}
                     />
                   </Box>
-                  <Box>
-                    <Typography>Text 1</Typography>
-                    <Typography>Text 2</Typography>
-                  </Box>
                 </Box>
               </Carousel.Item>
               <Carousel.Item>
@@ -38,10 +34,6 @@ const UserSuggest = () => {
                       style={{ width: "100%" }}
                     />
                   </Box>
-                  <Box>
-                    <Typography>Text 1</Typography>
-                    <Typography>Text 2</Typography>
-                  </Box>
                 </Box>
               </Carousel.Item>
               <Carousel.Item>
@@ -51,10 +43,6 @@ const UserSuggest = () => {
                       src="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
                       style={{ width: "100%" }}
                     />
-                  </Box>
-                  <Box>
-                    <Typography>Text 1</Typography>
-                    <Typography>Text 2</Typography>
                   </Box>
                 </Box>
               </Carousel.Item>

@@ -1,29 +1,29 @@
-import axiosInstance from "utils/axios";
+import axiosInstanceUser from "utils/axiosForUser";
 
 const authUserApi = {
   login(params) {
     const url = "/authenticate/login";
-    return axiosInstance.post(url, params);
+    return axiosInstanceUser.post(url, params);
   },
   loginUser(params) {
     const url = "/authenticate/login-user";
-    return axiosInstance.post(url, params);
+    return axiosInstanceUser.post(url, params);
   },
   register(params) {
     const url = "/authenticate/register-user";
-    return axiosInstance.post(url, params);
+    return axiosInstanceUser.post(url, params);
   },
   getCurrentUser() {
     const url = "/authenticate/getCurrentUser";
-    return axiosInstance.get(url);
+    return axiosInstanceUser.get(url);
   },
   getCurrentInfo() {
     const url = "/authenticate/getCurrentInfo";
-    return axiosInstance.get(url);
+    return axiosInstanceUser.get(url);
   },
   confirm() {
     const url = "/users/confirm-user";
-    return axiosInstance.put(url);
+    return axiosInstanceUser.put(url);
   },
 };
 

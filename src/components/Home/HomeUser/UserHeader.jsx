@@ -63,7 +63,7 @@ const UserHeader = () => {
             </Typography>
           </Container>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={8}>
           <List
             component="nav"
             sx={{
@@ -100,20 +100,17 @@ const UserHeader = () => {
             })}
           </List>
         </Grid>
-        {/* <Grid
+        <Grid
           item
-          xs={4}
+          xs={2}
           sx={{
             display: "flex",
             alignItems: "center",
             flexDirection: "row-reverse",
           }}
         >
-          <Box>
-            <Button>Đăng nhập</Button>
-            <Button>Đăng ký</Button>
-          </Box>
-        </Grid> */}
+          
+        </Grid>
       </Grid>
       <Container
         sx={{
