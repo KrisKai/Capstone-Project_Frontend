@@ -52,8 +52,13 @@ export default function StickyHeadTableTrip() {
             pageIndex: 0,
             pageSize: 10,
           };
+          const filterMember = {
+            pageIndex: 0,
+            pageSize: 10,
+            tripId: tripId,
+          };
           const route = await tripRouteApi.getAll(filter);
-          const member = await tripMemberApi.getAll(filter);
+          const member = await tripMemberApi.getAll(filterMember);
           const item = await tripItemApi.getAll(filter);
           setRouteList(route.numOfRoute);
           setMemberList(member.numOfMember);

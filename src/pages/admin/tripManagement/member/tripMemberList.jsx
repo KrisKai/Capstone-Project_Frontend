@@ -53,21 +53,22 @@ const columns = [
 
 export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [allMembers, setAllMembers] = useState({
     listOfMember: [],
     numOfMember: 0,
   });
+  const { tripId } = useParams();
   const [deleteId, setDeleteId] = useState("");
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState({
     pageIndex: 0,
     pageSize: 10,
+    tripId: tripId,
     memberName: "",
   });
   const memberList = allMembers.listOfMember;
   const numOfMember = allMembers.numOfMember;
-  const { tripId } = useParams();
 
   const handleClickOpen = (e) => {
     setOpen(true);
