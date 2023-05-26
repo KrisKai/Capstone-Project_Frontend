@@ -1,4 +1,12 @@
-import { Box, Button, ButtonGroup, Card, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Card,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 import {
   Autocomplete,
   DirectionsRenderer,
@@ -14,8 +22,8 @@ import { useRef, useState } from "react";
 const center = { lat: 16.0545, lng: 108.0717 };
 
 const restrictions = {
-  country: 'vn',
-}
+  country: "vn",
+};
 
 export default function MapForTrip({ getReturnData }) {
   const { isLoaded } = useJsApiLoader({
@@ -87,53 +95,56 @@ export default function MapForTrip({ getReturnData }) {
             bgcolor={"white"}
             display="flex"
             justifyContent="space-between"
-            width="80%"
+            width="94%"
             position="absolute"
             zIndex={100}
-            padding={1}
+            padding={3}
+            margin={4}
+            boxShadow={2}
+            borderRadius={2}
           >
-            <Box>
-              <Autocomplete restrictions={restrictions}>
-                <input
-                  className="custom-input"
-                  type="text"
-                  ref={originRef}
-                  placeholder="Trip Start Location"
-                />
-              </Autocomplete>
-            </Box>
-            <Box>
-              <Autocomplete restrictions={restrictions}>
-                <input
-                  className="custom-input"
-                  type="text"
-                  ref={destinationRef}
-                  placeholder="Destination Start Location"
-                />
-              </Autocomplete>
-            </Box>
-
-            <ButtonGroup>
-              <Button colorScheme="pink" type="button" onClick={calculateRoute}>
-                Calculate Route
-              </Button>
-            </ButtonGroup>
-
-            <Typography>Distance: {distance} </Typography>
-            {/* <Typography>Duration: {duration} </Typography>
-            <Button
-              aria-label="center back"
-              onClick={() => {
-                map.panTo(center);
-                map.setZoom(15);
-              }}
-            >
-              Center
-            </Button> */}
+            <Grid container>
+              <Grid item xs={12} sm={5}>
+                <Autocomplete restrictions={restrictions}>
+                  <input
+                    className="custom-input"
+                    type="text"
+                    ref={originRef}
+                    placeholder="Trip Start Location"
+                  />
+                </Autocomplete>
+              </Grid>
+              <Grid item xs={12} sm={5}>
+                <Autocomplete restrictions={restrictions}>
+                  <input
+                    className="custom-input"
+                    type="text"
+                    ref={destinationRef}
+                    placeholder="Destination Start Location"
+                  />
+                </Autocomplete>
+              </Grid>
+              <Grid item xs={12} sm={2}>
+                <Button
+                  colorScheme="pink"
+                  type="button"
+                  onClick={calculateRoute}
+                  variant="outlined"
+                >
+                  Calculate Route
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={5} mt={2}>
+                <Typography>Distance: {distance} </Typography>
+              </Grid>
+              <Grid item xs={12} sm={5} mt={2}>
+                <Typography>Duration: {duration} </Typography>
+              </Grid>
+            </Grid>
           </Box>
           <GoogleMap
             center={center}
-            zoom={10}
+            zoom={15}
             mapContainerStyle={{ width: "100%", height: "100%" }}
             options={{
               zoomControl: false,

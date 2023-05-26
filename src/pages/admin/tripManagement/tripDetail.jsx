@@ -8,7 +8,6 @@ import {
   tripApi,
   tripMemberApi,
   tripRouteApi,
-  tripRoleApi,
   tripItemApi,
 } from "api";
 import React, { useEffect, useState } from "react";
@@ -19,7 +18,6 @@ export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
   const { tripId } = useParams();
   const [routeList, setRouteList] = useState(0);
-  const [roleList, setRoleList] = useState(0);
   const [memberList, setMemberList] = useState(0);
   const [itemList, setItemList] = useState(0);
 
@@ -55,11 +53,9 @@ export default function StickyHeadTableTrip() {
             pageSize: 10,
           };
           const route = await tripRouteApi.getAll(filter);
-          const role = await tripRoleApi.getAll(filter);
           const member = await tripMemberApi.getAll(filter);
           const item = await tripItemApi.getAll(filter);
           setRouteList(route.numOfRoute);
-          setRoleList(role.numOfRole);
           setMemberList(member.numOfMember);
           setItemList(item.numOfItem);
         } else {
@@ -115,23 +111,6 @@ export default function StickyHeadTableTrip() {
           </CardContent>
           <CardActions>
             <Button size="small" onClick={gotoMember}>
-              More Details
-            </Button>
-          </CardActions>
-        </Card>
-        <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
-          <CardContent>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              Trip Role
-            </Typography>
-            <Typography variant="body2">includes {roleList} role(s)</Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small" onClick={gotoRole}>
               More Details
             </Button>
           </CardActions>

@@ -38,7 +38,7 @@ const columns = [
     align: "center",
   },
   {
-    id: "roleName",
+    id: "memberRole",
     label: "Role",
     minWidth: 130,
     align: "center",

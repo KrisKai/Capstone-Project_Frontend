@@ -6,7 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { tripMemberApi, tripRoleApi, userApi } from "api";
+import { tripMemberApi, userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
@@ -24,7 +24,7 @@ export default function UserCreate() {
   const [member, setMember] = useState({
     userId: "",
     tripId: tripId,
-    memberRoleId: "",
+    memberRole: "",
     nickName: "",
     status: "Active",
   });
@@ -35,13 +35,6 @@ export default function UserCreate() {
       userId: "",
       email: "",
       fullname: "",
-    },
-  ]);
-
-  const [role, setRole] = useState([
-    {
-      roleName: "",
-      description: "",
     },
   ]);
   const ref = useRef(null);
@@ -55,19 +48,13 @@ export default function UserCreate() {
         userName: "",
       });
       setUser(response.listOfUser);
-      const role = await tripRoleApi.getAll({
-        pageIndex: 0,
-        pageSize: 99999999,
-        roleName: "",
-      });
-      setRole(role.listOfRole);
       if (!tripId || !memberId) return;
       try {
         const data = await tripMemberApi.getById(memberId);
         if (data != null && data != "") {
           setMember(data);
-          setName(data.Fullname);
-          setEmail(data.Email);
+          setName(data.fullname);
+          setEmail(data.email);
         } else {
           navigate(`/admin/tripMemberList/${tripId}`);
         }
@@ -96,7 +83,7 @@ export default function UserCreate() {
 
   const validationSchema = yup.object().shape({
     userId: yup.string("Enter User").required("User is required"),
-    memberRoleId: yup
+    memberRole: yup
       .string("Enter Member Role")
       .required("Member Role is required"),
     nickName: yup
@@ -241,23 +228,17 @@ export default function UserCreate() {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl sx={{ minWidth: 530 }}>
-                      <InputLabel id="MemberRoleId">Trip Role</InputLabel>
+                      <InputLabel id="memberRole">Trip Role</InputLabel>
                       <Select
-                        labelId="MemberRoleId"
-                        id="memberRoleId"
-                        value={values.memberRoleId}
-                        label="MemberRoleId"
+                        labelId="memberRole"
+                        id="memberRole"
+                        value={values.memberRole}
+                        label="memberRole"
                         onChange={handleChange}
-                        name="memberRoleId"
+                        name="memberRole"
                       >
-                        {role.map((item) => (
-                          <MenuItem
-                            value={item.roleId}
-                            onClick={handleChangeSelect}
-                          >
-                            {item.roleName}
-                          </MenuItem>
-                        ))}
+                        <MenuItem value="HOST">Host</MenuItem>
+                        <MenuItem value="MEMBER">Member</MenuItem>
                       </Select>
 
                       {touched.userId && errors.userId && (

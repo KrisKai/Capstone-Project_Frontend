@@ -34,26 +34,12 @@ import { toast } from "react-toastify";
 // import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 import * as yup from "yup";
 
-// import gg map api
-
 dayjs.extend(utc);
-
-const center = { lat: 48.8584, lng: 2.2945 };
 
 export default function TripCreate() {
   let navigate = useNavigate();
   const { tripId } = useParams();
   const isEdit = Boolean(tripId);
-
-  // using for map
-  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
-  const [directionsResponse, setDirectionsResponse] = useState(null);
-  const [distance, setDistance] = useState("");
-  const [duration, setDuration] = useState("");
-  /** @type React.MutableRefObject<HTMLInputElement> */
-  const originRef = useRef();
-  /** @type React.MutableRefObject<HTMLInputElement> */
-  const destiantionRef = useRef();
 
   const [trip, setTrip] = useState({
     tripName: "",
@@ -82,60 +68,6 @@ export default function TripCreate() {
       fullname: "",
     },
   ]);
-  const [openView, setOpenView] = useState(false);
-  const handleOpenView = () => setOpenView(true);
-  const handleCloseView = () => setOpenView(false);
-
-  // const { isLoaded } = useJsApiLoader({
-  //   googleMapsApiKey: ,
-  //   libraries: ['places'],
-  // })
-
-  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    "& .MuiPaper-root": {
-      minWidth: "1350px",
-    },
-    "& .MuiDialogContent-root": {
-      padding: theme.spacing(2),
-      width: "100%",
-      position: "relative",
-    },
-    "& .MuiDialogActions-root": {
-      padding: theme.spacing(1),
-      width: "100%",
-      display: "flex",
-      justifyContent: "center",
-    },
-  }));
-
-  function BootstrapDialogTitle(props) {
-    const { children, onClose, ...other } = props;
-
-    return (
-      <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-        {children}
-        {onClose ? (
-          <IconButton
-            aria-label="close"
-            onClick={onClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        ) : null}
-      </DialogTitle>
-    );
-  }
-
-  BootstrapDialogTitle.propTypes = {
-    children: PropTypes.node,
-    onClose: PropTypes.func.isRequired,
-  };
 
   useEffect(() => {
     // IFFE
@@ -215,31 +147,6 @@ export default function TripCreate() {
   let hours = [];
   for (let i = 0; i < 24; i++) {
     hours.push(i);
-  }
-
-  function clearRoute() {
-    setDirectionsResponse(null);
-    setDistance("");
-    setDuration("");
-    originRef.current.value = "";
-    destiantionRef.current.value = "";
-  }
-
-  async function calculateRoute() {
-    if (originRef.current.value === "" || destiantionRef.current.value === "") {
-      return;
-    }
-    // eslint-disable-next-line no-undef
-    // const directionsService = new google.maps.DirectionsService()
-    // const results = await directionsService.route({
-    //   origin: originRef.current.value,
-    //   destination: destiantionRef.current.value,
-    //   // eslint-disable-next-line no-undef
-    //   travelMode: google.maps.TravelMode.DRIVING,
-    // })
-    // setDirectionsResponse(results)
-    // setDistance(results.routes[0].legs[0].distance.text)
-    // setDuration(results.routes[0].legs[0].duration.text)
   }
 
   return (
