@@ -18,7 +18,7 @@ const HomeUser = () => {
       try {
         const response = await authUserApi.getCurrentUser();
         console.log(response)
-        if (response === null && response === "") {
+        if (response !== null && response !== "") {
           const tripHistory = await userTripApi.tripHistory();
         }
       } catch (error) {
