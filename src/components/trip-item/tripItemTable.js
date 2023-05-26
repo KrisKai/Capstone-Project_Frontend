@@ -43,15 +43,16 @@ export default function StickyHeadTableTripItem(props) {
     listOfItem: [],
     numOfItem: 0,
   });
+  const { tripId } = useParams();
   const [filter, setFilter] = useState({
     pageIndex: 0,
     pageSize: 10,
     itemName: "",
     categoryId: props.category.categoryId,
+    tripId: tripId
   });
   const itemList = allTripItems.listOfItem;
   const numberOfItem = allTripItems.numOfItem;
-  const { tripId } = useParams();
 
   const handleChangePage = (event, newPage) => {
     setFilter({

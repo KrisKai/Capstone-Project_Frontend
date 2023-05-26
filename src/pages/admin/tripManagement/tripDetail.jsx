@@ -4,12 +4,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
-import {
-  tripApi,
-  tripMemberApi,
-  tripRouteApi,
-  tripItemApi,
-} from "api";
+import { tripApi, tripMemberApi, tripRouteApi, tripItemApi } from "api";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -51,14 +46,10 @@ export default function StickyHeadTableTrip() {
           const filter = {
             pageIndex: 0,
             pageSize: 10,
-          };
-          const filterMember = {
-            pageIndex: 0,
-            pageSize: 10,
             tripId: tripId,
           };
           const route = await tripRouteApi.getAll(filter);
-          const member = await tripMemberApi.getAll(filterMember);
+          const member = await tripMemberApi.getAll(filter);
           const item = await tripItemApi.getAll(filter);
           setRouteList(route.numOfRoute);
           setMemberList(member.numOfMember);

@@ -28,6 +28,7 @@ const columns = [
 
 export default function StickyHeadTableTripRoute() {
   let navigate = useNavigate();
+  const { tripId } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [allTripRoutes, setAllTripRoutes] = useState({
     listOfRoute: [],
@@ -37,10 +38,10 @@ export default function StickyHeadTableTripRoute() {
     pageIndex: 0,
     pageSize: 10,
     planName: "",
+    tripId: tripId,
   });
   const planList = allTripRoutes.listOfRoute;
   const numberOfRoute = allTripRoutes.numOfRoute;
-  const { tripId } = useParams();
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
