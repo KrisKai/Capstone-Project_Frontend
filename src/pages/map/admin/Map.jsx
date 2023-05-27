@@ -46,6 +46,10 @@ export default function Map({ getReturnData }) {
     libraries: ["places"],
   });
 
+const restrictions = {
+  country: "vn",
+};
+
   const [numberOfPlaces, setNumberOfPlace] = useState(2);
 
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
@@ -54,6 +58,8 @@ export default function Map({ getReturnData }) {
   const [duration, setDuration] = useState("");
 
   /** @type React.MutableRefObject<HTMLInputElement> */
+  const originRef = useRef();
+  const destinationRef = useRef();
   const locationRef1 = useRef();
   const locationRef2 = useRef();
   const locationRef3 = useRef();
@@ -66,7 +72,7 @@ export default function Map({ getReturnData }) {
   const locationRef10 = useRef();
 
   if (!isLoaded) {
-    return "â";
+    return "Loading!";
   }
 
   async function calculateRoute() {
@@ -129,7 +135,7 @@ export default function Map({ getReturnData }) {
                 })} */}
               <Card sx={{ padding: "15px 10px" }}>
                 <Box borderRadius="2px">
-                  <Autocomplete>
+                  <Autocomplete restrictions={restrictions}>
                     <input ref={locationRef1} className="custom-input" />
                   </Autocomplete>
                 </Box>
@@ -140,7 +146,7 @@ export default function Map({ getReturnData }) {
               </Card>
               <Card sx={{ padding: "15px 10px" }}>
                 <Box borderRadius="2px">
-                  <Autocomplete>
+                  <Autocomplete restrictions={restrictions}>
                     <input ref={locationRef2} className="custom-input" />
                   </Autocomplete>
                 </Box>
