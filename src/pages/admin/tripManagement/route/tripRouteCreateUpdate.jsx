@@ -123,7 +123,7 @@ export default function RouteCreate() {
           setFieldValue,
         }) => (
           <form onSubmit={handleSubmit}>
-            <Card sx={{ padding: 8, gap: 2 }}>
+            <Card>
               {/* <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField

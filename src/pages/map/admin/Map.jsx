@@ -110,8 +110,8 @@ export default function Map({ getReturnData }) {
   return (
     <>
       {/* Google Map Box */}
-      <Box height="100vh" width="100vw" display="flex">
-        <Box width="25%" padding="10px 20px">
+      <Box height="100vh" width="100%" display="flex">
+        <Box width="25%" padding="10px 10px">
           <Box textAlign="center">
             <Typography variant="h2">Setting Route</Typography>
           </Box>
