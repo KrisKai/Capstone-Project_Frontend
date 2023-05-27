@@ -11,6 +11,7 @@ import { tripRouteApi, tripApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
+import Map from "pages/map/admin/Map";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -73,58 +74,57 @@ export default function RouteCreate() {
       <Typography variant="h4" gutterBottom color="primary">
         {isEdit ? "Update Trip Route" : "Create Trip Route"}
       </Typography>
-      <Container>
-        <Formik
-          initialValues={route}
-          enableReinitialize={true}
-          validationSchema={validationSchema}
-          onSubmit={async (values, { setErrors, setStatus }) => {
-            try {
-              setStatus({ success: false });
+      <Formik
+        initialValues={route}
+        enableReinitialize={true}
+        validationSchema={validationSchema}
+        onSubmit={async (values, { setErrors, setStatus }) => {
+          try {
+            setStatus({ success: false });
 
-              console.log(1);
-              let reponse;
-              if (isEdit) {
-                reponse = await tripRouteApi.update(values);
-              } else {
-                reponse = await tripRouteApi.create(values);
-              }
+            console.log(1);
+            let reponse;
+            if (isEdit) {
+              reponse = await tripRouteApi.update(values);
+            } else {
+              reponse = await tripRouteApi.create(values);
+            }
 
-              switch (reponse.Code) {
-                case "G001":
-                  return toast.error(reponse.Message);
-                case "U001":
-                  return toast.error(reponse.Message);
-                case "I001":
-                  return toast.error(reponse.Message);
-                default: {
-                  if (reponse > 0) {
-                    navigate(`/admin/tripRouteList/${tripId}`);
-                    if (isEdit) {
-                      toast.success("Update Trip Route Successed!");
-                    } else {
-                      toast.success("Create Trip Route Successed!");
-                    }
+            switch (reponse.Code) {
+              case "G001":
+                return toast.error(reponse.Message);
+              case "U001":
+                return toast.error(reponse.Message);
+              case "I001":
+                return toast.error(reponse.Message);
+              default: {
+                if (reponse > 0) {
+                  navigate(`/admin/tripRouteList/${tripId}`);
+                  if (isEdit) {
+                    toast.success("Update Trip Route Successed!");
+                  } else {
+                    toast.success("Create Trip Route Successed!");
                   }
                 }
               }
-            } catch (err) {
-              setStatus({ success: false });
-              setErrors({ submit: err.message });
             }
-          }}
-        >
-          {({
-            errors,
-            touched,
-            handleChange,
-            handleSubmit,
-            values,
-            setFieldValue,
-          }) => (
-            <form onSubmit={handleSubmit}>
-              <Card sx={{ padding: 8, gap: 2 }}>
-                <Grid container spacing={3}>
+          } catch (err) {
+            setStatus({ success: false });
+            setErrors({ submit: err.message });
+          }
+        }}
+      >
+        {({
+          errors,
+          touched,
+          handleChange,
+          handleSubmit,
+          values,
+          setFieldValue,
+        }) => (
+          <form onSubmit={handleSubmit}>
+            <Card sx={{ padding: 8, gap: 2 }}>
+              {/* <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       id="tripId"
@@ -177,12 +177,12 @@ export default function RouteCreate() {
                       {isEdit ? "Update" : "Create"}
                     </Button>
                   </Grid>
-                </Grid>
-              </Card>
-            </form>
-          )}
-        </Formik>
-      </Container>
+                </Grid> */}
+              <Map></Map>
+            </Card>
+          </form>
+        )}
+      </Formik>
     </>
   );
 }

@@ -54,23 +54,30 @@ export default function Map({ getReturnData }) {
   const [duration, setDuration] = useState("");
 
   /** @type React.MutableRefObject<HTMLInputElement> */
-  const originRef = useRef();
-  /** @type React.MutableRefObject<HTMLInputElement> */
-  const destinationRef = useRef();
+  const locationRef1 = useRef();
+  const locationRef2 = useRef();
+  const locationRef3 = useRef();
+  const locationRef4 = useRef();
+  const locationRef5 = useRef();
+  const locationRef6 = useRef();
+  const locationRef7 = useRef();
+  const locationRef8 = useRef();
+  const locationRef9 = useRef();
+  const locationRef10 = useRef();
 
   if (!isLoaded) {
     return "â";
   }
 
   async function calculateRoute() {
-    if (originRef.current.value === "" || destinationRef.current.value === "") {
+    if (locationRef1.current.value === "" || locationRef2.current.value === "") {
       return;
     }
     // eslint-disable-next-line no-undef
     const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route({
-      origin: originRef.current.value,
-      destination: destinationRef.current.value,
+      origin: locationRef1.current.value,
+      destination: locationRef2.current.value,
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
     });
@@ -80,10 +87,10 @@ export default function Map({ getReturnData }) {
 
     ///đây là chỗ đưa dữ liệu ra ngoài component cha
     const returnData = {
-      origin: originRef.current.value,
+      origin: locationRef1.current.value,
       originLat: results.routes[0].legs[0].start_location.lat(),
       originLng: results.routes[0].legs[0].start_location.lng(),
-      destination: destinationRef.current.value,
+      destination: locationRef2.current.value,
       destinationLat: results.routes[0].legs[0].end_location.lat(),
       destinationLng: results.routes[0].legs[0].end_location.lng(),
       distance: results.routes[0].legs[0].distance.text,
@@ -96,8 +103,8 @@ export default function Map({ getReturnData }) {
     setDirectionsResponse(null);
     setDistance("");
     setDuration("");
-    originRef.current.value = "";
-    destinationRef.current.value = "";
+    locationRef1.current.value = "";
+    locationRef2.current.value = "";
   }
 
   return (
@@ -121,9 +128,9 @@ export default function Map({ getReturnData }) {
                   return <CardCustom></CardCustom>;
                 })} */}
               <Card sx={{ padding: "15px 10px" }}>
-                <Box border="1px solid black" borderRadius="2px">
+                <Box borderRadius="2px">
                   <Autocomplete>
-                    <input ref={originRef} className="custom-input" />
+                    <input ref={locationRef1} className="custom-input" />
                   </Autocomplete>
                 </Box>
                 <Box display="flex" mt="5px">
@@ -132,9 +139,9 @@ export default function Map({ getReturnData }) {
                 </Box>
               </Card>
               <Card sx={{ padding: "15px 10px" }}>
-                <Box border="1px solid black" borderRadius="2px">
+                <Box borderRadius="2px">
                   <Autocomplete>
-                    <input ref={destinationRef} className="custom-input" />
+                    <input ref={locationRef2} className="custom-input" />
                   </Autocomplete>
                 </Box>
                 <Box display="flex" mt="5px">
@@ -165,7 +172,7 @@ export default function Map({ getReturnData }) {
         <Box height="100%" flex="1 1 0">
           <GoogleMap
             center={center}
-            zoom={10}
+            zoom={15}
             mapContainerStyle={{ width: "100%", height: "100%" }}
             options={{
               zoomControl: false,
@@ -190,12 +197,12 @@ export default function Map({ getReturnData }) {
   /* <Box display="flex" justifyContent="space-between" width="100%">
           <Box>
             <Autocomplete>
-              <input type="text" ref={originRef} />
+              <input type="text" ref={locationRef1} />
             </Autocomplete>
           </Box>
           <Box>
             <Autocomplete>
-              <input type="text" ref={destinationRef} />
+              <input type="text" ref={locationRef2} />
             </Autocomplete>
           </Box>
 
