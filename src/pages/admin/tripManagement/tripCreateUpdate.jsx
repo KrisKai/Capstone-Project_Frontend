@@ -502,7 +502,7 @@ export default function TripCreate() {
                 </Card>
               </Grid>
               <Grid item xs={12} sm={9} paddingLeft={1}>
-                <MapForTrip getReturnData={getReturnData} />
+                <MapForTrip getReturnData={getReturnData} passToProps={trip}/>
               </Grid>
             </Grid>
             <Grid container marginTop={2}>

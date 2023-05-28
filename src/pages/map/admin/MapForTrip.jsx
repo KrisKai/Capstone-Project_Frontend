@@ -25,7 +25,7 @@ const restrictions = {
   country: "vn",
 };
 
-export default function MapForTrip({ getReturnData }) {
+export default function MapForTrip({ getReturnData, passToProps }) {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
@@ -39,9 +39,9 @@ export default function MapForTrip({ getReturnData }) {
   const [duration, setDuration] = useState("");
 
   /** @type React.MutableRefObject<HTMLInputElement> */
-  const originRef = useRef();
+  const originRef = useRef(passToProps.startLocationName);
   /** @type React.MutableRefObject<HTMLInputElement> */
-  const destinationRef = useRef();
+  const destinationRef = useRef(passToProps.endLocationName);
 
   if (!isLoaded) {
     return "Map is loading";
@@ -86,6 +86,44 @@ export default function MapForTrip({ getReturnData }) {
     destinationRef.current.value = "";
   }
 
+  // useEffect(() => {
+  //   // IFFE
+  //   (async () => {
+  //     const directionsService = new google.maps.DirectionsService();
+  //     const results = await directionsService.route({
+  //       origin:
+  //         "482 Trưng Nữ Vương, Hòa Thuận Tây, Hải Châu District, Da Nang, Vietnam",
+  //       destination:
+  //         "483 Trưng Nữ Vương, Hòa Thuận Tây, Hải Châu District, Da Nang, Vietnam",
+  //       // eslint-disable-next-line no-undef
+  //       travelMode: google.maps.TravelMode.DRIVING,
+  //     });
+  //     setDirectionsResponse(results);
+  //   })();
+  // }, []);
+
+
+  // onMapLoad = map => {
+  //   let request = {
+  //     query: "Museum of Contemporary Art Australia",
+  //     fields: ["name", "geometry"]
+  //   };
+
+  //   let service = new google.maps.places.PlacesService(map);
+
+  //   service.findPlaceFromQuery(request, (results, status) => {
+  //     if (status === google.maps.places.PlacesServiceStatus.OK) {
+  //       for (var i = 0; i < results.length; i++) {
+  //         coords.push(results[i]);
+  //       }
+
+  //       this.setState({
+  //         center: results[0].geometry.location,
+  //         coordsResult: coords
+  //       });
+  //     }
+  //   });
+  // };
   return (
     <>
       {/* Google Map Box */}
@@ -111,6 +149,7 @@ export default function MapForTrip({ getReturnData }) {
                     type="text"
                     ref={originRef}
                     placeholder="Trip Start Location"
+                    value={passToProps.startLocationName}
                   />
                 </Autocomplete>
               </Grid>
@@ -121,6 +160,7 @@ export default function MapForTrip({ getReturnData }) {
                     type="text"
                     ref={destinationRef}
                     placeholder="Destination Start Location"
+                    value={passToProps.endLocationName}
                   />
                 </Autocomplete>
               </Grid>
@@ -152,7 +192,7 @@ export default function MapForTrip({ getReturnData }) {
               mapTypeControl: false,
               fullscreenControl: false,
             }}
-            onLoad={(map) => setMap(map)}
+            onLoad={calculateRoute}
           >
             <Marker position={center} />
             {directionsResponse && (
