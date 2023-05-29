@@ -17,7 +17,7 @@ import {
 import { GOOGLE_MAP_API } from "config";
 import "./map.css";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const center = { lat: 16.0545, lng: 108.0717 };
 
@@ -26,6 +26,10 @@ const restrictions = {
 };
 
 export default function MapForTrip({ getReturnData, passToProps }) {
+  useEffect(() => {
+    console.log("a");
+  }, []);
+
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
@@ -101,7 +105,6 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   //     setDirectionsResponse(results);
   //   })();
   // }, []);
-
 
   // onMapLoad = map => {
   //   let request = {
