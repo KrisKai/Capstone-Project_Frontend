@@ -14,12 +14,13 @@ import {
   Marker,
   useJsApiLoader,
 } from "@react-google-maps/api";
-import { GOOGLE_MAP_API } from "config";
+import { GOOGLE_MAP_API,PLACE_API } from "config";
 import "./map.css";
 
 import { useRef, useState, useEffect } from "react";
+import axios from "axios";
 
-const center = { lat: 16.0545, lng: 108.0717 };
+const center = { lat: 16.0545, lng: 108.22074 };
 
 const restrictions = {
   country: "vn",
@@ -27,8 +28,32 @@ const restrictions = {
 
 export default function MapForTrip({ getReturnData, passToProps }) {
   useEffect(() => {
-    console.log(passToProps)
-    setDeparture(passToProps.startLocationName)
+    console.log(passToProps);
+    setDeparture(passToProps.startLocationName);
+    setDestination(passToProps.endLocationName);
+    var url =
+      "https://api.geoapify.com/v2/places?categories=catering.restaurant&filter=circle:" +
+      center.lng +
+      "," +
+      center.lat +
+      ",5000&bias=proximity:" +
+      center.lng +
+      "," +
+      center.lat +
+      "&limit=50&apiKey=" + PLACE_API;
+    var config = {
+      method: "get",
+      url: url,
+      headers: {},
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }, []);
 
   const { isLoaded } = useJsApiLoader({
@@ -110,25 +135,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   // }, []);
 
   // onMapLoad = map => {
-  //   let request = {
-  //     query: "Museum of Contemporary Art Australia",
-  //     fields: ["name", "geometry"]
-  //   };
 
-  //   let service = new google.maps.places.PlacesService(map);
-
-  //   service.findPlaceFromQuery(request, (results, status) => {
-  //     if (status === google.maps.places.PlacesServiceStatus.OK) {
-  //       for (var i = 0; i < results.length; i++) {
-  //         coords.push(results[i]);
-  //       }
-
-  //       this.setState({
-  //         center: results[0].geometry.location,
-  //         coordsResult: coords
-  //       });
-  //     }
-  //   });
   // };
   return (
     <>
@@ -156,7 +163,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
                     ref={originRef}
                     placeholder="Trip Start Location"
                     value={departure}
-                    onChange={(val)=>setDeparture(val.value)}
+                    onChange={(val) => setDeparture(val.value)}
                   />
                 </Autocomplete>
               </Grid>
@@ -168,7 +175,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
                     ref={destinationRef}
                     placeholder="Destination Start Location"
                     value={destination}
-                    onChange={(val)=>setDestination(val.value)}
+                    onChange={(val) => setDestination(val.value)}
                   />
                 </Autocomplete>
               </Grid>
