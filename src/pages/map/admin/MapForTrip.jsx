@@ -27,11 +27,12 @@ const restrictions = {
 
 export default function MapForTrip({ getReturnData, passToProps }) {
   useEffect(() => {
-    console.log("a");
+    console.log(passToProps)
+    setDeparture(passToProps.startLocationName)
   }, []);
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: GOOGLE_MAP_API,
+    // googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
   });
 
@@ -41,6 +42,8 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
+  const [departure, setDeparture] = useState();
+  const [destination, setDestination] = useState();
 
   /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef(passToProps.startLocationName);
@@ -152,7 +155,8 @@ export default function MapForTrip({ getReturnData, passToProps }) {
                     type="text"
                     ref={originRef}
                     placeholder="Trip Start Location"
-                    value={passToProps.startLocationName}
+                    value={departure}
+                    onChange={(val)=>setDeparture(val.value)}
                   />
                 </Autocomplete>
               </Grid>
@@ -163,7 +167,8 @@ export default function MapForTrip({ getReturnData, passToProps }) {
                     type="text"
                     ref={destinationRef}
                     placeholder="Destination Start Location"
-                    value={passToProps.endLocationName}
+                    value={destination}
+                    onChange={(val)=>setDestination(val.value)}
                   />
                 </Autocomplete>
               </Grid>
