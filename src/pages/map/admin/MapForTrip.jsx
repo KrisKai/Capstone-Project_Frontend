@@ -14,7 +14,7 @@ import {
   Marker,
   useJsApiLoader,
 } from "@react-google-maps/api";
-import { GOOGLE_MAP_API,PLACE_API } from "config";
+import { GOOGLE_MAP_API, PLACE_API } from "config";
 import "./map.css";
 
 import { useRef, useState, useEffect } from "react";
@@ -40,7 +40,8 @@ export default function MapForTrip({ getReturnData, passToProps }) {
       center.lng +
       "," +
       center.lat +
-      "&limit=50&apiKey=" + PLACE_API;
+      "&limit=50&apiKey=" +
+      PLACE_API;
     var config = {
       method: "get",
       url: url,
@@ -54,7 +55,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }, [passToProps]);
 
   const { isLoaded } = useJsApiLoader({
     // googleMapsApiKey: GOOGLE_MAP_API,
@@ -63,6 +64,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
 
   const [numberOfPlaces, setNumberOfPlace] = useState(2);
 
+  const [a, setA] = useState();
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance, setDistance] = useState("");
@@ -71,9 +73,9 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   const [destination, setDestination] = useState();
 
   /** @type React.MutableRefObject<HTMLInputElement> */
-  const originRef = useRef(passToProps.startLocationName);
+  const originRef = useRef();
   /** @type React.MutableRefObject<HTMLInputElement> */
-  const destinationRef = useRef(passToProps.endLocationName);
+  const destinationRef = useRef();
 
   if (!isLoaded) {
     return "Map is loading";
@@ -118,28 +120,10 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     destinationRef.current.value = "";
   }
 
-  // useEffect(() => {
-  //   // IFFE
-  //   (async () => {
-  //     const directionsService = new google.maps.DirectionsService();
-  //     const results = await directionsService.route({
-  //       origin:
-  //         "482 Trưng Nữ Vương, Hòa Thuận Tây, Hải Châu District, Da Nang, Vietnam",
-  //       destination:
-  //         "483 Trưng Nữ Vương, Hòa Thuận Tây, Hải Châu District, Da Nang, Vietnam",
-  //       // eslint-disable-next-line no-undef
-  //       travelMode: google.maps.TravelMode.DRIVING,
-  //     });
-  //     setDirectionsResponse(results);
-  //   })();
-  // }, []);
-
-  // onMapLoad = map => {
-
-  // };
   return (
     <>
       {/* Google Map Box */}
+
       <Box height="100%" width="100%" display="flex">
         <Box height="100%" flex="1 1 0" position="relative">
           <Box

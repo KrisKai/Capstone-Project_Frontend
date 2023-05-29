@@ -59,7 +59,7 @@ export default function TripCreate() {
     endLongitude: "",
     distance: "",
     tripStatus: "ACTIVE",
-    tripId: ""
+    tripId: "",
   });
   const [user, setUser] = useState([
     {
@@ -96,7 +96,7 @@ export default function TripCreate() {
         }
       }
     })();
-  }, [tripId]);
+  }, []);
 
   function gotoList() {
     navigate("/admin/tripList");
@@ -115,6 +115,7 @@ export default function TripCreate() {
       startLongitude: returnData.startLongitude.toString(),
     });
   };
+
   const validationSchema = yup.object().shape({
     tripName: yup.string("Enter Trip Name").required("Trip Name is required"),
     // TripBudget: yup.number().required("Trip Budget is required"),
@@ -502,7 +503,7 @@ export default function TripCreate() {
                 </Card>
               </Grid>
               <Grid item xs={12} sm={9} paddingLeft={1}>
-                <MapForTrip getReturnData={getReturnData} passToProps={trip}/>
+                <MapForTrip getReturnData={getReturnData} passToProps={trip} />
               </Grid>
             </Grid>
             <Grid container marginTop={2}>
