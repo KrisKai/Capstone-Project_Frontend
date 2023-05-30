@@ -30,12 +30,12 @@ const google = window.google;
 
 const offices = [
   {
-    id: '1',
+    id: "1",
     field_address: {
-      locality: 'Gent',
-      postal_code: '9000',
-      address_line1: 'Veldstraat 1',
-      address_line2: 'a',
+      locality: "Gent",
+      postal_code: "9000",
+      address_line1: "Veldstraat 1",
+      address_line2: "a",
       latitude: 16.0545,
       longitude: 108.22074,
     },
@@ -74,20 +74,32 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   }, [passToProps]);
 
   const onLoad = useCallback(
-    mapInstance => {
-      const bounds = new google.maps.LatLngBounds();
-      offices.forEach(office => {
-        bounds.extend(
-          new google.maps.LatLng(
-            office.field_address.latitude,
-            office.field_address.longitude
-          )
-        );
+    () => {
+      // const bounds = new google.maps.LatLngBounds();
+      // offices.forEach(office => {
+      //   bounds.extend(
+      //     new google.maps.LatLng(
+      //       office.field_address.latitude,
+      //       office.field_address.longitude
+      //     )
+      //   );
+      // });
+      // mapRef.current = mapInstance;
+      // mapInstance.fitBounds(bounds);
+      var start = new google.maps.LatLng(passToProps.startLatitude, passToProps.startLongitude);
+      var end = new google.maps.LatLng(passToProps.endLatitude, passToProps.endLongitude);
+      const directionsService = new google.maps.DirectionsService();
+      const results = directionsService.route({
+        origin: start,
+        destination: end,
+        // eslint-disable-next-line no-undef
+        travelMode: google.maps.TravelMode.DRIVING,
       });
-      mapRef.current = mapInstance;
-      mapInstance.fitBounds(bounds);
+      console.log(start);
+      console.log(passToProps)
+      setDirectionsResponse(results);
     },
-    [offices]
+    [passToProps]
   );
 
   const { isLoaded } = useJsApiLoader({
@@ -109,7 +121,6 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   const originRef = useRef();
   /** @type React.MutableRefObject<HTMLInputElement> */
   const destinationRef = useRef();
-
 
   if (!isLoaded) {
     return "Map is loading";
@@ -142,7 +153,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
       distance: results.routes[0].legs[0].distance.text,
       duration: results.routes[0].legs[0].duration.text,
     };
-    console.log(1)
+    console.log(1);
     getReturnData(returnData);
   }
 
@@ -153,7 +164,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     originRef.current.value = "";
     destinationRef.current.value = "";
   }
-  
+
   return (
     <>
       {/* Google Map Box */}
@@ -231,7 +242,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
             {directionsResponse && (
               <DirectionsRenderer directions={directionsResponse} />
             )}
-             {offices.map(office => (
+            {offices.map((office) => (
               <Marker
                 key={office.id}
                 position={{
