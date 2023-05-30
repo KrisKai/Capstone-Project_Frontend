@@ -17,7 +17,7 @@ import {
 import { GOOGLE_MAP_API, PLACE_API } from "config";
 import "./map.css";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const center = { lat: 16.0545, lng: 108.22074 };
@@ -25,6 +25,22 @@ const center = { lat: 16.0545, lng: 108.22074 };
 const restrictions = {
   country: "vn",
 };
+
+const google = window.google;
+
+const offices = [
+  {
+    id: '1',
+    field_address: {
+      locality: 'Gent',
+      postal_code: '9000',
+      address_line1: 'Veldstraat 1',
+      address_line2: 'a',
+      latitude: 16.0545,
+      longitude: 108.22074,
+    },
+  },
+];
 
 export default function MapForTrip({ getReturnData, passToProps }) {
   useEffect(() => {
@@ -48,22 +64,39 @@ export default function MapForTrip({ getReturnData, passToProps }) {
       headers: {},
     };
 
-    axios(config)
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios(config)
+    //   .then(function (response) {
+    //     console.log(response.data);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   }, [passToProps]);
 
+  const onLoad = useCallback(
+    mapInstance => {
+      const bounds = new google.maps.LatLngBounds();
+      offices.forEach(office => {
+        bounds.extend(
+          new google.maps.LatLng(
+            office.field_address.latitude,
+            office.field_address.longitude
+          )
+        );
+      });
+      mapRef.current = mapInstance;
+      mapInstance.fitBounds(bounds);
+    },
+    [offices]
+  );
+
   const { isLoaded } = useJsApiLoader({
-    // googleMapsApiKey: GOOGLE_MAP_API,
+    googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
   });
 
   const [numberOfPlaces, setNumberOfPlace] = useState(2);
-
+  const mapRef = useRef(/** @type google.maps.Map */ (null));
   const [a, setA] = useState();
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionsResponse, setDirectionsResponse] = useState(null);
@@ -76,6 +109,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   const originRef = useRef();
   /** @type React.MutableRefObject<HTMLInputElement> */
   const destinationRef = useRef();
+
 
   if (!isLoaded) {
     return "Map is loading";
@@ -108,7 +142,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
       distance: results.routes[0].legs[0].distance.text,
       duration: results.routes[0].legs[0].duration.text,
     };
-
+    console.log(1)
     getReturnData(returnData);
   }
 
@@ -119,7 +153,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     originRef.current.value = "";
     destinationRef.current.value = "";
   }
-
+  
   return (
     <>
       {/* Google Map Box */}
@@ -191,12 +225,21 @@ export default function MapForTrip({ getReturnData, passToProps }) {
               mapTypeControl: false,
               fullscreenControl: false,
             }}
-            onLoad={calculateRoute}
+            onLoad={onLoad}
           >
             <Marker position={center} />
             {directionsResponse && (
               <DirectionsRenderer directions={directionsResponse} />
             )}
+             {offices.map(office => (
+              <Marker
+                key={office.id}
+                position={{
+                  lat: office.field_address.latitude,
+                  lng: office.field_address.longitude,
+                }}
+              />
+            ))}
           </GoogleMap>
         </Box>
       </Box>
