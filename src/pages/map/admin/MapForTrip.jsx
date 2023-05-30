@@ -13,6 +13,7 @@ import {
   GoogleMap,
   Marker,
   useJsApiLoader,
+  DirectionsService,
 } from "@react-google-maps/api";
 import { GOOGLE_MAP_API, PLACE_API } from "config";
 import "./map.css";
@@ -30,12 +31,12 @@ const google = window.google;
 
 const offices = [
   {
-    id: '1',
+    id: "1",
     field_address: {
-      locality: 'Gent',
-      postal_code: '9000',
-      address_line1: 'Veldstraat 1',
-      address_line2: 'a',
+      locality: "Gent",
+      postal_code: "9000",
+      address_line1: "Veldstraat 1",
+      address_line2: "a",
       latitude: 16.0545,
       longitude: 108.22074,
     },
@@ -74,21 +75,31 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   }, [passToProps]);
 
   const onLoad = useCallback(
-    mapInstance => {
-      const bounds = new google.maps.LatLngBounds();
-      offices.forEach(office => {
-        bounds.extend(
-          new google.maps.LatLng(
-            office.field_address.latitude,
-            office.field_address.longitude
-          )
-        );
-      });
-      mapRef.current = mapInstance;
-      mapInstance.fitBounds(bounds);
+    (mapInstance) => {
+      // const bounds = new google.maps.LatLngBounds();
+      // offices.forEach(office => {
+      //   bounds.extend(
+      //     new google.maps.LatLng(
+      //       office.field_address.latitude,
+      //       office.field_address.longitude
+      //     )
+      //   );
+      // });
+      // mapRef.current = mapInstance;
+      // mapInstance.fitBounds(bounds);
     },
     [offices]
   );
+
+  function directionsCallback(response) {
+    console.log(response);
+
+    if (response !== null) {
+      if (response.status === "OK") {
+        setDirectionsResponse(response);
+      }
+    }
+  }
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAP_API,
@@ -109,7 +120,6 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   const originRef = useRef();
   /** @type React.MutableRefObject<HTMLInputElement> */
   const destinationRef = useRef();
-
 
   if (!isLoaded) {
     return "Map is loading";
@@ -142,7 +152,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
       distance: results.routes[0].legs[0].distance.text,
       duration: results.routes[0].legs[0].duration.text,
     };
-    console.log(1)
+    console.log(1);
     getReturnData(returnData);
   }
 
@@ -153,7 +163,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     originRef.current.value = "";
     destinationRef.current.value = "";
   }
-  
+
   return (
     <>
       {/* Google Map Box */}
@@ -227,11 +237,38 @@ export default function MapForTrip({ getReturnData, passToProps }) {
             }}
             onLoad={onLoad}
           >
+            {departure !== "" && destination !== "" && (
+              <DirectionsService
+                // required
+                options={{
+                  // eslint-disable-line
+                  destination: departure,
+                  origin: destination,
+                  travelMode: google.maps.TravelMode.DRIVING,
+                }}
+                // required
+                callback={directionsCallback}
+                // optional
+                onLoad={(directionsService) => {
+                  console.log(
+                    "DirectionsService onLoad directionsService: ",
+                    directionsService
+                  );
+                }}
+                // optional
+                onUnmount={(directionsService) => {
+                  console.log(
+                    "DirectionsService onUnmount directionsService: ",
+                    directionsService
+                  );
+                }}
+              />
+            )}
             <Marker position={center} />
             {directionsResponse && (
               <DirectionsRenderer directions={directionsResponse} />
             )}
-             {offices.map(office => (
+            {offices.map((office) => (
               <Marker
                 key={office.id}
                 position={{
