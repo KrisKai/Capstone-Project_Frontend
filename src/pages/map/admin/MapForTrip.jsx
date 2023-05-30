@@ -13,6 +13,7 @@ import {
   GoogleMap,
   Marker,
   useJsApiLoader,
+  DirectionsService,
 } from "@react-google-maps/api";
 import { GOOGLE_MAP_API, PLACE_API } from "config";
 import "./map.css";
@@ -74,7 +75,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   }, [passToProps]);
 
   const onLoad = useCallback(
-    () => {
+    (mapInstance) => {
       // const bounds = new google.maps.LatLngBounds();
       // offices.forEach(office => {
       //   bounds.extend(
@@ -86,21 +87,19 @@ export default function MapForTrip({ getReturnData, passToProps }) {
       // });
       // mapRef.current = mapInstance;
       // mapInstance.fitBounds(bounds);
-      var start = new google.maps.LatLng(passToProps.startLatitude, passToProps.startLongitude);
-      var end = new google.maps.LatLng(passToProps.endLatitude, passToProps.endLongitude);
-      const directionsService = new google.maps.DirectionsService();
-      const results = directionsService.route({
-        origin: start,
-        destination: end,
-        // eslint-disable-next-line no-undef
-        travelMode: google.maps.TravelMode.DRIVING,
-      });
-      console.log(start);
-      console.log(passToProps)
-      setDirectionsResponse(results);
     },
     [passToProps]
   );
+
+  function directionsCallback(response) {
+    console.log(response);
+
+    if (response !== null) {
+      if (response.status === "OK") {
+        setDirectionsResponse(response);
+      }
+    }
+  }
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAP_API,
@@ -238,6 +237,33 @@ export default function MapForTrip({ getReturnData, passToProps }) {
             }}
             onLoad={onLoad}
           >
+            {departure !== "" && destination !== "" && (
+              <DirectionsService
+                // required
+                options={{
+                  // eslint-disable-line
+                  destination: departure,
+                  origin: destination,
+                  travelMode: google.maps.TravelMode.DRIVING,
+                }}
+                // required
+                callback={directionsCallback}
+                // optional
+                onLoad={(directionsService) => {
+                  console.log(
+                    "DirectionsService onLoad directionsService: ",
+                    directionsService
+                  );
+                }}
+                // optional
+                onUnmount={(directionsService) => {
+                  console.log(
+                    "DirectionsService onUnmount directionsService: ",
+                    directionsService
+                  );
+                }}
+              />
+            )}
             <Marker position={center} />
             {directionsResponse && (
               <DirectionsRenderer directions={directionsResponse} />
