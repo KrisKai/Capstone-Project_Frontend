@@ -141,7 +141,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     setDistance(results.routes[0].legs[0].distance.text);
     setDuration(results.routes[0].legs[0].duration.text);
 
-    ///đây là chỗ đưa dữ liệu ra ngoài component cha
+    // đây là chỗ đưa dữ liệu ra ngoài component cha
     const returnData = {
       startLocationName: originRef.current.value,
       startLatitude: results.routes[0].legs[0].start_location.lat(),
@@ -244,7 +244,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
                   // eslint-disable-line
                   destination: departure,
                   origin: destination,
-                  travelMode: google.maps.TravelMode.DRIVING,
+                  travelMode: 'DRIVING',
                 }}
                 // required
                 callback={directionsCallback}
