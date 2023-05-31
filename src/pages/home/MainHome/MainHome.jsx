@@ -15,9 +15,9 @@ const MainHome = () => {
         <Box mt={10}>
           <Schedule />
         </Box>
-        {/* <Box mt={10}>
+        <Box mt={10}>
           <Rate />
-        </Box> */}
+        </Box>
         <Box mt={10}>
           <Explore />
         </Box>

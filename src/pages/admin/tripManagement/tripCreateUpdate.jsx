@@ -1,17 +1,4 @@
-import CloseIcon from "@mui/icons-material/Close";
-import {
-  Box,
-  Button,
-  Card,
-  Container,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  FormHelperText,
-  IconButton,
-  Typography,
-  styled,
-} from "@mui/material";
+import { Box, Button, Card, FormHelperText, Typography } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
@@ -25,10 +12,8 @@ import { tripApi, userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
-import Map from "pages/map/admin/Map";
 import MapForTrip from "pages/map/admin/MapForTrip";
-import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 // import { FaLocationArrow, FaTimes } from 'react-icons/fa'
@@ -70,6 +55,26 @@ export default function TripCreate() {
   ]);
 
   useEffect(() => {
+    // setTrip({
+    //   tripName: "asdasdasdasd",
+    //   tripDescription: "",
+    //   estimateStartDate: "",
+    //   estimateEndDate: "",
+    //   estimateStartTime: "",
+    //   estimateEndTime: "",
+    //   tripPresenter: "",
+    //   startLocationName: "",
+    //   endLocationName: "",
+    //   startLocationName: "",
+    //   startLatitude: "",
+    //   startLongitude: "",
+    //   endLocationName: "",
+    //   endLatitude: "",
+    //   endLongitude: "",
+    //   distance: "",
+    //   tripStatus: "ACTIVE",
+    //   tripId: "",
+    // });
     // IFFE
     (async () => {
       const response = await userApi.getAll({
