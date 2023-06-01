@@ -1,14 +1,6 @@
-import { StarRounded } from "@material-ui/icons";
-import {
-  Box,
-  Card,
-  Container,
-  Typography,
-  Button,
-  Rating,
-} from "@mui/material";
+import { Box, Card, Container, Rating, Typography } from "@mui/material";
+import { Carousel } from "components/Extend";
 import { useState } from "react";
-import { useSnapCarousel } from "react-snap-carousel";
 
 const RateCard = (props) => {
   return (
@@ -50,7 +42,6 @@ const RateCard = (props) => {
 
 const Rate = () => {
   const [test, setTest] = useState(6);
-  const { scrollRef, prev, next } = useSnapCarousel();
 
   return (
     <Container>
@@ -60,39 +51,11 @@ const Rate = () => {
           <Box width="60%" border="1px solid black" mt={1}></Box>
         </Box>
       </Box>
-      <Box position="relative" display="flex" mt={3}>
-        <Box
-          width="40px"
-          sx={{ transform: "translate(-50%, 0)", aspectRatio: "1/1" }}
-          position="absolute"
-          top="50%"
-          zIndex={9999}
-          backgroundColor="white"
-          borderRadius="50%"
-          border="1px solid black"
-        >
-          <Button
-            sx={{ width: "100%", height: "100%", borderRadius: "50%" }}
-            onClick={() => prev()}
-          >
-            prev
-          </Button>
-        </Box>
-        <Box
-          display="flex"
-          overflow="auto"
-          gap={2}
-          sx={{ scrollSnapType: "x mandatory" }}
-          ref={scrollRef}
-        >
-          {Array.from({ length: test }).map((_, idx) => {
-            return <RateCard key={idx} />;
-          })}
-        </Box>
-        <Box position="absolute" right="0" top="50%">
-          <Button onClick={() => next()}>next</Button>
-        </Box>
-      </Box>
+      <Carousel>
+        {Array.from({ length: test }).map((_, idx) => {
+          return <RateCard key={idx} />;
+        })}
+      </Carousel>
     </Container>
   );
 };
