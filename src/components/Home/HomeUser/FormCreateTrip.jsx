@@ -13,10 +13,12 @@ import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 import { GOOGLE_MAP_API } from "config";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { useNavigate } from "react-router-dom";
 
 dayjs.extend(utc);
 
 const FormCreateTrip = () => {
+  const navigate = useNavigate();
   const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -48,7 +50,16 @@ const FormCreateTrip = () => {
   }
 
   const gotoCreate = () => {
-    console.log(destination)
+    console.log(destination);
+    if (destination !== "" && startDate !== "" && endDate !== "") {
+      navigate("/tripCreate", {
+        state: {
+          destination: destination,
+          startDate: startDate,
+          endDate: endDate,
+        },
+      });
+    }
   };
 
   return (
@@ -97,8 +108,10 @@ const FormCreateTrip = () => {
                   </Autocomplete>
                 </Box>
                 <Box display="flex" gap={2}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}
-                        dateLibInstance={dayjs.utc}>
+                  <LocalizationProvider
+                    dateAdapter={AdapterDayjs}
+                    dateLibInstance={dayjs.utc}
+                  >
                     <DatePicker
                       sx={{
                         background: "white",
@@ -111,8 +124,10 @@ const FormCreateTrip = () => {
                       }}
                     />
                   </LocalizationProvider>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}
-                        dateLibInstance={dayjs.utc}>
+                  <LocalizationProvider
+                    dateAdapter={AdapterDayjs}
+                    dateLibInstance={dayjs.utc}
+                  >
                     <DatePicker
                       sx={{
                         background: "white",
