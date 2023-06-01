@@ -1,3 +1,4 @@
+import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
@@ -10,15 +11,22 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 import { GOOGLE_MAP_API } from "config";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 const FormCreateTrip = () => {
+  const [destination, setDestination] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
   });
   const restrictions = {
-    country: 'vn',
-  }
+    country: "vn",
+  };
 
   const onSubmit = (e) => {
     e.target.preventDefault();
@@ -38,6 +46,10 @@ const FormCreateTrip = () => {
       </Box>
     );
   }
+
+  const gotoCreate = () => {
+    console.log(destination)
+  };
 
   return (
     <>
@@ -76,27 +88,41 @@ const FormCreateTrip = () => {
                           </InputAdornment>
                         ),
                       }}
+                      value={destination}
+                      onChange={(eve) => {
+                        setDestination(eve.value);
+                      }}
                       placeholder="Điểm đến"
                     ></TextField>
                   </Autocomplete>
                 </Box>
                 <Box display="flex" gap={2}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}
+                        dateLibInstance={dayjs.utc}>
                     <DatePicker
                       sx={{
                         background: "white",
                         borderRadius: "8px",
                       }}
                       label="Ngày đi"
+                      value={startDate}
+                      onChange={(eve) => {
+                        setStartDate(eve.value);
+                      }}
                     />
                   </LocalizationProvider>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}
+                        dateLibInstance={dayjs.utc}>
                     <DatePicker
                       sx={{
                         background: "white",
                         borderRadius: "8px",
                       }}
                       label="Ngày đến"
+                      value={endDate}
+                      onChange={(eve) => {
+                        setEndDate(eve.value);
+                      }}
                     />
                   </LocalizationProvider>
                 </Box>
@@ -108,6 +134,7 @@ const FormCreateTrip = () => {
                       fontSize: "20px",
                       backgroundColor: "#168843",
                     }}
+                    onClick={gotoCreate}
                   >
                     Bắt Đầu
                   </Button>
