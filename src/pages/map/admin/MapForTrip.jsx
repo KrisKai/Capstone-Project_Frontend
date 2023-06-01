@@ -45,18 +45,17 @@ const offices = [
 
 export default function MapForTrip({ getReturnData, passToProps }) {
   useEffect(() => {
-    console.log(passToProps);
     setDeparture(passToProps.startLocationName);
     setDestination(passToProps.endLocationName);
     var url =
       "https://api.geoapify.com/v2/places?categories=catering.restaurant&filter=circle:" +
-      center.lng +
+      passToProps.startLongitude +
       "," +
-      center.lat +
+      passToProps.endLatitude +
       ",5000&bias=proximity:" +
-      center.lng +
+      passToProps.startLongitude +
       "," +
-      center.lat +
+      passToProps.endLatitude +
       "&limit=50&apiKey=" +
       PLACE_API;
     var config = {
@@ -237,7 +236,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
             }}
             onLoad={onLoad}
           >
-            {departure !== "" && destination !== "" && (
+            {/* {departure !== "" && destination !== "" && (
               <DirectionsService
                 // required
                 options={{
@@ -263,7 +262,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
                   );
                 }}
               />
-            )}
+            )} */}
             <Marker position={center} />
             {directionsResponse && (
               <DirectionsRenderer directions={directionsResponse} />
