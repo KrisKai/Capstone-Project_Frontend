@@ -1,5 +1,8 @@
+import { Image } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import { useSnapCarousel } from "react-snap-carousel";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const Carousel = (props) => {
   const { scrollRef, prev, next } = useSnapCarousel();
@@ -21,13 +24,13 @@ const Carousel = (props) => {
         zIndex={9999}
         backgroundColor="white"
         borderRadius="50%"
-        border="1px solid black"
+        boxShadow={2}
         display="flex"
         justifyContent="center"
         alignItems="center"
         onClick={() => prev()}
       >
-        prev
+        <KeyboardArrowLeftIcon />
       </Box>
       <Box
         display="flex"
@@ -54,14 +57,13 @@ const Carousel = (props) => {
         }}
         zIndex={9999}
         backgroundColor="white"
-        borderRadius="50%"
-        border="1px solid black"
+        borderRadius="50%"boxShadow={2}
         display="flex"
         justifyContent="center"
         alignItems="center"
         onClick={() => next()}
       >
-        next
+        <KeyboardArrowRightIcon />
       </Box>
     </Box>
   );
