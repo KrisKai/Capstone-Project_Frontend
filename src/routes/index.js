@@ -47,6 +47,22 @@ export default function Router() {
             </AuthGuardUser>
           ),
         },
+        {
+          path: "tripCreate",
+          element: (
+            <AuthGuardUser>
+              <TripCreateUpdateUser />
+            </AuthGuardUser>
+          ),
+        },
+        {
+          path: "tripUpdate/:tripId",
+          element: (
+            <AuthGuardUser>
+              <TripCreateUpdateUser />
+            </AuthGuardUser>
+          ),
+        },
       ],
     },
     {
@@ -312,6 +328,10 @@ const Register = Loadable(
 const UserHome  = Loadable(
   lazy(() => import("../pages/home/UserHome/UserHome"))
 );
+const TripCreateUpdateUser = Loadable(
+  lazy(() => import("../pages/user/trip/tripCreateUpdateUser"))
+)
+
 //     --------------ADMIN------------------
 // Authentication
 const AuthLogin = Loadable(

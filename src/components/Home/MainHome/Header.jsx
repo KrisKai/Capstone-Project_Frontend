@@ -14,19 +14,9 @@ import Logo from "assets/images/logo.svg";
 
 const listNavItems = [
   {
-    display: "Trang chủ",
-    link: "/",
-  },
-  {
-    display: "Cẩm nang đi phượt",
-    link: "",
-  },
-  ,
-  {
     display: "Đăng nhập",
     link: "/login",
   },
-  ,
   {
     display: "Đăng ký",
     link: "/register",
@@ -61,7 +51,7 @@ const Header = () => {
           container
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Grid item xs={3}>
+          <Grid item xs={9}>
             <Container
               className="d-flex"
               sx={{
@@ -77,7 +67,7 @@ const Header = () => {
               </Typography>
             </Container>
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={3}>
             <List
               component="nav"
               sx={{
@@ -116,7 +106,7 @@ const Header = () => {
                       <Link
                         style={{
                           fontWeight: 600,
-                          fontSize: "16px",
+                          fontSize: "15px",
                           textDecoration: "none",
                           color: "black",
                         }}

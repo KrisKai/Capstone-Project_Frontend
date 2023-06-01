@@ -21,10 +21,7 @@ const Explore = () => {
       <Box display="flex" justifyContent="center">
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography variant="h2">
-            Khám phá điểm đến ngẫu hứng của bạn
-          </Typography>
-          <Typography fontSize="20px">
-            Những điểm du lịch lấy cảm hứng từ các hướng dẫn trên khắp thế giới
+            Khám phá điểm đến ngẫu hứng dành cho bạn
           </Typography>
           <Box width="60%" border="1px solid black" mt={1}></Box>
         </Box>

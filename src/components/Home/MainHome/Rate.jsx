@@ -5,8 +5,8 @@ import { useState } from "react";
 const RateCard = (props) => {
   return (
     <Card sx={{ minWidth: "295px" }}>
-      <Box display="flex" justifyContent="center">
-        <Rating value={5} />
+      <Box display="flex" justifyContent="center" paddingTop={2}>
+        <Rating value={5}/>
       </Box>
       <Box padding={3}>
         <Box>
