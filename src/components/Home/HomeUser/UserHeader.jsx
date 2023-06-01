@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 
 import HomeImage from "assets/images/index_img.png";
 import Logo from "assets/images/logo.svg";
+import ProfileUser from "layout/MainLayout/Header/HeaderContent/Profile/ProfileUser";
 
 const listNavItems = [
   {
@@ -98,6 +99,7 @@ const UserHeader = () => {
                 </>
               );
             })}
+            <ProfileUser/>
           </List>
         </Grid>
         <Grid
