@@ -51,7 +51,7 @@ const FormCreateTrip = () => {
 
   const gotoCreate = () => {
     console.log(destination);
-    if (destination !== "" && startDate !== "" && endDate !== "") {
+    // if (destination !== "" && startDate !== "" && endDate !== "") {
       navigate("/tripCreate", {
         state: {
           destination: destination,
@@ -59,7 +59,7 @@ const FormCreateTrip = () => {
           endDate: endDate,
         },
       });
-    }
+    // }
   };
 
   return (
@@ -77,85 +77,84 @@ const FormCreateTrip = () => {
             tạo hành trình mới
           </Typography>
           <Box mt={2}>
-            <form>
-              <Box display="flex" flexDirection="column" gap={2}>
-                <Box
-                  width="100%"
-                  sx={{
-                    borderRadius: "8px",
-                  }}
-                >
-                  <Autocomplete restrictions={restrictions}>
-                    <TextField
-                      sx={{
-                        width: "100%",
-                        background: "white",
-                        borderRadius: "8px",
-                      }}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <SearchIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                      value={destination}
-                      onChange={(eve) => {
-                        setDestination(eve.value);
-                      }}
-                      placeholder="Điểm đến"
-                    ></TextField>
-                  </Autocomplete>
-                </Box>
-                <Box display="flex" gap={2}>
-                  <LocalizationProvider
-                    dateAdapter={AdapterDayjs}
-                    dateLibInstance={dayjs.utc}
-                  >
-                    <DatePicker
-                      sx={{
-                        background: "white",
-                        borderRadius: "8px",
-                      }}
-                      label="Ngày đi"
-                      value={startDate}
-                      onChange={(eve) => {
-                        setStartDate(eve.value);
-                      }}
-                    />
-                  </LocalizationProvider>
-                  <LocalizationProvider
-                    dateAdapter={AdapterDayjs}
-                    dateLibInstance={dayjs.utc}
-                  >
-                    <DatePicker
-                      sx={{
-                        background: "white",
-                        borderRadius: "8px",
-                      }}
-                      label="Ngày đến"
-                      value={endDate}
-                      onChange={(eve) => {
-                        setEndDate(eve.value);
-                      }}
-                    />
-                  </LocalizationProvider>
-                </Box>
-                <Box display="flex" justifyContent="center">
-                  <Button
-                    variant="contained"
+            <Box display="flex" flexDirection="column" gap={2}>
+              <Box
+                width="100%"
+                sx={{
+                  borderRadius: "8px",
+                }}
+              >
+                <Autocomplete restrictions={restrictions}>
+                  <TextField
                     sx={{
-                      padding: "10px 30px",
-                      fontSize: "20px",
-                      backgroundColor: "#168843",
+                      width: "100%",
+                      background: "white",
+                      borderRadius: "8px",
                     }}
-                    onClick={gotoCreate}
-                  >
-                    Bắt Đầu
-                  </Button>
-                </Box>
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    value={destination}
+                    onChange={(eve) => {
+                      setDestination(eve.target.value);
+                    }}
+                    placeholder="Điểm đến"
+                  ></TextField>
+                </Autocomplete>
               </Box>
-            </form>
+              <Box display="flex" gap={2}>
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  dateLibInstance={dayjs.utc}
+                >
+                  <DatePicker
+                    sx={{
+                      background: "white",
+                      borderRadius: "8px",
+                    }}
+                    label="Ngày đi"
+                    value={startDate}
+                    onChange={(eve) => {
+                      setStartDate(eve.target.value);
+                      console.log(eve.target.value)
+                    }}
+                  />
+                </LocalizationProvider>
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  dateLibInstance={dayjs.utc}
+                >
+                  <DatePicker
+                    sx={{
+                      background: "white",
+                      borderRadius: "8px",
+                    }}
+                    label="Ngày đến"
+                    value={endDate}
+                    onChange={(eve) => {
+                      setEndDate(eve.target.value);
+                    }}
+                  />
+                </LocalizationProvider>
+              </Box>
+              <Box display="flex" justifyContent="center">
+                <Button
+                  variant="contained"
+                  sx={{
+                    padding: "10px 30px",
+                    fontSize: "20px",
+                    backgroundColor: "#168843",
+                  }}
+                  onClick={gotoCreate}
+                >
+                  Bắt Đầu
+                </Button>
+              </Box>
+            </Box>
           </Box>
         </Box>
       </Box>

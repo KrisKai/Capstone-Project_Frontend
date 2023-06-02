@@ -13,8 +13,9 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
 import MapForTrip from "pages/map/admin/MapForTrip";
+import MapUser from "pages/map/user/MapUser";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 // import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 import * as yup from "yup";
@@ -25,6 +26,7 @@ export default function TripCreate() {
   let navigate = useNavigate();
   const { tripId } = useParams();
   const isEdit = Boolean(tripId);
+  const location = useLocation();
 
   const [trip, setTrip] = useState({
     tripName: "",
@@ -108,7 +110,6 @@ export default function TripCreate() {
   }
 
   const getReturnData = (returnData) => {
-    console.log(returnData);
     setTrip({
       ...trip,
       distance: returnData.distance.toString(),
@@ -136,18 +137,6 @@ export default function TripCreate() {
     tripPresenter: yup
       .string("Enter Trip Presenter")
       .required("Trip Presenter is required"),
-    // startLocationName: yup
-    //   .string("Enter Trip Start Location Name")
-    //   .required("Trip Start Location Name is required"),
-    // tripStartLocationAddress: yup
-    //   .string("Enter Trip Start Location Address")
-    //   .required("Trip Start Location Address is required"),
-    // endLocationName: yup
-    //   .string("Enter Trip Destination Location Name")
-    //   .required("Trip Destination Location Name is required"),
-    // tripDestinationLocationAddress: yup
-    //   .string("Enter Trip Destination Location Address")
-    //   .required("Trip Destination Location Address is required"),
   });
 
   let hours = [];
@@ -158,7 +147,7 @@ export default function TripCreate() {
   return (
     <>
       <Typography variant="h4" gutterBottom color="primary">
-        {isEdit ? "Update Trip" : "Create Trip"}
+      {location.state.destination}
       </Typography>
       <Formik
         initialValues={trip}
@@ -508,19 +497,7 @@ export default function TripCreate() {
                 </Card>
               </Grid>
               <Grid item xs={12} sm={9} paddingLeft={1}>
-                <MapForTrip getReturnData={getReturnData} passToProps={trip} />
-              </Grid>
-            </Grid>
-            <Grid container marginTop={2}>
-              <Grid item xs={6}>
-                <Button variant="outlined" onClick={gotoList}>
-                  Return to List
-                </Button>
-              </Grid>
-              <Grid item xs={6} textAlign="right">
-                <Button type="submit" variant="contained">
-                  {isEdit ? "Update" : "Create"}
-                </Button>
+                <MapUser getReturnData={getReturnData} passToProps={trip} />
               </Grid>
             </Grid>
           </form>
