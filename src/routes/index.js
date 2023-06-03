@@ -63,6 +63,10 @@ export default function Router() {
             </AuthGuardUser>
           ),
         },
+        {
+          path: "maintenance",
+          element: <Maintenance />,
+        },
       ],
     },
     {
@@ -325,12 +329,12 @@ const Register = Loadable(
   lazy(() => import("../pages/user/authentication/Register"))
 );
 // Dashboard
-const UserHome  = Loadable(
+const UserHome = Loadable(
   lazy(() => import("../pages/home/UserHome/UserHome"))
 );
 const TripCreateUpdateUser = Loadable(
   lazy(() => import("../pages/user/trip/tripCreateUpdateUser"))
-)
+);
 
 //     --------------ADMIN------------------
 // Authentication

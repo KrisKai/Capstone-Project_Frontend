@@ -23,11 +23,11 @@ const listNavItems = [
   },
   {
     display: "Điểm dừng chân",
-    link: "",
+    link: "/maintenance",
   },
   {
     display: "Cẩm nang đi phượt",
-    link: "/",
+    link: "/maintenance",
   },
   {
     display: "Quản lí chuyến đi",
