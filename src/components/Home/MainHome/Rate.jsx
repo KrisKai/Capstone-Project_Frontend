@@ -1,20 +1,19 @@
 import { Box, Card, Container, Rating, Typography } from "@mui/material";
+import { feedbackApi } from "api";
 import { Carousel } from "components/Extend";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const RateCard = (props) => {
+  console.log(props.item.rate)
   return (
-    <Card sx={{ minWidth: "295px" }}>
+    <Card sx={{ width: "300px" }}>
       <Box display="flex" justifyContent="center" paddingTop={2}>
-        <Rating value={5}/>
+        <Rating value={props.item.rate} />
       </Box>
       <Box padding={3}>
         <Box>
           <Typography>
-            Amet adipisicing voluptate laboris nisi mollit.Pariatur non est esse
-            irure consectetur. Duis magna ea id cupidatat ullamco pariatur est
-            eiusmod et ullamco excepteur exercitation. Id laborum irure esse
-            irure duis reprehenderit est duis nostrud.
+            {props.item.feedbackDescription}
           </Typography>
         </Box>
         <Box display="flex" alignItems="center" gap={2} mt={2}>
@@ -33,7 +32,7 @@ const RateCard = (props) => {
           >
             <Typography>K</Typography>
           </Box>
-          <Typography>DOK, Dev</Typography>
+          <Typography> {props.item.fullname}</Typography>
         </Box>
       </Box>
     </Card>
@@ -42,6 +41,27 @@ const RateCard = (props) => {
 
 const Rate = () => {
   const [test, setTest] = useState(6);
+  const [feedback, setFeedbback] = useState([{
+    fullname: "",
+    email: "",
+    feedbackDescription: "",
+    rate: "",
+    like: "",
+    dislike: "",
+    createDate: "",
+  }]);
+
+  useEffect(() => {
+    // IFFE
+    (async () => {
+      try {
+        const response = await feedbackApi.getTopFeedback();
+        setFeedbback(response.listOfFeedback);
+      } catch (error) {
+        console.log("Failed to fetch feedback", error);
+      }
+    })();
+  }, []);
 
   return (
     <Container>
@@ -52,8 +72,8 @@ const Rate = () => {
         </Box>
       </Box>
       <Carousel>
-        {Array.from({ length: test }).map((_, idx) => {
-          return <RateCard key={idx} />;
+        {feedback.map((item) => {
+          return <RateCard key={item.fullname} item={item} />;
         })}
       </Carousel>
     </Container>
