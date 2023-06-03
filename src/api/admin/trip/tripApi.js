@@ -24,6 +24,10 @@ const tripApi = {
   tripStatistic() {
     const url = `/trips/trip-statistic`;
     return axiosInstance.get(url);
+  },
+  tripHistory() {
+    const url = `/trips/trip-history`;
+    return axiosInstance.get(url);
   }
 };
 

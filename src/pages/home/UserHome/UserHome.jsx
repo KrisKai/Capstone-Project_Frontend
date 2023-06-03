@@ -10,6 +10,7 @@ import authUserApi from "api/user/authenticate/authUserApi";
 
 import { useNavigate } from "react-router-dom";
 import userTripApi from "api/user/trip/userTripApi";
+import History from "components/Home/HomeUser/History";
 
 const HomeUser = () => {
   let navigate = useNavigate();
@@ -37,9 +38,9 @@ const HomeUser = () => {
         <Box mt={10}>
           <UserSuggest />
         </Box>
-        {/* <Box mt={10}>
-          <Rate />
-        </Box> */}
+        <Box mt={10}>
+          <History />
+        </Box>
         <Box mt={10}>
           <FormCreateTrip />
         </Box>
