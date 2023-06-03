@@ -7,7 +7,6 @@ import { PATH_USER_SITE } from "../../routes/path";
 
 export default function GuestGuardUser({ children }) {
   const isAuthenticated = Boolean(localStorage.getItem('access_token_user'));
-  console.log(isAuthenticated)
   if (isAuthenticated) {
     return <Navigate to={PATH_USER_SITE.general.dashboard} />;
   }

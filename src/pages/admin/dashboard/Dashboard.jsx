@@ -76,7 +76,6 @@ const DashboardDefault = () => {
     (async () => {
       try {
         const tripStatistic = await tripApi.tripStatistic();
-        console.log(tripStatistic);
         if (tripStatistic != null && tripStatistic != "") {
           setTripStatistic(tripStatistic);
         }

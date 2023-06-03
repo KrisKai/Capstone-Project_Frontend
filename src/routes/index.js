@@ -21,7 +21,11 @@ export default function Router() {
       children: [
         {
           path: "/",
-          element: <MainHome />,
+          element: (
+            <GuestGuardUser>
+              <MainHome />
+            </GuestGuardUser>
+          ),
         },
         {
           path: "login",

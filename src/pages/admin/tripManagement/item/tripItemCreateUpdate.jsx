@@ -106,7 +106,6 @@ export default function TripItemCreate() {
         onSubmit={async (values, { setErrors, setStatus }) => {
           try {
             setStatus({ success: false });
-            console.log(values)
             let reponse;
             if (isEdit) {
               reponse = await tripItemApi.update(values);

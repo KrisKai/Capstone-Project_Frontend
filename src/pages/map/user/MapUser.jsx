@@ -151,7 +151,6 @@ export default function MapUser({ getReturnData, passToProps }) {
       distance: results.routes[0].legs[0].distance.text,
       duration: results.routes[0].legs[0].duration.text,
     };
-    console.log(1);
     getReturnData(returnData);
   }
 

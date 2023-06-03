@@ -96,7 +96,6 @@ const AuthRegister = () => {
             dispatch(handleRegister(values))
               .unwrap()
               .then((res) => {
-                console.log(res)
                 switch (res.Code) {
                   case "R001":
                     return toast.error(res.Message);

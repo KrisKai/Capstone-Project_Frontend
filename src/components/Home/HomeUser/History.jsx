@@ -4,7 +4,6 @@ import { Carousel } from "components/Extend";
 import { useEffect, useState } from "react";
 
 const RateCard = (props) => {
-  console.log(props.item.rate);
   return (
     <Card sx={{ width: "300px" }}>
       <Box display="flex" justifyContent="center" paddingTop={2}>
@@ -38,7 +37,6 @@ const RateCard = (props) => {
 };
 
 const History = () => {
-  const [test, setTest] = useState(6);
   const [feedback, setFeedbback] = useState([
     {
       fullname: "test",

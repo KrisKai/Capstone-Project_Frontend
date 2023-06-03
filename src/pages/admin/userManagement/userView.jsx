@@ -34,7 +34,6 @@ export default function UserCreate() {
     async function getUserDetail() {
       try {
         const data = await userApi.getById(userId);
-        console.log(data)
         if (data !== null && data !== "") {
           data.birthday = data.birthday.substring(0, 10);
           data.retypePassword = data.password;

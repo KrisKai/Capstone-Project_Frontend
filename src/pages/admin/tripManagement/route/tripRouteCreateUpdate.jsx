@@ -42,7 +42,6 @@ export default function RouteCreate() {
       setTrip(response.listOfTrip);
       if (!tripId || !routeId) return;
       try {
-        console.log(routeId);
         const data = await tripRouteApi.getById(routeId);
         if (data != null && data != "") {
           setRoute(data);
@@ -81,8 +80,6 @@ export default function RouteCreate() {
         onSubmit={async (values, { setErrors, setStatus }) => {
           try {
             setStatus({ success: false });
-
-            console.log(1);
             let reponse;
             if (isEdit) {
               reponse = await tripRouteApi.update(values);

@@ -14,7 +14,6 @@ import { selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
 
 const ProfileChangePassword = (props) => {
   const currentUser = useAppSelector(selectCurrentUser);
-  console.log(currentUser);
   const [currentInfo, setCurrentInfo] = useState({
     UserId: currentUser.userId,
     OldPassword: null,

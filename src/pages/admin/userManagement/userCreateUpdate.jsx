@@ -110,7 +110,6 @@ export default function UserCreate() {
               setStatus({ success: false });
               let reponse;
               if (isEdit) {
-                console.log(values);
                 reponse = await userApi.update(values);
               } else {
                 reponse = await userApi.create(values);

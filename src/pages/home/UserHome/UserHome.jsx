@@ -18,7 +18,6 @@ const HomeUser = () => {
     (async () => {
       try {
         const response = await authUserApi.getCurrentUser();
-        console.log(response)
         if (response !== null && response !== "") {
           const tripHistory = await userTripApi.tripHistory();
         }

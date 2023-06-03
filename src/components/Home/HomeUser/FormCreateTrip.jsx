@@ -50,7 +50,6 @@ const FormCreateTrip = () => {
   }
 
   const gotoCreate = () => {
-    console.log(destination);
     // if (destination !== "" && startDate !== "" && endDate !== "") {
       navigate("/tripCreate", {
         state: {
@@ -120,7 +119,6 @@ const FormCreateTrip = () => {
                     value={startDate}
                     onChange={(eve) => {
                       setStartDate(eve.target.value);
-                      console.log(eve.target.value)
                     }}
                   />
                 </LocalizationProvider>

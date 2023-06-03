@@ -108,7 +108,6 @@ export default function TripCreate() {
   }
 
   const getReturnData = (returnData) => {
-    console.log(returnData);
     setTrip({
       ...trip,
       distance: returnData.distance.toString(),

@@ -90,15 +90,6 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     [passToProps]
   );
 
-  function directionsCallback(response) {
-    console.log(response);
-
-    if (response !== null) {
-      if (response.status === "OK") {
-        setDirectionsResponse(response);
-      }
-    }
-  }
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAP_API,
@@ -151,7 +142,6 @@ export default function MapForTrip({ getReturnData, passToProps }) {
       distance: results.routes[0].legs[0].distance.text,
       duration: results.routes[0].legs[0].duration.text,
     };
-    console.log(1);
     getReturnData(returnData);
   }
 
