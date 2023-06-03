@@ -4,17 +4,15 @@ import { Carousel } from "components/Extend";
 import { useEffect, useState } from "react";
 
 const RateCard = (props) => {
-  console.log(props.item.rate)
+  console.log(props.item.rate);
   return (
     <Card sx={{ width: "300px" }}>
       <Box display="flex" justifyContent="center" paddingTop={2}>
-        <Rating value={props.item.rate} readOnly/>
+        <Rating value={props.item.rate} readOnly />
       </Box>
       <Box padding={3}>
         <Box>
-          <Typography>
-            {props.item.feedbackDescription}
-          </Typography>
+          <Typography>{props.item.feedbackDescription}</Typography>
         </Box>
         <Box display="flex" alignItems="center" gap={2} mt={2}>
           <Box
@@ -41,22 +39,27 @@ const RateCard = (props) => {
 
 const Rate = () => {
   const [test, setTest] = useState(6);
-  const [feedback, setFeedbback] = useState([{
-    fullname: "",
-    email: "",
-    feedbackDescription: "",
-    rate: "",
-    like: "",
-    dislike: "",
-    createDate: "",
-  }]);
+  const [feedback, setFeedbback] = useState([
+    {
+      fullname: "test",
+      email: "",
+      feedbackDescription:
+        "Amet adipisicing voluptate laboris nisi mollit.Pariatur non est esse irure consectetur. Duis magna ea id cupidatat ullamco pariatur est eiusmod et ullamco excepteur exercitation. Id laborum irure esse irure duis reprehenderit est duis nostrud.",
+      rate: 5,
+      like: "",
+      dislike: "",
+      createDate: "",
+    },
+  ]);
 
   useEffect(() => {
     // IFFE
     (async () => {
       try {
         const response = await feedbackApi.getTopFeedback();
-        setFeedbback(response.listOfFeedback);
+        if (response.numOfFeedback > 0) {
+          setFeedbback(response.listOfFeedback);
+        }
       } catch (error) {
         console.log("Failed to fetch feedback", error);
       }
