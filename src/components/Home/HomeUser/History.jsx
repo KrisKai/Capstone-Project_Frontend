@@ -3,7 +3,7 @@ import { feedbackApi, tripApi } from "api";
 import { Carousel } from "components/Extend";
 import { useEffect, useState } from "react";
 
-const RateCard = (props) => {
+const HistoryCard = (props) => {
   return (
     <Card sx={{ width: "300px" }}>
       <Box display="flex" justifyContent="center" paddingTop={2}>
@@ -29,7 +29,7 @@ const RateCard = (props) => {
           >
             <Typography>K</Typography>
           </Box>
-          <Typography> {props.item.fullname}</Typography>
+          <Typography> {props.item.estimateStartDateStr} - {props.item.estimateEndDateStr}</Typography>
         </Box>
       </Box>
     </Card>
@@ -39,14 +39,12 @@ const RateCard = (props) => {
 const History = () => {
   const [history, setHistory] = useState([
     {
-      fullname: "test",
-      email: "",
-      feedbackDescription:
-        "Amet adipisicing voluptate laboris nisi mollit.Pariatur non est esse irure consectetur. Duis magna ea id cupidatat ullamco pariatur est eiusmod et ullamco excepteur exercitation. Id laborum irure esse irure duis reprehenderit est duis nostrud.",
-      rate: 5,
-      like: "",
-      dislike: "",
-      createDate: "",
+      estimateStartDate: "",
+      estimateEndDate: "",
+      estimateStartDateStr: "",
+      estimateEndDateStr: "",
+      tripId: "",
+      tripName: "",
     },
   ]);
 
@@ -74,7 +72,7 @@ const History = () => {
       </Box>
       <Carousel>
         {history.map((item) => {
-          return <RateCard key={item.fullname} item={item} />;
+          return <HistoryCard key={item.tripId} item={item} />;
         })}
       </Carousel>
     </Container>
