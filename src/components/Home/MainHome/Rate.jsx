@@ -37,7 +37,7 @@ const RateCard = (props) => {
 };
 
 const Rate = () => {
-  const [feedback, setFeedbback] = useState([
+  const [feedback, setFeedback] = useState([
     {
       fullname: "test",
       email: "",
@@ -56,7 +56,7 @@ const Rate = () => {
       try {
         const response = await feedbackApi.getTopFeedback();
         if (response.numOfFeedback > 0) {
-          setFeedbback(response.listOfFeedback);
+          setFeedback(response.listOfFeedback);
         }
       } catch (error) {
         console.log("Failed to fetch feedback", error);

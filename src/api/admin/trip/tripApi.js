@@ -1,4 +1,5 @@
 import axiosInstance from "utils/axios";
+import axiosInstanceUser from "utils/axiosForUser";
 
 const tripApi = {
   getAll(params) {
@@ -27,7 +28,7 @@ const tripApi = {
   },
   tripHistory() {
     const url = `/trips/trip-history`;
-    return axiosInstance.get(url);
+    return axiosInstanceUser.get(url);
   }
 };
 

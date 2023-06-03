@@ -37,7 +37,7 @@ const RateCard = (props) => {
 };
 
 const History = () => {
-  const [feedback, setFeedbback] = useState([
+  const [history, setHistory] = useState([
     {
       fullname: "test",
       email: "",
@@ -55,8 +55,8 @@ const History = () => {
     (async () => {
       try {
         const response = await tripApi.tripHistory();
-        if (response.numOfFeedback > 0) {
-          setFeedbback(response.listOfFeedback);
+        if (response !== "" && response !== null) {
+          setHistory(response);
         }
       } catch (error) {
         console.log("Failed to fetch feedback", error);
@@ -73,7 +73,7 @@ const History = () => {
         </Box>
       </Box>
       <Carousel>
-        {feedback.map((item) => {
+        {history.map((item) => {
           return <RateCard key={item.fullname} item={item} />;
         })}
       </Carousel>

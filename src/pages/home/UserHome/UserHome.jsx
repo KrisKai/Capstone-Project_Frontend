@@ -9,27 +9,23 @@ import { Box, Container } from "@mui/material";
 import authUserApi from "api/user/authenticate/authUserApi";
 
 import { useNavigate } from "react-router-dom";
-import userTripApi from "api/user/trip/userTripApi";
 import History from "components/Home/HomeUser/History";
 
 const HomeUser = () => {
   let navigate = useNavigate();
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await authUserApi.getCurrentUser();
-        if (response !== null && response !== "") {
-          const tripHistory = await userTripApi.tripHistory();
-        }
-      } catch (error) {
-        console.log("Authenticate!", error);
-        if (error.response.status == 401) {
-          localStorage.removeItem("access_token_user");
-          navigate("/");
-        }
-      }
-    })();
-  },[]);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       await authUserApi.getCurrentUser();
+  //     } catch (error) {
+  //       console.log("Authenticate!", error);
+  //       if (error.response.status == 401) {
+  //         localStorage.removeItem("access_token_user");
+  //         navigate("/");
+  //       }
+  //     }
+  //   })();
+  // },[]);
   return (
     <Box>
       <UserHeader />
