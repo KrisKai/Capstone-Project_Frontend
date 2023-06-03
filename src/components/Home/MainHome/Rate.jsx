@@ -8,7 +8,7 @@ const RateCard = (props) => {
   return (
     <Card sx={{ width: "300px" }}>
       <Box display="flex" justifyContent="center" paddingTop={2}>
-        <Rating value={props.item.rate} />
+        <Rating value={props.item.rate} readOnly/>
       </Box>
       <Box padding={3}>
         <Box>
