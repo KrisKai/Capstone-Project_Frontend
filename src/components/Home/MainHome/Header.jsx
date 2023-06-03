@@ -144,6 +144,7 @@ const Header = () => {
                 padding: "17px 40px",
                 fontWeight: 900,
                 fontSize: "20px",
+                fontFamily: "Montserrat"
               }}
               onClick={goToLogin}
             >
