@@ -4,8 +4,6 @@ import { Navigate, useRoutes } from "react-router-dom";
 import { AuthGuard, GuestGuard } from "guards/admin";
 import { AuthGuardUser, GuestGuardUser } from "guards/user";
 
-// import RoleBasedGuard from '../guards/admin/RoleBasedGuard';
-
 // project import
 import { Loadable } from "components/Loadable";
 import MainLayout from "layout/MainLayout/index";
@@ -15,7 +13,6 @@ import MainHome from "pages/home/MainHome/MainHome";
 
 export default function Router() {
   return useRoutes([
-    // { path: "/", element: <Home /> },
     {
       path: "/",
       children: [

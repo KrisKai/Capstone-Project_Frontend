@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   Grid,
   List,
@@ -18,18 +17,22 @@ import ProfileUser from "layout/MainLayout/Header/HeaderContent/Profile/ProfileU
 
 const listNavItems = [
   {
+    key: 1,
     display: "Trang chủ",
     link: "/",
   },
   {
+    key: 2,
     display: "Điểm dừng chân",
     link: "/maintenance",
   },
   {
+    key: 3,
     display: "Cẩm nang đi phượt",
     link: "/maintenance",
   },
   {
+    key: 4,
     display: "Quản lí chuyến đi",
     link: "/tripManagement",
   },
@@ -73,33 +76,31 @@ const UserHeader = () => {
               height: "100%",
             }}
           >
-            {listNavItems.map((item, idx) => {
+            {listNavItems.map((item) => {
               return (
-                <>
-                  <ListItem
-                    key={idx}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      paddingX: "8px",
+                <ListItem
+                  key={item.key}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingX: "8px",
+                  }}
+                >
+                  <Link
+                    style={{
+                      fontWeight: 600,
+                      fontSize: "16px",
+                      textDecoration: "none",
+                      color: "black",
                     }}
+                    to={item.link}
                   >
-                    <Link
-                      style={{
-                        fontWeight: 600,
-                        fontSize: "16px",
-                        textDecoration: "none",
-                        color: "black",
-                      }}
-                      to={item.link}
-                    >
-                      {item.display}
-                    </Link>
-                  </ListItem>
-                </>
+                    {item.display}
+                  </Link>
+                </ListItem>
               );
             })}
-            <ProfileUser/>
+            <ProfileUser />
           </List>
         </Grid>
         <Grid
@@ -110,9 +111,7 @@ const UserHeader = () => {
             alignItems: "center",
             flexDirection: "row-reverse",
           }}
-        >
-          
-        </Grid>
+        ></Grid>
       </Grid>
       <Container
         sx={{
