@@ -1,4 +1,3 @@
-import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
@@ -13,15 +12,13 @@ import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 import { GOOGLE_MAP_API } from "config";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 
 dayjs.extend(utc);
 
 const FormCreateTrip = () => {
   const navigate = useNavigate();
-  const [destination, setDestination] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
@@ -45,18 +42,6 @@ const FormCreateTrip = () => {
     );
   }
 
-  const gotoCreate = () => {
-    // if (destination !== "" && startDate !== "" && endDate !== "") {
-      navigate("/tripCreate", {
-        state: {
-          destination: destination,
-          startDate: startDate,
-          endDate: endDate,
-        },
-      });
-    // }
-  };
-
   return (
     <>
       <Box>
@@ -72,83 +57,105 @@ const FormCreateTrip = () => {
             tạo hành trình mới
           </Typography>
           <Box mt={2}>
-            <Box display="flex" flexDirection="column" gap={2}>
-              <Box
-                width="100%"
-                sx={{
-                  borderRadius: "8px",
-                }}
-              >
-                <Autocomplete restrictions={restrictions}>
-                  <TextField
-                    sx={{
-                      width: "100%",
-                      background: "white",
-                      borderRadius: "8px",
-                    }}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <SearchIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    value={destination}
-                    onChange={(eve) => {
-                      setDestination(eve.target.value);
-                    }}
-                    placeholder="Điểm đến"
-                  ></TextField>
-                </Autocomplete>
-              </Box>
-              <Box display="flex" gap={2}>
-                <LocalizationProvider
-                  dateAdapter={AdapterDayjs}
-                  dateLibInstance={dayjs.utc}
-                >
-                  <DatePicker
-                    sx={{
-                      background: "white",
-                      borderRadius: "8px",
-                    }}
-                    label="Ngày đi"
-                    value={startDate}
-                    onChange={(eve) => {
-                      setStartDate(eve.target.value);
-                    }}
-                  />
-                </LocalizationProvider>
-                <LocalizationProvider
-                  dateAdapter={AdapterDayjs}
-                  dateLibInstance={dayjs.utc}
-                >
-                  <DatePicker
-                    sx={{
-                      background: "white",
-                      borderRadius: "8px",
-                    }}
-                    label="Ngày đến"
-                    value={endDate}
-                    onChange={(eve) => {
-                      setEndDate(eve.target.value);
-                    }}
-                  />
-                </LocalizationProvider>
-              </Box>
-              <Box display="flex" justifyContent="center">
-                <Button
-                  variant="contained"
-                  sx={{
-                    padding: "10px 30px",
-                    fontSize: "20px",
-                    backgroundColor: "#168843",
-                  }}
-                  onClick={gotoCreate}
-                >
-                  Bắt Đầu
-                </Button>
-              </Box>
-            </Box>
+            <Formik
+              initialValues={{
+                destination: null,
+                startDate: null,
+                endDate: null,
+              }}
+              onSubmit={async (values) => {
+                navigate("/tripCreate", {
+                  state: {
+                    destination: values.destination,
+                    startDate: values.startDate,
+                    endDate: values.endDate,
+                  },
+                });
+              }}
+            >
+              {({ values, setFieldValue, handleChange, handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+                  <Box display="flex" flexDirection="column" gap={2}>
+                    <Box
+                      width="100%"
+                      sx={{
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <Autocomplete restrictions={restrictions}>
+                        <TextField
+                          sx={{
+                            width: "100%",
+                            background: "white",
+                            borderRadius: "8px",
+                          }}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <SearchIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                          name="destination"
+                          value={values.destination}
+                          onChange={handleChange}
+                          placeholder="Điểm đến"
+                        ></TextField>
+                      </Autocomplete>
+                    </Box>
+                    <Box display="flex" gap={2}>
+                      <LocalizationProvider
+                        dateAdapter={AdapterDayjs}
+                        dateLibInstance={dayjs.utc}
+                      >
+                        <DatePicker
+                          sx={{
+                            background: "white",
+                            borderRadius: "8px",
+                          }}
+                          name="startDate"
+                          label="Ngày đi"
+                          value={values.startDate}
+                          onChange={(value) => {
+                            setFieldValue("startDate", value);
+                          }}
+                        />
+                      </LocalizationProvider>
+                      <LocalizationProvider
+                        dateAdapter={AdapterDayjs}
+                        dateLibInstance={dayjs.utc}
+                      >
+                        <DatePicker
+                          sx={{
+                            background: "white",
+                            borderRadius: "8px",
+                          }}
+                          name="endDate"
+                          label="Ngày đến"
+                          value={values.endDate}
+                          onChange={(value) => {
+                            setFieldValue("endDate", value);
+                          }}
+                        />
+                      </LocalizationProvider>
+                    </Box>
+                    <Box display="flex" justifyContent="center">
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{
+                          padding: "10px 30px",
+                          fontSize: "20px",
+                          backgroundColor: "#168843",
+                        }}
+                      >
+                        Bắt Đầu
+                      </Button>
+                    </Box>
+                  </Box>
+                </form>
+              )}
+            </Formik>
           </Box>
         </Box>
       </Box>
