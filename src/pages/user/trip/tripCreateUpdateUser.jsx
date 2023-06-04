@@ -85,10 +85,6 @@ export default function TripCreate() {
     })();
   }, []);
 
-  function gotoList() {
-    navigate("/admin/tripList");
-  }
-
   const getReturnData = (returnData) => {
     setTrip({
       ...trip,
@@ -126,9 +122,9 @@ export default function TripCreate() {
 
   return (
     <>
-      <Typography variant="h4" gutterBottom color="primary">
-      {location.state.destination}
-      </Typography>
+      {/* <Typography variant="h4" gutterBottom color="primary">
+        {location.state.destination}
+      </Typography> */}
       <Formik
         initialValues={trip}
         enableReinitialize={true}

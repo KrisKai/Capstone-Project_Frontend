@@ -30,10 +30,6 @@ const FormCreateTrip = () => {
     country: "vn",
   };
 
-  const onSubmit = (e) => {
-    e.target.preventDefault();
-  };
-
   if (!isLoaded) {
     return (
       <Box

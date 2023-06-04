@@ -7,18 +7,20 @@ import {
   Container,
   Typography,
 } from "@mui/material";
-import { feedbackApi, tripApi } from "api";
+import { tripApi } from "api";
 import { Carousel } from "components/Extend";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HistoryCard = (props) => {
-  const gotoTrip = () => {
-    console.log(1);
-    // props.history.push(`/trip/${props.trip.id}`);
+  const navigate = useNavigate();
+  const gotoTrip = (id) => {
+    console.log(id);
+    navigate(`/tripUpdate/${id}`)
   };
   return (
     <Card sx={{ width: "300px" }}>
-      <CardActionArea onClick={gotoTrip}>
+      <CardActionArea onClick={() => gotoTrip(props.item.tripId)}>
         <CardMedia
           component="img"
           alt="green iguana"
