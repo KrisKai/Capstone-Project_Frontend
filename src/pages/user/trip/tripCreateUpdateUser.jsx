@@ -59,12 +59,6 @@ export default function TripCreate() {
   useEffect(() => {
     // IFFE
     (async () => {
-      const response = await userApi.getAll({
-        pageIndex: 0,
-        pageSize: 99999999,
-        userName: "",
-      });
-      setUser(response.listOfUser);
       if (!tripId) return;
       try {
         const data = await tripApi.getById(tripId);

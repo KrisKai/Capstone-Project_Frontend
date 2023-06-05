@@ -4,6 +4,7 @@ import { Carousel } from "components/Extend";
 import { useEffect, useState } from "react";
 
 const RateCard = (props) => {
+  const char = props.item.fullname.toString().substring(0, 1).toUpperCase();
   return (
     <Card sx={{ width: "300px" }}>
       <Box display="flex" justifyContent="center" paddingTop={2}>
@@ -27,7 +28,7 @@ const RateCard = (props) => {
             border="1px solid black"
             borderRadius="50%"
           >
-            <Typography>K</Typography>
+            <Typography>{char}</Typography>
           </Box>
           <Typography> {props.item.fullname}</Typography>
         </Box>
