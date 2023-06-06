@@ -29,7 +29,11 @@ const tripApi = {
   tripHistory() {
     const url = `/trips/trip-history`;
     return axiosInstanceUser.get(url);
-  }
+  },
+  getByIdUser(id) {
+    const url = `/trips/${id}`;
+    return axiosInstanceUser.get(url);
+  },
 };
 
 export default tripApi;

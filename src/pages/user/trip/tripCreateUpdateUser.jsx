@@ -61,19 +61,19 @@ export default function TripCreate() {
     (async () => {
       if (!tripId) return;
       try {
-        const data = await tripApi.getById(tripId);
+        const data = await tripApi.getByIdUser(tripId);
         if (data != null && data != "") {
           data.estimateEndDate = dayjs.utc(data.estimateEndDate);
           data.estimateStartDate = dayjs.utc(data.estimateStartDate);
           setTrip(data);
         } else {
-          navigate("/admin/tripList");
+          navigate("/tripList");
         }
       } catch (error) {
         console.log("Failed to fetch trip details", error);
         if (error.response.status == 401) {
           localStorage.removeItem("access_token");
-          navigate("/auth/login");
+          navigate("/login");
         }
       }
     })();

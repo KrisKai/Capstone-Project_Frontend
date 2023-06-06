@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -13,20 +14,38 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const HistoryCard = (props) => {
+  const char = "Khai".toString().substring(0, 1).toUpperCase();
   const navigate = useNavigate();
   const gotoTrip = (id) => {
-    console.log(id);
-    navigate(`/tripUpdate/${id}`)
+    navigate(`/tripUpdate/${id}`);
   };
   return (
     <Card sx={{ width: "300px" }}>
       <CardActionArea onClick={() => gotoTrip(props.item.tripId)}>
+        <Button
+          sx={{
+            alignSelf: "flex-end",
+            marginTop: 0,
+            position: "absolute",
+            right: 0,
+            width: "15px",
+            zIndex: 999999,
+            minWidth: "140px"
+          }}
+          variant="contained"
+          disableElevation
+          color="info"
+        >
+          {props.item.tripStatus === "ACTIVE" && "Đang hoạt động"}
+          {props.item.tripStatus === "CLOSED" && "Hết hạn"}
+        </Button>
         <CardMedia
           component="img"
           alt="green iguana"
           height="200"
           image="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
         />
+
         <CardContent>
           <Typography variant="h5" component="div">
             Chuyến đi tới {props.item.endLocationName}
@@ -45,11 +64,10 @@ const HistoryCard = (props) => {
               border="1px solid black"
               borderRadius="50%"
             >
-              <Typography>K</Typography>
+              <Typography>{char}</Typography>
             </Box>
             <Typography>
-              {props.item.estimateStartDateStr} -{" "}
-              {props.item.estimateEndDateStr}
+              {props.item.estimateStartDateStr} -{props.item.estimateEndDateStr}
             </Typography>
           </Box>
         </CardContent>
@@ -68,6 +86,7 @@ const History = () => {
       tripId: "0",
       tripName: "",
       endLocationName: "",
+      tripStatus: "",
     },
   ]);
 
