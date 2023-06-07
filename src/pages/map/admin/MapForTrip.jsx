@@ -72,22 +72,6 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     //   });
   }, [passToProps]);
 
-  const onLoad = useCallback(
-    (mapInstance) => {
-      // const bounds = new google.maps.LatLngBounds();
-      // offices.forEach(office => {
-      //   bounds.extend(
-      //     new google.maps.LatLng(
-      //       office.field_address.latitude,
-      //       office.field_address.longitude
-      //     )
-      //   );
-      // });
-      // mapRef.current = mapInstance;
-      // mapInstance.fitBounds(bounds);
-    },
-    [passToProps]
-  );
   Geocode.setApiKey(GOOGLE_MAP_API);
   Geocode.setRegion("vn");
 
@@ -96,10 +80,14 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     libraries: ["places"],
   });
 
+  const [map, setMap] = useState(null);
+
+  const onLoad = (mapInstance) => {
+    setMap(mapInstance);
+  };
+
   const [numberOfPlaces, setNumberOfPlace] = useState(2);
   const mapRef = useRef(/** @type google.maps.Map */ (null));
-  const [a, setA] = useState();
-  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
@@ -119,8 +107,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     if (originRef.current.value === "" || destinationRef.current.value === "") {
       return;
     }
-    
-    // console.log(originRef.current.value)
+
     // // eslint-disable-next-line no-undef
     // const directionsService = new google.maps.DirectionsService();
     // const results = await directionsService.route({
@@ -265,17 +252,10 @@ export default function MapForTrip({ getReturnData, passToProps }) {
                 }}
               />
             )} */}
-            <Marker position={center} />
+            <Marker position={center} map={map}/>
             {directionsResponse && (
               <DirectionsRenderer directions={directionsResponse} />
             )}
-            <Marker
-            onLoad={onLoad}
-              position={{
-                lat: 16.0545,
-                lng: 108.22074,
-              }}
-            />
           </GoogleMap>
         </Box>
       </Box>
