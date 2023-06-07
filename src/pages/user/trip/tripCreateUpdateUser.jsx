@@ -19,10 +19,27 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 // import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 import * as yup from "yup";
+import {
+  Autocomplete,
+  DirectionsRenderer,
+  GoogleMap,
+  Marker,
+  useJsApiLoader,
+  DirectionsService,
+} from "@react-google-maps/api";
+import { GOOGLE_MAP_API, PLACE_API } from "config";
+import axios from "axios";
+
+const center = { lat: 16.0545, lng: 108.22074 };
 
 dayjs.extend(utc);
 
 export default function TripCreate() {
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: GOOGLE_MAP_API,
+    libraries: ["places"],
+  });
+
   let navigate = useNavigate();
   const { tripId } = useParams();
   const isEdit = Boolean(tripId);
@@ -35,7 +52,6 @@ export default function TripCreate() {
     estimateEndDate: "",
     estimateStartTime: "",
     estimateEndTime: "",
-    tripPresenter: "",
     startLocationName: "",
     endLocationName: "",
     startLocationName: "",
@@ -79,6 +95,32 @@ export default function TripCreate() {
     })();
   }, []);
 
+  const getLocationData = (data) => {
+    const type = "restaurant";
+    var url =
+      "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+      trip.endLatitude +
+      "%2C" +
+      trip.endLatitude +
+      "&radius=1500&type=" +
+      type +
+      "&key=" +
+      GOOGLE_MAP_API;
+    var config = {
+      method: "get",
+      url: url,
+      headers: {},
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const getReturnData = (returnData) => {
     setTrip({
       ...trip,
@@ -104,9 +146,6 @@ export default function TripCreate() {
     estimateEndDate: yup
       .string("Enter Estimate End Time")
       .required("Estimate End Time is required"),
-    tripPresenter: yup
-      .string("Enter Trip Presenter")
-      .required("Trip Presenter is required"),
   });
 
   let hours = [];
@@ -190,36 +229,6 @@ export default function TripCreate() {
                           {errors.tripName}
                         </FormHelperText>
                       )}
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControl sx={{ minWidth: "100%" }}>
-                        <InputLabel id="TripPresenter">
-                          Trip Presenter
-                        </InputLabel>
-                        <Select
-                          labelId="TripPresenter"
-                          id="tripPresenter"
-                          value={values.tripPresenter}
-                          label="TripPresenter"
-                          onChange={handleChange}
-                          name="tripPresenter"
-                        >
-                          {user.map((item) => (
-                            <MenuItem value={item.userId}>
-                              {item.fullname} ({item.email})
-                            </MenuItem>
-                          ))}
-                        </Select>
-
-                        {touched.tripPresenter && errors.tripPresenter && (
-                          <FormHelperText
-                            error
-                            id="standard-weight-helper-TripPresenter"
-                          >
-                            {errors.tripPresenter}
-                          </FormHelperText>
-                        )}
-                      </FormControl>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
@@ -464,6 +473,9 @@ export default function TripCreate() {
                       )}
                     </Grid>
                   </Grid>
+                  <Button onClick={() => getLocationData("test")}>
+                    test
+                  </Button>
                 </Card>
               </Grid>
               <Grid item xs={12} sm={9} paddingLeft={1}>

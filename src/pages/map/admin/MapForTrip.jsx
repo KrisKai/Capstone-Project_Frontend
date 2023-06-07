@@ -20,14 +20,13 @@ import "./map.css";
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import Geocode from "react-geocode";
 
 const center = { lat: 16.0545, lng: 108.22074 };
 
 const restrictions = {
   country: "vn",
 };
-
-const google = window.google;
 
 const offices = [
   {
@@ -89,7 +88,8 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     },
     [passToProps]
   );
-
+  Geocode.setApiKey(GOOGLE_MAP_API);
+  Geocode.setRegion("vn");
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAP_API,
@@ -119,30 +119,42 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     if (originRef.current.value === "" || destinationRef.current.value === "") {
       return;
     }
-    // eslint-disable-next-line no-undef
-    const directionsService = new google.maps.DirectionsService();
-    const results = await directionsService.route({
-      origin: originRef.current.value,
-      destination: destinationRef.current.value,
-      // eslint-disable-next-line no-undef
-      travelMode: google.maps.TravelMode.DRIVING,
-    });
-    setDirectionsResponse(results);
-    setDistance(results.routes[0].legs[0].distance.text);
-    setDuration(results.routes[0].legs[0].duration.text);
+    
+    // console.log(originRef.current.value)
+    // // eslint-disable-next-line no-undef
+    // const directionsService = new google.maps.DirectionsService();
+    // const results = await directionsService.route({
+    //   origin: originRef.current.value,
+    //   destination: destinationRef.current.value,
+    //   // eslint-disable-next-line no-undef
+    //   travelMode: google.maps.TravelMode.DRIVING,
+    // });
+    // setDirectionsResponse(results);
+    // setDistance(results.routes[0].legs[0].distance.text);
+    // setDuration(results.routes[0].legs[0].duration.text);
 
-    // đây là chỗ đưa dữ liệu ra ngoài component cha
-    const returnData = {
-      startLocationName: originRef.current.value,
-      startLatitude: results.routes[0].legs[0].start_location.lat(),
-      startLongitude: results.routes[0].legs[0].start_location.lng(),
-      endLocationName: destinationRef.current.value,
-      endLatitude: results.routes[0].legs[0].end_location.lat(),
-      endLongitude: results.routes[0].legs[0].end_location.lng(),
-      distance: results.routes[0].legs[0].distance.text,
-      duration: results.routes[0].legs[0].duration.text,
-    };
-    getReturnData(returnData);
+    // // đây là chỗ đưa dữ liệu ra ngoài component cha
+    // const returnData = {
+    //   startLocationName: originRef.current.value,
+    //   startLatitude: results.routes[0].legs[0].start_location.lat(),
+    //   startLongitude: results.routes[0].legs[0].start_location.lng(),
+    //   endLocationName: destinationRef.current.value,
+    //   endLatitude: results.routes[0].legs[0].end_location.lat(),
+    //   endLongitude: results.routes[0].legs[0].end_location.lng(),
+    //   distance: results.routes[0].legs[0].distance.text,
+    //   duration: results.routes[0].legs[0].duration.text,
+    // };
+    // getReturnData(returnData);
+
+    Geocode.fromAddress(originRef.current.value).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   function clearRoute() {
@@ -257,15 +269,13 @@ export default function MapForTrip({ getReturnData, passToProps }) {
             {directionsResponse && (
               <DirectionsRenderer directions={directionsResponse} />
             )}
-            {offices.map((office) => (
-              <Marker
-                key={office.id}
-                position={{
-                  lat: office.field_address.latitude,
-                  lng: office.field_address.longitude,
-                }}
-              />
-            ))}
+            <Marker
+            onLoad={onLoad}
+              position={{
+                lat: 16.0545,
+                lng: 108.22074,
+              }}
+            />
           </GoogleMap>
         </Box>
       </Box>
