@@ -63,7 +63,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   }, [mapContainer]);
 
   return (
-    <Box
+    <Card
       className="map-container"
       ref={(el) => (mapContainer = el)}
       sx={{ height: "100%", width: "100%" }}
