@@ -8,6 +8,7 @@ import { AuthGuardUser, GuestGuardUser } from "guards/user";
 import { Loadable } from "components/Loadable";
 import MainLayout from "layout/MainLayout/index";
 import MainHome from "pages/home/MainHome/MainHome";
+import UserTripCreate from "pages/admin/userManagement/userTripCreateUpdate";
 
 // ----------------------------------------------------------------------
 
@@ -16,6 +17,10 @@ export default function Router() {
     {
       path: "/",
       children: [
+        {
+          path: "/test",
+          element: <UserTripCreate />,
+        },
         {
           path: "/",
           element: (
@@ -42,11 +47,7 @@ export default function Router() {
         },
         {
           path: "dashboard",
-          element: (
-            <AuthGuardUser>
-              <UserHome />
-            </AuthGuardUser>
-          ),
+          element: <UserHome />,
         },
         {
           path: "tripCreate",
