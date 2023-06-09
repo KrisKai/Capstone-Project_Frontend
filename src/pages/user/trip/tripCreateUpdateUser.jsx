@@ -17,6 +17,7 @@ import MapUser from "pages/map/user/MapUser";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 // import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 import * as yup from "yup";
 import {
@@ -63,6 +64,8 @@ export default function TripCreate() {
     distance: "",
     tripStatus: "ACTIVE",
     tripId: "",
+    estimateEndDateStr: "",
+    estimateStartDateStr: "",
   });
   const [user, setUser] = useState([
     {
@@ -204,7 +207,18 @@ export default function TripCreate() {
         }) => (
           <form onSubmit={handleSubmit}>
             <Grid container>
-              <Grid item xs={12} sm={3}>
+              <Grid item xs={12} sm={5}>
+                <Card sx={{ padding: 4, gap: 2, margin: 10 }}>
+                  <Typography variant="h4">
+                    Chuyến đi tới {values.endLocationName}
+                  </Typography>
+                  <br/>
+                  <br/>
+                  <Grid>
+                    <CalendarMonthIcon /> {values.estimateEndDateStr} -{" "}
+                    {values.estimateEndDateStr}
+                  </Grid>
+                </Card>
                 <Card sx={{ padding: 2, gap: 2 }}>
                   <Box paddingBottom={2}>
                     <Typography variant="h5">Basic Information</Typography>
@@ -473,13 +487,11 @@ export default function TripCreate() {
                       )}
                     </Grid>
                   </Grid>
-                  <Button onClick={() => getLocationData("test")}>
-                    test
-                  </Button>
+                  <Button onClick={() => getLocationData("test")}>test</Button>
                 </Card>
               </Grid>
-              <Grid item xs={12} sm={9} paddingLeft={1}>
-                <MapUser getReturnData={getReturnData} passToProps={trip} />
+              <Grid item xs={12} sm={7} paddingLeft={1}>
+                {/* <MapUser getReturnData={getReturnData} passToProps={trip} /> */}
               </Grid>
             </Grid>
           </form>
