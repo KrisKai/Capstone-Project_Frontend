@@ -22,7 +22,6 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import * as yup from "yup";
 import { GOOGLE_MAP_API, PLACE_API } from "config";
 import axios from "axios";
-import SideBarUser from "components/SideBarUser/SideBarUser";
 
 import { styled, useTheme } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
