@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom'
 import {
   Box,
   Button,
@@ -7,27 +8,24 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import {
-  Autocomplete,
-  DirectionsRenderer,
-  GoogleMap,
-  Marker,
-  useJsApiLoader,
-  DirectionsService,
-} from "@react-google-maps/api";
 import { GOOGLE_MAP_API, PLACE_API } from "config";
-// import "././admin/map.css";
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import olms from "ol-mapbox-style";
+import * as proj from "ol/proj";
+import { GeocoderAutocomplete } from "@geoapify/geocoder-autocomplete";
+import {
+  GeoapifyGeocoderAutocomplete,
+  GeoapifyContext,
+} from "@geoapify/react-geocoder-autocomplete";
+import "@geoapify/geocoder-autocomplete/styles/minimal.css";
 
 const center = { lat: 16.0545, lng: 108.22074 };
 
 const restrictions = {
   country: "vn",
 };
-
-const google = window.google;
 
 const offices = [
   {
@@ -44,87 +42,89 @@ const offices = [
 ];
 
 export default function MapUser({ getReturnData, passToProps }) {
-  useEffect(() => {
-    setDeparture(passToProps.startLocationName);
-    setDestination(passToProps.endLocationName);
-    var url =
-      "https://api.geoapify.com/v2/places?categories=catering.restaurant&filter=circle:" +
-      passToProps.startLongitude +
-      "," +
-      passToProps.endLatitude +
-      ",5000&bias=proximity:" +
-      passToProps.startLongitude +
-      "," +
-      passToProps.endLatitude +
-      "&limit=50&apiKey=" +
-      PLACE_API;
-    var config = {
-      method: "get",
-      url: url,
-      headers: {},
-    };
-
-    // axios(config)
-    //   .then(function (response) {
-    //     console.log(response.data);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-  }, [passToProps]);
-
-  const onLoad = useCallback(
-    (mapInstance) => {
-      // const bounds = new google.maps.LatLngBounds();
-      // offices.forEach(office => {
-      //   bounds.extend(
-      //     new google.maps.LatLng(
-      //       office.field_address.latitude,
-      //       office.field_address.longitude
-      //     )
-      //   );
-      // });
-      // mapRef.current = mapInstance;
-      // mapInstance.fitBounds(bounds);
-    },
-    [passToProps]
-  );
-
-  function directionsCallback(response) {
-    console.log(response);
-
-    if (response !== null) {
-      if (response.status === "OK") {
-        setDirectionsResponse(response);
-      }
-    }
-  }
-
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: GOOGLE_MAP_API,
-    libraries: ["places"],
-  });
-
-  const [numberOfPlaces, setNumberOfPlace] = useState(2);
-  const mapRef = useRef(/** @type google.maps.Map */ (null));
-  const [a, setA] = useState();
-  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
-  const [directionsResponse, setDirectionsResponse] = useState(null);
-  const [distance, setDistance] = useState("");
-  const [duration, setDuration] = useState("");
-  const [departure, setDeparture] = useState();
-  const [destination, setDestination] = useState();
-
   /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef();
   /** @type React.MutableRefObject<HTMLInputElement> */
   const destinationRef = useRef();
 
-  if (!isLoaded) {
-    return "Map is loading";
+  const [distance, setDistance] = useState("");
+  const [duration, setDuration] = useState("");
+  const [departure, setDeparture] = useState();
+  const [destination, setDestination] = useState();
+  const [selectedPlace, setSelectedPlace] = useState(null);
+
+  let mapContainer;
+
+  useEffect(() => {
+    const initialState = {
+      lng: 108.22074,
+      lat: 16.0545,
+      zoom: 15,
+    };
+
+    const myAPIKey = PLACE_API;
+    const mapStyle = "https://maps.geoapify.com/v1/styles/osm-carto/style.json";
+
+    olms(mapContainer, `${mapStyle}?apiKey=${myAPIKey}`).then((map) => {
+      map
+        .getView()
+        .setCenter(
+          proj.transform(
+            [initialState.lng, initialState.lat],
+            "EPSG:4326",
+            "EPSG:3857"
+          )
+        );
+      map.getView().setZoom(initialState.zoom);
+    });
+  }, [mapContainer]);
+
+  function handlePlaceSelect(place) {
+    setSelectedPlace(place);
+    console.log(place);
+  }
+
+  function onPlaceSelect(place) {
+    setSelectedPlace(place);
+    console.log(place);
+  }
+
+  function onSuggestionChange(suggestion) {
+    if (suggestion) {
+      const place = suggestion.properties;
+      setSelectedPlace(place);
+      console.log(suggestion);
+    }
+  }
+
+  function preprocessHook(value) {
+    console.log(value);
+  }
+
+  function postprocessHook(feature) {
+    return feature.properties.street;
+  }
+
+  function suggestionsFilter(suggestions) {
+    const processedStreets = [];
+
+    const filtered = suggestions.filter((value) => {
+      if (
+        !value.properties.street ||
+        processedStreets.indexOf(value.properties.street) >= 0
+      ) {
+        return false;
+      } else {
+        processedStreets.push(value.properties.street);
+        return true;
+      }
+    });
+
+    return filtered;
   }
 
   async function calculateRoute() {
+    const root = ReactDOM.createRoot(document.getElementById("root"));
     if (originRef.current.value === "" || destinationRef.current.value === "") {
       return;
     }
@@ -136,7 +136,7 @@ export default function MapUser({ getReturnData, passToProps }) {
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
     });
-    setDirectionsResponse(results);
+    // setDirectionsResponse(results);
     setDistance(results.routes[0].legs[0].distance.text);
     setDuration(results.routes[0].legs[0].duration.text);
 
@@ -154,56 +154,49 @@ export default function MapUser({ getReturnData, passToProps }) {
     getReturnData(returnData);
   }
 
-  function clearRoute() {
-    setDirectionsResponse(null);
-    setDistance("");
-    setDuration("");
-    originRef.current.value = "";
-    destinationRef.current.value = "";
+  function onUserInput(input) {
+    console.log(input);
   }
 
   return (
-    <>
-      {/* Google Map Box */}
-
-      <Box height="90vh" width="100%" display="flex">
-        <Box height="100%" flex="1 1 0" position="relative">
-          <Box
-            bgcolor={"white"}
-            display="flex"
-            justifyContent="space-between"
-            width="94%"
-            position="absolute"
-            zIndex={100}
-            padding={3}
-            margin={4}
-            boxShadow={2}
-            borderRadius={2}
-          >
+    <Box height="90vh" width="63%" display="flex" position="fixed">
+      <Box height="100%" flex="1 1 0" position="relative">
+        <Box
+          bgcolor={"white"}
+          display="flex"
+          justifyContent="space-between"
+          width="94%"
+          position="absolute"
+          zIndex={100}
+          padding={3}
+          margin={4}
+          boxShadow={2}
+          borderRadius={2}
+        >
+          <GeoapifyContext apiKey="a4f9fffa383040d581230c5d9fd096b2">
             <Grid container>
               <Grid item xs={12} sm={5}>
-                <Autocomplete restrictions={restrictions}>
-                  <input
-                    className="custom-input"
-                    type="text"
-                    ref={originRef}
-                    placeholder="Trip Start Location"
-                    value={departure}
-                    onChange={(val) => setDeparture(val.value)}
-                  />
-                </Autocomplete>
+                <GeoapifyGeocoderAutocomplete
+                  id="test"
+                  placeholder="Trip Start Location"
+                  className="custom-input"
+                  lang="vi"
+                  countryCodes="vn"
+                  placeSelect={onPlaceSelect} // Add this line
+                  onSuggestionChange={onSuggestionChange}
+                  onUserInput={onUserInput}
+                  ref={originRef}
+                />
               </Grid>
               <Grid item xs={12} sm={5}>
-                <Autocomplete restrictions={restrictions}>
-                  <input
-                    className="custom-input"
-                    type="text"
-                    ref={destinationRef}
-                    placeholder="Destination Start Location"
-                    value={destination}
-                    onChange={(val) => setDestination(val.value)}
-                  />
-                </Autocomplete>
+                <GeoapifyGeocoderAutocomplete
+                  placeholder="Destination Start Location"
+                  className="custom-input"
+                  type="street"
+                  lang="vi"
+                  countryCodes="vn"
+                  onChange={handlePlaceSelect}
+                />
               </Grid>
               <Grid item xs={12} sm={2}>
                 <Button
@@ -222,65 +215,14 @@ export default function MapUser({ getReturnData, passToProps }) {
                 <Typography>Duration: {duration} </Typography>
               </Grid>
             </Grid>
-          </Box>
-          <GoogleMap
-            center={center}
-            zoom={15}
-            mapContainerStyle={{ width: "100%", height: "100%" }}
-            options={{
-              zoomControl: false,
-              streetViewControl: false,
-              mapTypeControl: false,
-              fullscreenControl: false,
-            }}
-            onLoad={onLoad}
-          >
-            {/* {departure !== "" && destination !== "" && (
-              <DirectionsService
-                // required
-                options={{
-                  // eslint-disable-line
-                  destination: departure,
-                  origin: destination,
-                  travelMode: 'DRIVING',
-                }}
-                // required
-                callback={directionsCallback}
-                // optional
-                onLoad={(directionsService) => {
-                  console.log(
-                    "DirectionsService onLoad directionsService: ",
-                    directionsService
-                  );
-                }}
-                // optional
-                onUnmount={(directionsService) => {
-                  console.log(
-                    "DirectionsService onUnmount directionsService: ",
-                    directionsService
-                  );
-                }}
-              />
-            )} */}
-            <Marker position={center} />
-            {directionsResponse && (
-              <DirectionsRenderer directions={directionsResponse} />
-            )}
-            {offices.map((office) => (
-              <Marker
-                key={office.id}
-                position={{
-                  lat: office.field_address.latitude,
-                  lng: office.field_address.longitude,
-                }}
-              />
-            ))}
-          </GoogleMap>
+          </GeoapifyContext>
         </Box>
+        {/* <Card
+          className="map-container"
+          ref={(el) => (mapContainer = el)}
+          sx={{ height: "100%", width: "100%" }}
+        /> */}
       </Box>
-    </>
+    </Box>
   );
-}
-
-{
 }

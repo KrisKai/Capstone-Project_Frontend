@@ -19,7 +19,7 @@ import {
   GeoapifyGeocoderAutocomplete,
   GeoapifyContext,
 } from "@geoapify/react-geocoder-autocomplete";
-import '@geoapify/geocoder-autocomplete/styles/minimal.css';
+import "@geoapify/geocoder-autocomplete/styles/minimal.css";
 
 const center = { lat: 16.0545, lng: 108.22074 };
 
@@ -51,6 +51,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   const [duration, setDuration] = useState("");
   const [departure, setDeparture] = useState();
   const [destination, setDestination] = useState();
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   let mapContainer;
 
@@ -78,16 +79,26 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     });
   }, [mapContainer]);
 
-  function onPlaceSelect(value) {
-    console.log(value);
+  function handlePlaceSelect(place) {
+    setSelectedPlace(place);
+    console.log(place);
   }
 
-  function onSuggectionChange(value) {
-    console.log(value);
+  function onPlaceSelect(place) {
+    setSelectedPlace(place);
+    console.log(place);
+  }
+
+  function onSuggestionChange(suggestion) {
+    if (suggestion) {
+      const place = suggestion.properties;
+      setSelectedPlace(place);
+      console.log(suggestion);
+    }
   }
 
   function preprocessHook(value) {
-    return `${value}, Munich, Germany`
+    console.log(value)
   }
 
   function postprocessHook(feature) {
@@ -97,19 +108,23 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   function suggestionsFilter(suggestions) {
     const processedStreets = [];
 
-    const filtered = suggestions.filter(value => {
-      if (!value.properties.street || processedStreets.indexOf(value.properties.street) >= 0) {
+    const filtered = suggestions.filter((value) => {
+      if (
+        !value.properties.street ||
+        processedStreets.indexOf(value.properties.street) >= 0
+      ) {
         return false;
       } else {
         processedStreets.push(value.properties.street);
         return true;
       }
-    })
+    });
 
     return filtered;
   }
 
   async function calculateRoute() {
+    console.log(originRef.current.value)
     if (originRef.current.value === "" || destinationRef.current.value === "") {
       return;
     }
@@ -139,6 +154,10 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     getReturnData(returnData);
   }
 
+  function onUserInput(input) {
+    console.log(input);
+  }
+
   return (
     <Box height="90vh" width="100%" display="flex">
       <Box height="100%" flex="1 1 0" position="relative">
@@ -160,11 +179,12 @@ export default function MapForTrip({ getReturnData, passToProps }) {
                 <GeoapifyGeocoderAutocomplete
                   placeholder="Trip Start Location"
                   className="custom-input"
-                  type="street"
                   lang="vi"
                   countryCodes="vn"
-                  placeSelect={onPlaceSelect}
-                  postprocessHook={postprocessHook}
+                  placeSelect={(value)=>onPlaceSelect(value)} // Add this line
+                  onSuggestionChange={onSuggestionChange}
+                  onUserInput={onUserInput}
+                  ref={originRef}
                 />
               </Grid>
               <Grid item xs={12} sm={5}>
@@ -174,6 +194,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
                   type="street"
                   lang="vi"
                   countryCodes="vn"
+                  onChange={handlePlaceSelect}
                 />
               </Grid>
               <Grid item xs={12} sm={2}>
