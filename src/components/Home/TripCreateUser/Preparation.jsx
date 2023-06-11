@@ -319,6 +319,7 @@ const Preparation = (props) => {
         <Card
           sx={{
             minWidth: 300,
+            marginBottom: 1,
           }}
         >
           <CardHeader
@@ -405,6 +406,7 @@ const Preparation = (props) => {
         <Card
           sx={{
             minWidth: 300,
+            marginBottom: 1,
           }}
         >
           <CardHeader
