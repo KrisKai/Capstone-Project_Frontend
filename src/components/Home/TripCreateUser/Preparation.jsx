@@ -6,12 +6,11 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import CardHeader from "@mui/material/CardHeader";
-import Container from "@mui/material/Container";
-import CardContent from "@mui/material/CardContent";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
+import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
 import { tripItemApi } from "api";
 import { toast } from "react-toastify";
 
@@ -313,7 +312,7 @@ const Preparation = (props) => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography variant="h5">Chuẩn bị</Typography>
+        <Typography variant="h4" marginBottom={2}><PlaylistAddCheckOutlinedIcon/> Phần chuẩn bị cho chuyến đi</Typography>
       </Grid>
       <Grid item xs={12}>
         <Card
