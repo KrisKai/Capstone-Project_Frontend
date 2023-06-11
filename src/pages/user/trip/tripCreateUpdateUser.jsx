@@ -12,7 +12,6 @@ import { tripApi, userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
-import MapForTrip from "pages/map/admin/MapForTrip";
 import MapUser from "pages/map/user/MapUser";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -40,6 +39,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import Preparation from "components/Home/TripCreateUser/Preparation";
 
 const center = { lat: 16.0545, lng: 108.22074 };
 
@@ -619,9 +619,7 @@ export default function TripCreate() {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12}>
-                          <Typography variant="h5">
-                            Location Information
-                          </Typography>
+                          <Preparation item={trip} />
                         </Grid>
                         <Grid item xs={12}>
                           <TextField
