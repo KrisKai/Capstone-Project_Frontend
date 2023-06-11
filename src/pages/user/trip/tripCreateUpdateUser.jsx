@@ -427,8 +427,11 @@ export default function TripCreate() {
                       <br />
                       <br />
                       <Grid>
-                        <CalendarMonthIcon /> {values.estimateEndDateStr} -{" "}
-                        {values.estimateEndDateStr}
+                        <CalendarMonthIcon /> {"("}
+                        {trip.estimateStartTimeStr}
+                        {")"} {values.estimateEndDateStr} - {"("}
+                        {trip.estimateEndTimeStr}
+                        {")"} {values.estimateEndDateStr}
                       </Grid>
                     </Card>
                     <Card sx={{ padding: 2, gap: 2 }}>
@@ -480,144 +483,7 @@ export default function TripCreate() {
                               </FormHelperText>
                             )}
                         </Grid>
-                        <Grid item xs={12}>
-                          <LocalizationProvider
-                            dateAdapter={AdapterDayjs}
-                            dateLibInstance={dayjs.utc}
-                          >
-                            <DatePicker
-                              required
-                              sx={{
-                                "& .MuiInputBase-root": {
-                                  paddingY: 1,
-                                  paddingX: 3,
-                                },
-                                "& .MuiFormLabel-root": {
-                                  paddingY: 1,
-                                },
-                              }}
-                              label="Estimate Start Date"
-                              id="estimateStartDate"
-                              name="estimateStartDate"
-                              fullWidth
-                              value={values.estimateStartDate}
-                              onChange={(value) => {
-                                setFieldValue("estimateStartDate", value);
-                              }}
-                              error={Boolean(
-                                touched.estimateStartDate &&
-                                  errors.estimateStartDate
-                              )}
-                            />
-                          </LocalizationProvider>
-                          {touched.estimateStartDate &&
-                            errors.estimateStartDate && (
-                              <FormHelperText
-                                error
-                                id="standard-weight-helper-EstimateStartDate"
-                              >
-                                {errors.estimateStartDate}
-                              </FormHelperText>
-                            )}
-                        </Grid>
-                        <Grid item xs={12}>
-                          <FormControl sx={{ minWidth: 250 }}>
-                            <InputLabel id="EstimateStartTime">
-                              Estimate Start Time
-                            </InputLabel>
-                            <Select
-                              labelId="EstimateStartTime"
-                              id="estimateStartTime"
-                              value={values.estimateStartTime}
-                              label="EstimateStartTime"
-                              onChange={handleChange}
-                              name="estimateStartTime"
-                            >
-                              {hours.map((item) => (
-                                <MenuItem value={item}>{item}</MenuItem>
-                              ))}
-                            </Select>
 
-                            {touched.estimateStartTime &&
-                              errors.estimateStartTime && (
-                                <FormHelperText
-                                  error
-                                  id="standard-weight-helper-EstimateStartTime"
-                                >
-                                  {errors.estimateStartTime}
-                                </FormHelperText>
-                              )}
-                          </FormControl>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <LocalizationProvider
-                            dateAdapter={AdapterDayjs}
-                            dateLibInstance={dayjs.utc}
-                          >
-                            <DatePicker
-                              required
-                              sx={{
-                                "& .MuiInputBase-root": {
-                                  paddingY: 1,
-                                  paddingX: 3,
-                                },
-                                "& .MuiFormLabel-root": {
-                                  paddingY: 1,
-                                },
-                              }}
-                              id="estimateEndDate"
-                              name="estimateEndDate"
-                              label="Estimate End Date"
-                              fullWidth
-                              value={values.estimateEndDate}
-                              onChange={(value) =>
-                                setFieldValue("estimateEndDate", value)
-                              }
-                              error={Boolean(
-                                touched.estimateEndDate &&
-                                  errors.estimateEndDate
-                              )}
-                            />
-                            {touched.estimateEndDate &&
-                              errors.estimateEndDate && (
-                                <FormHelperText
-                                  error
-                                  id="standard-weight-helper-estimateEndDate"
-                                >
-                                  {errors.estimateEndDate}
-                                </FormHelperText>
-                              )}
-                          </LocalizationProvider>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <FormControl sx={{ minWidth: 250 }}>
-                            <InputLabel id="EstimateEndTime">
-                              Estimate End Time
-                            </InputLabel>
-                            <Select
-                              labelId="EstimateEndTime"
-                              id="estimateEndTime"
-                              value={values.estimateEndTime}
-                              label="estimateEndTime"
-                              onChange={handleChange}
-                              name="estimateEndTime"
-                            >
-                              {hours.map((item) => (
-                                <MenuItem value={item}>{item}</MenuItem>
-                              ))}
-                            </Select>
-
-                            {touched.estimateEndTime &&
-                              errors.estimateEndTime && (
-                                <FormHelperText
-                                  error
-                                  id="standard-weight-helper-EstimateEndTime"
-                                >
-                                  {errors.estimateEndTime}
-                                </FormHelperText>
-                              )}
-                          </FormControl>
-                        </Grid>
                         <Grid item xs={12}>
                           <Preparation item={trip} />
                         </Grid>

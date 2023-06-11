@@ -48,12 +48,13 @@ const Preparation = (props) => {
       }
     }
     const list = [...itemList];
-    list.splice(index, 1);
-    setItemList(list);
+    if (index + 1 !== list.length) {
+      list.splice(index, 1);
+      setItemList(list);
+    }
   };
 
   const handleItemAdd = async (itemId, index) => {
-    alert(itemId);
     if (itemId === 0) {
       const reponse = await tripItemApi.createUser(itemList[index]);
       switch (reponse.Code) {
@@ -79,8 +80,129 @@ const Preparation = (props) => {
           return toast.success("Tạo thành công!");
       }
     } else {
-      alert(21);
       const reponse = await tripItemApi.updateUser(itemList[index]);
+      switch (reponse.Code) {
+        case "G001":
+          return toast.error(reponse.Message);
+        case "U001":
+          return toast.error(reponse.Message);
+        case "I001":
+          return toast.error(reponse.Message);
+        default:
+          return toast.success("Cập nhập thành công!");
+      }
+    }
+  };
+
+  const handleItemChange1 = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...itemList1];
+    list[index][name] = value;
+    setItemList1(list);
+  };
+
+  const handleItemRemove1 = async (itemId, index) => {
+    if (itemId !== 0) {
+      const reponse = await tripItemApi.delete(itemId || "");
+      if (reponse > 0) {
+        toast.success("Xoá thành công!");
+      }
+    }
+    const list = [...itemList1];
+    if (index + 1 !== list.length) {
+      list.splice(index, 1);
+      setItemList1(list);
+    }
+  };
+
+  const handleItemAdd1 = async (itemId, index) => {
+    if (itemId === 0) {
+      const reponse = await tripItemApi.createUser(itemList1[index]);
+      switch (reponse.Code) {
+        case "G001":
+          return toast.error(reponse.Message);
+        case "U001":
+          return toast.error(reponse.Message);
+        case "I001":
+          return toast.error(reponse.Message);
+        default:
+          setItemList1([
+            ...itemList1,
+            {
+              itemId: 0,
+              tripId: tripId,
+              itemName: "",
+              itemDescription: "",
+              priceMin: "",
+              quantity: "",
+              categoryId: 3,
+            },
+          ]);
+          return toast.success("Tạo thành công!");
+      }
+    } else {
+      const reponse = await tripItemApi.updateUser(itemList1[index]);
+      switch (reponse.Code) {
+        case "G001":
+          return toast.error(reponse.Message);
+        case "U001":
+          return toast.error(reponse.Message);
+        case "I001":
+          return toast.error(reponse.Message);
+        default:
+          return toast.success("Cập nhập thành công!");
+      }
+    }
+  };
+
+  const handleItemChange2 = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...itemList2];
+    list[index][name] = value;
+    setItemList2(list);
+  };
+
+  const handleItemRemove2 = async (itemId, index) => {
+    if (itemId !== 0) {
+      const reponse = await tripItemApi.delete(itemId || "");
+      if (reponse > 0) {
+        toast.success("Xoá thành công!");
+      }
+    }
+    const list = [...itemList2];
+    if (index + 1 !== list.length) {
+      list.splice(index, 1);
+      setItemList2(list);
+    }
+  };
+
+  const handleItemAdd2 = async (itemId, index) => {
+    if (itemId === 0) {
+      const reponse = await tripItemApi.createUser(itemList2[index]);
+      switch (reponse.Code) {
+        case "G001":
+          return toast.error(reponse.Message);
+        case "U001":
+          return toast.error(reponse.Message);
+        case "I001":
+          return toast.error(reponse.Message);
+        default:
+          setItemList2([
+            ...itemList2,
+            {
+              itemId: 0,
+              tripId: tripId,
+              itemName: "",
+              itemDescription: "",
+              priceMin: "",
+              quantity: "",
+              categoryId: 4,
+            },
+          ]);
+          return toast.success("Tạo thành công!");
+      }
+    } else {
+      const reponse = await tripItemApi.updateUser(itemList2[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -121,7 +243,6 @@ const Preparation = (props) => {
   useEffect(() => {
     // IFFE
     (async () => {
-      console.log(props);
       if (!tripId) return;
       try {
         const data = await tripItemApi.getAllUser({
@@ -144,6 +265,46 @@ const Preparation = (props) => {
             },
           ]);
         }
+        const data1 = await tripItemApi.getAllUser({
+          pageIndex: 0,
+          pageSize: 99999,
+          categoryId: 3,
+          tripId: tripId,
+        });
+        if (data1 != null && data1 != "") {
+          setItemList1([
+            ...data1.listOfItem,
+            {
+              itemId: 0,
+              tripId: tripId,
+              itemName: "",
+              itemDescription: "",
+              priceMin: "",
+              quantity: "",
+              categoryId: 3,
+            },
+          ]);
+        }
+        const data2 = await tripItemApi.getAllUser({
+          pageIndex: 0,
+          pageSize: 99999,
+          categoryId: 4,
+          tripId: tripId,
+        });
+        if (data2 != null && data2 != "") {
+          setItemList2([
+            ...data2.listOfItem,
+            {
+              itemId: 0,
+              tripId: tripId,
+              itemName: "",
+              itemDescription: "",
+              priceMin: "",
+              quantity: "",
+              categoryId: 4,
+            },
+          ]);
+        }
       } catch (error) {
         console.log("Failed to fetch trip item", error);
       }
@@ -161,7 +322,7 @@ const Preparation = (props) => {
           }}
         >
           <CardHeader
-            title="Nhu yếu phẩm"
+            title="Đồ ăn vặt"
             action={
               <IconButton
                 onClick={() => setOpenOverview(!openOverview)}
@@ -241,13 +402,13 @@ const Preparation = (props) => {
         </Card>
       </Grid>
       <Grid item xs={12}>
-        <Box
+        <Card
           sx={{
             minWidth: 300,
           }}
         >
           <CardHeader
-            title="Đồ ăn vặt"
+            title="Nguyên liệu nấu ăn"
             action={
               <IconButton
                 onClick={() => setOpenOverview2(!openOverview2)}
@@ -268,33 +429,75 @@ const Preparation = (props) => {
             }}
           >
             <Collapse in={openOverview2} timeout="auto" unmountOnExit>
-              <CardContent>
-                <Container
-                  sx={{
-                    height: 100,
-                    lineHeight: 2,
-                  }}
-                >
-                  An interview-centric course designed to prepare you for the
-                  role of SDE for both product and service-based companies. A
-                  placement preparation pack built with years of expertise.
-                  Learn Resume Building, C++, Java, DSA, CS Theory concepts,
-                  Aptitude, Reasoning, LLD, and much more!
-                </Container>
-              </CardContent>
+              {itemList1.map((item, index) => (
+                <Card key={index} sx={{ padding: 2, margin: 1 }}>
+                  <Grid container>
+                    <Grid item xs={12} sm={8} sx={{ marginBottom: 2 }}>
+                      <TextField
+                        id="itemName"
+                        name="itemName"
+                        label="Tên đồ dùng"
+                        fullWidth
+                        variant="outlined"
+                        value={item.itemName}
+                        onChange={(e) => handleItemChange1(e, index)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={1}></Grid>
+                    <Grid item xs={12} sm={1}>
+                      <Button
+                        onClick={() => handleItemAdd1(item.itemId, index)}
+                      >
+                        <CheckCircleOutlineOutlinedIcon />
+                      </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={1}>
+                      <Button
+                        color="error"
+                        onClick={() => handleItemRemove1(item.itemId, index)}
+                      >
+                        <RemoveCircleOutlineOutlinedIcon />
+                      </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={5}>
+                      <TextField
+                        id="priceMin"
+                        name="priceMin"
+                        label="Giá tiền"
+                        fullWidth
+                        variant="outlined"
+                        value={item.priceMin}
+                        onChange={(e) => handleItemChange1(e, index)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={2}></Grid>
+                    <Grid item xs={12} sm={5}>
+                      <TextField
+                        id="quantity"
+                        name="quantity"
+                        label="Số lượng"
+                        fullWidth
+                        variant="outlined"
+                        value={item.quantity}
+                        onChange={(e) => handleItemChange1(e, index)}
+                      />
+                    </Grid>
+                  </Grid>
+                </Card>
+              ))}
             </Collapse>
           </div>
-        </Box>
+        </Card>
       </Grid>
 
       <Grid item xs={12}>
-        <Box
+        <Card
           sx={{
             minWidth: 300,
           }}
         >
           <CardHeader
-            title="Nguyên liệu nấu ăn"
+            title="Đồ dùng cá nhân"
             action={
               <IconButton
                 onClick={() => setOpenOverview3(!openOverview3)}
@@ -315,24 +518,65 @@ const Preparation = (props) => {
             }}
           >
             <Collapse in={openOverview3} timeout="auto" unmountOnExit>
-              <CardContent>
-                <Container
-                  sx={{
-                    height: 100,
-                    lineHeight: 2,
-                  }}
-                >
-                  An interview-centric course designed to prepare you for the
-                  role of SDE for both product and service-based companies. A
-                  placement preparation pack built with years of expertise.
-                  Learn Resume Building, C++, Java, DSA, CS Theory concepts,
-                  Aptitude, Reasoning, LLD, and much more!
-                </Container>
-              </CardContent>
+              {itemList2.map((item, index) => (
+                <Card key={index} sx={{ padding: 2, margin: 1 }}>
+                  <Grid container>
+                    <Grid item xs={12} sm={8} sx={{ marginBottom: 2 }}>
+                      <TextField
+                        id="itemName"
+                        name="itemName"
+                        label="Tên đồ dùng"
+                        fullWidth
+                        variant="outlined"
+                        value={item.itemName}
+                        onChange={(e) => handleItemChange2(e, index)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={1}></Grid>
+                    <Grid item xs={12} sm={1}>
+                      <Button
+                        onClick={() => handleItemAdd2(item.itemId, index)}
+                      >
+                        <CheckCircleOutlineOutlinedIcon />
+                      </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={1}>
+                      <Button
+                        color="error"
+                        onClick={() => handleItemRemove2(item.itemId, index)}
+                      >
+                        <RemoveCircleOutlineOutlinedIcon />
+                      </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={5}>
+                      <TextField
+                        id="priceMin"
+                        name="priceMin"
+                        label="Giá tiền"
+                        fullWidth
+                        variant="outlined"
+                        value={item.priceMin}
+                        onChange={(e) => handleItemChange2(e, index)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={2}></Grid>
+                    <Grid item xs={12} sm={5}>
+                      <TextField
+                        id="quantity"
+                        name="quantity"
+                        label="Số lượng"
+                        fullWidth
+                        variant="outlined"
+                        value={item.quantity}
+                        onChange={(e) => handleItemChange2(e, index)}
+                      />
+                    </Grid>
+                  </Grid>
+                </Card>
+              ))}
             </Collapse>
           </div>
-        </Box>
-
+        </Card>
         <hr />
       </Grid>
     </Grid>
