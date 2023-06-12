@@ -343,22 +343,24 @@ export default function TripCreate() {
               <Card sx={{ padding: 4, gap: 2, margin: 7 }}>
                 <Typography variant="h4">
                   <ElementMaker
-                    value={"Chuyến đi tới " + trip.endLocationName}
-                    handleChange={(e) => (
-                      (trip["tripName"] = e.target.value), setTrip(trip)
-                    )}
+                    value={trip.tripName}
+                    handleChange={(e) => {
+                      const newTrip = { ...trip, tripName: e.target.value };
+                      setTrip(newTrip);
+                    }}
                     handleDoubleClick={() => (
                       setShowInputTripName(true),
-                      (trip["tripName"] =
-                        "Chuyến đi tới " + trip.endLocationName),
+                      (trip["tripName"] = trip.tripName),
                       setTrip(trip)
                     )}
-                    handleBlur={() => (
-                      setShowInputTripName(false),
-                      (trip["tripName"] =
-                        "Chuyến đi tới " + trip.endLocationName),
-                      setTrip(trip)
-                    )}
+                    handleBlur={() => {
+                      const newTrip = {
+                        ...trip,
+                        tripName: trip.tripName,
+                      };
+                      setTrip(newTrip);
+                      setShowInputTripName(false);
+                    }}
                     showInputTripName={showInputTripName}
                   />
                 </Typography>
