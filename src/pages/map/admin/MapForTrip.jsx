@@ -1,50 +1,11 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Card,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { GOOGLE_MAP_API, PLACE_API } from "config";
+import { Autocomplete, Box, TextField } from "@mui/material";
 import "./map.css";
-
-import { useRef, useState, useEffect, useCallback } from "react";
-import axios from "axios";
-import olms from "ol-mapbox-style";
-import * as proj from "ol/proj";
-import { GeocoderAutocomplete } from "@geoapify/geocoder-autocomplete";
-import {
-  GeoapifyGeocoderAutocomplete,
-  GeoapifyContext,
-} from "@geoapify/react-geocoder-autocomplete";
 import "@geoapify/geocoder-autocomplete/styles/minimal.css";
-
-const center = { lat: 16.0545, lng: 108.22074 };
-
-const restrictions = {
-  country: "vn",
-};
-
-const offices = [
-  {
-    id: "1",
-    field_address: {
-      locality: "Gent",
-      postal_code: "9000",
-      address_line1: "Veldstraat 1",
-      address_line2: "a",
-      latitude: 16.0545,
-      longitude: 108.22074,
-    },
-  },
-];
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 
 export default function MapForTrip({ getReturnData, passToProps }) {
-  /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef();
-  /** @type React.MutableRefObject<HTMLInputElement> */
   const destinationRef = useRef();
 
   const [distance, setDistance] = useState("");
@@ -53,78 +14,14 @@ export default function MapForTrip({ getReturnData, passToProps }) {
   const [destination, setDestination] = useState();
   const [selectedPlace, setSelectedPlace] = useState(null);
 
-  let mapContainer;
+  const [options, setOptions] = useState([]);
 
-  useEffect(() => {
-    const initialState = {
-      lng: 108.22074,
-      lat: 16.0545,
-      zoom: 15,
-    };
-
-    const myAPIKey = PLACE_API;
-    const mapStyle = "https://maps.geoapify.com/v1/styles/osm-carto/style.json";
-
-    olms(mapContainer, `${mapStyle}?apiKey=${myAPIKey}`).then((map) => {
-      map
-        .getView()
-        .setCenter(
-          proj.transform(
-            [initialState.lng, initialState.lat],
-            "EPSG:4326",
-            "EPSG:3857"
-          )
-        );
-      map.getView().setZoom(initialState.zoom);
-    });
-  }, [mapContainer]);
-
-  function handlePlaceSelect(place) {
-    setSelectedPlace(place);
-    console.log(place);
-  }
-
-  function onPlaceSelect(place) {
-    setSelectedPlace(place);
-    console.log(place);
-  }
-
-  function onSuggestionChange(suggestion) {
-    if (suggestion) {
-      const place = suggestion.properties;
-      setSelectedPlace(place);
-      console.log(suggestion);
-    }
-  }
-
-  function preprocessHook(value) {
-    console.log(value)
-  }
-
-  function postprocessHook(feature) {
-    return feature.properties.street;
-  }
-
-  function suggestionsFilter(suggestions) {
-    const processedStreets = [];
-
-    const filtered = suggestions.filter((value) => {
-      if (
-        !value.properties.street ||
-        processedStreets.indexOf(value.properties.street) >= 0
-      ) {
-        return false;
-      } else {
-        processedStreets.push(value.properties.street);
-        return true;
-      }
-    });
-
-    return filtered;
+  function handlePlaceSelect(event) {
+    setSelectedPlace(options[event.target.value]);
   }
 
   async function calculateRoute() {
-    console.log(originRef.current.value)
+    console.log(originRef.current.value);
     if (originRef.current.value === "" || destinationRef.current.value === "") {
       return;
     }
@@ -154,13 +51,25 @@ export default function MapForTrip({ getReturnData, passToProps }) {
     getReturnData(returnData);
   }
 
-  function onUserInput(input) {
-    console.log(input);
-  }
+  const handleOnKeyDown = async (event) => {
+    const response = await axios.get(
+      `https://api.geoapify.com/v1/geocode/autocomplete?text=${event.target.value}&format=json&apiKey=a4f9fffa383040d581230c5d9fd096b2`
+    );
+    const options = response.data.results.map((value) => ({
+      name: value.address_line1,
+      lat: value.lat,
+      lon: value.lon,
+    }));
+    setOptions(options);
+  };
+
+  useEffect(() => {
+    console.log(selectedPlace);
+  }, [selectedPlace]);
 
   return (
     <Box height="90vh" width="100%" display="flex">
-      <Box height="100%" flex="1 1 0" position="relative">
+      {/* <Box height="100%" flex="1 1 0" position="relative">
         <Box
           bgcolor={"white"}
           display="flex"
@@ -181,7 +90,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
                   className="custom-input"
                   lang="vi"
                   countryCodes="vn"
-                  placeSelect={(value)=>onPlaceSelect(value)} // Add this line
+                  placeSelect={(value) => onPlaceSelect(value)} // Add this line
                   onSuggestionChange={onSuggestionChange}
                   onUserInput={onUserInput}
                   ref={originRef}
@@ -221,7 +130,19 @@ export default function MapForTrip({ getReturnData, passToProps }) {
           ref={(el) => (mapContainer = el)}
           sx={{ height: "100%", width: "100%" }}
         />
-      </Box>
+      </Box> */}
+
+      <Autocomplete
+        disablePortal
+        getOptionLabel={(option) => option.name}
+        id="combo-box-demo"
+        options={options}
+        sx={{ width: 300 }}
+        renderInput={(params) => (
+          <TextField {...params} label="Địa điểm" onChange={handleOnKeyDown} />
+        )}
+        onChange={handlePlaceSelect}
+      />
     </Box>
   );
 }
