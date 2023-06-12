@@ -82,8 +82,8 @@ const authUserSlice = createSlice({
 export const authUserActions = authUserSlice.actions;
 
 // Selectors
-export const selectIsInitialized = (state) => state.auth.isInitialized;
-export const selectCurrentUser = (state) => state.auth.currentUser;
+export const selectIsInitialized = (state) => state.authUser.isInitialized;
+export const selectCurrentUser = (state) => state.authUser.currentUser;
 
 // Reducer
 export default authUserSlice.reducer;

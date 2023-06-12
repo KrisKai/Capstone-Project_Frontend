@@ -40,6 +40,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import Preparation from "components/Home/TripCreateUser/Preparation";
+import ElementMaker from "components/Home/TripCreateUser/ElementMakerForTripName";
 
 const center = { lat: 16.0545, lng: 108.22074 };
 
@@ -116,13 +117,10 @@ export default function TripCreate() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  // show input
+  const [showInputTripName, setShowInputTripName] = useState(false);
+  const [showInputSDate, setShowInputSDate] = useState(false);
+  const [showInputEDate, setShowInputEDate] = useState(false);
 
   let navigate = useNavigate();
   const { tripId } = useParams();
@@ -150,13 +148,6 @@ export default function TripCreate() {
     estimateEndDateStr: "",
     estimateStartDateStr: "",
   });
-  const [user, setUser] = useState([
-    {
-      userId: "",
-      email: "",
-      fullname: "",
-    },
-  ]);
 
   useEffect(() => {
     // IFFE
@@ -220,341 +211,223 @@ export default function TripCreate() {
     });
   };
 
-  const validationSchema = yup.object().shape({
-    tripName: yup.string("Enter Trip Name").required("Trip Name is required"),
-    // TripBudget: yup.number().required("Trip Budget is required"),
-    tripDescription: yup
-      .string("Enter Trip Description")
-      .required("Trip Description is required"),
-    estimateStartDate: yup
-      .string("Enter Estimate Start Time")
-      .required("Estimate Start Time is required"),
-    estimateEndDate: yup
-      .string("Enter Estimate End Time")
-      .required("Estimate End Time is required"),
-  });
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
-  let hours = [];
-  for (let i = 0; i < 24; i++) {
-    hours.push(i);
-  }
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
-      {/* <Typography variant="h4" gutterBottom color="primary">
-        {location.state.destination}
-      </Typography> */}
-      <Formik
-        initialValues={trip}
-        enableReinitialize={true}
-        validationSchema={validationSchema}
-        onSubmit={async (values, { setErrors, setStatus }) => {
-          try {
-            setStatus({ success: false });
-            let reponse;
-            if (isEdit) {
-              reponse = await tripApi.update(values);
-            } else {
-              reponse = await tripApi.create(values);
-            }
-
-            switch (reponse.Code) {
-              case "G001":
-                return toast.error(reponse.Message);
-              case "U001":
-                return toast.error(reponse.Message);
-              case "I001":
-                return toast.error(reponse.Message);
-              default: {
-                navigate("/admin/tripList");
-                if (isEdit) {
-                  toast.success("Update Trip Successed!");
-                } else {
-                  toast.success("Create Trip Successed!");
-                }
-              }
-            }
-          } catch (err) {
-            setStatus({ success: false });
-            setErrors({ submit: err.message });
-          }
-        }}
-      >
-        {({
-          errors,
-          touched,
-          handleChange,
-          handleSubmit,
-          values,
-          setFieldValue,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Box sx={{ display: "flex" }}>
-              <CssBaseline />
-              <AppBar position="fixed" open={open} color="secondary">
-                <Toolbar>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <AppBar position="fixed" open={open} color="secondary">
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                marginRight: 5,
+                ...(open && { display: "none" }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              Journey Sick
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer variant="permanent" open={open}>
+          <Divider />
+          <List>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                {open === false && (
                   <IconButton
                     color="inherit"
                     aria-label="open drawer"
                     onClick={handleDrawerOpen}
                     edge="start"
                     sx={{
-                      marginRight: 5,
                       ...(open && { display: "none" }),
                     }}
                   >
                     <MenuIcon />
                   </IconButton>
-                  <Typography variant="h6" noWrap component="div">
-                    Journey Sick
-                  </Typography>
-                </Toolbar>
-              </AppBar>
-              <Drawer variant="permanent" open={open}>
-                <Divider />
-                <List>
-                  <ListItemButton
+                )}
+                {open === true && (
+                  <IconButton onClick={handleDrawerClose}>
+                    <ChevronLeftIcon />
+                  </IconButton>
+                )}
+              </ListItemIcon>
+              <ListItemText primary="test" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
                     sx={{
-                      minHeight: 48,
-                      justifyContent: open ? "initial" : "center",
-                      px: 2.5,
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
                     }}
                   >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : "auto",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {open === false && (
-                        <IconButton
-                          color="inherit"
-                          aria-label="open drawer"
-                          onClick={handleDrawerOpen}
-                          edge="start"
-                          sx={{
-                            ...(open && { display: "none" }),
-                          }}
-                        >
-                          <MenuIcon />
-                        </IconButton>
-                      )}
-                      {open === true && (
-                        <IconButton onClick={handleDrawerClose}>
-                          <ChevronLeftIcon />
-                        </IconButton>
-                      )}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="test"
-                      sx={{ opacity: open ? 1 : 0 }}
+                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {["All mail", "Trash", "Spam"].map((text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <DrawerHeader />
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              sm={4}
+              sx={{
+                backgroundImage: `url(https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60)`,
+              }}
+            >
+              <Card sx={{ padding: 4, gap: 2, margin: 7 }}>
+                <Typography variant="h4">
+                  <ElementMaker
+                    value={"Chuyến đi tới " + trip.endLocationName}
+                    handleChange={(e) => (
+                      (trip["tripName"] = e.target.value), setTrip(trip)
+                    )}
+                    handleDoubleClick={() => (
+                      setShowInputTripName(true),
+                      (trip["tripName"] =
+                        "Chuyến đi tới " + trip.endLocationName),
+                      setTrip(trip)
+                    )}
+                    handleBlur={() => (
+                      setShowInputTripName(false),
+                      (trip["tripName"] =
+                        "Chuyến đi tới " + trip.endLocationName),
+                      setTrip(trip)
+                    )}
+                    showInputTripName={showInputTripName}
+                  />
+                </Typography>
+                <br />
+                <br />
+                <Grid>
+                  <CalendarMonthIcon /> {"("}
+                  {trip.estimateStartTimeStr}
+                  {")"} {trip.estimateEndDateStr} - {"("}
+                  {trip.estimateEndTimeStr}
+                  {")"} {trip.estimateEndDateStr}
+                </Grid>
+              </Card>
+              <Card sx={{ padding: 2, gap: 2 }}>
+                <Box paddingBottom={2}>
+                  <Typography variant="h5">Thông tin cơ bản</Typography>
+                </Box>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="tripDescription"
+                      name="tripDescription"
+                      label="Trip Description"
+                      fullWidth
+                      autoComplete=""
+                      variant="outlined"
+                      value={trip.tripDescription}
                     />
-                  </ListItemButton>
-                  {["Inbox", "Starred", "Send email", "Drafts"].map(
-                    (text, index) => (
-                      <ListItem
-                        key={text}
-                        disablePadding
-                        sx={{ display: "block" }}
-                      >
-                        <ListItemButton
-                          sx={{
-                            minHeight: 48,
-                            justifyContent: open ? "initial" : "center",
-                            px: 2.5,
-                          }}
-                        >
-                          <ListItemIcon
-                            sx={{
-                              minWidth: 0,
-                              mr: open ? 3 : "auto",
-                              justifyContent: "center",
-                            }}
-                          >
-                            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                          </ListItemIcon>
-                          <ListItemText
-                            primary={text}
-                            sx={{ opacity: open ? 1 : 0 }}
-                          />
-                        </ListItemButton>
-                      </ListItem>
-                    )
-                  )}
-                </List>
-                <Divider />
-                <List>
-                  {["All mail", "Trash", "Spam"].map((text, index) => (
-                    <ListItem
-                      key={text}
-                      disablePadding
-                      sx={{ display: "block" }}
-                    >
-                      <ListItemButton
-                        sx={{
-                          minHeight: 48,
-                          justifyContent: open ? "initial" : "center",
-                          px: 2.5,
-                        }}
-                      >
-                        <ListItemIcon
-                          sx={{
-                            minWidth: 0,
-                            mr: open ? 3 : "auto",
-                            justifyContent: "center",
-                          }}
-                        >
-                          {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={text}
-                          sx={{ opacity: open ? 1 : 0 }}
-                        />
-                      </ListItemButton>
-                    </ListItem>
-                  ))}
-                </List>
-              </Drawer>
-              <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                <DrawerHeader />
-                <Grid container>
-                  <Grid item xs={12} sm={4}>
-                    <Card sx={{ padding: 4, gap: 2, margin: 7 }}>
-                      <Typography variant="h4">
-                        Chuyến đi tới {values.endLocationName}
-                      </Typography>
-                      <br />
-                      <br />
-                      <Grid>
-                        <CalendarMonthIcon /> {"("}
-                        {trip.estimateStartTimeStr}
-                        {")"} {values.estimateEndDateStr} - {"("}
-                        {trip.estimateEndTimeStr}
-                        {")"} {values.estimateEndDateStr}
-                      </Grid>
-                    </Card>
-                    <Card sx={{ padding: 2, gap: 2 }}>
-                      <Box paddingBottom={2}>
-                        <Typography variant="h5">Thông tin cơ bản</Typography>
-                      </Box>
-                      <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                          <TextField
-                            id="tripName"
-                            name="tripName"
-                            label="Trip Name"
-                            fullWidth
-                            variant="outlined"
-                            value={values.tripName}
-                            onChange={handleChange}
-                            error={Boolean(touched.tripName && errors.tripName)}
-                          />
-                          {touched.tripName && errors.tripName && (
-                            <FormHelperText
-                              error
-                              id="standard-weight-helper-text-TripName"
-                            >
-                              {errors.tripName}
-                            </FormHelperText>
-                          )}
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            id="tripDescription"
-                            name="tripDescription"
-                            label="Trip Description"
-                            fullWidth
-                            autoComplete=""
-                            variant="outlined"
-                            value={values.tripDescription}
-                            onChange={handleChange}
-                            error={Boolean(
-                              touched.tripDescription && errors.tripDescription
-                            )}
-                          />
-                          {touched.tripDescription &&
-                            errors.tripDescription && (
-                              <FormHelperText
-                                error
-                                id="standard-weight-helper-TripDescription"
-                              >
-                                {errors.tripDescription}
-                              </FormHelperText>
-                            )}
-                        </Grid>
-
-                        <Grid item xs={12}>
-                          <Preparation item={trip} />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            id="startLocationName"
-                            name="startLocationName"
-                            label="Trip Start Location Name"
-                            fullWidth
-                            variant="outlined"
-                            value={values.startLocationName}
-                            onChange={handleChange}
-                            InputProps={{
-                              readOnly: true,
-                            }}
-                            error={Boolean(
-                              touched.startLocationName &&
-                                errors.startLocationName
-                            )}
-                          />
-                          {touched.startLocationName &&
-                            errors.startLocationName && (
-                              <FormHelperText
-                                error
-                                id="standard-weight-helper-StartLocationName"
-                              >
-                                {errors.startLocationName}
-                              </FormHelperText>
-                            )}
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            id="endLocationName"
-                            name="endLocationName"
-                            label="Trip Destination Location Name"
-                            fullWidth
-                            variant="outlined"
-                            value={values.endLocationName}
-                            onChange={handleChange}
-                            InputProps={{
-                              readOnly: true,
-                            }}
-                            error={Boolean(
-                              touched.endLocationName && errors.endLocationName
-                            )}
-                          />
-                          {touched.endLocationName &&
-                            errors.endLocationName && (
-                              <FormHelperText
-                                error
-                                id="standard-weight-helper-EndLocationName"
-                              >
-                                {errors.endLocationName}
-                              </FormHelperText>
-                            )}
-                        </Grid>
-                      </Grid>
-                      <Button onClick={() => getLocationData("test")}>
-                        test
-                      </Button>
-                    </Card>
                   </Grid>
-                  <Grid item xs={12} sm={8} paddingLeft={1}>
-                    <MapUser getReturnData={getReturnData} passToProps={trip} />
+
+                  <Grid item xs={12}>
+                    <Preparation item={trip} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="startLocationName"
+                      name="startLocationName"
+                      label="Trip Start Location Name"
+                      fullWidth
+                      variant="outlined"
+                      value={trip.startLocationName}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="endLocationName"
+                      name="endLocationName"
+                      label="Trip Destination Location Name"
+                      fullWidth
+                      variant="outlined"
+                      value={trip.endLocationName}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
                   </Grid>
                 </Grid>
-              </Box>
-            </Box>
-          </form>
-        )}
-      </Formik>
+                <Button onClick={() => getLocationData("test")}>test</Button>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={8} paddingLeft={1}>
+              <MapUser getReturnData={getReturnData} passToProps={trip} />
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
     </>
   );
 }

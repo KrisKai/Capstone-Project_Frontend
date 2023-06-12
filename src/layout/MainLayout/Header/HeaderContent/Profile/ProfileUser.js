@@ -67,6 +67,7 @@ const ProfileUser = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const currentUser = useAppSelector(selectCurrentUser);
+  console.log(currentUser)
 
   useEffect(() => {
     if (localStorage.getItem("access_token_user")) {

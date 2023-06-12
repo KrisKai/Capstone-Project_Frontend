@@ -10,7 +10,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
-import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
+import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
 import { tripItemApi } from "api";
 import { toast } from "react-toastify";
 
@@ -312,7 +312,9 @@ const Preparation = (props) => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography variant="h4" marginBottom={2}><PlaylistAddCheckOutlinedIcon/> Phần chuẩn bị cho chuyến đi</Typography>
+        <Typography variant="h4" marginBottom={2} sx={{ fontSize: "1.5 rem", fontWeight:700 }}>
+          <PlaylistAddCheckOutlinedIcon /> Phần chuẩn bị cho chuyến đi
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <Card
