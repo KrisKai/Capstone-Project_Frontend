@@ -15,7 +15,6 @@ dayjs.extend(utc);
 
 // Create an ElementMakerForSDate component
 function ElementMakerForSDate(props) {
-  console.log(props.value);
   return (
     <span>
       {
