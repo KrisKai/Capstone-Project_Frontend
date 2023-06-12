@@ -41,6 +41,8 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import Preparation from "components/Home/TripCreateUser/Preparation";
 import ElementMaker from "components/Home/TripCreateUser/ElementMakerForTripName";
+import ElementMakerForSDate from "components/Home/TripCreateUser/ElementMakerForSDate";
+import ElementMakerForEDate from "components/Home/TripCreateUser/ElementMakerForEDate";
 
 const center = { lat: 16.0545, lng: 108.22074 };
 
@@ -156,8 +158,8 @@ export default function TripCreate() {
       try {
         const data = await tripApi.getByIdUser(tripId);
         if (data != null && data != "") {
-          data.estimateEndDate = dayjs.utc(data.estimateEndDate);
-          data.estimateStartDate = dayjs.utc(data.estimateStartDate);
+          // data.estimateEndDate = dayjs.utc(data.estimateEndDate);
+          // data.estimateStartDate = dayjs.utc(data.estimateStartDate);
           setTrip(data);
         } else {
           navigate("/tripList");
@@ -353,13 +355,14 @@ export default function TripCreate() {
                       (trip["tripName"] = trip.tripName),
                       setTrip(trip)
                     )}
-                    handleBlur={() => {
+                    handleBlur={async () => {
                       const newTrip = {
                         ...trip,
                         tripName: trip.tripName,
                       };
                       setTrip(newTrip);
                       setShowInputTripName(false);
+                      await tripApi.updateUser(trip);
                     }}
                     showInputTripName={showInputTripName}
                   />
@@ -367,11 +370,54 @@ export default function TripCreate() {
                 <br />
                 <br />
                 <Grid>
-                  <CalendarMonthIcon /> {"("}
-                  {trip.estimateStartTimeStr}
-                  {")"} {trip.estimateEndDateStr} - {"("}
-                  {trip.estimateEndTimeStr}
-                  {")"} {trip.estimateEndDateStr}
+                  <CalendarMonthIcon />
+                  <ElementMakerForSDate
+                    value={trip.estimateStartDate}
+                    handleChange={(e) => {
+                      console.log(e);
+                      const newTrip = { ...trip, estimateStartDate: e };
+                      setTrip(newTrip);
+                    }}
+                    handleDoubleClick={() => (
+                      setShowInputSDate(true),
+                      (trip["estimateStartDate"] = trip.estimateStartDate),
+                      setTrip(trip)
+                    )}
+                    handleBlur={async () => {
+                      const newTrip = {
+                        ...trip,
+                        estimateStartDate: trip.estimateStartDate,
+                      };
+                      setTrip(newTrip);
+                      setShowInputSDate(false);
+                      await tripApi.updateUser(trip);
+                    }}
+                    showInputSDate={showInputSDate}
+                  />{" "}
+                  -{" "}
+                  <ElementMakerForEDate
+                    value={trip.estimateEndDate}
+                    handleChange={(e) => {
+                      console.log(e);
+                      const newTrip = { ...trip, estimateEndDate: e };
+                      setTrip(newTrip);
+                    }}
+                    handleDoubleClick={() => (
+                      setShowInputEDate(true),
+                      (trip["estimateEndDate"] = trip.estimateEndDate),
+                      setTrip(trip)
+                    )}
+                    handleBlur={async () => {
+                      const newTrip = {
+                        ...trip,
+                        estimateEndDate: trip.estimateEndDate,
+                      };
+                      setTrip(newTrip);
+                      setShowInputEDate(false);
+                      await tripApi.updateUser(trip);
+                    }}
+                    showInputEDate={showInputEDate}
+                  />
                 </Grid>
               </Card>
               <Card sx={{ padding: 2, gap: 2 }}>
