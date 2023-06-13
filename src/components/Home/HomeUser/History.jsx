@@ -19,6 +19,9 @@ const HistoryCard = (props) => {
   const gotoTrip = (id) => {
     navigate(`/tripUpdate/${id}`);
   };
+  const openFeedback = () => {
+    console.log(1)
+  };
   return (
     <Card sx={{ width: "300px" }}>
       <CardActionArea onClick={() => gotoTrip(props.item.tripId)}>
@@ -30,7 +33,7 @@ const HistoryCard = (props) => {
             right: 0,
             width: "15px",
             zIndex: 999999,
-            minWidth: "140px"
+            minWidth: "140px",
           }}
           variant="contained"
           disableElevation
@@ -39,11 +42,32 @@ const HistoryCard = (props) => {
           {props.item.tripStatus === "ACTIVE" && "Đang hoạt động"}
           {props.item.tripStatus === "CLOSED" && "Hết hạn"}
         </Button>
-        <CardMedia
-          component="img"
-          alt="green iguana"
-          height="200"
-          image="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
+        <Box
+          sx={{
+            backgroundImage: `url(https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60)`,
+          }}
+        >
+          {props.item.tripStatus === "CLOSED" && (
+            <Button
+              sx={{
+                position: "absolute",
+                alignContent: "center",
+                top: "100px",
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: "140px",
+                zIndex: 999999,
+              }}
+              variant="contained"
+              onClick={openFeedback}
+            >
+              Phản hồi
+            </Button>
+          )}
+        </Box>
+        <img
+          src="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
+          style={{ width: "100%" }}
         />
 
         <CardContent>
