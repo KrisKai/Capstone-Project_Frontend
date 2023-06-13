@@ -29,8 +29,9 @@ const HistoryCard = (props) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [feedback, setFeedback] = useState({
-    feedbackDescription: "",
-    rate: 5,
+    feedbackId: props.item.feedbackId,
+    feedbackDescription: props.item.feedbackDescription,
+    rate: props.item.rate,
     locationName: props.item.endLocationName,
     tripId: props.item.tripId,
     userId: currentUser.userId,
@@ -46,7 +47,12 @@ const HistoryCard = (props) => {
   };
   const handleSudmit = async () => {
     setOpen(false);
-    const response = await feedbackApi.createUser(feedback);
+    let response;
+    if (feedback.feedbackId === 0) {
+      response = await feedbackApi.createUser(feedback);
+    } else {
+      response = await feedbackApi.updateUser(feedback);
+    }
     switch (response.Code) {
       case "G001":
         return toast.error(response.Message);
@@ -65,7 +71,7 @@ const HistoryCard = (props) => {
   };
   return (
     <Card sx={{ width: "300px" }}>
-      <CardActionArea>
+      <CardActionArea onClick={() => gotoTrip(props.item.tripId)}>
         <Button
           sx={{
             alignSelf: "flex-end",
@@ -86,37 +92,24 @@ const HistoryCard = (props) => {
           sx={{
             backgroundImage: `url(https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60)`,
           }}
-        >
-          {props.item.tripStatus === "CLOSED" && (
-            <Button
-              sx={{
-                position: "absolute",
-                alignContent: "center",
-                top: "100px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "140px",
-              }}
-              variant="contained"
-              onClick={openFeedback}
-            >
-              Phản hồi
-            </Button>
-          )}
-        </Box>
+        ></Box>
         <img
           src="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
           style={{ width: "100%" }}
         />
       </CardActionArea>
-      <CardActionArea onClick={() => gotoTrip(props.item.tripId)}>
+      <CardActionArea>
         <CardContent>
-          <Typography variant="h5" component="div">
+          <Typography
+            variant="h5"
+            component="div"
+            onClick={() => gotoTrip(props.item.tripId)}
+          >
             Chuyến đi tới {props.item.endLocationName}
           </Typography>
           <Box display="flex" alignItems="center" gap={2} mt={2}>
             <Box
-              width="30px"
+              width="25px"
               sx={{
                 aspectRatio: "1/1",
                 backgroundColor: "black",
@@ -130,9 +123,21 @@ const HistoryCard = (props) => {
             >
               <Typography>{char}</Typography>
             </Box>
-            <Typography>
-              {props.item.estimateStartDateStr} -{props.item.estimateEndDateStr}
+            <Typography onClick={() => gotoTrip(props.item.tripId)}>
+              {props.item.estimateStartDateStr} -{" "}
+              {props.item.estimateEndDateStr}
             </Typography>
+            {props.item.tripStatus === "CLOSED" && (
+              <Button
+                sx={{
+                  right: 0,
+                }}
+                variant="outlined"
+                onClick={openFeedback}
+              >
+                Đánh giá
+              </Button>
+            )}
           </Box>
         </CardContent>
       </CardActionArea>
@@ -141,7 +146,7 @@ const HistoryCard = (props) => {
         onClose={handleClose}
         sx={{ "& .MuiDialog-paper": { width: "450px" } }}
       >
-        <DialogTitle>Phản hồi</DialogTitle>
+        <DialogTitle>Đánh giá</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Cảm ơn bạn đã trải nghiệm chuyến đi cùng chúng tôi. Liệu bạn có thể
@@ -200,6 +205,9 @@ const History = () => {
       tripName: "",
       endLocationName: "",
       tripStatus: "",
+      feedbackId: 0,
+      feedbackDescription: "",
+      rate: 5,
     },
   ]);
 
