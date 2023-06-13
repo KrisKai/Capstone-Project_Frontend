@@ -53,7 +53,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
 
   const handleOnKeyDown = async (event) => {
     const response = await axios.get(
-      `https://api.geoapify.com/v1/geocode/autocomplete?text=${event.target.value}&format=json&apiKey=a4f9fffa383040d581230c5d9fd096b2`
+      `https://api.geoapify.com/v1/geocode/autocomplete?text=${event.target.value}&lang=vi&filter=countrycode:vn&format=json&apiKey=a4f9fffa383040d581230c5d9fd096b2`
     );
     const options = response.data.results.map((value) => ({
       name: value.address_line1,
