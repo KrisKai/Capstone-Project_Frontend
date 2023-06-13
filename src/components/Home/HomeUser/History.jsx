@@ -15,21 +15,26 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { tripApi } from "api";
+import { feedbackApi, tripApi } from "api";
 import { Carousel } from "components/Extend";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "redux/hooks";
+import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
+import { toast } from "react-toastify";
 
 const HistoryCard = (props) => {
-  const char = "Khai".toString().substring(0, 1).toUpperCase();
+  const currentUser = useAppSelector(selectCurrentUser);
+  const char = currentUser.name.toString().substring(0, 1).toUpperCase();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [feedback, setFeedback] = useState({
     feedbackDescription: "",
     rate: 5,
     locationName: props.item.endLocationName,
+    tripId: props.item.tripId,
+    userId: currentUser.userId,
   });
-  console.log(feedback);
   const gotoTrip = (id) => {
     navigate(`/tripUpdate/${id}`);
   };
@@ -38,6 +43,25 @@ const HistoryCard = (props) => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleSudmit = async () => {
+    setOpen(false);
+    const response = await feedbackApi.createUser(feedback);
+    switch (response.Code) {
+      case "G001":
+        return toast.error(response.Message);
+      case "U001":
+        return toast.error(response.Message);
+      case "I001":
+        return toast.error(response.Message);
+      case "V001":
+        return toast.error(response.Message);
+      default: {
+        if (response > 0) {
+          toast.success("Cảm ơn bạn đã đánh giá!");
+        }
+      }
+    }
   };
   return (
     <Card sx={{ width: "300px" }}>
@@ -123,20 +147,28 @@ const HistoryCard = (props) => {
             Cảm ơn bạn đã trải nghiệm chuyến đi cùng chúng tôi. Liệu bạn có thể
             chia sẻ cảm nghĩ về chuyến đi vừa rồi được không?
           </DialogContentText>
-          <Rating
-            value={feedback.rate}
-            onChange={(event, newValue) => {
-              const newFeedback = { ...feedback, rate: newValue };
-              setFeedback(newFeedback);
-            }}
-          />
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            marginTop={2}
+          >
+            <Rating
+              value={feedback.rate}
+              onChange={(event, newValue) => {
+                const newFeedback = { ...feedback, rate: newValue };
+                setFeedback(newFeedback);
+              }}
+            />
+          </Box>
           <TextField
             autoFocus
             margin="dense"
             id="name"
             label="Cảm nghĩ của bạn"
-            type="email"
             fullWidth
+            multiline
+            rows={3}
             variant="standard"
             value={feedback.feedbackDescription}
             onChange={(event) => {
@@ -149,8 +181,8 @@ const HistoryCard = (props) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleClose}>Hủy</Button>
+          <Button onClick={handleSudmit}>Xác nhận</Button>
         </DialogActions>
       </Dialog>
     </Card>
