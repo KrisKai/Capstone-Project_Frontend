@@ -6,8 +6,15 @@ import {
   CardContent,
   CardMedia,
   Container,
+  Rating,
   Typography,
 } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import { tripApi } from "api";
 import { Carousel } from "components/Extend";
 import { useEffect, useState } from "react";
@@ -16,15 +23,25 @@ import { useNavigate } from "react-router-dom";
 const HistoryCard = (props) => {
   const char = "Khai".toString().substring(0, 1).toUpperCase();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [feedback, setFeedback] = useState({
+    feedbackDescription: "",
+    rate: 5,
+    locationName: props.item.endLocationName,
+  });
+  console.log(feedback);
   const gotoTrip = (id) => {
     navigate(`/tripUpdate/${id}`);
   };
   const openFeedback = () => {
-    console.log(1)
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
   return (
     <Card sx={{ width: "300px" }}>
-      <CardActionArea onClick={() => gotoTrip(props.item.tripId)}>
+      <CardActionArea>
         <Button
           sx={{
             alignSelf: "flex-end",
@@ -32,12 +49,11 @@ const HistoryCard = (props) => {
             position: "absolute",
             right: 0,
             width: "15px",
-            zIndex: 999999,
             minWidth: "140px",
           }}
           variant="contained"
           disableElevation
-          color="info"
+          color="error"
         >
           {props.item.tripStatus === "ACTIVE" && "Đang hoạt động"}
           {props.item.tripStatus === "CLOSED" && "Hết hạn"}
@@ -56,7 +72,6 @@ const HistoryCard = (props) => {
                 left: "50%",
                 transform: "translateX(-50%)",
                 width: "140px",
-                zIndex: 999999,
               }}
               variant="contained"
               onClick={openFeedback}
@@ -69,7 +84,8 @@ const HistoryCard = (props) => {
           src="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
           style={{ width: "100%" }}
         />
-
+      </CardActionArea>
+      <CardActionArea onClick={() => gotoTrip(props.item.tripId)}>
         <CardContent>
           <Typography variant="h5" component="div">
             Chuyến đi tới {props.item.endLocationName}
@@ -96,6 +112,47 @@ const HistoryCard = (props) => {
           </Box>
         </CardContent>
       </CardActionArea>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        sx={{ "& .MuiDialog-paper": { width: "450px" } }}
+      >
+        <DialogTitle>Phản hồi</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Cảm ơn bạn đã trải nghiệm chuyến đi cùng chúng tôi. Liệu bạn có thể
+            chia sẻ cảm nghĩ về chuyến đi vừa rồi được không?
+          </DialogContentText>
+          <Rating
+            value={feedback.rate}
+            onChange={(event, newValue) => {
+              const newFeedback = { ...feedback, rate: newValue };
+              setFeedback(newFeedback);
+            }}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Cảm nghĩ của bạn"
+            type="email"
+            fullWidth
+            variant="standard"
+            value={feedback.feedbackDescription}
+            onChange={(event) => {
+              const newFeedback = {
+                ...feedback,
+                feedbackDescription: event.target.value,
+              };
+              setFeedback(newFeedback);
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Subscribe</Button>
+        </DialogActions>
+      </Dialog>
     </Card>
   );
 };

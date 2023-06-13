@@ -21,7 +21,7 @@ const Carousel = (props) => {
         }}
         position="absolute"
         top="50%"
-        zIndex={9999}
+        zIndex={99}
         backgroundColor="white"
         borderRadius="50%"
         boxShadow={2}
@@ -55,7 +55,7 @@ const Carousel = (props) => {
             backgroundColor: "gray",
           },
         }}
-        zIndex={9999}
+        zIndex={99}
         backgroundColor="white"
         borderRadius="50%"boxShadow={2}
         display="flex"
