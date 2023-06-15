@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import axios from 'axios';
+import { REACT_APP_RAPID_API_TRAVEL_API_KEY } from 'config';
 
 export const getPlacesData = async (type, sw, ne) => {
   try {
@@ -11,7 +12,7 @@ export const getPlacesData = async (type, sw, ne) => {
         tr_latitude: ne.lat,
       },
       headers: {
-        'x-rapidapi-key': process.env.REACT_APP_RAPID_API_TRAVEL_API_KEY,
+        'x-rapidapi-key': REACT_APP_RAPID_API_TRAVEL_API_KEY,
         'x-rapidapi-host': 'travel-advisor.p.rapidapi.com',
       },
     });
