@@ -43,6 +43,7 @@ import Preparation from "components/Home/TripCreateUser/Preparation";
 import ElementMaker from "components/Home/TripCreateUser/ElementMakerForTripName";
 import ElementMakerForSDate from "components/Home/TripCreateUser/ElementMakerForSDate";
 import ElementMakerForEDate from "components/Home/TripCreateUser/ElementMakerForEDate";
+import Plan from "components/Home/TripCreateUser/Plan";
 
 const center = { lat: 16.0545, lng: 108.22074 };
 
@@ -342,7 +343,7 @@ export default function TripCreate() {
                 backgroundImage: `url(https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60)`,
               }}
             >
-              <Card sx={{ padding: 4, gap: 2, margin: 7 }}>
+              <Card sx={{ padding: 4, gap: 2, margin: 7, borderRadius: 5 }}>
                 <Typography variant="h4">
                   <ElementMaker
                     value={trip.tripName}
@@ -420,9 +421,9 @@ export default function TripCreate() {
                   />
                 </Grid>
               </Card>
-              <Card sx={{ padding: 2, gap: 2 }}>
+              <Card sx={{ padding: 6, gap: 2 }}>
                 <Box paddingBottom={2}>
-                  <Typography variant="h5">Thông tin cơ bản</Typography>
+                  <Typography variant="h3">Thông tin cơ bản</Typography>
                 </Box>
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
@@ -441,33 +442,9 @@ export default function TripCreate() {
                     <Preparation item={trip} />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      id="startLocationName"
-                      name="startLocationName"
-                      label="Trip Start Location Name"
-                      fullWidth
-                      variant="outlined"
-                      value={trip.startLocationName}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      id="endLocationName"
-                      name="endLocationName"
-                      label="Trip Destination Location Name"
-                      fullWidth
-                      variant="outlined"
-                      value={trip.endLocationName}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                    />
+                    <Plan item={trip} />
                   </Grid>
                 </Grid>
-                <Button onClick={() => getLocationData("test")}>test</Button>
               </Card>
             </Grid>
             <Grid item xs={12} sm={8} paddingLeft={1}>

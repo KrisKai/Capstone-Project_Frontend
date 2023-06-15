@@ -2,14 +2,12 @@
 import axios from 'axios';
 import { REACT_APP_RAPID_API_TRAVEL_API_KEY } from 'config';
 
-export const getPlacesData = async (type, sw, ne) => {
+export const getPlacesData = async (type, lat, lng) => {
   try {
     const { data: { data } } = await axios.get(`https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary`, {
       params: {
-        bl_latitude: sw.lat,
-        bl_longitude: sw.lng,
-        tr_longitude: ne.lng,
-        tr_latitude: ne.lat,
+        latitude: lat,
+        longitude: lng
       },
       headers: {
         'x-rapidapi-key': REACT_APP_RAPID_API_TRAVEL_API_KEY,
