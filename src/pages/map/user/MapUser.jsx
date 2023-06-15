@@ -23,9 +23,6 @@ import "@geoapify/geocoder-autocomplete/styles/minimal.css";
 
 const center = { lat: 16.0545, lng: 108.22074 };
 
-const restrictions = {
-  country: "vn",
-};
 
 const offices = [
   {
