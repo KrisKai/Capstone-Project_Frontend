@@ -15,8 +15,8 @@ import { toast } from "react-toastify";
 const columns = [
   { id: "tripId", label: "Trip Id", minWidth: 100, onclick: true },
   {
-    id: "userId",
-    label: "User Id",
+    id: "fullname",
+    label: "Username",
     minWidth: 150,
     align: "center",
   },

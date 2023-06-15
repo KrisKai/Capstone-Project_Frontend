@@ -25,12 +25,6 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "startLocationName",
-    label: "Departure",
-    minWidth: 170,
-    align: "center",
-  },
-  {
     id: "endLocationName",
     label: "Destination",
     minWidth: 170,
