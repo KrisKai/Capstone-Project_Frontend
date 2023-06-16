@@ -25,22 +25,6 @@ const feedbackApi = {
   delete(id) {
     const url = `/feedbacks/${id}`;
     return axiosInstance.delete(url);
-  },
-  getByIdUser(id) {
-    const url = `/feedbacks/${id}`;
-    return axiosInstanceUser.get(url);
-  },
-  createUser(data) {
-    const url = "/feedbacks";
-    return axiosInstanceUser.post(url, data);
-  },
-  updateUser(data) {
-    const url = "/feedbacks";
-    return axiosInstanceUser.put(url, data);
-  },
-  increaseLike(params) {
-    const url = "/feedbacks/increase-like";
-    return axiosInstanceUser.put(url, params);
   }
 };
 

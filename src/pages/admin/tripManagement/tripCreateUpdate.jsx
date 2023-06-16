@@ -55,26 +55,6 @@ export default function TripCreate() {
   ]);
 
   useEffect(() => {
-    // setTrip({
-    //   tripName: "asdasdasdasd",
-    //   tripDescription: "",
-    //   estimateStartDate: "",
-    //   estimateEndDate: "",
-    //   estimateStartTime: "",
-    //   estimateEndTime: "",
-    //   tripPresenter: "",
-    //   startLocationName: "",
-    //   endLocationName: "",
-    //   startLocationName: "",
-    //   startLatitude: "",
-    //   startLongitude: "",
-    //   endLocationName: "",
-    //   endLatitude: "",
-    //   endLongitude: "",
-    //   distance: "",
-    //   tripStatus: "ACTIVE",
-    //   tripId: "",
-    // });
     // IFFE
     (async () => {
       const response = await userApi.getAll({

@@ -15,13 +15,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { feedbackApi, tripApi } from "api";
+import { tripApi } from "api";
 import { Carousel } from "components/Extend";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "redux/hooks";
 import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
 import { toast } from "react-toastify";
+import userFeedbackApi from "api/user/feedback/userFeedbackApi"
 
 const HistoryCard = (props) => {
   const currentUser = useAppSelector(selectCurrentUser);
@@ -49,9 +50,9 @@ const HistoryCard = (props) => {
     setOpen(false);
     let response;
     if (feedback.feedbackId === 0) {
-      response = await feedbackApi.createUser(feedback);
+      response = await userFeedbackApi.createUser(feedback);
     } else {
-      response = await feedbackApi.updateUser(feedback);
+      response = await userFeedbackApi.updateUser(feedback);
     }
     switch (response.Code) {
       case "G001":
