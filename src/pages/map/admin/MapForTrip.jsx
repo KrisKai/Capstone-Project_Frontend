@@ -1,8 +1,9 @@
-import { Autocomplete, Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import "./map.css";
 import "@geoapify/geocoder-autocomplete/styles/minimal.css";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
+import { AutocompletePlace } from "components/Extend";
 
 export default function MapForTrip({ getReturnData, passToProps }) {
   const originRef = useRef();
@@ -53,7 +54,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
 
   const handleOnKeyDown = async (event) => {
     const response = await axios.get(
-      `https://api.geoapify.com/v1/geocode/autocomplete?text=${event.target.value}&lang=vi&filter=countrycode:vn&format=json&apiKey=a4f9fffa383040d581230c5d9fd096b2`
+      `https://api.geoapify.com/v1/geocode/autocomplete?text=${event.target.value}&format=json&apiKey=a4f9fffa383040d581230c5d9fd096b2`
     );
     const options = response.data.results.map((value) => ({
       name: value.address_line1,
@@ -132,17 +133,7 @@ export default function MapForTrip({ getReturnData, passToProps }) {
         />
       </Box> */}
 
-      <Autocomplete
-        disablePortal
-        getOptionLabel={(option) => option.name}
-        id="combo-box-demo"
-        options={options}
-        sx={{ width: 300 }}
-        renderInput={(params) => (
-          <TextField {...params} label="Địa điểm" onChange={handleOnKeyDown} />
-        )}
-        onChange={handlePlaceSelect}
-      />
+      <AutocompletePlace label="Địa diểm" onSelect={handlePlaceSelect} />
     </Box>
   );
 }
