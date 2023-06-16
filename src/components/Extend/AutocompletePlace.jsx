@@ -21,7 +21,7 @@ const AutocompletePlace = (props) => {
   };
 
   const handleSelectPlace = (event) => {
-    onSelect(event);
+    onSelect(options[event.target.value]);
   };
 
   return (
