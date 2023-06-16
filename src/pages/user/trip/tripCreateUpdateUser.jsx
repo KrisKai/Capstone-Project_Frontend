@@ -1,24 +1,15 @@
 import { Box, Button, Card, FormHelperText, Typography } from "@mui/material";
-import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { tripApi, userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { Formik } from "formik";
 import MapUser from "pages/map/user/MapUser";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 // import { FaLocationArrow, FaTimes } from 'react-icons/fa'
-import * as yup from "yup";
 import { GOOGLE_MAP_API, PLACE_API } from "config";
 import axios from "axios";
 
