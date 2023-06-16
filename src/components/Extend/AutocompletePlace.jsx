@@ -1,8 +1,9 @@
 import { PLACE_API } from "config";
 import { Autocomplete, TextField } from "@mui/material";
 import { useState } from "react";
+import axios from "axios";
 
-const Autocomplete = (props) => {
+const AutocompletePlace = (props) => {
   const { onSelect, label } = props;
 
   const [options, setOptions] = useState([]);
@@ -40,4 +41,4 @@ const Autocomplete = (props) => {
   );
 };
 
-export default Autocomplete;
+export default AutocompletePlace;

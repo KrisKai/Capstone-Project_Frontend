@@ -1,7 +1,15 @@
 import AnimateButton from "./AnimateButton";
+import AutocompletePlace from "./AutocompletePlace";
 import Breadcrumbs from "./Breadcrumbs";
-import Transitions from "./Transitions";
-import SimpleBar from "./SimpleBar";
 import Carousel from "./Carousel";
+import SimpleBar from "./SimpleBar";
+import Transitions from "./Transitions";
 
-export { AnimateButton, Breadcrumbs, Transitions, SimpleBar, Carousel };
+export {
+  AnimateButton,
+  AutocompletePlace,
+  Breadcrumbs,
+  Carousel,
+  SimpleBar,
+  Transitions,
+};
