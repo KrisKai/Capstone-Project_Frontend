@@ -310,13 +310,13 @@ const Preparation = (props) => {
     })();
   }, []);
   return (
-    <Grid container sx={{p:3}}>
+    <Grid container>
       <Grid item xs={12}>
         <Typography variant="h4" marginBottom={2} sx={{ fontSize: "1.5 rem", fontWeight:700 }}>
           <PlaylistAddCheckOutlinedIcon /> Phần chuẩn bị cho chuyến đi
         </Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{p:2}}>
         <Card
           sx={{
             minWidth: 300,
@@ -403,7 +403,7 @@ const Preparation = (props) => {
           </div>
         </Card>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{p:2}}>
         <Card
           sx={{
             minWidth: 300,
@@ -493,7 +493,7 @@ const Preparation = (props) => {
         </Card>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{p:2}}>
         <Card
           sx={{
             minWidth: 300,
