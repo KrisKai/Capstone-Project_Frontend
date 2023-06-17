@@ -69,6 +69,11 @@ const Plan = (props) => {
     updatedPlans[index].open = !updatedPlans[index].open;
     setPlans(updatedPlans);
   };
+
+  const onSelect = (value) => {
+    console.log(value);
+  };
+
   return (
     <Grid container>
       <Grid item xs={12}>
