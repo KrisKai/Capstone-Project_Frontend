@@ -15,9 +15,15 @@ const Plan = (props) => {
       priority: 2,
     },
   ]);
+
   useEffect(() => {
     console.log(props.item);
   }, []);
+
+  const onSelect = (value) => {
+    console.log(value);
+  };
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -32,7 +38,13 @@ const Plan = (props) => {
 
       <Grid item xs={12} sx={{ pt: 3 }}>
         {places.map((place, index) => {
-          return <AutocompletePlaceForTrip key={index} place={place} />;
+          return (
+            <AutocompletePlaceForTrip
+              key={index}
+              place={place}
+              onSelect={onSelect}
+            />
+          );
         })}
 
         <hr />

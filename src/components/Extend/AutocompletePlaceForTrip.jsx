@@ -51,15 +51,12 @@ const AutocompletePlaceForTrip = (props) => {
         <Autocomplete
           disablePortal
           getOptionLabel={(option) => option.name}
+          filterOptions={(x) => x}
           options={options}
           sx={{
             width: "90%",
             "& fieldset": {
               border: "none",
-
-              "&:focus": {
-                outline: "none",
-              },
             },
           }}
           renderInput={(params) => (

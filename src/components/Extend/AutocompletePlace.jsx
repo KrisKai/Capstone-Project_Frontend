@@ -29,6 +29,7 @@ const AutocompletePlace = (props) => {
       <Autocomplete
         disablePortal
         getOptionLabel={(option) => option.name}
+        filterOptions={(x) => x}
         id="combo-box-demo"
         options={options}
         sx={{ width: 300 }}
