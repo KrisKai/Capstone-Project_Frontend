@@ -55,29 +55,31 @@ const Plan = (props) => {
 
   console.log(plans);
   useEffect(() => {
-    const tmp = props.item.listOfDate.map((date, index) => {
-      const newPlan = {
-        planDate: date,
-        routeId: 0,
-        open: false,
-        tripRoute: [
-          {
-            routeId: 0,
-            tripId: props.item.tripId,
-            longitude: "",
-            latitude: "",
-            locationName: "",
-            priority: 2 + index,
-            showNote: false,
-            note: "",
-          },
-        ],
-      };
-
-      return newPlan;
-    });
-    setPlans(tmp);
-  }, [props.trip]);
+    if (props.item.listOfDate) {
+      const tmp = props.item.listOfDate.map((date, index) => {
+        const newPlan = {
+          planDate: date,
+          routeId: 0,
+          open: false,
+          tripRoute: [
+            {
+              routeId: 0,
+              tripId: props.item.tripId,
+              longitude: "",
+              latitude: "",
+              locationName: "",
+              priority: 2 + index,
+              showNote: false,
+              note: "",
+            },
+          ],
+        };
+  
+        return newPlan;
+      });
+      setPlans(tmp);
+    }
+  }, [props.item.trip, props.item.listOfDate]);
 
   const handleToggleOpen = (index) => {
     const updatedPlans = [...plans];
