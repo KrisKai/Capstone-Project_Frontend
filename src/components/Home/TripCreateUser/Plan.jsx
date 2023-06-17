@@ -20,18 +20,6 @@ import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOut
 import AutocompletePlaceForTrip from "components/Extend/AutocompletePlaceForTrip";
 
 const Plan = (props) => {
-  const [places, setPlaces] = useState([
-    {
-      routeId: 0,
-      tripId: props.item.tripId,
-      longitude: "",
-      latitude: "",
-      locationName: "",
-      priority: 2,
-      open: false,
-      showNote: false,
-    },
-  ]);
 
   const [plans, setPlans] = useState([
     {
@@ -52,8 +40,6 @@ const Plan = (props) => {
       ],
     },
   ]);
-
-  console.log(plans);
   useEffect(() => {
     if (props.item.listOfDate) {
       const tmp = props.item.listOfDate.map((date, index) => {
@@ -87,9 +73,13 @@ const Plan = (props) => {
     setPlans(updatedPlans);
   };
 
-  const onSelect = (value) => {
-    console.log(value);
+  const onSelect = (index,childIndex) => {
+    const updatedPlans = [...plans];
+    updatedPlans[index].tripRoute[childIndex].showNote = !updatedPlans[index].tripRoute[childIndex].showNote;
+    setPlans(updatedPlans);
   };
+  
+  console.log(plans);
 
   return (
     <Grid container>
@@ -130,10 +120,12 @@ const Plan = (props) => {
               ></CardHeader>
               <div>
                 <Collapse in={plan.open} timeout="auto" unmountOnExit>
-                  {plan.tripRoute.map((place, index) => {
+                  {plan.tripRoute.map((place, childIndex) => {
                     return (
                       <AutocompletePlaceForTrip
-                        key={index}
+                        key={childIndex}
+                        index={index}
+                        childIndex={childIndex}
                         place={place}
                         onSelect={onSelect}
                       />

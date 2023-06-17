@@ -4,7 +4,7 @@ import { PLACE_API } from "config";
 import { useEffect, useState } from "react";
 
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
+import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 
 const AutocompletePlaceForTrip = (props) => {
   const { onSelect, label } = props;
@@ -37,7 +37,7 @@ const AutocompletePlaceForTrip = (props) => {
   };
 
   useEffect(() => {
-    console.log(props);
+    console.log(props.place);
   }, options);
   return (
     <>
@@ -74,9 +74,14 @@ const AutocompletePlaceForTrip = (props) => {
           onInputChange={handleOnKeyDown}
         />
         <Box>
-          {showDeleteButton && (
+          {showDeleteButton && props.place.showNote && (
             <IconButton>
               <DeleteForeverOutlinedIcon />
+            </IconButton>
+          )}
+          {!props.place.showNote && (
+            <IconButton onClick={() => props.onSelect(props.index, props.childIndex)}>
+              <StickyNote2OutlinedIcon />
             </IconButton>
           )}
         </Box>
