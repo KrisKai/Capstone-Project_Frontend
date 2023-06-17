@@ -44,6 +44,7 @@ const Plan = (props) => {
       open: false,
     },
   ]);
+
   useEffect(() => {
     const tmp = props.item.listOfDate.map((date, index) => {
       const newPlan = {
@@ -110,7 +111,11 @@ const Plan = (props) => {
                 <Collapse in={plan.open} timeout="auto" unmountOnExit>
                   {places.map((place, index) => {
                     return (
-                      <AutocompletePlaceForTrip key={index} place={place} />
+                      <AutocompletePlaceForTrip
+              key={index}
+              place={place}
+              onSelect={onSelect}
+            />
                     );
                   })}
                 </Collapse>
