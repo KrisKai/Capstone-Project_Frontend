@@ -77,7 +77,7 @@ const Plan = (props) => {
       return newPlan;
     });
     setPlans(tmp);
-  }, []);
+  }, [props.trip]);
 
   const handleToggleOpen = (index) => {
     const updatedPlans = [...plans];
