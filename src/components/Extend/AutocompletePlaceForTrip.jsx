@@ -4,6 +4,7 @@ import { PLACE_API } from "config";
 import { useEffect, useState } from "react";
 
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
 
 const AutocompletePlaceForTrip = (props) => {
   const { onSelect, label } = props;
