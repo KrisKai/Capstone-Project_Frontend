@@ -36,7 +36,7 @@ const AutocompletePlaceForTrip = (props) => {
   };
 
   useEffect(() => {
-    console.log(options);
+    console.log(props);
   }, options);
   return (
     <>
@@ -47,6 +47,7 @@ const AutocompletePlaceForTrip = (props) => {
         width="100%"
         display="flex"
         alignItems="center"
+        marginRight={1}
       >
         <Autocomplete
           disablePortal

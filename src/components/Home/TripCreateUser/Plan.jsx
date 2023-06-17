@@ -29,37 +29,49 @@ const Plan = (props) => {
       locationName: "",
       priority: 2,
       open: false,
+      showNote: false,
     },
   ]);
+
   const [plans, setPlans] = useState([
     {
       planDate: props.item.listOfDate[0],
       routeId: 0,
-      tripId: props.item.tripId,
-      longitude: "",
-      latitude: "",
-      locationName: "",
-      priority: 2,
-      note: "",
       open: false,
+      tripRoute: [
+        {
+          routeId: 0,
+          tripId: props.item.tripId,
+          longitude: "",
+          latitude: "",
+          locationName: "",
+          priority: 2,
+          showNote: false,
+          note: "",
+        },
+      ],
     },
   ]);
 
   console.log(plans);
-
   useEffect(() => {
-    console.log(props.item);
     const tmp = props.item.listOfDate.map((date, index) => {
       const newPlan = {
         planDate: date,
         routeId: 0,
-        tripId: props.item.tripId,
-        longitude: "",
-        latitude: "",
-        locationName: "",
-        priority: 2 + index,
-        note: "",
         open: false,
+        tripRoute: [
+          {
+            routeId: 0,
+            tripId: props.item.tripId,
+            longitude: "",
+            latitude: "",
+            locationName: "",
+            priority: 2 + index,
+            showNote: false,
+            note: "",
+          },
+        ],
       };
 
       return newPlan;
@@ -116,7 +128,7 @@ const Plan = (props) => {
               ></CardHeader>
               <div>
                 <Collapse in={plan.open} timeout="auto" unmountOnExit>
-                  {places.map((place, index) => {
+                  {plan.tripRoute.map((place, index) => {
                     return (
                       <AutocompletePlaceForTrip
                         key={index}
