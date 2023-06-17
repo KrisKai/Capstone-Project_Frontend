@@ -40,7 +40,7 @@ const Plan = (props) => {
         </Typography>
       </Grid>
 
-      <Grid item xs={12} sx={{ p: 3 }}>
+      <Grid item xs={12} sx={{ pt: 3 }}>
         {places.map((place, index) => {
           return <AutocompletePlaceForTrip key={index} place={place} />;
         })}
