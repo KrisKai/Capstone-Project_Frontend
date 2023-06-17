@@ -1,16 +1,6 @@
+import { Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import {
-  Box,
-  Card,
-  CardMedia,
-  Container,
-  Grid,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
 
-import PlaceIcon from "@mui/icons-material/Place";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import AutocompletePlaceForTrip from "components/Extend/AutocompletePlaceForTrip";
 

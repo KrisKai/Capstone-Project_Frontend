@@ -1,10 +1,9 @@
-import { PLACE_API } from "config";
-import { Autocomplete, TextField, InputAdornment, Grid, IconButton } from "@mui/material";
-import { useState } from "react";
+import { Autocomplete, Box, IconButton, TextField } from "@mui/material";
 import axios from "axios";
+import { PLACE_API } from "config";
+import { useEffect, useState } from "react";
 
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import PlaceIcon from "@mui/icons-material/Place";
 
 const AutocompletePlaceForTrip = (props) => {
   const { onSelect, label } = props;
@@ -16,12 +15,12 @@ const AutocompletePlaceForTrip = (props) => {
     const response = await axios.get(
       `https://api.geoapify.com/v1/geocode/autocomplete?text=${event.target.value}&lang=vi&filter=countrycode:vn&format=json&apiKey=${PLACE_API}`
     );
-    const options = response.data.results.map((value) => ({
+    const optionsFetch = response.data.results.map((value) => ({
       name: value.address_line1,
       lat: value.lat,
       lon: value.lon,
     }));
-    setOptions(options);
+    setOptions(optionsFetch);
   };
 
   const handleSelectPlace = (event) => {
@@ -36,49 +35,53 @@ const AutocompletePlaceForTrip = (props) => {
     setShowDeleteButton(false);
   };
 
+  useEffect(() => {
+    console.log(options);
+  }, options);
   return (
     <>
-      <Grid
+      <Box
         container
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        width="100%"
+        display="flex"
+        alignItems="center"
       >
-        <Grid item xs={12} sm={1}></Grid>
-        <Grid item xs={12} sm={9}>
-          <Autocomplete
-            disablePortal
-            getOptionLabel={(option) => option.name}
-            id="combo-box-demo"
-            options={options}
-            sx={{ border: "none" }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                fullWidth
-                onChange={handleOnKeyDown}
-                sx={{ backgroundColor: "#f3f4f5", borderRadius: 4 }}
-                placeholder="Thêm địa điểm"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PlaceIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            )}
-            onChange={handleSelectPlace}
-          />
-          <Grid item xs={12} sm={1}>
-            {showDeleteButton && (
-              <IconButton>
-                <DeleteForeverOutlinedIcon />
-              </IconButton>
-            )}
-          </Grid>
-        </Grid>
-      </Grid>
+        <Autocomplete
+          disablePortal
+          getOptionLabel={(option) => option.name}
+          options={options}
+          sx={{
+            width: "90%",
+            "& fieldset": {
+              border: "none",
+
+              "&:focus": {
+                outline: "none",
+              },
+            },
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={label}
+              fullWidth
+              sx={{ backgroundColor: "#f3f4f5", borderRadius: 4 }}
+              placeholder="Thêm địa điểm"
+            />
+          )}
+          onChange={handleSelectPlace}
+          onInputChange={handleOnKeyDown}
+        />
+        <Box>
+          {showDeleteButton && (
+            <IconButton>
+              <DeleteForeverOutlinedIcon />
+            </IconButton>
+          )}
+        </Box>
+      </Box>
     </>
   );
 };
