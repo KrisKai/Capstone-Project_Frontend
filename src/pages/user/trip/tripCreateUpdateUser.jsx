@@ -141,6 +141,7 @@ export default function TripCreate() {
     tripId: "",
     estimateEndDateStr: "",
     estimateStartDateStr: "",
+    listOfDate: [],
   });
 
   useEffect(() => {
@@ -205,38 +206,18 @@ export default function TripCreate() {
     });
   };
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
     <>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="fixed" open={open} color="secondary">
           <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={{
-                marginRight: 5,
-                ...(open && { display: "none" }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
             <Typography variant="h6" noWrap component="div">
               Journey Sick
             </Typography>
           </Toolbar>
         </AppBar>
-        
+
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
           <Grid container>
@@ -280,7 +261,6 @@ export default function TripCreate() {
                   <ElementMakerForSDate
                     value={trip.estimateStartDate}
                     handleChange={(e) => {
-                      console.log(e);
                       const newTrip = { ...trip, estimateStartDate: e };
                       setTrip(newTrip);
                     }}
@@ -304,7 +284,6 @@ export default function TripCreate() {
                   <ElementMakerForEDate
                     value={trip.estimateEndDate}
                     handleChange={(e) => {
-                      console.log(e);
                       const newTrip = { ...trip, estimateEndDate: e };
                       setTrip(newTrip);
                     }}
