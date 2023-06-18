@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import AutocompletePlaceForTrip from "components/Extend/AutocompletePlaceForTrip";
 
@@ -111,22 +112,27 @@ const Plan = (props) => {
                 marginBottom: 1,
               }}
             >
-              <CardHeader
-                title={plan.planDate}
-                action={
+              <Grid container>
+                <Grid item xs={12} sm={1}>
                   <IconButton
                     onClick={() => handleToggleOpen(index)}
                     aria-label="expand"
                     size="small"
                   >
                     {plan.open ? (
-                      <KeyboardArrowUpIcon />
-                    ) : (
                       <KeyboardArrowDownIcon />
+                    ) : (
+                      <KeyboardArrowRightIcon />
                     )}
                   </IconButton>
-                }
-              ></CardHeader>
+                </Grid>
+                <Grid item xs={12} sm={11} pt={0.5}>
+                  <Typography sx={{ fontWeight: "700", fontSize: "15px" }}>
+                    {plan.planDate}
+                  </Typography>
+                </Grid>
+              </Grid>
+
               <div>
                 <Collapse in={plan.open} timeout="auto" unmountOnExit>
                   {plan.tripRoute.map((place, childIndex) => {

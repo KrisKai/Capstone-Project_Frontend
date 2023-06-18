@@ -45,13 +45,13 @@ const UserHeader = () => {
         backgroundImage: `url(${HomeImage})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        height: "100vh",
+        height: "50vh",
         paddingX: 10,
         paddingY: 5,
       }}
     >
       <Grid container sx={{ display: "flex" }}>
-        <Grid item xs={2}>
+        <Grid item xs={12} sm={2}>
           <Container
             className="d-flex"
             sx={{
@@ -67,29 +67,23 @@ const UserHeader = () => {
             </Typography>
           </Container>
         </Grid>
-        <Grid item xs={8}>
-          <List
-            component="nav"
+        <Grid item xs={12} sm={9}>
+          <Box
             sx={{
               display: "flex",
-              alignItems: "center",
-              height: "100%",
+              justifyContent: "flex-start",
+              p: 1,
+              m: 1,
+              borderRadius: 1,
             }}
           >
             {listNavItems.map((item) => {
               return (
-                <ListItem
-                  key={item.key}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    paddingX: "8px",
-                  }}
-                >
+                <Box marginRight={3}>
                   <Link
                     style={{
                       fontWeight: 600,
-                      fontSize: "16px",
+                      fontSize: "20px",
                       textDecoration: "none",
                       color: "black",
                     }}
@@ -97,11 +91,21 @@ const UserHeader = () => {
                   >
                     {item.display}
                   </Link>
-                </ListItem>
+                </Box>
               );
             })}
-            <ProfileUser />
-          </List>
+          </Box>
+          <List
+            component="nav"
+            sx={{
+              display: "flex",
+              height: "100%",
+              flexDirection: "row",
+            }}
+          ></List>
+        </Grid>
+        <Grid item xs={12} sm={1} marginTop={2}>
+          <ProfileUser />
         </Grid>
         <Grid
           item
@@ -125,22 +129,6 @@ const UserHeader = () => {
         <Typography component="h3" fontSize="20px" fontWeight={400}>
           Không phải ai lang thang cũng là người đi lạc
         </Typography>
-        <Box mt="20px">
-          <TextField
-            sx={{
-              border: "1px solid rgb(162, 192, 222)",
-              width: "25%",
-              borderRadius: "10px",
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          ></TextField>
-        </Box>
       </Container>
     </Box>
   );

@@ -10,21 +10,13 @@ import {
   CardHeader,
   Box,
   CardMedia,
-  Paper,
-  CardContent,
   CardActions,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useTheme } from "@mui/material/styles";
 
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Carousel from "react-material-ui-carousel";
-import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import SkipNextIcon from "@mui/icons-material/SkipNext";
 
 const PlaceCard = (props) => {
   return (
@@ -116,7 +108,7 @@ const RecommendedPlaces = (props) => {
               aria-label="expand"
               size="small"
             >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              {open ? <KeyboardArrowDownIcon /> : <KeyboardArrowRightIcon />}
             </IconButton>
           </Grid>
           <Grid item xs={12} sm={11} pt={0.5}>
@@ -136,7 +128,6 @@ const RecommendedPlaces = (props) => {
             </Carousel>
           </Collapse>
         </div>
-        <hr />
       </Box>
     </>
   );
