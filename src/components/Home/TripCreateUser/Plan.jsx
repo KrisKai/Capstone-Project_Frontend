@@ -1,7 +1,4 @@
 import {
-  TextField,
-  Button,
-  Card,
   Typography,
   IconButton,
   Grid,
@@ -14,13 +11,10 @@ import { useEffect, useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 
 import AutocompletePlaceForTrip from "components/Extend/AutocompletePlaceForTrip";
 
 const Plan = (props) => {
-
   const [plans, setPlans] = useState([
     {
       planDate: props.item.listOfDate[0],
@@ -33,7 +27,7 @@ const Plan = (props) => {
           longitude: "",
           latitude: "",
           locationName: "",
-          priority: 2,
+          priority: 1,
           showNote: false,
           note: "",
         },
@@ -54,13 +48,13 @@ const Plan = (props) => {
               longitude: "",
               latitude: "",
               locationName: "",
-              priority: 2 + index,
+              priority: 1,
               showNote: false,
               note: "",
             },
           ],
         };
-  
+
         return newPlan;
       });
       setPlans(tmp);
@@ -73,12 +67,27 @@ const Plan = (props) => {
     setPlans(updatedPlans);
   };
 
-  const onSelect = (index,childIndex) => {
+  const handleShowNote = (index, childIndex) => {
     const updatedPlans = [...plans];
-    updatedPlans[index].tripRoute[childIndex].showNote = !updatedPlans[index].tripRoute[childIndex].showNote;
+    updatedPlans[index].tripRoute[childIndex].showNote =
+      !updatedPlans[index].tripRoute[childIndex].showNote;
     setPlans(updatedPlans);
   };
-  
+
+  const onSelect = (index, childIndex, value) => {
+    const updatedPlans = [...plans];
+    updatedPlans[index].tripRoute[childIndex].locationName = value.name;
+    updatedPlans[index].tripRoute[childIndex].longitude = value.lon;
+    updatedPlans[index].tripRoute[childIndex].latitude = value.lat;
+    setPlans(updatedPlans);
+  };
+
+  const onChangeInput = (index, childIndex, value) => {
+    const updatedPlans = [...plans];
+    updatedPlans[index].tripRoute[childIndex].note = value;
+    setPlans(updatedPlans);
+  };
+
   console.log(plans);
 
   return (
@@ -128,6 +137,8 @@ const Plan = (props) => {
                         childIndex={childIndex}
                         place={place}
                         onSelect={onSelect}
+                        handleShowNote={handleShowNote}
+                        onChangeInput={onChangeInput}
                       />
                     );
                   })}
