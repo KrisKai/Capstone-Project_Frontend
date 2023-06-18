@@ -11,6 +11,7 @@ import {
   Box,
   CardMedia,
   CardActions,
+  CardActionArea,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 
@@ -39,18 +40,36 @@ const PlaceCard = (props) => {
               image="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
               sx={{ width: "30%" }}
             />
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-              justifyContent="center"
-              alignItems="center"
-              marginLeft={1}
-            >
-              <Typography>{item.name}</Typography>
-            </Box>
-            <CardActions>Share</CardActions>
+            <CardActionArea>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+                justifyContent="center"
+                alignItems="center"
+                marginLeft={1}
+              >
+                <Typography>{item.name}</Typography>
+              </Box>
+            </CardActionArea>
+            <CardActions>
+              <IconButton>
+                <Box
+                  width="30px"
+                  sx={{
+                    aspectRatio: "1/1",
+                    backgroundColor: "#f3f4f5",
+                  }}
+                  display="flex"
+                  alignItems=" center"
+                  justifyContent="center"
+                  borderRadius="50%"
+                >
+                  <Typography>+</Typography>
+                </Box>
+              </IconButton>
+            </CardActions>
           </Card>
         ))}
       </Box>
@@ -89,8 +108,8 @@ const RecommendedPlaces = (props) => {
   ];
 
   const groupedItems = [];
-  for (let i = 0; i < items.length; i += 2) {
-    const group = items.slice(i, i + 2);
+  for (let i = 0; i < items.length; i += 3) {
+    const group = items.slice(i, i + 3);
     groupedItems.push(group);
   }
 
@@ -121,9 +140,16 @@ const RecommendedPlaces = (props) => {
               sx={{
                 height: "130px",
               }}
+              indicators={false}
+              navButtonsWrapperProps={{   // Move the buttons to the bottom. Unsetting top here to override default style.
+                style: {
+                    bottom: '0',
+                    top: 'unset'
+                }
+            }} 
             >
               {groupedItems.map((group, index) => (
-                <PlaceCard key={index} group={group} />
+                <PlaceCard key={index} group={group}/>
               ))}
             </Carousel>
           </Collapse>

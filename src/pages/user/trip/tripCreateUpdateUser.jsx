@@ -35,6 +35,7 @@ import ElementMaker from "components/Home/TripCreateUser/ElementMakerForTripName
 import ElementMakerForSDate from "components/Home/TripCreateUser/ElementMakerForSDate";
 import ElementMakerForEDate from "components/Home/TripCreateUser/ElementMakerForEDate";
 import Plan from "components/Home/TripCreateUser/Plan";
+import { getPlacesData } from "api/user/travelAdvisorAPI";
 
 const center = { lat: 16.0545, lng: 108.22074 };
 
@@ -108,7 +109,6 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function TripCreate() {
-  const theme = useTheme();
   const [open, setOpen] = useState(false);
 
   // show input
@@ -143,6 +143,9 @@ export default function TripCreate() {
     estimateStartDateStr: "",
     listOfDate: [],
   });
+  const [restaurantList, setRestaurantList] = useState([]);
+  const [hotelList, setHotelList] = useState([]);
+  const [attractionList, setAttractionList] = useState([]);
 
   useEffect(() => {
     // IFFE
@@ -157,6 +160,20 @@ export default function TripCreate() {
         } else {
           navigate("/tripList");
         }
+        //call api
+        // getPlacesData("hotels", data.endLatitude, data.endLongitude)
+        // .then((data) => {
+        //   console.log(data)
+        //   setHotelList(data);
+        // });
+        // getPlacesData("restaurants", data.endLatitude, data.endLongitude)
+        // .then((data) => {
+        //   setRestaurantList(data);
+        // });
+        // getPlacesData("attractions", data.endLatitude, data.endLongitude)
+        // .then((data) => {
+        //   setAttractionList(data);
+        // });
       } catch (error) {
         console.log("Failed to fetch trip details", error);
         if (error.response.status == 401) {
@@ -224,7 +241,7 @@ export default function TripCreate() {
             <Grid
               item
               xs={12}
-              sm={4}
+              sm={5}
               sx={{
                 backgroundImage: `url(https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60)`,
               }}
@@ -331,7 +348,7 @@ export default function TripCreate() {
                 </Grid>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={8} paddingLeft={1}>
+            <Grid item xs={12} sm={7} paddingLeft={1}>
               <MapUser getReturnData={getReturnData} passToProps={trip} />
             </Grid>
           </Grid>
