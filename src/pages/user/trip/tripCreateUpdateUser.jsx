@@ -19,17 +19,6 @@ import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import Preparation from "components/Home/TripCreateUser/Preparation";
 import ElementMaker from "components/Home/TripCreateUser/ElementMakerForTripName";
 import ElementMakerForSDate from "components/Home/TripCreateUser/ElementMakerForSDate";
@@ -91,25 +80,9 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
-
 export default function TripCreate() {
   const [open, setOpen] = useState(false);
+  const [selectedPlace, setSelectedPlace] = useState();
 
   // show input
   const [showInputTripName, setShowInputTripName] = useState(false);
@@ -161,19 +134,21 @@ export default function TripCreate() {
           navigate("/tripList");
         }
         //call api
-        // getPlacesData("hotels", data.endLatitude, data.endLongitude)
-        // .then((data) => {
-        //   console.log(data)
-        //   setHotelList(data);
-        // });
-        // getPlacesData("restaurants", data.endLatitude, data.endLongitude)
-        // .then((data) => {
-        //   setRestaurantList(data);
-        // });
-        // getPlacesData("attractions", data.endLatitude, data.endLongitude)
-        // .then((data) => {
-        //   setAttractionList(data);
-        // });
+        getPlacesData("hotels", data.endLatitude, data.endLongitude).then(
+          (data) => {
+            setHotelList(data);
+          }
+        );
+        getPlacesData("restaurants", data.endLatitude, data.endLongitude).then(
+          (data) => {
+            setRestaurantList(data);
+          }
+        );
+        getPlacesData("attractions", data.endLatitude, data.endLongitude).then(
+          (data) => {
+            setAttractionList(data);
+          }
+        );
       } catch (error) {
         console.log("Failed to fetch trip details", error);
         if (error.response.status == 401) {
@@ -208,6 +183,11 @@ export default function TripCreate() {
       .catch(function (error) {
         console.log(error);
       });
+  };
+
+  const onClickData = (data) => {
+    console.log(data);
+    setSelectedPlace(data);
   };
 
   const getReturnData = (returnData) => {
@@ -343,13 +323,19 @@ export default function TripCreate() {
                     <Preparation item={trip} />
                   </Grid>
                   <Grid item xs={12}>
-                    <Plan item={trip} />
+                    <Plan
+                      item={trip}
+                      hotels={hotelList}
+                      restaurants={restaurantList}
+                      attractions={attractionList}
+                      onClickData={onClickData}
+                    />
                   </Grid>
                 </Grid>
               </Card>
             </Grid>
             <Grid item xs={12} sm={7} paddingLeft={1}>
-              <MapUser getReturnData={getReturnData} passToProps={trip} />
+              <MapUser getReturnData={getReturnData} passToProps={trip} selectedData={selectedPlace}/>
             </Grid>
           </Grid>
         </Box>

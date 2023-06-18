@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom'
+import ReactDOM from "react-dom";
 import {
   Box,
   Button,
@@ -23,7 +23,6 @@ import "@geoapify/geocoder-autocomplete/styles/minimal.css";
 
 const center = { lat: 16.0545, lng: 108.22074 };
 
-
 const offices = [
   {
     id: "1",
@@ -38,7 +37,7 @@ const offices = [
   },
 ];
 
-export default function MapUser({ getReturnData, passToProps }) {
+export default function MapUser({ getReturnData, passToProps, selectedData }) {
   /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef();
   /** @type React.MutableRefObject<HTMLInputElement> */
@@ -49,6 +48,8 @@ export default function MapUser({ getReturnData, passToProps }) {
   const [departure, setDeparture] = useState();
   const [destination, setDestination] = useState();
   const [selectedPlace, setSelectedPlace] = useState(null);
+
+  const data = selectedData;
 
   let mapContainer;
 
@@ -156,69 +157,72 @@ export default function MapUser({ getReturnData, passToProps }) {
   }
 
   return (
-    <Box height="90vh" width="63%" display="flex" position="fixed">
+    <Box height="90vh" width="57%" display="flex" position="fixed">
       <Box height="100%" flex="1 1 0" position="relative">
-        <Box
-          bgcolor={"white"}
-          display="flex"
-          justifyContent="space-between"
-          width="94%"
-          position="absolute"
-          zIndex={100}
-          padding={3}
-          margin={4}
-          boxShadow={2}
-          borderRadius={2}
-        >
-          <GeoapifyContext apiKey="a4f9fffa383040d581230c5d9fd096b2">
-            <Grid container>
-              <Grid item xs={12} sm={5}>
-                <GeoapifyGeocoderAutocomplete
-                  id="test"
-                  placeholder="Trip Start Location"
-                  className="custom-input"
-                  lang="vi"
-                  countryCodes="vn"
-                  placeSelect={onPlaceSelect} // Add this line
-                  onSuggestionChange={onSuggestionChange}
-                  onUserInput={onUserInput}
-                  ref={originRef}
-                />
+        {data && (
+          <Box
+            bgcolor={"white"}
+            display="flex"
+            justifyContent="space-between"
+            width="97%"
+            position="absolute"
+            zIndex={100}
+            padding={3}
+            margin={2}
+            boxShadow={2}
+            borderRadius={2}
+            bottom={0}
+          >
+            <GeoapifyContext apiKey="a4f9fffa383040d581230c5d9fd096b2">
+              <Grid container>
+                <Grid item xs={12} sm={5}>
+                  <GeoapifyGeocoderAutocomplete
+                    id="test"
+                    placeholder="Trip Start Location"
+                    className="custom-input"
+                    lang="vi"
+                    countryCodes="vn"
+                    placeSelect={onPlaceSelect} // Add this line
+                    onSuggestionChange={onSuggestionChange}
+                    onUserInput={onUserInput}
+                    ref={originRef}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                  <GeoapifyGeocoderAutocomplete
+                    placeholder="Destination Start Location"
+                    className="custom-input"
+                    type="street"
+                    lang="vi"
+                    countryCodes="vn"
+                    onChange={handlePlaceSelect}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={2}>
+                  <Button
+                    colorScheme="pink"
+                    type="button"
+                    onClick={calculateRoute}
+                    variant="outlined"
+                  >
+                    Calculate Route
+                  </Button>
+                </Grid>
+                <Grid item xs={12} sm={5} mt={2}>
+                  <Typography>Distance: {distance} </Typography>
+                </Grid>
+                <Grid item xs={12} sm={5} mt={2}>
+                  <Typography>Duration: {duration} </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={5}>
-                <GeoapifyGeocoderAutocomplete
-                  placeholder="Destination Start Location"
-                  className="custom-input"
-                  type="street"
-                  lang="vi"
-                  countryCodes="vn"
-                  onChange={handlePlaceSelect}
-                />
-              </Grid>
-              <Grid item xs={12} sm={2}>
-                <Button
-                  colorScheme="pink"
-                  type="button"
-                  onClick={calculateRoute}
-                  variant="outlined"
-                >
-                  Calculate Route
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={5} mt={2}>
-                <Typography>Distance: {distance} </Typography>
-              </Grid>
-              <Grid item xs={12} sm={5} mt={2}>
-                <Typography>Duration: {duration} </Typography>
-              </Grid>
-            </Grid>
-          </GeoapifyContext>
-        </Box>
-        {/* <Card
+            </GeoapifyContext>
+          </Box>
+        )}
+        <Card
           className="map-container"
           ref={(el) => (mapContainer = el)}
           sx={{ height: "100%", width: "100%" }}
-        /> */}
+        />
       </Box>
     </Box>
   );

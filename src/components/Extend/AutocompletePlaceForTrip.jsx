@@ -37,7 +37,9 @@ const AutocompletePlaceForTrip = (props) => {
     setShowDeleteButton(false);
   };
 
-  useEffect(() => {}, options);
+  useEffect(() => {
+    console.log(props.restaurants);
+  }, options);
   return (
     <>
       {!props.place.showNote && (
@@ -90,7 +92,12 @@ const AutocompletePlaceForTrip = (props) => {
             )}
           </Box>
           <Grid item xs={12}>
-            <RecommendedPlaces/>
+            <RecommendedPlaces
+              hotels={props.hotels}
+              restaurants={props.restaurants}
+              attractions={props.attractions}
+              onClickData={props.onClickData}
+            />
           </Grid>
         </Grid>
       )}
@@ -158,7 +165,12 @@ const AutocompletePlaceForTrip = (props) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <RecommendedPlaces/>
+            <RecommendedPlaces
+              hotels={props.hotels}
+              restaurants={props.restaurants}
+              attractions={props.attractions}
+              onClickData={props.onClickData}
+            />
           </Grid>
         </Grid>
       )}

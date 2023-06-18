@@ -112,7 +112,7 @@ const Plan = (props) => {
                 marginBottom: 1,
               }}
             >
-              <Grid container>
+              <Grid container sx={{ pb: 1 }}>
                 <Grid item xs={12} sm={1}>
                   <IconButton
                     onClick={() => handleToggleOpen(index)}
@@ -145,6 +145,10 @@ const Plan = (props) => {
                         onSelect={onSelect}
                         handleShowNote={handleShowNote}
                         onChangeInput={onChangeInput}
+                        hotels={props.hotels}
+                        restaurants={props.restaurants}
+                        attractions={props.attractions}
+                        onClickData={props.onClickData}
                       />
                     );
                   })}
