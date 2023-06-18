@@ -49,13 +49,13 @@ const FormCreateTrip = () => {
           display="flex"
           alignItems="center"
           flexDirection="column"
-          backgroundColor="rgba(212, 212, 215, 0.9)"
           paddingY={5}
           borderRadius="5px"
         >
-          <Typography variant="h2" textTransform="uppercase">
-            tạo hành trình mới
-          </Typography>
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography variant="h2">Tạo hành trình mới</Typography>
+            <Box width="60%" border="1px solid black" mt={1}></Box>
+          </Box>
           <Box mt={2}>
             <Formik
               initialValues={{
