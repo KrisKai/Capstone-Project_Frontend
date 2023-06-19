@@ -100,10 +100,13 @@ const AutocompletePlaceForTrip = (props) => {
           {!props.place.locationName ? (
             <Grid item xs={12}>
               <RecommendedPlaces
+                index={props.index}
+                childIndex={props.childIndex}
                 hotels={props.hotels}
                 restaurants={props.restaurants}
                 attractions={props.attractions}
                 onClickData={props.onClickData}
+                handleClickData={props.handleClickData}
               />
             </Grid>
           ) : (
@@ -187,10 +190,13 @@ const AutocompletePlaceForTrip = (props) => {
           <Grid item xs={12} sm={11}>
             {!props.place.locationName ? (
               <RecommendedPlaces
+                index={props.index}
+                childIndex={props.childIndex}
                 hotels={props.hotels}
                 restaurants={props.restaurants}
                 attractions={props.attractions}
                 onClickData={props.onClickData}
+                handleClickData={props.handleClickData}
               />
             ) : (
               <hr />

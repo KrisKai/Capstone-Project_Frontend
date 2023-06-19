@@ -114,21 +114,21 @@ export default function TripCreate() {
           navigate("/tripList");
         }
         //call api
-        // getPlacesData("hotels", data.endLatitude, data.endLongitude).then(
-        //   (data) => {
-        //     setHotelList(data);
-        //   }
-        // );
-        // getPlacesData("restaurants", data.endLatitude, data.endLongitude).then(
-        //   (data) => {
-        //     setRestaurantList(data);
-        //   }
-        // );
-        // getPlacesData("attractions", data.endLatitude, data.endLongitude).then(
-        //   (data) => {
-        //     setAttractionList(data);
-        //   }
-        // );
+        getPlacesData("hotels", data.endLatitude, data.endLongitude).then(
+          (data) => {
+            setHotelList(data);
+          }
+        );
+        getPlacesData("restaurants", data.endLatitude, data.endLongitude).then(
+          (data) => {
+            setRestaurantList(data);
+          }
+        );
+        getPlacesData("attractions", data.endLatitude, data.endLongitude).then(
+          (data) => {
+            setAttractionList(data);
+          }
+        );
       } catch (error) {
         console.log("Failed to fetch trip details", error);
         if (error.response.status == 401) {

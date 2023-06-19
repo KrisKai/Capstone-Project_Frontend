@@ -34,7 +34,10 @@ const PlaceCard = (props) => {
               borderStyle: "dashed",
               border: "1px",
             }}
-            onClick={() => props.onClickData(item)}
+            onClick={() => {
+              props.onClickData(item);
+              props.handleClickData(props.index, props.childIndex, item);
+            }}
           >
             <CardMedia
               component="img"
@@ -162,19 +165,15 @@ const RecommendedPlaces = (props) => {
                     height: "70px",
                   }}
                   indicators={false}
-                  navButtonsWrapperProps={{
-                    // Move the buttons to the bottom. Unsetting top here to override default style.
-                    style: {
-                      bottom: "0",
-                      top: "unset",
-                    },
-                  }}
                 >
                   {groupedRestaurants.map((group, index) => (
                     <PlaceCard
                       key={index}
+                      index={props.index}
+                      childIndex={props.childIndex}
                       group={group}
                       onClickData={props.onClickData}
+                      handleClickData={props.handleClickData}
                     />
                   ))}
                 </Carousel>
@@ -206,19 +205,15 @@ const RecommendedPlaces = (props) => {
                     height: "70px",
                   }}
                   indicators={false}
-                  navButtonsWrapperProps={{
-                    // Move the buttons to the bottom. Unsetting top here to override default style.
-                    style: {
-                      bottom: "0",
-                      top: "unset",
-                    },
-                  }}
                 >
                   {groupedHotels.map((group, index) => (
                     <PlaceCard
                       key={index}
+                      index={props.index}
+                      childIndex={props.childIndex}
                       group={group}
                       onClickData={props.onClickData}
+                      handleClickData={props.handleClickData}
                     />
                   ))}
                 </Carousel>
@@ -261,6 +256,8 @@ const RecommendedPlaces = (props) => {
                   {groupedAttractions.map((group, index) => (
                     <PlaceCard
                       key={index}
+                      index={props.index}
+                      childIndex={props.childIndex}
                       group={group}
                       onClickData={props.onClickData}
                     />

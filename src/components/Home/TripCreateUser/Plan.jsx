@@ -1,15 +1,7 @@
-import {
-  Typography,
-  IconButton,
-  Grid,
-  Collapse,
-  CardHeader,
-  Box,
-} from "@mui/material";
+import { Typography, IconButton, Grid, Collapse, Box } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
@@ -132,6 +124,34 @@ const Plan = (props) => {
     setPlans(updatedPlans);
   };
 
+  const handleClickData = async (index, childIndex, value) => {
+    const updatedPlans = [...plans];
+    updatedPlans[index].tripRoute[childIndex].locationName = value.name;
+    updatedPlans[index].tripRoute[childIndex].longitude =
+      value.longitude.toString();
+    updatedPlans[index].tripRoute[childIndex].latitude =
+      value.latitude.toString();
+    const id = updatedPlans[index].tripRoute[childIndex].priority;
+    const data = await tripRouteApi.createUser(
+      updatedPlans[index].tripRoute[childIndex]
+    );
+    updatedPlans[index].tripRoute[childIndex].routeId = data;
+    const newTripRoute = {
+      planDateTime: updatedPlans[index].tripRoute[childIndex].planDateTime,
+      routeId: 0,
+      tripId: props.item.tripId,
+      longitude: "",
+      latitude: "",
+      locationName: "",
+      priority: id + 1,
+      showNote: false,
+      note: "",
+    };
+
+    updatedPlans[index].tripRoute.push(newTripRoute);
+    setPlans(updatedPlans);
+  };
+
   const onChangeInput = (index, childIndex, value) => {
     const updatedPlans = [...plans];
     updatedPlans[index].tripRoute[childIndex].note = value;
@@ -140,8 +160,8 @@ const Plan = (props) => {
 
   const handleClick = async (index, childIndex) => {
     const updatedPlans = [...plans];
-    
-    console.log(childIndex)
+
+    console.log(childIndex);
 
     if (childIndex + 1 === updatedPlans[index].tripRoute.length) {
       updatedPlans[index].tripRoute.splice(childIndex, 1);
@@ -229,6 +249,7 @@ const Plan = (props) => {
                         attractions={props.attractions}
                         onClickData={props.onClickData}
                         handleClick={handleClick}
+                        handleClickData={handleClickData}
                       />
                     );
                   })}
