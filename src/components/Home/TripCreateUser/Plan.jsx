@@ -61,7 +61,7 @@ const Plan = (props) => {
         tripRouteApi
           .getAllUser({
             pageIndex: 0,
-            pageSize: 10,
+            pageSize: 9999,
             planName: "",
             tripId: props.item.tripId,
             planDateTime: date,
@@ -69,7 +69,20 @@ const Plan = (props) => {
           .then((data) => {
             if (data.numOfRoute !== 0) {
               console.log(data.numOfRoute !== 0);
-              newPlan.tripRoute = data;
+              newPlan.tripRoute = data.listOfRoute;
+              const newTripRoute = {
+                planDateTime: "",
+                routeId: 0,
+                tripId: props.item.tripId,
+                longitude: "",
+                latitude: "",
+                locationName: "",
+                priority: 1,
+                showNote: false,
+                note: "",
+              };
+
+              newPlan.tripRoute.push(newTripRoute);
             }
           })
           .catch((error) => {
