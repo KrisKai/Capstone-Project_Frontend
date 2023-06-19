@@ -25,6 +25,7 @@ import ElementMakerForSDate from "components/Home/TripCreateUser/ElementMakerFor
 import ElementMakerForEDate from "components/Home/TripCreateUser/ElementMakerForEDate";
 import Plan from "components/Home/TripCreateUser/Plan";
 import { getPlacesData } from "api/user/travelAdvisorAPI";
+import { getPlacesDataByGoogleMap } from "api/user/googleMapAPI";
 
 const center = { lat: 16.0545, lng: 108.22074 };
 
@@ -114,21 +115,28 @@ export default function TripCreate() {
           navigate("/tripList");
         }
         //call api
-        getPlacesData("hotels", data.endLatitude, data.endLongitude).then(
-          (data) => {
-            setHotelList(data);
-          }
-        );
-        getPlacesData("restaurants", data.endLatitude, data.endLongitude).then(
-          (data) => {
-            setRestaurantList(data);
-          }
-        );
-        getPlacesData("attractions", data.endLatitude, data.endLongitude).then(
-          (data) => {
-            setAttractionList(data);
-          }
-        );
+        // getPlacesData("hotels", data.endLatitude, data.endLongitude).then(
+        //   (data) => {
+        //     setHotelList(data);
+        //   }
+        // );
+        // getPlacesData("restaurants", data.endLatitude, data.endLongitude).then(
+        //   (data) => {
+        //     setRestaurantList(data);
+        //   }
+        // );
+        // getPlacesData("attractions", data.endLatitude, data.endLongitude).then(
+        //   (data) => {
+        //     setAttractionList(data);
+        //   }
+        // );
+        // getPlacesDataByGoogleMap(
+        //   "restaurant",
+        //   data.endLatitude,
+        //   data.endLongitude
+        // ).then((data) => {
+        //   console.log(data);
+        // });
       } catch (error) {
         console.log("Failed to fetch trip details", error);
         if (error.response.status == 401) {
