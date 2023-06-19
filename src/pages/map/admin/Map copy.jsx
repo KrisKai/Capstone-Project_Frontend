@@ -1,21 +1,14 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Typography,
-  Card,
-  TextField,
-} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { Box, Button, Card, Typography } from "@mui/material";
 import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
   Autocomplete,
   DirectionsRenderer,
+  GoogleMap,
+  Marker,
+  useJsApiLoader,
 } from "@react-google-maps/api";
 import { GOOGLE_MAP_API } from "config";
-import "./map.css";
+import "../admin/map.css";
 
 import { useRef, useState } from "react";
 
@@ -46,9 +39,9 @@ export default function Map({ getReturnData }) {
     libraries: ["places"],
   });
 
-const restrictions = {
-  country: "vn",
-};
+  const restrictions = {
+    country: "vn",
+  };
 
   const [numberOfPlaces, setNumberOfPlace] = useState(2);
 
@@ -76,7 +69,10 @@ const restrictions = {
   }
 
   async function calculateRoute() {
-    if (locationRef1.current.value === "" || locationRef2.current.value === "") {
+    if (
+      locationRef1.current.value === "" ||
+      locationRef2.current.value === ""
+    ) {
       return;
     }
     // eslint-disable-next-line no-undef
