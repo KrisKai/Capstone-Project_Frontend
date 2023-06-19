@@ -108,7 +108,7 @@ const RecommendedPlaces = (props) => {
     groupedAttractions.push(group);
   }
 
-  console.log(props);
+  // console.log(props);
   return (
     <>
       <Box

@@ -38,7 +38,7 @@ const AutocompletePlaceForTrip = (props) => {
   };
 
   useEffect(() => {
-    console.log(props.restaurants);
+    // console.log(props.restaurants);
   }, options);
   return (
     <>
@@ -52,36 +52,34 @@ const AutocompletePlaceForTrip = (props) => {
           alignItems="center"
           marginRight={1}
         >
-          <Autocomplete
-            disablePortal
-            getOptionLabel={(option) => option.name}
-            filterOptions={(x) => x}
-            options={options}
-            sx={{
-              width: "90%",
-              "& fieldset": {
-                border: "none",
-              },
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                fullWidth
-                sx={{ backgroundColor: "#f3f4f5", borderRadius: 4 }}
-                placeholder="Thêm địa điểm"
-              />
-            )}
-            onChange={handleSelectPlace}
-            onInputChange={handleOnKeyDown}
-          />
-          <Box>
-            {showDeleteButton && props.place.showNote && (
-              <IconButton>
-                <DeleteForeverOutlinedIcon />
-              </IconButton>
-            )}
-            {!props.place.showNote && (
+          <Grid item xs={12} sm={1}></Grid>
+          <Grid item xs={12} sm={9} marginBottom={1}>
+            <Autocomplete
+              disablePortal
+              getOptionLabel={(option) => option.name}
+              filterOptions={(x) => x}
+              options={options}
+              sx={{
+                width: "100%",
+                "& fieldset": {
+                  border: "none",
+                },
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  fullWidth
+                  sx={{ backgroundColor: "#f3f4f5", borderRadius: 4 }}
+                  placeholder="Thêm địa điểm"
+                />
+              )}
+              onChange={handleSelectPlace}
+              onInputChange={handleOnKeyDown}
+            />
+          </Grid>
+          {!props.place.locationName && (
+            <Grid item xs={12} sm={1} marginBottom={1}>
               <IconButton
                 onClick={() =>
                   props.handleShowNote(props.index, props.childIndex)
@@ -89,16 +87,33 @@ const AutocompletePlaceForTrip = (props) => {
               >
                 <StickyNote2OutlinedIcon />
               </IconButton>
-            )}
-          </Box>
-          <Grid item xs={12}>
-            <RecommendedPlaces
-              hotels={props.hotels}
-              restaurants={props.restaurants}
-              attractions={props.attractions}
-              onClickData={props.onClickData}
-            />
+            </Grid>
+          )}
+          <Grid item xs={12} sm={1} marginBottom={1}>
+            <IconButton
+              onClick={() => props.handleClick(props.index, props.childIndex)}
+            >
+              <DeleteForeverOutlinedIcon />
+            </IconButton>
           </Grid>
+
+          {!props.place.locationName ? (
+            <Grid item xs={12}>
+              <RecommendedPlaces
+                hotels={props.hotels}
+                restaurants={props.restaurants}
+                attractions={props.attractions}
+                onClickData={props.onClickData}
+              />
+            </Grid>
+          ) : (
+            <>
+              <Grid item xs={2}></Grid>
+              <Grid item xs={6}>
+                <hr />
+              </Grid>
+            </>
+          )}
         </Grid>
       )}
       {props.place.showNote && (
@@ -111,7 +126,8 @@ const AutocompletePlaceForTrip = (props) => {
           alignItems="center"
           marginRight={1}
         >
-          <Grid item xs={12} sm={10} marginBottom={1}>
+          <Grid item xs={12} sm={1}></Grid>
+          <Grid item xs={12} sm={9} marginBottom={1}>
             <TextField
               label={label}
               fullWidth
@@ -135,12 +151,15 @@ const AutocompletePlaceForTrip = (props) => {
           </Grid>
           <Grid item xs={12} sm={2}>
             {showDeleteButton && (
-              <IconButton>
+              <IconButton
+                onClick={() => props.handleClick(props.index, props.childIndex)}
+              >
                 <DeleteForeverOutlinedIcon />
               </IconButton>
             )}
           </Grid>
-          <Grid item xs={12} sm={11}>
+          <Grid item xs={12} sm={1}></Grid>
+          <Grid item xs={12} sm={10}>
             <Autocomplete
               disablePortal
               getOptionLabel={(option) => option.name}
@@ -164,13 +183,18 @@ const AutocompletePlaceForTrip = (props) => {
               onInputChange={handleOnKeyDown}
             />
           </Grid>
-          <Grid item xs={12}>
-            <RecommendedPlaces
-              hotels={props.hotels}
-              restaurants={props.restaurants}
-              attractions={props.attractions}
-              onClickData={props.onClickData}
-            />
+          <Grid item xs={12} sm={1}></Grid>
+          <Grid item xs={12} sm={11}>
+            {!props.place.locationName ? (
+              <RecommendedPlaces
+                hotels={props.hotels}
+                restaurants={props.restaurants}
+                attractions={props.attractions}
+                onClickData={props.onClickData}
+              />
+            ) : (
+              <hr />
+            )}
           </Grid>
         </Grid>
       )}

@@ -68,10 +68,9 @@ const Plan = (props) => {
           })
           .then((data) => {
             if (data.numOfRoute !== 0) {
-              console.log(data.numOfRoute !== 0);
               newPlan.tripRoute = data.listOfRoute;
               const newTripRoute = {
-                planDateTime: "",
+                planDateTime: date,
                 routeId: 0,
                 tripId: props.item.tripId,
                 longitude: "",
@@ -108,17 +107,17 @@ const Plan = (props) => {
     setPlans(updatedPlans);
   };
 
-  const onSelect = (index, childIndex, value) => {
+  const onSelect = async (index, childIndex, value) => {
     const updatedPlans = [...plans];
     updatedPlans[index].tripRoute[childIndex].locationName = value.name;
     updatedPlans[index].tripRoute[childIndex].longitude = value.lon.toString();
     updatedPlans[index].tripRoute[childIndex].latitude = value.lat.toString();
-    const data = tripRouteApi.createUser(
+    const data = await tripRouteApi.createUser(
       updatedPlans[index].tripRoute[childIndex]
     );
-    console.log(data);
+    updatedPlans[index].tripRoute[childIndex].routeId = data;
     const newTripRoute = {
-      planDateTime: "",
+      planDateTime: updatedPlans[index].tripRoute[childIndex].planDateTime,
       routeId: 0,
       tripId: props.item.tripId,
       longitude: "",
@@ -136,6 +135,36 @@ const Plan = (props) => {
   const onChangeInput = (index, childIndex, value) => {
     const updatedPlans = [...plans];
     updatedPlans[index].tripRoute[childIndex].note = value;
+    setPlans(updatedPlans);
+  };
+
+  const handleClick = async (index, childIndex) => {
+    const updatedPlans = [...plans];
+    
+    console.log(childIndex)
+
+    if (childIndex + 1 === updatedPlans[index].tripRoute.length) {
+      updatedPlans[index].tripRoute.splice(childIndex, 1);
+      const newTripRoute = {
+        planDateTime: updatedPlans[index].tripRoute[0].planDateTime,
+        routeId: 0,
+        tripId: props.item.tripId,
+        longitude: "",
+        latitude: "",
+        locationName: "",
+        priority: 1,
+        showNote: false,
+        note: "",
+      };
+
+      updatedPlans[index].tripRoute.push(newTripRoute);
+    } else {
+      await tripRouteApi.deleteUser(
+        updatedPlans[index].tripRoute[childIndex].routeId
+      );
+
+      updatedPlans[index].tripRoute.splice(childIndex, 1);
+    }
     setPlans(updatedPlans);
   };
 
@@ -199,6 +228,7 @@ const Plan = (props) => {
                         restaurants={props.restaurants}
                         attractions={props.attractions}
                         onClickData={props.onClickData}
+                        handleClick={handleClick}
                       />
                     );
                   })}
