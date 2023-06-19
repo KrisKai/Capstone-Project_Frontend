@@ -32,27 +32,6 @@ dayjs.extend(utc);
 
 const drawerWidth = 240;
 
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: "hidden",
-});
-
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -115,6 +94,7 @@ export default function TripCreate() {
     estimateEndDateStr: "",
     estimateStartDateStr: "",
     listOfDate: [],
+    listOfDateTime: [],
   });
   const [restaurantList, setRestaurantList] = useState([]);
   const [hotelList, setHotelList] = useState([]);
@@ -307,7 +287,7 @@ export default function TripCreate() {
                   <Typography variant="h3">Thông tin cơ bản</Typography>
                 </Box>
                 <Grid container spacing={3}>
-                  <Grid item xs={12}>
+                  {/* <Grid item xs={12}>
                     <TextField
                       id="tripDescription"
                       name="tripDescription"
@@ -317,7 +297,7 @@ export default function TripCreate() {
                       variant="outlined"
                       value={trip.tripDescription}
                     />
-                  </Grid>
+                  </Grid> */}
 
                   <Grid item xs={12}>
                     <Preparation item={trip} />

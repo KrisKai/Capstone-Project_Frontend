@@ -1,4 +1,5 @@
 import axiosInstance from "utils/axios";
+import axiosInstanceUser from "utils/axiosForUser";
 
 const tripRouteApi = {
   getAll(params) {
@@ -20,6 +21,22 @@ const tripRouteApi = {
   delete(id) {
     const url = `/tripRoutes/${id}`;
     return axiosInstance.delete(url);
+  },
+  getAllUser(params) {
+    const url = "/tripRoutes";
+    return axiosInstanceUser.get(url, { params });
+  },
+  createUser(data) {
+    const url = "/tripRoutes";
+    return axiosInstanceUser.post(url, data);
+  },
+  updateUser(data) {
+    const url = "/tripRoutes";
+    return axiosInstanceUser.put(url, data);
+  },
+  deleteUser(id) {
+    const url = `/tripRoutes/${id}`;
+    return axiosInstanceUser.delete(url);
   },
 };
 

@@ -14,6 +14,7 @@ import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import AutocompletePlaceForTrip from "components/Extend/AutocompletePlaceForTrip";
+import { tripRouteApi } from "api";
 
 const Plan = (props) => {
   const [plans, setPlans] = useState([
@@ -23,6 +24,7 @@ const Plan = (props) => {
       open: false,
       tripRoute: [
         {
+          planDateTime: props.item.listOfDateTime[0],
           routeId: 0,
           tripId: props.item.tripId,
           longitude: "",
@@ -36,14 +38,15 @@ const Plan = (props) => {
     },
   ]);
   useEffect(() => {
-    if (props.item.listOfDate) {
-      const tmp = props.item.listOfDate.map((date, index) => {
+    if (props.item.listOfDateTime) {
+      const tmp = props.item.listOfDateTime.map((date, index) => {
         const newPlan = {
-          planDate: date,
+          planDate: props.item.listOfDate[index],
           routeId: 0,
           open: false,
           tripRoute: [
             {
+              planDateTime: date,
               routeId: 0,
               tripId: props.item.tripId,
               longitude: "",
@@ -55,6 +58,23 @@ const Plan = (props) => {
             },
           ],
         };
+        tripRouteApi
+          .getAllUser({
+            pageIndex: 0,
+            pageSize: 10,
+            planName: "",
+            tripId: props.item.tripId,
+            planDateTime: date,
+          })
+          .then((data) => {
+            if (data.numOfRoute !== 0) {
+              console.log(data.numOfRoute !== 0);
+              newPlan.tripRoute = data;
+            }
+          })
+          .catch((error) => {
+            // Handle the error here if needed
+          });
 
         return newPlan;
       });
@@ -78,8 +98,25 @@ const Plan = (props) => {
   const onSelect = (index, childIndex, value) => {
     const updatedPlans = [...plans];
     updatedPlans[index].tripRoute[childIndex].locationName = value.name;
-    updatedPlans[index].tripRoute[childIndex].longitude = value.lon;
-    updatedPlans[index].tripRoute[childIndex].latitude = value.lat;
+    updatedPlans[index].tripRoute[childIndex].longitude = value.lon.toString();
+    updatedPlans[index].tripRoute[childIndex].latitude = value.lat.toString();
+    const data = tripRouteApi.createUser(
+      updatedPlans[index].tripRoute[childIndex]
+    );
+    console.log(data);
+    const newTripRoute = {
+      planDateTime: "",
+      routeId: 0,
+      tripId: props.item.tripId,
+      longitude: "",
+      latitude: "",
+      locationName: "",
+      priority: 1,
+      showNote: false,
+      note: "",
+    };
+
+    updatedPlans[index].tripRoute.push(newTripRoute);
     setPlans(updatedPlans);
   };
 
