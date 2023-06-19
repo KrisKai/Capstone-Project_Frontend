@@ -312,7 +312,7 @@ const Preparation = (props) => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography variant="h4" marginBottom={2} sx={{ fontSize: "1.5 rem", fontWeight:700 }}>
+        <Typography variant="h3" marginBottom={2} sx={{ fontSize: "1.5 rem", fontWeight:700 }}>
           <PlaylistAddCheckOutlinedIcon /> Phần chuẩn bị cho chuyến đi
         </Typography>
       </Grid>

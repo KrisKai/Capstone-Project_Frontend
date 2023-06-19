@@ -284,7 +284,9 @@ export default function TripCreate() {
               </Card>
               <Card sx={{ padding: 6, gap: 2 }}>
                 <Box paddingBottom={2}>
-                  <Typography variant="h3">Thông tin cơ bản</Typography>
+                  <Typography sx={{ fontSize: "2rem", fontWeight: 700 }}>
+                    Thông tin cơ bản
+                  </Typography>
                 </Box>
                 <Grid container spacing={3}>
                   {/* <Grid item xs={12}>
@@ -315,7 +317,11 @@ export default function TripCreate() {
               </Card>
             </Grid>
             <Grid item xs={12} sm={7} paddingLeft={1}>
-              <MapUser getReturnData={getReturnData} passToProps={trip} selectedData={selectedPlace}/>
+              <MapUser
+                getReturnData={getReturnData}
+                passToProps={trip}
+                selectedData={selectedPlace}
+              />
             </Grid>
           </Grid>
         </Box>

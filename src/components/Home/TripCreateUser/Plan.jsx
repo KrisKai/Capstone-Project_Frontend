@@ -194,7 +194,7 @@ const Plan = (props) => {
     <Grid container>
       <Grid item xs={12}>
         <Typography
-          variant="h4"
+          variant="h3"
           marginBottom={2}
           sx={{ fontSize: "1.5 rem", fontWeight: 700 }}
         >
@@ -226,7 +226,7 @@ const Plan = (props) => {
                   </IconButton>
                 </Grid>
                 <Grid item xs={12} sm={11} pt={0.5}>
-                  <Typography sx={{ fontWeight: "700", fontSize: "15px" }}>
+                  <Typography variant="h4" sx={{ fontWeight: "700", fontSize: "15px" }}>
                     {plan.planDate}
                   </Typography>
                 </Grid>
@@ -260,7 +260,6 @@ const Plan = (props) => {
           );
         })}
 
-        <hr />
       </Grid>
     </Grid>
   );
