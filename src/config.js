@@ -1,12 +1,12 @@
 export const REACT_APP_API_URL =
   'https://localhost:7184/api/v1.0';
 // export const GOOGLE_MAP_API = "";
-export const GOOGLE_MAP_API = "AIzaSyBDFdIUGnN989YbBWaeE4qLCzQ5H3mUuEQ";
+export const GOOGLE_MAP_API = "AIzaSyAkdlykrPV9MF6cMalT6Sq69OOnL1OW708";
 //AIzaSyAER9XAP3vNb8HJsYDpUg3gsfq9shZTXlk
 //key cu
 export const PLACE_API = "a4f9fffa383040d581230c5d9fd096b2";
 
-export const REACT_APP_RAPID_API_TRAVEL_API_KEY = "5c2370033amshdb52afd0f4077e5p116d1cjsn1998b560ac46";
+export const REACT_APP_RAPID_API_TRAVEL_API_KEY = "229c00f068msh28734b3c30c4aacp115d1ejsn33650bd2adfa";
 
 // ==============================|| THEME CONFIG  ||============================== //
 
