@@ -160,9 +160,7 @@ const Plan = (props) => {
 
   const handleClick = async (index, childIndex) => {
     const updatedPlans = [...plans];
-
-    console.log(childIndex);
-
+    
     if (childIndex + 1 === updatedPlans[index].tripRoute.length) {
       updatedPlans[index].tripRoute.splice(childIndex, 1);
       const newTripRoute = {

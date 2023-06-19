@@ -20,6 +20,8 @@ import {
   GeoapifyContext,
 } from "@geoapify/react-geocoder-autocomplete";
 import "@geoapify/geocoder-autocomplete/styles/minimal.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt, faStar } from "@fortawesome/free-solid-svg-icons";
 
 const center = { lat: 16.0545, lng: 108.22074 };
 
@@ -167,55 +169,53 @@ export default function MapUser({ getReturnData, passToProps, selectedData }) {
             width="97%"
             position="absolute"
             zIndex={100}
-            padding={3}
+            padding={2}
             margin={2}
             boxShadow={2}
             borderRadius={2}
             bottom={0}
           >
-            <GeoapifyContext apiKey="a4f9fffa383040d581230c5d9fd096b2">
-              <Grid container>
-                <Grid item xs={12} sm={5}>
-                  <GeoapifyGeocoderAutocomplete
-                    id="test"
-                    placeholder="Trip Start Location"
-                    className="custom-input"
-                    lang="vi"
-                    countryCodes="vn"
-                    placeSelect={onPlaceSelect} // Add this line
-                    onSuggestionChange={onSuggestionChange}
-                    onUserInput={onUserInput}
-                    ref={originRef}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={5}>
-                  <GeoapifyGeocoderAutocomplete
-                    placeholder="Destination Start Location"
-                    className="custom-input"
-                    type="street"
-                    lang="vi"
-                    countryCodes="vn"
-                    onChange={handlePlaceSelect}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={2}>
-                  <Button
-                    colorScheme="pink"
-                    type="button"
-                    onClick={calculateRoute}
-                    variant="outlined"
-                  >
-                    Calculate Route
-                  </Button>
-                </Grid>
-                <Grid item xs={12} sm={5} mt={2}>
-                  <Typography>Distance: {distance} </Typography>
-                </Grid>
-                <Grid item xs={12} sm={5} mt={2}>
-                  <Typography>Duration: {duration} </Typography>
-                </Grid>
+            <Grid container>
+              <Grid item xs={12} sm={10} display="flex" alignItems="center">
+                <FontAwesomeIcon
+                  icon={faMapMarkerAlt}
+                  size="lg"
+                  style={{ marginRight: "8px" }}
+                />
+                <Typography variant="h5">{data.name}</Typography>
               </Grid>
-            </GeoapifyContext>
+              <Grid item xs={12} sm={2}>
+                <img
+                  src={data.photo.images.small.url}
+                  alt="Image"
+                  style={{ width: "100%", height: "100px", borderRadius: 5 }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} display="flex" alignItems="center">
+                <FontAwesomeIcon
+                  icon={faStar}
+                  style={{ color: "#ec9b3b", marginRight: 5 }}
+                />
+                <Typography sx={{ fontWeight: 600 }}>{data.rating}</Typography>{" "}
+                ( {data.ranking} )
+              </Grid>
+              <Grid item xs={12} sm={12} display="flex" alignItems="center">
+                <FontAwesomeIcon
+                  icon={faMapMarkerAlt}
+                  style={{ marginRight: 9, marginLeft: 2 }}
+                />
+                <Typography>
+                  {data.address_obj.street1},{data.address_obj.city},
+                  {data.address_obj.country}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={5} mt={2}>
+                <Typography>Distance: {distance} </Typography>
+              </Grid>
+              <Grid item xs={12} sm={5} mt={2}>
+                <Typography>Duration: {duration} </Typography>
+              </Grid>
+            </Grid>
           </Box>
         )}
         <Card
