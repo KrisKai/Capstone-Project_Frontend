@@ -38,7 +38,7 @@ export default function Map({
     lng: parseFloat(passToProps.endLongitude),
   };
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: GOOGLE_MAP_API,
+    googleMapsApiKey: "GOOGLE_MAP_API",
     libraries: ["places"],
   });
 
