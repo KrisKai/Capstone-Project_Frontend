@@ -8,6 +8,10 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import AutocompletePlaceForTrip from "components/Extend/AutocompletePlaceForTrip";
 import { tripRouteApi } from "api";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
+import dayjs from "dayjs";
+
 const Plan = (props) => {
   const [plans, setPlans] = useState([
     {
@@ -160,7 +164,7 @@ const Plan = (props) => {
 
   const handleClick = async (index, childIndex) => {
     const updatedPlans = [...plans];
-    
+
     if (childIndex + 1 === updatedPlans[index].tripRoute.length) {
       updatedPlans[index].tripRoute.splice(childIndex, 1);
       const newTripRoute = {
@@ -190,7 +194,7 @@ const Plan = (props) => {
 
   return (
     <Grid container>
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={10}>
         <Typography
           variant="h3"
           marginBottom={2}
@@ -199,7 +203,29 @@ const Plan = (props) => {
           <CalendarMonthOutlinedIcon /> Kế hoạch cho chuyến đi
         </Typography>
       </Grid>
-
+      <Grid item xs={12} sm={2}>
+        <Box
+          sx={{
+            backgroundColor: "#e9ecef",
+            borderColor: "#e9ecef",
+            borderWidth: "1px",
+            borderRadius: "24px",
+            height: "40px",
+            minWidth: "40px",
+            padding: "7px",
+            paddingLeft: "14px",
+            paddingRight: "14px",
+          }}
+          display="flex"
+          alignItems=" center"
+          justifyContent="center"
+        >
+          <FontAwesomeIcon icon={faCalendarDays} />{" "}
+          <Typography sx={{ fontWeight: 700 }} marginLeft={1} marginTop="1px">
+            {dayjs(props.item.estimateStartDate).format("d/M")} - {dayjs(props.item.estimateEndDate).format("d/M")}
+          </Typography>
+        </Box>
+      </Grid>
       <Grid item xs={12} sx={{ pt: 3 }}>
         {plans.map((plan, index) => {
           return (
@@ -224,7 +250,10 @@ const Plan = (props) => {
                   </IconButton>
                 </Grid>
                 <Grid item xs={12} sm={11} pt={0.5}>
-                  <Typography variant="h4" sx={{ fontWeight: "700", fontSize: "15px" }}>
+                  <Typography
+                    variant="h4"
+                    sx={{ fontWeight: "700", fontSize: "15px" }}
+                  >
                     {plan.planDate}
                   </Typography>
                 </Grid>
@@ -257,7 +286,6 @@ const Plan = (props) => {
             </Box>
           );
         })}
-
       </Grid>
     </Grid>
   );

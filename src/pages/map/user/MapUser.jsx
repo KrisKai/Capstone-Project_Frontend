@@ -1,5 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Button, Card, Typography, Grid } from "@mui/material";
 import {
   Autocomplete,
   DirectionsRenderer,
@@ -10,19 +10,24 @@ import {
 import { GOOGLE_MAP_API } from "config";
 import "../admin/map.css";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt, faStar } from "@fortawesome/free-solid-svg-icons";
+
 import { useRef, useState } from "react";
 
 const center = { lat: 16.0545, lng: 108.0717 };
 
-export default function Map({ getReturnData }) {
+export default function Map({ getReturnData, selectedData }) {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: GOOGLE_MAP_API,
+    googleMapsApiKey: "",
     libraries: ["places"],
   });
 
   const restrictions = {
     country: "vn",
   };
+
+  const data = selectedData;
 
   const [numberOfPlaces, setNumberOfPlace] = useState(2);
   const placeRef = useRef([]);
@@ -77,66 +82,65 @@ export default function Map({ getReturnData }) {
       {!isLoaded ? (
         "a"
       ) : (
-        <Box height="100vh" width="100%" display="flex">
-          <Box width="25%" padding="10px 10px">
-            <Box textAlign="center">
-              <Typography variant="h2">Setting Route</Typography>
-            </Box>
-            <Box display="flex" flexDirection="column" gap="10px">
+        <Box height="90vh" width="57%" display="flex" position="fixed">
+          <Box height="100%" flex="1 1 0" position="relative">
+            {data && (
               <Box
-                paddingTop="10px"
+                bgcolor={"white"}
                 display="flex"
-                flexDirection="column"
-                gap="10px"
+                justifyContent="space-between"
+                width="97%"
+                position="absolute"
+                zIndex={100}
+                padding={2}
+                margin={2}
+                boxShadow={2}
+                borderRadius={2}
+                bottom={0}
               >
-                {Array(numberOfPlaces)
-                  .fill()
-                  .map((_, idx) => {
-                    return (
-                      <Card sx={{ padding: "15px 10px" }}>
-                        <Box borderRadius="2px">
-                          <Autocomplete
-                            restrictions={restrictions}
-                            onLoad={(place) => console.log(place)}
-                          >
-                            <input
-                              ref={(el) => (placeRef.current[idx] = el)}
-                              className="custom-input"
-                            />
-                          </Autocomplete>
-                        </Box>
-                        <Box display="flex" mt="5px">
-                          <Button sx={{ width: "50%" }}>Delete</Button>
-                          <Button sx={{ width: "50%" }}>Move up</Button>
-                        </Box>
-                      </Card>
-                    );
-                  })}
+                <Grid container>
+                  <Grid item xs={12} sm={10} display="flex" alignItems="center">
+                    <FontAwesomeIcon
+                      icon={faMapMarkerAlt}
+                      size="lg"
+                      style={{ marginRight: "8px" }}
+                    />
+                    <Typography variant="h5">{data.name}</Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={2}>
+                    <img
+                      src={data.photo.images.small.url}
+                      alt="Image"
+                      style={{
+                        width: "100%",
+                        height: "100px",
+                        borderRadius: 5,
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} display="flex" alignItems="center">
+                    <FontAwesomeIcon
+                      icon={faStar}
+                      style={{ color: "#ec9b3b", marginRight: 5 }}
+                    />
+                    <Typography sx={{ fontWeight: 600 }}>
+                      {data.rating}
+                    </Typography>{" "}
+                    ( {data.ranking} )
+                  </Grid>
+                  <Grid item xs={12} sm={12} display="flex" alignItems="center">
+                    <FontAwesomeIcon
+                      icon={faMapMarkerAlt}
+                      style={{ marginRight: 9, marginLeft: 2 }}
+                    />
+                    <Typography>
+                      {data.address_obj.street1},{data.address_obj.city},
+                      {data.address_obj.country}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                  "& button": {
-                    width: "100%",
-                  },
-                }}
-              >
-                <Button
-                  variant="contained"
-                  startIcon={<AddIcon />}
-                  onClick={() => setNumberOfPlace((prevState) => prevState + 1)}
-                >
-                  Add new place
-                </Button>
-                <Button variant="contained" onClick={calculateRoute}>
-                  Save
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-          <Box height="100%" flex="1 1 0">
+            )}
             <GoogleMap
               center={center}
               zoom={15}

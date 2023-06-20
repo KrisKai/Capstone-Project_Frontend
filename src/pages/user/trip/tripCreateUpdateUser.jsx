@@ -27,6 +27,9 @@ import Plan from "components/Home/TripCreateUser/Plan";
 import { getPlacesData } from "api/user/travelAdvisorAPI";
 import { getPlacesDataByGoogleMap } from "api/user/googleMapAPI";
 
+import { useAppSelector } from "redux/hooks";
+import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
+
 const center = { lat: 16.0545, lng: 108.22074 };
 
 dayjs.extend(utc);
@@ -74,13 +77,14 @@ export default function TripCreate() {
   const isEdit = Boolean(tripId);
   const location = useLocation();
 
+  const currentUser = useAppSelector(selectCurrentUser);
+  const char = currentUser.name.toString().substring(0, 1).toUpperCase();
+
   const [trip, setTrip] = useState({
     tripName: "",
     tripDescription: "",
     estimateStartDate: "",
     estimateEndDate: "",
-    estimateStartTime: "",
-    estimateEndTime: "",
     startLocationName: "",
     endLocationName: "",
     startLocationName: "",
@@ -195,11 +199,18 @@ export default function TripCreate() {
     <>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="fixed" open={open} color="secondary">
+        <AppBar position="fixed" open={open} color="default">
           <Toolbar>
-            <Typography variant="h6" noWrap component="div">
+            <Button
+              variant="h6"
+              noWrap
+              component="div"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
               Journey Sick
-            </Typography>
+            </Button>
           </Toolbar>
         </AppBar>
 
@@ -241,53 +252,72 @@ export default function TripCreate() {
                 </Typography>
                 <br />
                 <br />
-                <Grid>
-                  <CalendarMonthIcon />
-                  <ElementMakerForSDate
-                    value={trip.estimateStartDate}
-                    handleChange={(e) => {
-                      const newTrip = { ...trip, estimateStartDate: e };
-                      setTrip(newTrip);
-                    }}
-                    handleDoubleClick={() => (
-                      setShowInputSDate(true),
-                      (trip["estimateStartDate"] = trip.estimateStartDate),
-                      setTrip(trip)
-                    )}
-                    handleBlur={async () => {
-                      const newTrip = {
-                        ...trip,
-                        estimateStartDate: trip.estimateStartDate,
-                      };
-                      setTrip(newTrip);
-                      setShowInputSDate(false);
-                      await tripApi.updateUser(trip);
-                    }}
-                    showInputSDate={showInputSDate}
-                  />{" "}
-                  -{" "}
-                  <ElementMakerForEDate
-                    value={trip.estimateEndDate}
-                    handleChange={(e) => {
-                      const newTrip = { ...trip, estimateEndDate: e };
-                      setTrip(newTrip);
-                    }}
-                    handleDoubleClick={() => (
-                      setShowInputEDate(true),
-                      (trip["estimateEndDate"] = trip.estimateEndDate),
-                      setTrip(trip)
-                    )}
-                    handleBlur={async () => {
-                      const newTrip = {
-                        ...trip,
-                        estimateEndDate: trip.estimateEndDate,
-                      };
-                      setTrip(newTrip);
-                      setShowInputEDate(false);
-                      await tripApi.updateUser(trip);
-                    }}
-                    showInputEDate={showInputEDate}
-                  />
+                <Grid container>
+                  <Grid item xs={12} sm={11}>
+                    <CalendarMonthIcon />
+                    <ElementMakerForSDate
+                      value={trip.estimateStartDate}
+                      handleChange={(e) => {
+                        const newTrip = { ...trip, estimateStartDate: e };
+                        setTrip(newTrip);
+                      }}
+                      handleDoubleClick={() => (
+                        setShowInputSDate(true),
+                        (trip["estimateStartDate"] = trip.estimateStartDate),
+                        setTrip(trip)
+                      )}
+                      handleBlur={async () => {
+                        const newTrip = {
+                          ...trip,
+                          estimateStartDate: trip.estimateStartDate,
+                        };
+                        setTrip(newTrip);
+                        setShowInputSDate(false);
+                        await tripApi.updateUser(trip);
+                      }}
+                      showInputSDate={showInputSDate}
+                    />{" "}
+                    -{" "}
+                    <ElementMakerForEDate
+                      value={trip.estimateEndDate}
+                      handleChange={(e) => {
+                        const newTrip = { ...trip, estimateEndDate: e };
+                        setTrip(newTrip);
+                      }}
+                      handleDoubleClick={() => (
+                        setShowInputEDate(true),
+                        (trip["estimateEndDate"] = trip.estimateEndDate),
+                        setTrip(trip)
+                      )}
+                      handleBlur={async () => {
+                        const newTrip = {
+                          ...trip,
+                          estimateEndDate: trip.estimateEndDate,
+                        };
+                        setTrip(newTrip);
+                        setShowInputEDate(false);
+                        await tripApi.updateUser(trip);
+                      }}
+                      showInputEDate={showInputEDate}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={1}>
+                    <Box
+                      width="25px"
+                      sx={{
+                        aspectRatio: "1/1",
+                        backgroundColor: "black",
+                        color: "white",
+                      }}
+                      display="flex"
+                      alignItems=" center"
+                      justifyContent="center"
+                      border="1px solid black"
+                      borderRadius="50%"
+                    >
+                      <Typography>{char}</Typography>
+                    </Box>
+                  </Grid>
                 </Grid>
               </Card>
               <Card sx={{ padding: 6, gap: 2 }}>
@@ -297,18 +327,6 @@ export default function TripCreate() {
                   </Typography>
                 </Box>
                 <Grid container spacing={3}>
-                  {/* <Grid item xs={12}>
-                    <TextField
-                      id="tripDescription"
-                      name="tripDescription"
-                      label="Trip Description"
-                      fullWidth
-                      autoComplete=""
-                      variant="outlined"
-                      value={trip.tripDescription}
-                    />
-                  </Grid> */}
-
                   <Grid item xs={12}>
                     <Preparation item={trip} />
                   </Grid>
