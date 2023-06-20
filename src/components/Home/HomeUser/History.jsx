@@ -25,7 +25,6 @@ import { toast } from "react-toastify";
 import userFeedbackApi from "api/user/feedback/userFeedbackApi";
 
 const HistoryCard = (props) => {
-  console.log(props.item);
   const currentUser = useAppSelector(selectCurrentUser);
   const char = currentUser.name.toString().substring(0, 1).toUpperCase();
   const navigate = useNavigate();
