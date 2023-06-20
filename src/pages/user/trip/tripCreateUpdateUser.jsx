@@ -124,11 +124,11 @@ export default function TripCreate() {
         //     setHotelList(data);
         //   }
         // );
-        // getPlacesData("restaurants", data.endLatitude, data.endLongitude).then(
-        //   (data) => {
-        //     setRestaurantList(data);
-        //   }
-        // );
+        getPlacesData("restaurants", data.endLatitude, data.endLongitude).then(
+          (data) => {
+            setRestaurantList(data);
+          }
+        );
         // getPlacesData("attractions", data.endLatitude, data.endLongitude).then(
         //   (data) => {
         //     setAttractionList(data);

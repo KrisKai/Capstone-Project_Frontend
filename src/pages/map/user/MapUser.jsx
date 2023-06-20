@@ -15,13 +15,23 @@ import { faMapMarkerAlt, faStar } from "@fortawesome/free-solid-svg-icons";
 
 import { useRef, useState } from "react";
 
-const center = { lat: 16.0545, lng: 108.0717 };
-
-export default function Map({ getReturnData, selectedData }) {
+export default function Map({ getReturnData, passToProps, selectedData }) {
+  const center = {
+    lat: parseFloat(passToProps.endLatitude),
+    lng: parseFloat(passToProps.endLongitude),
+  };
+  console.log(center)
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "",
+    googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
   });
+
+  const waypoints = [
+    { location: "Hue" },
+    { location: "Da Nang" },
+    { location: "Quang Nam" },
+    { location: "Binh Thuan" }
+  ];
 
   const restrictions = {
     country: "vn",
@@ -37,6 +47,8 @@ export default function Map({ getReturnData, selectedData }) {
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
 
+  console.log(directionsResponse)
+
   async function calculateRoute() {
     // if (
     //   locationRef1.current.value === "" ||
@@ -44,19 +56,20 @@ export default function Map({ getReturnData, selectedData }) {
     // ) {
     //   return;
     // }
-    // // eslint-disable-next-line no-undef
-    // const directionsService = new google.maps.DirectionsService();
-    // const results = await directionsService.route({
-    //   origin: locationRef1.current.value,
-    //   destination: locationRef2.current.value,
-    //   // eslint-disable-next-line no-undef
-    //   travelMode: google.maps.TravelMode.DRIVING,
-    // });
-    // setDirectionsResponse(results);
+    const request = {
+      origin: waypoints[0].location,
+      destination: waypoints[waypoints.length - 1].location,
+      waypoints: waypoints.slice(1, -1),
+      travelMode: "DRIVING"
+    };
+    // eslint-disable-next-line no-undef
+    const directionsService = new google.maps.DirectionsService();
+    const results = await directionsService.route(request);
+    setDirectionsResponse(results);
     // setDistance(results.routes[0].legs[0].distance.text);
     // setDuration(results.routes[0].legs[0].duration.text);
 
-    // ///đây là chỗ đưa dữ liệu ra ngoài component cha
+    ///đây là chỗ đưa dữ liệu ra ngoài component cha
     // const returnData = {
     //   origin: locationRef1.current.value,
     //   originLat: results.routes[0].legs[0].start_location.lat(),
@@ -68,7 +81,7 @@ export default function Map({ getReturnData, selectedData }) {
     //   duration: results.routes[0].legs[0].duration.text,
     // };
     // getReturnData(returnData);
-    console.log(placeRef.current.map((value) => value.value));
+    // console.log(placeRef.current.map((value) => value.value));
   }
 
   function clearRoute() {
@@ -137,6 +150,7 @@ export default function Map({ getReturnData, selectedData }) {
                       {data.address_obj.street1},{data.address_obj.city},
                       {data.address_obj.country}
                     </Typography>
+                    <Button onClick={calculateRoute}>test</Button>
                   </Grid>
                 </Grid>
               </Box>
