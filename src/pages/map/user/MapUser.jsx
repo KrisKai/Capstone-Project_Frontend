@@ -15,12 +15,14 @@ import { faMapMarkerAlt, faStar } from "@fortawesome/free-solid-svg-icons";
 
 import { useRef, useState } from "react";
 
+const color = ["red", "black", "blue", "green", "grey", "orange", "purple", "white", "yellow"];
+
 export default function Map({ getReturnData, passToProps, selectedData }) {
   const center = {
     lat: parseFloat(passToProps.endLatitude),
     lng: parseFloat(passToProps.endLongitude),
   };
-  console.log(center)
+  console.log(center);
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
@@ -30,7 +32,7 @@ export default function Map({ getReturnData, passToProps, selectedData }) {
     { location: "Hue" },
     { location: "Da Nang" },
     { location: "Quang Nam" },
-    { location: "Binh Thuan" }
+    { location: "Binh Thuan" },
   ];
 
   const restrictions = {
@@ -47,7 +49,7 @@ export default function Map({ getReturnData, passToProps, selectedData }) {
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
 
-  console.log(directionsResponse)
+  console.log(directionsResponse);
 
   async function calculateRoute() {
     // if (
@@ -60,7 +62,7 @@ export default function Map({ getReturnData, passToProps, selectedData }) {
       origin: waypoints[0].location,
       destination: waypoints[waypoints.length - 1].location,
       waypoints: waypoints.slice(1, -1),
-      travelMode: "DRIVING"
+      travelMode: "DRIVING",
     };
     // eslint-disable-next-line no-undef
     const directionsService = new google.maps.DirectionsService();
@@ -167,7 +169,24 @@ export default function Map({ getReturnData, passToProps, selectedData }) {
               }}
               onLoad={(map) => setMap(map)}
             >
-              <Marker position={center} />
+              <Marker
+                position={center}
+                map={map}
+                icon={
+                  "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_" +
+                  color[0] +
+                  1 +
+                  ".png"
+                }
+              />
+
+              <Marker
+                position={{ lat: 16.1545, lng: 108.1717 }}
+                map={map}
+                icon={
+                  "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red2.png"
+                }
+              />
               {directionsResponse && (
                 <DirectionsRenderer directions={directionsResponse} />
               )}
