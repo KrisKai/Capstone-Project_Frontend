@@ -60,7 +60,7 @@ const AutocompletePlaceForTrip = (props) => {
               filterOptions={(x) => x}
               options={options}
               sx={{
-                width: "100%",
+                width: "98%",
                 "& fieldset": {
                   border: "none",
                 },
@@ -84,6 +84,12 @@ const AutocompletePlaceForTrip = (props) => {
                 onClick={() =>
                   props.handleShowNote(props.index, props.childIndex)
                 }
+                sx={{
+                  height: "48px",
+                  width: "48px",
+                  borderRadius: "24px",
+                  backgroundColor: "#f3f4f5",
+                }}
               >
                 <StickyNote2OutlinedIcon />
               </IconButton>
@@ -92,6 +98,12 @@ const AutocompletePlaceForTrip = (props) => {
           <Grid item xs={12} sm={1} marginBottom={1}>
             <IconButton
               onClick={() => props.handleClick(props.index, props.childIndex)}
+              sx={{
+                height: "48px",
+                width: "48px",
+                borderRadius: "24px",
+                backgroundColor: "#f3f4f5",
+              }}
             >
               <DeleteForeverOutlinedIcon />
             </IconButton>
@@ -133,13 +145,14 @@ const AutocompletePlaceForTrip = (props) => {
           <Grid item xs={12} sm={9} marginBottom={1}>
             <TextField
               label={label}
-              fullWidth
               sx={{
                 backgroundColor: "#f3f4f5",
                 borderRadius: 3,
                 "& fieldset": {
                   border: "none",
                 },
+                height: "51px",
+                width: "98%",
               }}
               placeholder="Thêm ghi chú"
               value={props.place.note}
@@ -156,6 +169,12 @@ const AutocompletePlaceForTrip = (props) => {
             {showDeleteButton && (
               <IconButton
                 onClick={() => props.handleClick(props.index, props.childIndex)}
+                sx={{
+                  height: "48px",
+                  width: "48px",
+                  borderRadius: "24px",
+                  backgroundColor: "#f3f4f5",
+                }}
               >
                 <DeleteForeverOutlinedIcon />
               </IconButton>
