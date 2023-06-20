@@ -33,6 +33,7 @@ const Plan = (props) => {
       ],
     },
   ]);
+
   useEffect(() => {
     if (props.item.listOfDateTime) {
       const tmp = props.item.listOfDateTime.map((date, index) => {
@@ -89,6 +90,10 @@ const Plan = (props) => {
       setPlans(tmp);
     }
   }, [props.item.trip, props.item.listOfDate]);
+
+  useEffect(() => {
+    props.getPlanData(plans);
+  }, [plans]);
 
   const handleToggleOpen = (index) => {
     const updatedPlans = [...plans];
@@ -190,8 +195,6 @@ const Plan = (props) => {
     setPlans(updatedPlans);
   };
 
-  console.log(plans);
-
   return (
     <Grid container>
       <Grid item xs={12} sm={10}>
@@ -222,7 +225,8 @@ const Plan = (props) => {
         >
           <FontAwesomeIcon icon={faCalendarDays} />{" "}
           <Typography sx={{ fontWeight: 700 }} marginLeft={1} paddingTop={0.5}>
-            {dayjs(props.item.estimateStartDate).format("D/M")} - {dayjs(props.item.estimateEndDate).format("D/M")}
+            {dayjs(props.item.estimateStartDate).format("D/M")} -{" "}
+            {dayjs(props.item.estimateEndDate).format("D/M")}
           </Typography>
         </Box>
       </Grid>

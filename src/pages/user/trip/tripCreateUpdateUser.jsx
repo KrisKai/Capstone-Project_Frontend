@@ -74,7 +74,6 @@ export default function TripCreate() {
 
   let navigate = useNavigate();
   const { tripId } = useParams();
-  const isEdit = Boolean(tripId);
   const location = useLocation();
 
   const currentUser = useAppSelector(selectCurrentUser);
@@ -101,6 +100,7 @@ export default function TripCreate() {
     listOfDate: [],
     listOfDateTime: [],
   });
+  const [plans, setPlans] = useState([]);
   const [restaurantList, setRestaurantList] = useState([]);
   const [hotelList, setHotelList] = useState([]);
   const [attractionList, setAttractionList] = useState([]);
@@ -175,6 +175,10 @@ export default function TripCreate() {
       .catch(function (error) {
         console.log(error);
       });
+  };
+
+  const getPlanData = (plan) => {
+    setPlans(plan);
   };
 
   const onClickData = (data) => {
@@ -337,6 +341,7 @@ export default function TripCreate() {
                       restaurants={restaurantList}
                       attractions={attractionList}
                       onClickData={onClickData}
+                      getPlanData={getPlanData}
                     />
                   </Grid>
                 </Grid>
@@ -347,6 +352,7 @@ export default function TripCreate() {
                 getReturnData={getReturnData}
                 passToProps={trip}
                 selectedData={selectedPlace}
+                plans={plans}
               />
             </Grid>
           </Grid>

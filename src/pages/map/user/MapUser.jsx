@@ -15,14 +15,28 @@ import { faMapMarkerAlt, faStar } from "@fortawesome/free-solid-svg-icons";
 
 import { useRef, useState } from "react";
 
-const color = ["red", "black", "blue", "green", "grey", "orange", "purple", "white", "yellow"];
+const color = [
+  "red",
+  "black",
+  "blue",
+  "green",
+  "grey",
+  "orange",
+  "purple",
+  "white",
+  "yellow",
+];
 
-export default function Map({ getReturnData, passToProps, selectedData }) {
+export default function Map({
+  getReturnData,
+  passToProps,
+  selectedData,
+  plans,
+}) {
   const center = {
     lat: parseFloat(passToProps.endLatitude),
     lng: parseFloat(passToProps.endLongitude),
   };
-  console.log(center);
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
@@ -49,7 +63,7 @@ export default function Map({ getReturnData, passToProps, selectedData }) {
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
 
-  console.log(directionsResponse);
+  console.log(plans);
 
   async function calculateRoute() {
     // if (
@@ -159,7 +173,7 @@ export default function Map({ getReturnData, passToProps, selectedData }) {
             )}
             <GoogleMap
               center={center}
-              zoom={15}
+              zoom={13}
               mapContainerStyle={{ width: "100%", height: "100%" }}
               options={{
                 zoomControl: false,
@@ -169,24 +183,27 @@ export default function Map({ getReturnData, passToProps, selectedData }) {
               }}
               onLoad={(map) => setMap(map)}
             >
-              <Marker
-                position={center}
-                map={map}
-                icon={
-                  "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_" +
-                  color[0] +
-                  1 +
-                  ".png"
-                }
-              />
+              {plans.map((routes, index) => {
+                return routes.tripRoute.map((route, childIndex) => {
+                  console.log(route.longitude !== "");
+                  return (
+                    <Marker
+                      position={{
+                        lat: parseFloat(route.latitude),
+                        lng: parseFloat(route.longitude),
+                      }}
+                      map={map}
+                      icon={
+                        "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_" +
+                        color[index] +
+                        childIndex +
+                        ".png"
+                      }
+                    />
+                  );
+                });
+              })}
 
-              <Marker
-                position={{ lat: 16.1545, lng: 108.1717 }}
-                map={map}
-                icon={
-                  "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red2.png"
-                }
-              />
               {directionsResponse && (
                 <DirectionsRenderer directions={directionsResponse} />
               )}
