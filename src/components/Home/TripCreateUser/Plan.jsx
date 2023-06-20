@@ -221,7 +221,7 @@ const Plan = (props) => {
           justifyContent="center"
         >
           <FontAwesomeIcon icon={faCalendarDays} />{" "}
-          <Typography sx={{ fontWeight: 700 }} marginLeft={1} marginTop="1px">
+          <Typography sx={{ fontWeight: 700 }} marginLeft={1} paddingTop={0.5}>
             {dayjs(props.item.estimateStartDate).format("d/M")} - {dayjs(props.item.estimateEndDate).format("d/M")}
           </Typography>
         </Box>
