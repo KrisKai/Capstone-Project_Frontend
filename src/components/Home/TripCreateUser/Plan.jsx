@@ -197,7 +197,7 @@ const Plan = (props) => {
 
   return (
     <Grid container>
-      <Grid item xs={12} sm={10}>
+      <Grid item xs={12} sm={9}>
         <Typography
           variant="h3"
           marginBottom={2}
@@ -206,7 +206,7 @@ const Plan = (props) => {
           <CalendarMonthOutlinedIcon /> Kế hoạch cho chuyến đi
         </Typography>
       </Grid>
-      <Grid item xs={12} sm={2}>
+      <Grid item xs={12} sm={3}>
         <Box
           sx={{
             backgroundColor: "#e9ecef",
