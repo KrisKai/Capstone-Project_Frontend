@@ -245,13 +245,6 @@ const RecommendedPlaces = (props) => {
                     height: "70px",
                   }}
                   indicators={false}
-                  navButtonsWrapperProps={{
-                    // Move the buttons to the bottom. Unsetting top here to override default style.
-                    style: {
-                      bottom: "0",
-                      top: "unset",
-                    },
-                  }}
                 >
                   {groupedAttractions.map((group, index) => (
                     <PlaceCard

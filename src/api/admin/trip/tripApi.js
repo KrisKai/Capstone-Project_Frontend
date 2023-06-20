@@ -27,7 +27,7 @@ const tripApi = {
     return axiosInstance.get(url);
   },
   createUser(data) {
-    const url = "/trips";
+    const url = "/trips/create-trip-user";
     return axiosInstanceUser.post(url, data);
   },
   updateUser(data) {

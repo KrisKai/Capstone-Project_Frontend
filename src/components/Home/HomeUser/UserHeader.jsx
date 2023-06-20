@@ -77,9 +77,9 @@ const UserHeader = () => {
               borderRadius: 1,
             }}
           >
-            {listNavItems.map((item) => {
+            {listNavItems.map((item, index) => {
               return (
-                <Box marginRight={3}>
+                <Box marginRight={3} key={index}>
                   <Link
                     style={{
                       fontWeight: 600,

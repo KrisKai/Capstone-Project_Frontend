@@ -9,6 +9,7 @@ import {
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import { tripApi } from "api";
 import { getPlacesProps } from "api/user/placesAPI";
 import { GOOGLE_MAP_API } from "config";
 import dayjs from "dayjs";
@@ -28,8 +29,14 @@ const FormCreateTrip = () => {
   const restrictions = {
     country: "vn",
   };
-  const [data, setData] = useState();
-  
+  const [trip, setTrip] = useState({
+    estimateStartDate: dayjs(),
+    estimateEndDate: dayjs().add(1, 'day'),
+    endLongitude: "",
+    endLatitude: "",
+    endLocationName: "",
+  });
+
   const locationRef1 = useRef();
   if (!isLoaded) {
     return (
@@ -47,10 +54,18 @@ const FormCreateTrip = () => {
   }
 
   async function handleSubmit() {
-    console.log(1)
-    const placeId = "Ha Noi";
-    await getPlacesProps(placeId).then((data) => console.log(data));
-    
+    if (locationRef1.current.value !== "") {
+      const data = await getPlacesProps(locationRef1.current.value);
+      const id = await tripApi.createUser({
+        ...trip,
+        endLocationName: data.name,
+        endLongitude: data.lon.toString(),
+        endLatitude: data.lat.toString(),
+      });
+      if (id !== null) {
+        navigate(`/tripUpdate/` + id);
+      }
+    }
   }
 
   return (
@@ -97,7 +112,7 @@ const FormCreateTrip = () => {
                   <input
                     ref={locationRef1}
                     className="custom-input"
-                    placeholder="Điểm đến"
+                    placeholder="&#128269; Điểm đến"
                   />
                 </Autocomplete>
               </Box>
@@ -113,10 +128,11 @@ const FormCreateTrip = () => {
                     }}
                     name="startDate"
                     label="Ngày đi"
-                    // value={values.startDate}
-                    // onChange={(value) => {
-                    //   setFieldValue("startDate", value);
-                    // }}
+                    value={dayjs.utc(trip.estimateStartDate)}
+                    onChange={(e) => {
+                      const newTrip = { ...trip, estimateStartDate: e };
+                      setTrip(newTrip);
+                    }}
                   />
                 </LocalizationProvider>
                 <LocalizationProvider
@@ -130,10 +146,11 @@ const FormCreateTrip = () => {
                     }}
                     name="endDate"
                     label="Ngày đến"
-                    // value={values.endDate}
-                    // onChange={(value) => {
-                    //   setFieldValue("endDate", value);
-                    // }}
+                    value={dayjs.utc(trip.estimateEndDate)}
+                    onChange={(e) => {
+                      const newTrip = { ...trip, estimateEndDate: e };
+                      setTrip(newTrip);
+                    }}
                   />
                 </LocalizationProvider>
               </Box>
