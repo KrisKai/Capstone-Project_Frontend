@@ -33,8 +33,6 @@ import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice
 
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
-const center = { lat: 16.0545, lng: 108.22074 };
-
 dayjs.extend(utc);
 
 const drawerWidth = 240;
@@ -119,65 +117,10 @@ export default function TripCreate() {
       try {
         const data = await tripApi.getByIdUser(tripId);
         if (data != null && data != "") {
-          // data.estimateEndDate = dayjs.utc(data.estimateEndDate);
-          // data.estimateStartDate = dayjs.utc(data.estimateStartDate);
           setTrip(data);
         } else {
           navigate("/tripList");
         }
-
-        // console.log(coor)
-
-        // placesService.nearbySearch(
-        //   {
-        //     location: coor,
-        //     radius: 5000,
-        //     type: "restaurant",
-        //   },
-        //   (results, status) => {
-        //     // eslint-disable-next-line no-undef
-        //     if (status === google.maps.places.PlacesServiceStatus.OK) {
-        //       setRestaurantList(results);
-        //       // Access the details of the place here
-        //     } else {
-        //       console.error("Error:", status);
-        //     }
-        //   }
-        // );
-
-        // placesService.nearbySearch(
-        //   {
-        //     location: coor,
-        //     radius: 5000,
-        //     type: "hotel",
-        //   },
-        //   (results, status) => {
-        //     // eslint-disable-next-line no-undef
-        //     if (status === google.maps.places.PlacesServiceStatus.OK) {
-        //       setHotelList(results);
-        //       // Access the details of the place here
-        //     } else {
-        //       console.error("Error:", status);
-        //     }
-        //   }
-        // );
-
-        // placesService.nearbySearch(
-        //   {
-        //     location: coor,
-        //     radius: 5000,
-        //     type: "tourist_attraction",
-        //   },
-        //   (results, status) => {
-        //     // eslint-disable-next-line no-undef
-        //     if (status === google.maps.places.PlacesServiceStatus.OK) {
-        //       setAttractionList(results);
-        //       // Access the details of the place here
-        //     } else {
-        //       console.error("Error:", status);
-        //     }
-        //   }
-        // );
 
         //call api
         // getPlacesData("hotels", data.endLatitude, data.endLongitude).then(
