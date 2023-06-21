@@ -114,7 +114,7 @@ const RecommendedPlaces = (props) => {
     placesService.nearbySearch(
       {
         location: coor,
-        radius: 500,
+        radius: 5000,
         type: "restaurant",
       },
       (results, status) => {
@@ -138,8 +138,8 @@ const RecommendedPlaces = (props) => {
     placesService.nearbySearch(
       {
         location: coor,
-        radius: 500,
-        type: "hotel",
+        radius: 5000,
+        type: "lodging",
       },
       (results, status) => {
         console.log(results);
@@ -163,7 +163,7 @@ const RecommendedPlaces = (props) => {
     placesService.nearbySearch(
       {
         location: coor,
-        radius: 500,
+        radius: 5000,
         type: "tourist_attraction",
       },
       (results, status) => {
@@ -237,9 +237,11 @@ const RecommendedPlaces = (props) => {
               <Collapse in={openRestaurants} timeout="auto" unmountOnExit>
                 <Carousel
                   sx={{
-                    height: "70px",
+                    height: "80px",
                   }}
                   indicators={false}
+                  autoPlay={false}
+                  cycleNavigation={false}
                 >
                   {groupedRestaurants.map((group, index) => (
                     <PlaceCard
@@ -280,9 +282,11 @@ const RecommendedPlaces = (props) => {
               <Collapse in={openHotels} timeout="auto" unmountOnExit>
                 <Carousel
                   sx={{
-                    height: "70px",
+                    height: "80px",
                   }}
                   indicators={false}
+                  autoPlay={false}
+                  cycleNavigation={false}
                 >
                   {groupedHotels.map((group, index) => (
                     <PlaceCard
@@ -323,9 +327,11 @@ const RecommendedPlaces = (props) => {
               <Collapse in={openAttractions} timeout="auto" unmountOnExit>
                 <Carousel
                   sx={{
-                    height: "70px",
+                    height: "80px",
                   }}
                   indicators={false}
+                  autoPlay={false}
+                  cycleNavigation={false}
                 >
                   {groupedAttractions.map((group, index) => (
                     <PlaceCard

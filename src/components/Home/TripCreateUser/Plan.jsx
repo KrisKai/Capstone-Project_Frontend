@@ -109,10 +109,11 @@ const Plan = (props) => {
   };
 
   const onSelect = async (index, childIndex, value) => {
+    const coor = JSON.stringify(value.geometry.location);
     const updatedPlans = [...plans];
     updatedPlans[index].tripRoute[childIndex].locationName = value.name;
-    updatedPlans[index].tripRoute[childIndex].longitude = value.lon.toString();
-    updatedPlans[index].tripRoute[childIndex].latitude = value.lat.toString();
+    updatedPlans[index].tripRoute[childIndex].longitude = JSON.parse(coor).lng.toString();
+    updatedPlans[index].tripRoute[childIndex].latitude = JSON.parse(coor).lat.toString();
     const data = await tripRouteApi.createUser(
       updatedPlans[index].tripRoute[childIndex]
     );
@@ -196,7 +197,7 @@ const Plan = (props) => {
     setPlans(updatedPlans);
   };
 
-  console.log(props.item);
+  // console.log(props.item);
 
   return (
     <Grid container>

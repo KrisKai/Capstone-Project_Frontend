@@ -1,11 +1,13 @@
-import { Autocomplete, Box, Grid, IconButton, TextField } from "@mui/material";
+import { Box, Grid, IconButton, TextField } from "@mui/material";
 import axios from "axios";
-import { PLACE_API } from "config";
+import { PLACE_API, GOOGLE_MAP_API } from "config";
 import { useEffect, useState } from "react";
 
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
 import RecommendedPlaces from "./RecommendedPlaces";
+
+import Autocomplete from "react-google-autocomplete";
 
 const AutocompletePlaceForTrip = (props) => {
   const { onSelect, label } = props;
@@ -13,20 +15,19 @@ const AutocompletePlaceForTrip = (props) => {
   const [options, setOptions] = useState([]);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
 
-  const handleOnKeyDown = async (event) => {
-    const response = await axios.get(
-      `https://api.geoapify.com/v1/geocode/autocomplete?text=${event.target.value}&lang=vi&filter=countrycode:vn&format=json&apiKey=${PLACE_API}`
-    );
-    const optionsFetch = response.data.results.map((value) => ({
-      name: value.address_line1,
-      lat: value.lat,
-      lon: value.lon,
-    }));
-    setOptions(optionsFetch);
+  const coor = {
+    lat: parseFloat(props.trip.endLatitude),
+    lng: parseFloat(props.trip.endLongitude),
+  };
+  const defaultBounds = {
+    north: coor.lat + 0.1,
+    south: coor.lat - 0.1,
+    east: coor.lng + 0.1,
+    west: coor.lng - 0.1,
   };
 
-  const handleSelectPlace = (event) => {
-    onSelect(props.index, props.childIndex, options[event.target.value]);
+  const handleSelectPlace = (place) => {
+    onSelect(props.index, props.childIndex, place);
   };
 
   const handleMouseEnter = () => {
@@ -36,10 +37,6 @@ const AutocompletePlaceForTrip = (props) => {
   const handleMouseLeave = () => {
     setShowDeleteButton(false);
   };
-
-  useEffect(() => {
-    // console.log(props.restaurants);
-  }, options);
   return (
     <>
       {!props.place.showNote && (
@@ -55,27 +52,26 @@ const AutocompletePlaceForTrip = (props) => {
           <Grid item xs={12} sm={1}></Grid>
           <Grid item xs={12} sm={9} marginBottom={1}>
             <Autocomplete
-              disablePortal
-              getOptionLabel={(option) => option.name}
-              filterOptions={(x) => x}
-              options={options}
-              sx={{
+              apiKey={GOOGLE_MAP_API}
+              className="custom-input"
+              style={{
+                height: "48px",
+                backgroundColor: "#f3f4f5",
+                borderRadius: 10,
+                border: "none",
                 width: "98%",
-                "& fieldset": {
-                  border: "none",
-                },
+                paddingLeft: 20,
+                fontWeight: 600,
               }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={label}
-                  fullWidth
-                  sx={{ backgroundColor: "#f3f4f5", borderRadius: 4 }}
-                  placeholder="Thêm địa điểm"
-                />
-              )}
-              onChange={handleSelectPlace}
-              onInputChange={handleOnKeyDown}
+              options={{
+                componentRestrictions: { country: "vn" },
+                types: ["restaurant", "lodging", "tourist_attraction"],
+                bounds: defaultBounds,
+                fields: ["address_components", "geometry", "icon", "name"],
+              }}
+              defaultValue={props.place.locationName}
+              placeholder="Thêm địa điểm"
+              onPlaceSelected={handleSelectPlace}
             />
           </Grid>
           {!props.place.locationName && (
@@ -184,26 +180,26 @@ const AutocompletePlaceForTrip = (props) => {
           <Grid item xs={12} sm={1}></Grid>
           <Grid item xs={12} sm={10}>
             <Autocomplete
-              disablePortal
-              getOptionLabel={(option) => option.name}
-              filterOptions={(x) => x}
-              options={options}
-              sx={{
-                "& fieldset": {
-                  border: "none",
-                },
+              apiKey={GOOGLE_MAP_API}
+              className="custom-input"
+              style={{
+                height: "48px",
+                backgroundColor: "#f3f4f5",
+                borderRadius: 10,
+                border: "none",
+                width: "98%",
+                paddingLeft: 20,
+                fontWeight: 600,
               }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={label}
-                  fullWidth
-                  sx={{ backgroundColor: "#f3f4f5", borderRadius: 4 }}
-                  placeholder="Thêm địa điểm"
-                />
-              )}
-              onChange={handleSelectPlace}
-              onInputChange={handleOnKeyDown}
+              options={{
+                componentRestrictions: { country: "vn" },
+                types: ["restaurant", "lodging", "tourist_attraction"],
+                bounds: defaultBounds,
+                fields: ["address_components", "geometry", "icon", "name"],
+              }}
+              defaultValue={props.place.locationName}
+              placeholder="Thêm địa điểm"
+              onPlaceSelected={handleSelectPlace}
             />
           </Grid>
           <Grid item xs={12} sm={1}></Grid>

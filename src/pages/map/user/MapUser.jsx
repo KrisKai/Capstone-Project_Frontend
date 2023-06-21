@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faStar } from "@fortawesome/free-solid-svg-icons";
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 import { useRef, useState } from "react";
+import Google from "assets/images/google_logo.png";
 
 const color = [
   "red",
@@ -162,6 +163,7 @@ export default function Map({
                 boxShadow={2}
                 borderRadius={2}
                 bottom={0}
+                paddingLeft={5}
               >
                 <Grid container>
                   <Grid item xs={12} sm={10} display="flex" alignItems="center">
@@ -174,7 +176,7 @@ export default function Map({
                   </Grid>
                   <Grid item xs={12} sm={2}>
                     <img
-                      src={data.photos[0].getUrl()}
+                      src={data.photos && data.photos[0].getUrl()}
                       alt="Image"
                       style={{
                         width: "100%",
@@ -188,19 +190,31 @@ export default function Map({
                       icon={faStar}
                       style={{ color: "#ec9b3b", marginRight: 5 }}
                     />
-                    <Typography sx={{ fontWeight: 600 }}>
+                    <Typography
+                      sx={{ fontWeight: 600, color: "#ec9b3b" }}
+                      marginTop={0.5}
+                      marginRight={1}
+                    >
                       {data.rating}
-                    </Typography>{" "}
-                    ( {data.ranking} )
+                    </Typography>
+                    <Typography marginTop={0.5}>
+                      ({data.user_ratings_total})
+                    </Typography>
+
+                    <img
+                      alt=""
+                      src={Google}
+                      width="16"
+                      height="16"
+                      class="mx-1"
+                    ></img>
                   </Grid>
                   <Grid item xs={12} sm={12} display="flex" alignItems="center">
                     <FontAwesomeIcon
                       icon={faMapMarkerAlt}
                       style={{ marginRight: 9, marginLeft: 2 }}
                     />
-                    <Typography>
-                      {data.vicinity}
-                    </Typography>
+                    <Typography>{data.vicinity}</Typography>
                     <Button onClick={calculateRoute}>test</Button>
                   </Grid>
                 </Grid>

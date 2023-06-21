@@ -1,9 +1,5 @@
 import SearchIcon from "@mui/icons-material/Search";
-import {
-  Box,
-  Button,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { tripApi } from "api";
@@ -71,7 +67,7 @@ const FormCreateTrip = () => {
                   ref={locationRef1}
                   className="custom-input"
                   options={{
-                    types: ["(regions)"],
+                    types: ["geocode", "establishment"],
                     componentRestrictions: { country: "vn" },
                   }}
                 />
