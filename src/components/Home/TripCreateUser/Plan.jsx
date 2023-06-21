@@ -134,12 +134,13 @@ const Plan = (props) => {
   };
 
   const handleClickData = async (index, childIndex, value) => {
+    const coor = JSON.stringify(value.geometry.location);
     const updatedPlans = [...plans];
     updatedPlans[index].tripRoute[childIndex].locationName = value.name;
     updatedPlans[index].tripRoute[childIndex].longitude =
-      value.longitude.toString();
+      JSON.parse(coor).lng.toString();
     updatedPlans[index].tripRoute[childIndex].latitude =
-      value.latitude.toString();
+      JSON.parse(coor).lat.toString();
     const id = updatedPlans[index].tripRoute[childIndex].priority;
     const data = await tripRouteApi.createUser(
       updatedPlans[index].tripRoute[childIndex]
@@ -195,7 +196,7 @@ const Plan = (props) => {
     setPlans(updatedPlans);
   };
 
-  console.log(props.item)
+  console.log(props.item);
 
   return (
     <Grid container>

@@ -112,8 +112,6 @@ export default function Map({
 
   function handleClickMarker(data) {
     const coor = JSON.stringify(data.latLng);
-    console.log(JSON.parse(coor).lat);
-    console.log(JSON.parse(coor).lng);
     placesService.nearbySearch(
       {
         location: JSON.parse(coor),
@@ -176,7 +174,7 @@ export default function Map({
                   </Grid>
                   <Grid item xs={12} sm={2}>
                     <img
-                      src={data.photo.images.small.url}
+                      src={data.photos[0].getUrl()}
                       alt="Image"
                       style={{
                         width: "100%",
@@ -201,8 +199,7 @@ export default function Map({
                       style={{ marginRight: 9, marginLeft: 2 }}
                     />
                     <Typography>
-                      {data.address_obj.street1},{data.address_obj.city},
-                      {data.address_obj.country}
+                      {data.vicinity}
                     </Typography>
                     <Button onClick={calculateRoute}>test</Button>
                   </Grid>
