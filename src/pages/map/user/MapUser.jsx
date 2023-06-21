@@ -13,7 +13,7 @@ import "../admin/map.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faStar } from "@fortawesome/free-solid-svg-icons";
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Google from "assets/images/google_logo.png";
 
 const color = [
@@ -60,15 +60,29 @@ export default function Map({
 
   const data = selectedData;
 
-  const [numberOfPlaces, setNumberOfPlace] = useState(2);
-  const placeRef = useRef([]);
-
   const [map, setMap] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
 
   console.log(plans);
+
+  const markers = useRef([]);
+
+  useEffect(() => {
+    // if (map && plans.length > 0) {
+    //   const waypoints = plans.flatMap((routes) =>
+    //     routes.tripRoute.map((route) => ({
+    //       location: {
+    //         lat: parseFloat(route.latitude),
+    //         lng: parseFloat(route.longitude),
+    //       },
+    //     }))
+    //   );
+
+    //   calculateRoute(waypoints);
+    // }
+  }, [map, plans]);
 
   async function calculateRoute() {
     // if (
@@ -248,6 +262,7 @@ export default function Map({
                         ".png"
                       }
                       onClick={handleClickMarker}
+                      ref={(marker) => markers.current.push(marker)}
                     />
                   );
                 });
