@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // material-ui
 import {
   Avatar,
-  AvatarGroup,
-  Button,
   Grid,
   List,
   ListItemAvatar,
@@ -16,8 +14,8 @@ import {
 
 // project import
 
-import AnalyticEcommerce from "components/cards/statistics/AnalyticEcommerce";
-import MainCard from "components/MainCard";
+import AnalyticEcommerce from "temp/cards/statistics/AnalyticEcommerce";
+import { MainCard } from "components/Layout";
 
 // assets
 import {
@@ -25,10 +23,10 @@ import {
   MessageOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import avatar1 from "assets/images/users/avatar-1.png";
-import avatar2 from "assets/images/users/avatar-2.png";
-import avatar3 from "assets/images/users/avatar-3.png";
-import avatar4 from "assets/images/users/avatar-4.png";
+
+import { getCurrentUser } from "redux/modules/admin/authenticate/authSlice";
+import { tripApi } from "api";
+import { useNavigate, useParams } from "react-router-dom";
 
 // avatar style
 const avatarSX = {
@@ -66,9 +64,29 @@ const status = [
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const DashboardDefault = () => {
+  let navigate = useNavigate();
+  const [tripStatistic, setTripStatistic] = useState({
+    tripCountThisMonth: 0,
+    countDiff: 0,
+    trendStatus: "",
+  });
   const [value, setValue] = useState("today");
   const [slot, setSlot] = useState("week");
-
+  useEffect(() => {
+    (async () => {
+      try {
+        const tripStatistic = await tripApi.tripStatistic();
+        if (tripStatistic != null && tripStatistic != "") {
+          setTripStatistic(tripStatistic);
+        }
+      } catch (error) {
+        if (error.response.status == 401) {
+          localStorage.removeItem("access_token");
+          navigate("/auth/login");
+        }
+      }
+    })();
+  }, []);
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {/* row 1 */}
@@ -77,18 +95,20 @@ const DashboardDefault = () => {
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Total Page Views"
-          count="4,42,236"
+          title="Tổng lượt truy cập vào trang"
+          count="442,236"
           percentage={59.3}
           extra="35,000"
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <AnalyticEcommerce
-          title="Total Users"
-          count="78,250"
-          percentage={70.5}
-          extra="8,900"
+          title="Tổng số chuyến đi được đăng kí trong tháng"
+          count={tripStatistic.tripCountThisMonth}
+          percentage={tripStatistic.countDiff}
+          isLoss={tripStatistic.trendStatus === "L"}
+          color={tripStatistic.trendStatus === "L" ? "warning" : "primary"}
+          extra={tripStatistic.tripCountThisYear}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>

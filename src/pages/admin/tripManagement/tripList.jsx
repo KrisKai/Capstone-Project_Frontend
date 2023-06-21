@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { Box, Button, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -8,97 +7,95 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
 import { tripApi } from "api";
-import {
-  tripActions,
-  getTripList,
-  selectAllTripList,
-  selectTripFilter,
-} from "../../../redux/modules/trip/tripSlice";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-
-// assets
+import { toast } from "react-toastify";
 
 const columns = [
-  { id: "fldTripName", label: "Trip Name", minWidth: 100 },
+  { id: "tripName", label: "Trip Name", minWidth: 100, onclick: true },
   {
-    id: "fldTripBudget",
+    id: "tripBudget",
     label: "Trip Budget",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "fldTripDescription",
-    label: "Trip Description",
+    id: "endLocationName",
+    label: "Destination",
     minWidth: 170,
     align: "center",
   },
   {
-    id: "fldEstimateStartTime",
-    label: "Estimate Start Time",
-    minWidth: 130,
-    align: "center",
-  },
-  {
-    id: "fldEstimateArrivalTime",
-    label: "Estimate Arrival Time",
-    minWidth: 130,
-    align: "center",
-  },
-  {
-    id: "fldTripStatus",
+    id: "tripStatus",
     label: "Trip Status",
-    minWidth: 170,
+    minWidth: 130,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "fldTripMember",
-    label: "Trip Member",
-    minWidth: 170,
-    align: "center",
-    format: (value) => value.toFixed(2),
   },
 ];
 
 export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const dispatch = useAppDispatch();
-  const allTrips = useAppSelector(selectAllTripList);
-  const filter = useAppSelector(selectTripFilter);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+  const [allTrips, setAllTrips] = useState({ listOfTrip: [], numOfTrip: 0 });
+  const [filter, setFilter] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+    tripName: "",
+  });
   const tripList = allTrips.listOfTrip;
   const numberOfTrip = allTrips.numOfTrip;
+
+  const handleClickOpen = (e) => {
+    setOpen(true);
+    setDeleteId(e);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     // call api
+    setFilter({
+      ...filter,
+      tripName: event.target.value,
+    });
   };
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
+    setFilter({
+      ...filter,
+      tripName: event.target.value,
+    });
   };
 
   const handleChangePage = (event, newPage) => {
-    dispatch(
-      tripActions.setFilter({
-        ...filter,
-        pageIndex: newPage,
-      })
-    );
+    setFilter({
+      ...filter,
+      pageIndex: newPage,
+    });
   };
 
   const handleChangeRowsPerPage = (event) => {
-    dispatch(
-      tripActions.setFilter({
-        ...filter,
-        pageIndex: 0,
-        pageSize: +event.target.value,
-      })
-    );
+    setFilter({
+      ...filter,
+      pageIndex: 0,
+      pageSize: +event.target.value,
+    });
+  };
+
+  const handleDetail = (id) => {
+    // detail
+    navigate(`/admin/tripDetail/${id}`);
   };
 
   const handleUpdate = (id) => {
@@ -106,20 +103,31 @@ export default function StickyHeadTableTrip() {
     navigate(`/admin/tripUpdate/${id}`);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
-      console.log(id)
       // Remove trip API
-      await tripApi.delete(id || "");
+      const data = await tripApi.delete(deleteId || "");
+      switch (data.Code) {
+        case "G001":
+          return toast.error(data.Message);
+        case "D001":
+          return toast.error(data.Message);
+        default:
+          toast.success("Remove trip successfully!");
 
-      toast.success('Remove trip successfully!');
-
-      // Trigger to re-fetch student list with current filter
-      const newFilter = { ...filter };
-      dispatch(tripActions.setFilter(newFilter));
+          // Trigger to re-fetch student list with current filter
+          const newFilter = { ...filter };
+          setFilter(newFilter);
+          setOpen(false);
+          setDeleteId(null);
+      }
     } catch (error) {
       // Toast error
       console.log("Failed to fetch trip", error);
+      if (error.response.status == 401) {
+        localStorage.removeItem("access_token");
+        navigate("/auth/login");
+      }
     }
   };
 
@@ -127,11 +135,17 @@ export default function StickyHeadTableTrip() {
     navigate("/admin/tripCreate");
   }
 
+  function gotoView(id) {
+    navigate(`/admin/tripView/${id}`);
+  }
+
   useEffect(() => {
-    //filter = { pageIndex: 0, pageSize: 10 };
-    console.log(filter);
-    dispatch(getTripList(filter));
-  }, [dispatch, filter]);
+    async function getAllTrips() {
+      const response = await tripApi.getAll(filter);
+      setAllTrips(response);
+    }
+    getAllTrips();
+  }, [filter]);
 
   return (
     <>
@@ -163,6 +177,9 @@ export default function StickyHeadTableTrip() {
                     {column.label}
                   </TableCell>
                 ))}
+                <TableCell key="detail" align="center">
+                  Show Detail
+                </TableCell>
                 <TableCell key="edit" align="center">
                   Edit || Delete
                 </TableCell>
@@ -174,23 +191,48 @@ export default function StickyHeadTableTrip() {
                   <TableRow
                     hover
                     role="checkbox"
-                    tabIndex={row.fldTripId}
-                    key={row.fldTripId}
+                    tabIndex={row.tripId}
+                    key={row.tripId}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
+                        <>
+                          {column.onclick ? (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              onClick={() => gotoView(row.tripId)}
+                              style={{ textDecoration: "underline" }}
+                            >
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          ) : (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          )}
+                        </>
                       );
                     })}
+                    <TableCell key="detail" align="center">
+                      <Button
+                        variant="outlined"
+                        value={row.tripId}
+                        onClick={(e) => handleDetail(e.target.value)}
+                        color="primary"
+                      >
+                        About Trip
+                      </Button>
+                    </TableCell>
                     <TableCell key="edit" align="center">
                       <Button
                         variant="outlined"
-                        value={row.fldTripId}
+                        value={row.tripId}
                         onClick={(e) => handleUpdate(e.target.value)}
                         color="primary"
                       >
@@ -198,9 +240,9 @@ export default function StickyHeadTableTrip() {
                       </Button>
                       <Button
                         variant="outlined"
-                        value={row.fldTripId}
-                        onClick={(e) => handleDelete(e.target.value)}
-                        color="secondary"
+                        value={row.tripId}
+                        onClick={(e) => handleClickOpen(e.target.value)}
+                        color="error"
                       >
                         Delete
                       </Button>
@@ -222,10 +264,33 @@ export default function StickyHeadTableTrip() {
         />
       </Paper>
       <Box sx={{ mt: 2 }} textAlign="right">
-        <Button variant="outlined" onClick={gotoCreate} right>
+        <Button variant="contained" onClick={gotoCreate}>
           Create
         </Button>
       </Box>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Do you want to delete this user?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button variant="contained" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleDelete}
+            autoFocus
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

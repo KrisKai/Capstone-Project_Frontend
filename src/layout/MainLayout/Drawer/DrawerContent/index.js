@@ -1,23 +1,23 @@
-import React from 'react';
+import React from "react";
 // project import
-import NavCard from './NavCard';
-import Navigation from './Navigation';
-import SimpleBar from '../../../../components/third-party/SimpleBar';
+import NavCard from "./NavCard";
+import Navigation from "./Navigation";
+import { SimpleBar } from "components/Extend";
 
 // ==============================|| DRAWER CONTENT ||============================== //
 
 const DrawerContent = () => (
-    <SimpleBar
-        sx={{
-            '& .simplebar-content': {
-                display: 'flex',
-                flexDirection: 'column'
-            }
-        }}
-    >
-        <Navigation />
-        <NavCard />
-    </SimpleBar>
+  <SimpleBar
+    sx={{
+      "& .simplebar-content": {
+        display: "flex",
+        flexDirection: "column",
+      },
+    }}
+  >
+    <Navigation />
+    <NavCard />
+  </SimpleBar>
 );
 
 export default DrawerContent;

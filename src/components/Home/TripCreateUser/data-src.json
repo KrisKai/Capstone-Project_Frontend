@@ -1,0 +1,910 @@
+[
+    {
+        "geometry": {
+            "location": {
+                "lat": 21.0277644,
+                "lng": 105.8341598
+            },
+            "viewport": {
+                "south": 20.99509906891873,
+                "west": 105.7974814649321,
+                "north": 21.05038011368417,
+                "east": 105.876445869669
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/geocode-71.png",
+        "icon_background_color": "#7B9EB0",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+        "name": "Hà Nội",
+        "photos": [
+            {
+                "height": 462,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/100968979814345776530\">1PLUS VIETNAM</a>"
+                ],
+                "width": 700
+            }
+        ],
+        "place_id": "ChIJoRyG2ZurNTERqRfKcnt_iOc",
+        "reference": "ChIJoRyG2ZurNTERqRfKcnt_iOc",
+        "scope": "GOOGLE",
+        "types": [
+            "locality",
+            "political"
+        ],
+        "vicinity": "Hà Nội",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0315685,
+                "lng": 105.8496552
+            },
+            "viewport": {
+                "south": 21.03025396970849,
+                "west": 105.8482843197085,
+                "north": 21.0329519302915,
+                "east": 105.8509822802915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Church Boutique Hotel Hang Gai",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 3000,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/107468819875217659023\">bok Cho</a>"
+                ],
+                "width": 4000
+            }
+        ],
+        "place_id": "ChIJfaMFzb-rNTERyNeaxzoxW3s",
+        "plus_code": {
+            "compound_code": "2RJX+JV Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RJX+JV"
+        },
+        "rating": 3.7,
+        "reference": "ChIJfaMFzb-rNTERyNeaxzoxW3s",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 181,
+        "vicinity": "95 Phố Hàng Gai, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0303704,
+                "lng": 105.8482687
+            },
+            "viewport": {
+                "south": 21.0289778197085,
+                "west": 105.8469452197085,
+                "north": 21.0316757802915,
+                "east": 105.8496431802915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Khách Sạn Camellia",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 3024,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/103033572287936821578\">Tran Quoc Trung</a>"
+                ],
+                "width": 4032
+            }
+        ],
+        "place_id": "ChIJFaisupWrNTERVwhJE5WV7NE",
+        "plus_code": {
+            "compound_code": "2RJX+48 Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RJX+48"
+        },
+        "rating": 3.5,
+        "reference": "ChIJFaisupWrNTERVwhJE5WV7NE",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "real_estate_agency",
+            "travel_agency",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 69,
+        "vicinity": "12C Phố Chân Cầm, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0301781,
+                "lng": 105.8497142
+            },
+            "viewport": {
+                "south": 21.0288730197085,
+                "west": 105.8484307697085,
+                "north": 21.0315709802915,
+                "east": 105.8511287302915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Golden Sun Villa Hotel",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 854,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/114980151177186906718\">Golden Sun Villa Hotel</a>"
+                ],
+                "width": 1280
+            }
+        ],
+        "place_id": "ChIJiQKhfpWrNTERx3EHfuirrqY",
+        "plus_code": {
+            "compound_code": "2RJX+3V Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RJX+3V"
+        },
+        "rating": 4.4,
+        "reference": "ChIJiQKhfpWrNTERx3EHfuirrqY",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 251,
+        "vicinity": "68 Phố Hàng Trống, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.028046,
+                "lng": 105.848048
+            },
+            "viewport": {
+                "south": 21.0267601197085,
+                "west": 105.8466739697085,
+                "north": 21.0294580802915,
+                "east": 105.8493719302915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Aquarius Hanoi Hotel",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 2268,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/102324269892806802985\">chan chan</a>"
+                ],
+                "width": 4032
+            }
+        ],
+        "place_id": "ChIJQ3n_oJWrNTERLITBjBznz5s",
+        "plus_code": {
+            "compound_code": "2RHX+66 Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RHX+66"
+        },
+        "rating": 3.3,
+        "reference": "ChIJQ3n_oJWrNTERLITBjBznz5s",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 63,
+        "vicinity": "15 Phố Ấu Triệu, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0282612,
+                "lng": 105.8481903
+            },
+            "viewport": {
+                "south": 21.02694481970849,
+                "west": 105.8468172197085,
+                "north": 21.0296427802915,
+                "east": 105.8495151802915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "7S Splendid Star Boutique Hotel",
+        "photos": [
+            {
+                "height": 2988,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/107694120785211499992\">Enrico Farina</a>"
+                ],
+                "width": 5312
+            }
+        ],
+        "place_id": "ChIJg_8DoZWrNTERmA6DvuEUV8w",
+        "plus_code": {
+            "compound_code": "2RHX+87 Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RHX+87"
+        },
+        "rating": 3.8,
+        "reference": "ChIJg_8DoZWrNTERmA6DvuEUV8w",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 120,
+        "vicinity": "19 Phố Ấu Triệu, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0297403,
+                "lng": 105.8484077
+            },
+            "viewport": {
+                "south": 21.02847316970849,
+                "west": 105.8474104697085,
+                "north": 21.0311711302915,
+                "east": 105.8501084302915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Maison d'Orient Hotel",
+        "photos": [
+            {
+                "height": 2048,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/112557210729497512611\">Maison d&#39;Orient Hôtel</a>"
+                ],
+                "width": 1365
+            }
+        ],
+        "place_id": "ChIJuXD4lZWrNTERHg2A-7Nc_58",
+        "plus_code": {
+            "compound_code": "2RHX+V9 Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RHX+V9"
+        },
+        "rating": 4.6,
+        "reference": "ChIJuXD4lZWrNTERHg2A-7Nc_58",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 114,
+        "vicinity": "26 Ngõ Huyện, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0308014,
+                "lng": 105.8496879
+            },
+            "viewport": {
+                "south": 21.0294001197085,
+                "west": 105.8482702197085,
+                "north": 21.0320980802915,
+                "east": 105.8509681802915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Hoan Kiem Lake Hotel",
+        "opening_hours": {
+            "open_now": false
+        },
+        "photos": [
+            {
+                "height": 1365,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/107277972160480286505\">Vương Đinh Trọng</a>"
+                ],
+                "width": 2048
+            }
+        ],
+        "place_id": "ChIJ__8jvJWrNTER8SsptLC9ED8",
+        "plus_code": {
+            "compound_code": "2RJX+8V Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RJX+8V"
+        },
+        "rating": 3.7,
+        "reference": "ChIJ__8jvJWrNTER8SsptLC9ED8",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 153,
+        "vicinity": "29 Phố Hàng Trống, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0295075,
+                "lng": 105.8489029
+            },
+            "viewport": {
+                "south": 21.0282134197085,
+                "west": 105.8475228697085,
+                "north": 21.0309113802915,
+                "east": 105.8502208302915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Hanoi Lucky Hostel",
+        "photos": [
+            {
+                "height": 2048,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/116094340492570160261\">Hanoi Lucky Hostel</a>"
+                ],
+                "width": 1652
+            }
+        ],
+        "place_id": "ChIJtWAqmJWrNTERrJatdhT9y-0",
+        "plus_code": {
+            "compound_code": "2RHX+RH Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RHX+RH"
+        },
+        "rating": 4.3,
+        "reference": "ChIJtWAqmJWrNTERrJatdhT9y-0",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 175,
+        "vicinity": "11 Ngõ Huyện, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.030528,
+                "lng": 105.84863
+            },
+            "viewport": {
+                "south": 21.0290552197085,
+                "west": 105.8471154697085,
+                "north": 21.0317531802915,
+                "east": 105.8498134302915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Serendipity Hostel",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 600,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/112067233370403307693\">Hanoi Serendipity Hotel</a>"
+                ],
+                "width": 600
+            }
+        ],
+        "place_id": "ChIJh9x2jpWrNTERpMSWflrmprs",
+        "plus_code": {
+            "compound_code": "2RJX+6F Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RJX+6F"
+        },
+        "rating": 4,
+        "reference": "ChIJh9x2jpWrNTERpMSWflrmprs",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "travel_agency",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 101,
+        "vicinity": "14 Phố Chân Cầm, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0305333,
+                "lng": 105.8504925
+            },
+            "viewport": {
+                "south": 21.0291647697085,
+                "west": 105.8491153197085,
+                "north": 21.0318627302915,
+                "east": 105.8518132802915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Bonsella Hotel",
+        "photos": [
+            {
+                "height": 1365,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/111679709987665371362\">Bonsella Hotel</a>"
+                ],
+                "width": 2048
+            }
+        ],
+        "place_id": "ChIJDxoxe5WrNTER8GI5Lf95hY8",
+        "plus_code": {
+            "compound_code": "2VJ2+65 Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72VJ2+65"
+        },
+        "rating": 4.6,
+        "reference": "ChIJDxoxe5WrNTER8GI5Lf95hY8",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 519,
+        "vicinity": "3 Ngõ Báo Khánh, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0294917,
+                "lng": 105.8478508
+            },
+            "viewport": {
+                "south": 21.0281425197085,
+                "west": 105.8464641697085,
+                "north": 21.0308404802915,
+                "east": 105.8491621302915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Phoenix Palace Hotel Hanoi",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 3000,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/109569001556745619003\">Andres Larin</a>"
+                ],
+                "width": 4000
+            }
+        ],
+        "place_id": "ChIJce5xxpWrNTERRVXQmb9JNDA",
+        "plus_code": {
+            "compound_code": "2RHX+Q4 Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RHX+Q4"
+        },
+        "rating": 4,
+        "reference": "ChIJce5xxpWrNTERRVXQmb9JNDA",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 164,
+        "vicinity": "27 Phố Phủ Doãn, Old Quarter",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0314715,
+                "lng": 105.8506231
+            },
+            "viewport": {
+                "south": 21.03017441970849,
+                "west": 105.8492523697085,
+                "north": 21.0328723802915,
+                "east": 105.8519503302915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Lakeside Palace Hotel",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 2268,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/109715362771809855128\">van nam Truong</a>"
+                ],
+                "width": 4032
+            }
+        ],
+        "place_id": "ChIJI0BzUKKrNTERQxpT05blVCk",
+        "plus_code": {
+            "compound_code": "2VJ2+H6 Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72VJ2+H6"
+        },
+        "rating": 3.5,
+        "reference": "ChIJI0BzUKKrNTERQxpT05blVCk",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 176,
+        "vicinity": "15 Ngõ Hàng Hành, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.029692,
+                "lng": 105.8478711
+            },
+            "viewport": {
+                "south": 21.0283394197085,
+                "west": 105.8465224197085,
+                "north": 21.0310373802915,
+                "east": 105.8492203802915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Luxury Hotel",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 3673,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/114190258325505784281\">Luxury Hotel</a>"
+                ],
+                "width": 2912
+            }
+        ],
+        "place_id": "ChIJC-dYrMCrNTER3MK8LdoitfM",
+        "plus_code": {
+            "compound_code": "2RHX+V4 Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RHX+V4"
+        },
+        "rating": 4,
+        "reference": "ChIJC-dYrMCrNTER3MK8LdoitfM",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 162,
+        "vicinity": "Phố, Phố Phủ Doãn/2 Ngõ Phủ Doãn",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0294228,
+                "lng": 105.848478
+            },
+            "viewport": {
+                "south": 21.0280558197085,
+                "west": 105.8471392197085,
+                "north": 21.0307537802915,
+                "east": 105.8498371802915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Grand Holiday Hotel 2",
+        "photos": [
+            {
+                "height": 3000,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/100874547600678020986\">Bessi Bossi</a>"
+                ],
+                "width": 4000
+            }
+        ],
+        "place_id": "ChIJW2O9v5WrNTERMYjP-0GsqTc",
+        "plus_code": {
+            "compound_code": "2RHX+Q9 Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RHX+Q9"
+        },
+        "rating": 4.2,
+        "reference": "ChIJW2O9v5WrNTERMYjP-0GsqTc",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 117,
+        "vicinity": "31 Ngõ Huyện, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0304007,
+                "lng": 105.8499092
+            },
+            "viewport": {
+                "south": 21.0290186697085,
+                "west": 105.8485047697085,
+                "north": 21.0317166302915,
+                "east": 105.8512027302915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Golden Lotus Luxury Hotel",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 800,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/105773658688143076954\">Golden Lotus Luxury Hotel</a>"
+                ],
+                "width": 1176
+            }
+        ],
+        "place_id": "ChIJl9XTe5WrNTER7hFpYXKAIAA",
+        "plus_code": {
+            "compound_code": "2RJX+5X Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RJX+5X"
+        },
+        "rating": 3.9,
+        "reference": "ChIJl9XTe5WrNTER7hFpYXKAIAA",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 450,
+        "vicinity": "53-55 Phố Hàng Trống, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0317201,
+                "lng": 105.8506659
+            },
+            "viewport": {
+                "south": 21.03033951970849,
+                "west": 105.8493394697085,
+                "north": 21.0330374802915,
+                "east": 105.8520374302915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Hanoi Morning Hotel",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 1365,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/106282698411758436490\">Hanoi Morning Hotel</a>"
+                ],
+                "width": 2048
+            }
+        ],
+        "place_id": "ChIJoyV0YpWrNTERAubm9AgKWG4",
+        "plus_code": {
+            "compound_code": "2VJ2+M7 Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72VJ2+M7"
+        },
+        "rating": 4.2,
+        "reference": "ChIJoyV0YpWrNTERAubm9AgKWG4",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 125,
+        "vicinity": "10 Ngõ Hàng Hành, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.0306491,
+                "lng": 105.8493093
+            },
+            "viewport": {
+                "south": 21.0293580697085,
+                "west": 105.8480575697085,
+                "north": 21.0320560302915,
+                "east": 105.8507555302915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Golden Rice Hotel",
+        "opening_hours": {
+            "open_now": false
+        },
+        "photos": [
+            {
+                "height": 2752,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/104016481242213552085\">Markus Linsert</a>"
+                ],
+                "width": 4896
+            }
+        ],
+        "place_id": "ChIJDUaZLr6rNTERIzMxGkQShtA",
+        "plus_code": {
+            "compound_code": "2RJX+7P Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RJX+7P"
+        },
+        "rating": 4.3,
+        "reference": "ChIJDUaZLr6rNTERIzMxGkQShtA",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 192,
+        "vicinity": "36 Phố Hàng Trống, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "business_status": "OPERATIONAL",
+        "geometry": {
+            "location": {
+                "lat": 21.029036,
+                "lng": 105.8484871
+            },
+            "viewport": {
+                "south": 21.0276904197085,
+                "west": 105.8471363697085,
+                "north": 21.0303883802915,
+                "east": 105.8498343302915
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+        "icon_background_color": "#909CE1",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/hotel_pinlet",
+        "name": "Especen hotel",
+        "opening_hours": {
+            "open_now": true
+        },
+        "photos": [
+            {
+                "height": 2432,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/117213742954080715545\">Especen hotel</a>"
+                ],
+                "width": 3648
+            }
+        ],
+        "place_id": "ChIJ4aTnwJWrNTER6tiRLsPgqss",
+        "plus_code": {
+            "compound_code": "2RHX+J9 Hoàn Kiếm, Hà Nội, Việt Nam",
+            "global_code": "7PH72RHX+J9"
+        },
+        "rating": 4,
+        "reference": "ChIJ4aTnwJWrNTER6tiRLsPgqss",
+        "scope": "GOOGLE",
+        "types": [
+            "lodging",
+            "travel_agency",
+            "point_of_interest",
+            "establishment"
+        ],
+        "user_ratings_total": 166,
+        "vicinity": "28 Ngõ Thọ Xương, Hàng Trống",
+        "html_attributions": []
+    },
+    {
+        "geometry": {
+            "location": {
+                "lat": 21.0309577,
+                "lng": 105.8547173
+            },
+            "viewport": {
+                "south": 21.02756162892248,
+                "west": 105.8520322278544,
+                "north": 21.03489951649073,
+                "east": 105.8582497569589
+            }
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/geocode-71.png",
+        "icon_background_color": "#7B9EB0",
+        "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+        "name": "Lý Thái Tổ",
+        "photos": [
+            {
+                "height": 2988,
+                "html_attributions": [
+                    "<a href=\"https://maps.google.com/maps/contrib/108537932276265518785\">Lok Chee Chiang</a>"
+                ],
+                "width": 5312
+            }
+        ],
+        "place_id": "ChIJPRaXjeqrNTERgenegAy9LMA",
+        "reference": "ChIJPRaXjeqrNTERgenegAy9LMA",
+        "scope": "GOOGLE",
+        "types": [
+            "sublocality_level_1",
+            "sublocality",
+            "political"
+        ],
+        "vicinity": "Lý Thái Tổ",
+        "html_attributions": []
+    }
+]

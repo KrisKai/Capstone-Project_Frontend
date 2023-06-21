@@ -1,38 +1,43 @@
-import { Link as RouterLink } from 'react-router-dom';
-// material
-import { styled } from '@mui/material/styles';
-import { Button, Typography, Container } from '@mui/material';
-// components
-import Page from '../components/Page';
-import { React } from "react";
+import { Box, Typography, CircularProgress, Button } from "@mui/material";
 
-// ----------------------------------------------------------------------
-
-const RootStyle = styled(Page)(({ theme }) => ({
-  minHeight: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(10)
-}));
-
-// ----------------------------------------------------------------------
-
-export default function Maintenance() {
+export default function MaintenancePage() {
+  const gotoHome = () => {
+    window.location.href = "/";
+  };
   return (
-    <RootStyle title="Maintenance | Krowd">
-      <Container sx={{ textAlign: 'center' }}>
-        <Typography variant="h3" paragraph>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#f5f5f5",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          p: 4,
+          backgroundColor: "white",
+          borderRadius: 4,
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <CircularProgress size={64} color="primary" />
+        <Typography variant="h5" component="h1" align="center" mt={2}>
           Đang cập nhật phát triển
         </Typography>
-        <Typography sx={{ color: 'text.secondary' }}>
-          Chúng tôi hiện đang làm việc chăm chỉ trên trang này!
+        <Typography variant="body1" align="center" mt={2}>
+          Chúng tôi xin lỗi vì sự bất tiện này. Trang web này đang được phát
+          triển. Vui lòng quay lại sau.
         </Typography>
-
-        <Button variant="contained" size="large" component={RouterLink} to="/">
+        <Button variant="contained" size="large" onClick={gotoHome}>
           Quay lại trang chủ
         </Button>
-      </Container>
-    </RootStyle>
+      </Box>
+    </Box>
   );
 }

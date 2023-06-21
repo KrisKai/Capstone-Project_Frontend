@@ -1,25 +1,36 @@
-import { Link as RouterLink } from "react-router-dom";
-// material
-import { styled } from "@mui/material/styles";
-import { Box, Button, Typography, Container } from "@mui/material";
-import Page from "../components/Page";
-import { React } from "react";
-// ----------------------------------------------------------------------
+import React from 'react';
+import { Box, Button, Container, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
-const RootStyle = styled(Page)(({ theme }) => ({
-  display: "flex",
-  minHeight: "100%",
-  alignItems: "center",
-  paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(10),
-}));
-
-// ----------------------------------------------------------------------
-
-export default function Page404() {
+export default function Error() {
   return (
-    <RootStyle title="404 Page Not Found | Krowd">
-      <Container>404 Page Not Found</Container>
-    </RootStyle>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh'
+      }}
+    >
+      <Container maxWidth="md">
+        <Grid container spacing={2}>
+          <Grid xs={6}>
+            <Typography variant="h1">
+              404
+            </Typography>
+            <Typography variant="h6">
+              The page you’re looking for doesn’t exist.
+            </Typography>
+          </Grid>
+          <Grid xs={6}>
+            <img
+              src="https://cdn.pixabay.com/photo/2017/03/09/12/31/error-2129569__340.jpg"
+              alt=""
+              width={500} height={250}
+            />
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   );
 }

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Box, Grid } from "@mui/material";
 
 // project import
-import AuthFooter from "components/cards/AuthFooter";
+// import AuthFooter from "components/cards/AuthFooter";
 import AuthCard from "./AuthCard";
 
 // assets
@@ -42,7 +42,7 @@ const AuthWrapper = ({ children }) => (
         </Grid>
       </Grid>
       <Grid item xs={12} sx={{ m: 3, mt: 1 }}>
-        <AuthFooter />
+        {/* <AuthFooter /> */}
       </Grid>
     </Grid>
   </Box>

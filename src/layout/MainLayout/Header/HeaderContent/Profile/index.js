@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
-import React, { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // material-ui
-import { useTheme } from "@mui/material/styles";
 import {
   Avatar,
   Box,
@@ -10,7 +9,6 @@ import {
   CardContent,
   ClickAwayListener,
   Grid,
-  IconButton,
   Paper,
   Popper,
   Stack,
@@ -18,19 +16,22 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 // project import
-import MainCard from "../../../../../components/MainCard";
-import Transitions from "../../../../../components/@extended/Transitions";
+import { Transitions } from "components/Extend";
+import { MainCard } from "components/Layout";
 import ProfileTab from "./ProfileTab";
 import SettingTab from "./SettingTab";
 
 // assets
-import avatar1 from "../../../../../assets/images/users/avatar-1.png";
 import { SettingOutlined, UserOutlined } from "@ant-design/icons";
+import avatar1 from "assets/images/users/avatar-1.png";
 
-import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { getCurrentUser, selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
+
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -65,16 +66,18 @@ const Profile = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
+  const currentUser = useAppSelector(selectCurrentUser);
 
   useEffect(() => {
-    //filter = { pageIndex: 0, pageSize: 10 };
-    console.log(localStorage.getItem("access_token"));
+    if (localStorage.getItem("access_token")) {
+      dispatch(getCurrentUser());
+    }
   }, []);
 
   const handleLogout = async () => {
     // logout
     localStorage.removeItem("access_token");
-    navigate("/auth/login")
+    navigate("/auth/login");
   };
 
   const anchorRef = useRef(null);
@@ -119,7 +122,7 @@ const Profile = () => {
             src={avatar1}
             sx={{ width: 32, height: 32 }}
           />
-          <Typography variant="subtitle1">John Doe</Typography>
+          <Typography variant="subtitle1">{currentUser.name}</Typography>
         </Stack>
       </ButtonBase>
       <Popper
@@ -174,9 +177,11 @@ const Profile = () => {
                               sx={{ width: 32, height: 32 }}
                             />
                             <Stack>
-                              <Typography variant="h6">John Doe</Typography>
+                              <Typography variant="h6">
+                                {currentUser.name}
+                              </Typography>
                               <Typography variant="body2" color="textSecondary">
-                                UI/UX Designer
+                                {currentUser.role}
                               </Typography>
                             </Stack>
                           </Stack>
@@ -185,7 +190,7 @@ const Profile = () => {
                     </CardContent>
                     {open && (
                       <>
-                        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                        {/* <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                           <Tabs
                             variant="fullWidth"
                             value={value}
@@ -231,13 +236,13 @@ const Profile = () => {
                               {...a11yProps(1)}
                             />
                           </Tabs>
-                        </Box>
+                        </Box> */}
                         <TabPanel value={value} index={0} dir={theme.direction}>
                           <ProfileTab handleLogout={handleLogout} />
                         </TabPanel>
-                        <TabPanel value={value} index={1} dir={theme.direction}>
+                        {/* <TabPanel value={value} index={1} dir={theme.direction}>
                           <SettingTab />
-                        </TabPanel>
+                        </TabPanel> */}
                       </>
                     )}
                   </MainCard>

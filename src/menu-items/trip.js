@@ -16,7 +16,7 @@ const trip = {
     children: [
         {
             id: 'trip-list',
-            title: 'List Trip',
+            title: 'List of Trips',
             type: 'item',
             url: '/admin/tripList',
             icon: icons.ChromeOutlined

@@ -1,30 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
-import { Stack, Chip, Typography } from '@mui/material';
+import { Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 // project import
-import DrawerHeaderStyled from './DrawerHeaderStyled';
-import Logo from '../../../../components/Logo';
+import DrawerHeaderStyled from "./DrawerHeaderStyled";
 
 // ==============================|| DRAWER HEADER ||============================== //
 
 const DrawerHeader = ({ open }) => {
-    const theme = useTheme();
+  const theme = useTheme();
 
-    return (
-        <DrawerHeaderStyled theme={theme} open={open}>
-            <Typography>
-                Journey Sick
-            </Typography>
-        </DrawerHeaderStyled>
-    );
+  return (
+    <DrawerHeaderStyled theme={theme} open={open}>
+      <h1>Journey Sick</h1>
+    </DrawerHeaderStyled>
+  );
 };
 
 DrawerHeader.propTypes = {
-    open: PropTypes.bool
+  open: PropTypes.bool,
 };
 
 export default DrawerHeader;

@@ -1,4 +1,5 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
+import { Box, Button, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,94 +8,172 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { TextField, Button, Box } from "@mui/material";
-
-// assets
-import { SearchOutlined } from "@ant-design/icons";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import { userApi } from "api";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAppSelector } from "redux/hooks";
+import { selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
 
 const columns = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "code", label: "ISO\u00a0Code", minWidth: 100 },
+  { id: "username", label: "UserName", minWidth: 100, onclick: true },
   {
-    id: "population",
-    label: "Population",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    id: "fullname",
+    label: "Full Name",
+    minWidth: 150,
+    align: "center",
   },
   {
-    id: "size",
-    label: "Size (km\u00b2)",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    id: "role",
+    label: "Role",
+    minWidth: 100,
+    align: "center",
   },
   {
-    id: "density",
-    label: "Density",
+    id: "email",
+    label: "Email",
     minWidth: 170,
-    align: "right",
-    format: (value) => value.toFixed(2),
+    align: "center",
+  },
+  {
+    id: "activeStatus",
+    label: "Active Status",
+    minWidth: 100,
+    align: "center",
   },
 ];
 
-function createData(name, code, population, size) {
-  const density = population / size;
-  return { name, code, population, size, density };
-}
+export default function StickyHeadTableUser() {
+  let navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+  const [filter, setFilter] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+    userName: "",
+  });
+  const [allUsers, setAllUsers] = useState({
+    listOfUser: [],
+    numOfUser: 0,
+  });
+  const userList = allUsers.listOfUser;
+  const numOfUser = allUsers.numOfUser;
+  const currentUser = useAppSelector(selectCurrentUser);
+  const isAdmin = Boolean(currentUser.role === "Admin");
 
-function gotoCreate() {
-  //go to create
-}
+  const [search, setSearch] = useState("");
 
-const rows = [
-  createData("India", "IN", 1324171354, 3287263),
-  createData("China", "CN", 1403500365, 9596961),
-  createData("Italy", "IT", 60483973, 301340),
-  createData("United States", "US", 327167434, 9833520),
-  createData("Canada", "CA", 37602103, 9984670),
-  createData("Australia", "AU", 25475400, 7692024),
-  createData("Germany", "DE", 83019200, 357578),
-  createData("Ireland", "IE", 4857000, 70273),
-  createData("Mexico", "MX", 126577691, 1972550),
-  createData("Japan", "JP", 126317000, 377973),
-  createData("France", "FR", 67022000, 640679),
-  createData("United Kingdom", "GB", 67545757, 242495),
-  createData("Russia", "RU", 146793744, 17098246),
-  createData("Nigeria", "NG", 200962417, 923768),
-  createData("Brazil", "BR", 210147125, 8515767),
-];
+  const onSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
 
-export default function StickyHeadTable() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const handleClickOpen = (e) => {
+    setOpen(true);
+    setDeleteId(e);
+  };
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    // call api
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleUpdate = () => {
-    // update
-  };
-
-  const handleDelete = () => {
-    // delete
+    if ((event.type && event.type === "click") || !event) {
+      setFilter({
+        ...filter,
+        userName: search,
+      });
+    }
   };
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setFilter({
+      ...filter,
+      pageIndex: newPage,
+    });
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+    setFilter({
+      ...filter,
+      pageIndex: 0,
+      pageSize: +event.target.value,
+    });
   };
+
+  const handleUpdate = (id) => {
+    // update
+    navigate(`/admin/userUpdate/${id}`);
+  };
+
+  const handleReset = async (id) => {
+    const response = await userApi.reset(id);
+    if (response > 0) {
+      toast.success("Change Password To Qwe1234!");
+    } else {
+      toast.error("Reset Password Failed!");
+    }
+  };
+
+  const handleChangeStatus = async (id, status) => {
+    let response = await userApi.changeStatus({
+      userId: id,
+      ActiveStatus: status,
+    });
+    switch (response.Code) {
+      case "G001":
+        return toast.error(response.Message);
+      case "U001":
+        return toast.error(response.Message);
+      case "I001":
+        return toast.error(response.Message);
+      case "V001":
+        return toast.error(response.Message);
+      default: {
+        if (response > 0) {
+          toast.success("Change Status Successed!");
+          window.location.reload(false);
+        }
+      }
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      // Remove user API
+      await userApi.delete(deleteId || "");
+      toast.success("Remove user successfully!");
+
+      // Trigger to re-fetch student list with current filter
+      const newFilter = { ...filter };
+      setFilter(newFilter);
+      setOpen(false);
+    } catch (error) {
+      // Toast error
+      console.log("Failed to fetch user", error);
+      if (error.response.status === 401) {
+        localStorage.removeItem("access_token");
+        navigate("/auth/login");
+      }
+    }
+  };
+
+  function gotoCreate() {
+    navigate("/admin/userCreate");
+  }
+
+  function gotoView(id) {
+    navigate(`/admin/userView/${id}`);
+  }
+
+  useEffect(() => {
+    async function getAllUsers() {
+      const response = await userApi.getAll(filter);
+      setAllUsers(response);
+    }
+    getAllUsers();
+  }, [filter]);
 
   return (
     <>
@@ -104,16 +183,17 @@ export default function StickyHeadTable() {
             id="search"
             type="search"
             label="Search"
-            value={searchTerm}
-            onChange={handleChange}
+            value={search}
+            onKeyDown={handleChange}
+            onChange={onSearchChange}
             sx={{ width: 400 }}
           />
-          <Button variant="outlined" onClick={handleSearch} right>
+          <Button variant="outlined" onClick={handleChange} sx={{ height: 42 }}>
             Search
           </Button>
         </Box>
 
-        <TableContainer sx={{ maxHeight: 440 }}>
+        <TableContainer>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -126,69 +206,169 @@ export default function StickyHeadTable() {
                     {column.label}
                   </TableCell>
                 ))}
+                {isAdmin && (
+                  <>
+                    <TableCell key="status" align="center">
+                      Change Status
+                    </TableCell>
+                    <TableCell key="reset" align="center">
+                      Reset Password
+                    </TableCell>
+                  </>
+                )}
                 <TableCell key="edit" align="center">
                   Edit || Delete
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={row.population}
-                      key={row.code}
-                    >
-                      {columns.map((column) => {
-                        const value = row[column.id];
+              {userList?.map((row) => {
+                return (
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    tabIndex={row.userId}
+                    key={row.userId}
+                  >
+                    {columns.map((column) => {
+                      const value = row[column.id];
+
+                      if (column.onclick) {
                         return (
-                          <TableCell key={column.id} align={column.align}>
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            style={{ textDecoration: "underline" }}
+                            onClick={() => gotoView(row.userId)}
+                          >
                             {column.format && typeof value === "number"
                               ? column.format(value)
                               : value}
                           </TableCell>
                         );
-                      })}
-                      <TableCell key="edit" align="center">
-                        <Button
-                          variant="outlined"
-                          onClick={() => handleUpdate(row.code)}
-                          color="primary"
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          variant="outlined"
-                          onClick={() => handleDelete(row.code)}
-                          color="secondary"
-                        >
-                          Delete
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                      }
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
+                      );
+                    })}
+                    {isAdmin && (
+                      <>
+                        <TableCell key="status" align="center">
+                          {row.ActiveStatus !== "ACTIVE" && (
+                            <Button
+                              variant="outlined"
+                              value={row.userId}
+                              onClick={(e) =>
+                                handleChangeStatus(e.target.value, "ACTIVE")
+                              }
+                              color="primary"
+                            >
+                              Active
+                            </Button>
+                          )}
+                          {row.ActiveStatus !== "INACTIVE" && (
+                            <Button
+                              variant="outlined"
+                              value={row.userId}
+                              onClick={(e) =>
+                                handleChangeStatus(e.target.value, "INACTIVE")
+                              }
+                              color="warning"
+                            >
+                              Inactive
+                            </Button>
+                          )}
+                          {row.ActiveStatus !== "BANNED" && (
+                            <Button
+                              variant="outlined"
+                              value={row.userId}
+                              onClick={(e) =>
+                                handleChangeStatus(e.target.value, "BANNED")
+                              }
+                              color="error"
+                            >
+                              Banned
+                            </Button>
+                          )}
+                        </TableCell>
+                        <TableCell key="reset" align="center">
+                          <Button
+                            variant="outlined"
+                            value={row.userId}
+                            onClick={(e) => handleReset(e.target.value)}
+                            color="success"
+                          >
+                            Reset Password
+                          </Button>
+                        </TableCell>
+                      </>
+                    )}
+                    <TableCell key="edit" align="center">
+                      <Button
+                        variant="outlined"
+                        value={row.userId}
+                        onClick={(e) => handleUpdate(e.target.value)}
+                        color="primary"
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        value={row.userId}
+                        onClick={(e) => handleClickOpen(e.target.value)}
+                        color="error"
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
+          count={numOfUser}
+          rowsPerPage={filter.pageSize}
+          page={filter.pageIndex}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
       <Box sx={{ mt: 2 }} textAlign="right">
-        <Button variant="outlined" onClick={gotoCreate} right>
+        <Button variant="contained" onClick={gotoCreate}>
           Create
         </Button>
       </Box>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Do you want to delete this user?"}
+        </DialogTitle>
+        <DialogActions>
+          <Button variant="contained" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleDelete}
+            autoFocus
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

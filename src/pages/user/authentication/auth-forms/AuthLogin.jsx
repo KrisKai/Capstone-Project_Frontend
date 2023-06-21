@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 // material-ui
 import {
@@ -9,32 +9,34 @@ import {
   FormControlLabel,
   FormHelperText,
   Grid,
-  Link,
   IconButton,
   InputAdornment,
   InputLabel,
+  Link,
   OutlinedInput,
   Stack,
   Typography,
 } from "@mui/material";
 
 // third party
-import * as Yup from "yup";
 import { Formik } from "formik";
+import * as Yup from "yup";
 
 // project import
+import { AnimateButton } from "components/Extend";
+import { useAppDispatch } from "redux/hooks";
+import { handleLogin } from "redux/modules/user/authenticate/authUserSlice";
 import FirebaseSocial from "./FirebaseSocial";
-import AnimateButton from "../../../../components/@extended/AnimateButton";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { handleLogin } from "../../../../redux/modules/authenticate/authSlice";
+import { toast } from "react-toastify";
 // assets
-import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const AuthLogin = () => {
-  const [checked, setChecked] = React.useState(false);
+  const navigate = useNavigate();
 
+  const [checked, setChecked] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const dispatch = useAppDispatch();
@@ -54,7 +56,18 @@ const AuthLogin = () => {
         Username: data.get("email"),
         Password: data.get("password"),
       })
-    );
+    )
+      .unwrap()
+      .then((data) => {
+        if (data.Code != "L001") {
+          localStorage.setItem("access_token_user", data.token);
+          navigate("/dashboard");
+        } else {
+          toast.error(data.Message, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }
+      });
   };
   return (
     <>
@@ -65,9 +78,7 @@ const AuthLogin = () => {
           submit: null,
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string()
-            .max(255)
-            .required("Username is required"),
+          email: Yup.string().max(255).required("Username is required"),
           password: Yup.string().max(255).required("Password is required"),
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
@@ -96,7 +107,6 @@ const AuthLogin = () => {
                   <InputLabel htmlFor="email-login">Email Address</InputLabel>
                   <OutlinedInput
                     id="email-login"
-                    type="email"
                     value={values.email}
                     name="email"
                     onBlur={handleBlur}
