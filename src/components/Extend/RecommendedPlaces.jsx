@@ -22,9 +22,6 @@ import { GOOGLE_MAP_API } from "config";
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
 const PlaceCard = (props) => {
-  console.log(
-    props.group[0].photos[0].getUrl({ maxWidth: 500, maxHeight: 500 })
-  );
   return (
     <>
       <Box display="flex" justifyContent="space-between">
