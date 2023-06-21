@@ -12,7 +12,7 @@ import "../admin/map.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt, faStar } from "@fortawesome/free-solid-svg-icons";
-
+import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 import { useRef, useState } from "react";
 
 const color = [
@@ -38,7 +38,7 @@ export default function Map({
     lng: parseFloat(passToProps.endLongitude),
   };
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "GOOGLE_MAP_API",
+    googleMapsApiKey: GOOGLE_MAP_API,
     libraries: ["places"],
   });
 
@@ -48,6 +48,10 @@ export default function Map({
     { location: "Quang Nam" },
     { location: "Binh Thuan" },
   ];
+
+  const { placesService } = usePlacesService({
+    apiKey: GOOGLE_MAP_API,
+  });
 
   const restrictions = {
     country: "vn",
@@ -104,6 +108,40 @@ export default function Map({
     setDirectionsResponse(null);
     setDistance("");
     setDuration("");
+  }
+
+  function handleClickMarker(data) {
+    const coor = JSON.stringify(data.latLng);
+    console.log(JSON.parse(coor).lat);
+    console.log(JSON.parse(coor).lng);
+    placesService.nearbySearch(
+      {
+        location: JSON.parse(coor),
+        radius: 500,
+        type: "tourist_attraction",
+      },
+      (results, status) => {
+        console.log(results);
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (let i = 0; i < results.length; i++) {
+            const place = results[i];
+            console.log("Place:", place);
+            // Access other properties of the place here
+
+            if (place.photos && place.photos.length > 0) {
+              const photo = place.photos[0];
+              const photoUrl = photo.getUrl({ maxWidth: 500, maxHeight: 500 });
+              console.log("Photo URL:", photoUrl);
+              // Use the photo URL here
+            }
+          }
+          // Access the details of the place here
+        } else {
+          console.error("Error:", status);
+        }
+      }
+    );
   }
 
   return (
@@ -185,7 +223,6 @@ export default function Map({
             >
               {plans.map((routes, index) => {
                 return routes.tripRoute.map((route, childIndex) => {
-                  console.log(route.longitude !== "");
                   return (
                     <Marker
                       position={{
@@ -196,9 +233,10 @@ export default function Map({
                       icon={
                         "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_" +
                         color[index] +
-                        childIndex +
+                        (childIndex + 1) +
                         ".png"
                       }
+                      onClick={handleClickMarker}
                     />
                   );
                 });

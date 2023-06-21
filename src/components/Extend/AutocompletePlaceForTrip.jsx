@@ -116,6 +116,7 @@ const AutocompletePlaceForTrip = (props) => {
                 childIndex={props.childIndex}
                 hotels={props.hotels}
                 restaurants={props.restaurants}
+                trip={props.trip}
                 attractions={props.attractions}
                 onClickData={props.onClickData}
                 handleClickData={props.handleClickData}
@@ -214,6 +215,7 @@ const AutocompletePlaceForTrip = (props) => {
                 hotels={props.hotels}
                 restaurants={props.restaurants}
                 attractions={props.attractions}
+                trip={props.trip}
                 onClickData={props.onClickData}
                 handleClickData={props.handleClickData}
               />

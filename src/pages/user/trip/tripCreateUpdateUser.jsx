@@ -30,6 +30,9 @@ import { getPlacesDataByGoogleMap } from "api/user/googleMapAPI";
 import { useAppSelector } from "redux/hooks";
 import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
 
+
+import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
+
 const center = { lat: 16.0545, lng: 108.22074 };
 
 dayjs.extend(utc);
@@ -79,6 +82,10 @@ export default function TripCreate() {
   const currentUser = useAppSelector(selectCurrentUser);
   const char = currentUser.name.toString().substring(0, 1).toUpperCase();
 
+  const { placesService } = usePlacesService({
+    apiKey: GOOGLE_MAP_API,
+  });
+
   const [trip, setTrip] = useState({
     tripName: "",
     tripDescription: "",
@@ -118,17 +125,71 @@ export default function TripCreate() {
         } else {
           navigate("/tripList");
         }
+
+        // console.log(coor)
+
+        // placesService.nearbySearch(
+        //   {
+        //     location: coor,
+        //     radius: 5000,
+        //     type: "restaurant",
+        //   },
+        //   (results, status) => {
+        //     // eslint-disable-next-line no-undef
+        //     if (status === google.maps.places.PlacesServiceStatus.OK) {
+        //       setRestaurantList(results);
+        //       // Access the details of the place here
+        //     } else {
+        //       console.error("Error:", status);
+        //     }
+        //   }
+        // );
+
+        // placesService.nearbySearch(
+        //   {
+        //     location: coor,
+        //     radius: 5000,
+        //     type: "hotel",
+        //   },
+        //   (results, status) => {
+        //     // eslint-disable-next-line no-undef
+        //     if (status === google.maps.places.PlacesServiceStatus.OK) {
+        //       setHotelList(results);
+        //       // Access the details of the place here
+        //     } else {
+        //       console.error("Error:", status);
+        //     }
+        //   }
+        // );
+
+        // placesService.nearbySearch(
+        //   {
+        //     location: coor,
+        //     radius: 5000,
+        //     type: "tourist_attraction",
+        //   },
+        //   (results, status) => {
+        //     // eslint-disable-next-line no-undef
+        //     if (status === google.maps.places.PlacesServiceStatus.OK) {
+        //       setAttractionList(results);
+        //       // Access the details of the place here
+        //     } else {
+        //       console.error("Error:", status);
+        //     }
+        //   }
+        // );
+
         //call api
         // getPlacesData("hotels", data.endLatitude, data.endLongitude).then(
         //   (data) => {
         //     setHotelList(data);
         //   }
         // );
-        getPlacesData("restaurants", data.endLatitude, data.endLongitude).then(
-          (data) => {
-            setRestaurantList(data);
-          }
-        );
+        // getPlacesData("restaurants", data.endLatitude, data.endLongitude).then(
+        //   (data) => {
+        //     setRestaurantList(data);
+        //   }
+        // );
         // getPlacesData("attractions", data.endLatitude, data.endLongitude).then(
         //   (data) => {
         //     setAttractionList(data);

@@ -18,8 +18,13 @@ import { useEffect, useState } from "react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Carousel from "react-material-ui-carousel";
+import { GOOGLE_MAP_API } from "config";
+import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
 const PlaceCard = (props) => {
+  console.log(
+    props.group[0].photos[0].getUrl({ maxWidth: 500, maxHeight: 500 })
+  );
   return (
     <>
       <Box display="flex" justifyContent="space-between">
@@ -42,8 +47,8 @@ const PlaceCard = (props) => {
             <CardMedia
               component="img"
               image={
-                item.photo
-                  ? item.photo.images.small.url
+                item.photos
+                  ? item.photos[0].getUrl({ maxWidth: 70, maxHeight: 70 })
                   : "https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg"
               }
               sx={{ width: "30%" }}
@@ -58,11 +63,13 @@ const PlaceCard = (props) => {
                 alignItems="center"
                 marginLeft={1}
               >
-                <Typography>{item.name}</Typography>
+                <Typography>
+                  {item.name}
+                </Typography>
               </Box>
             </CardActionArea>
             <CardActions>
-              <IconButton>
+              <IconButton >
                 <Box
                   width="30px"
                   sx={{
@@ -90,33 +97,101 @@ const RecommendedPlaces = (props) => {
   const [openRestaurants, setOpenRestaurants] = useState(false);
   const [openHotels, setOpenHotels] = useState(false);
   const [openAttractions, setOpenAttractions] = useState(false);
+  const { placesService } = usePlacesService({
+    apiKey: GOOGLE_MAP_API,
+  });
 
   var restaurantsList = props.restaurants;
   var hotelsList = props.hotels;
   var attractionsList = props.attractions;
 
-  const groupedRestaurants = [];
-  for (let i = 0; i < restaurantsList.length; i += 3) {
-    const group = restaurantsList.slice(i, i + 3);
-    groupedRestaurants.push(group);
+  const [groupedRestaurants, setGroupedRestaurants] = useState([]);
+  const [groupedHotels, setGroupedHotels] = useState([]);
+  const [groupedAttractions, setGroupedAttractions] = useState([]);
+
+  const coor = {
+    lat: parseFloat(props.trip.endLatitude),
+    lng: parseFloat(props.trip.endLongitude),
+  };
+  function handleGetRestaurants() {
+    placesService.nearbySearch(
+      {
+        location: coor,
+        radius: 500,
+        type: "restaurant",
+      },
+      (results, status) => {
+        console.log(results);
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          const groups = [];
+          for (let i = 0; i < results.length; i += 3) {
+            const group = results.slice(i, i + 3);
+            groups.push(group);
+          }
+          setGroupedRestaurants(groups);
+          // Access the details of the place here
+        } else {
+          console.error("Error:", status);
+        }
+      }
+    );
   }
-  const groupedHotels = [];
-  for (let i = 0; i < hotelsList.length; i += 3) {
-    const group = hotelsList.slice(i, i + 3);
-    groupedHotels.push(group);
-  }
-  const groupedAttractions = [];
-  for (let i = 0; i < attractionsList.length; i += 3) {
-    const group = attractionsList.slice(i, i + 3);
-    groupedAttractions.push(group);
+  function handleGetHotels() {
+    placesService.nearbySearch(
+      {
+        location: coor,
+        radius: 500,
+        type: "hotel",
+      },
+      (results, status) => {
+        console.log(results);
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          const groups = [];
+          for (let i = 0; i < results.length; i += 3) {
+            const group = results.slice(i, i + 3);
+            groups.push(group);
+          }
+          setGroupedHotels(groups);
+          // Access the details of the place here
+        } else {
+          console.error("Error:", status);
+        }
+      }
+    );
   }
 
-  // console.log(props);
+  function handleGetAttractions() {
+    placesService.nearbySearch(
+      {
+        location: coor,
+        radius: 500,
+        type: "tourist_attraction",
+      },
+      (results, status) => {
+        console.log(results);
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          const groups = [];
+          for (let i = 0; i < results.length; i += 3) {
+            const group = results.slice(i, i + 3);
+            groups.push(group);
+          }
+          setGroupedAttractions(groups);
+          // Access the details of the place here
+        } else {
+          console.error("Error:", status);
+        }
+      }
+    );
+  }
   return (
     <>
       <Box
         sx={{
           margin: 1,
+          marginLeft: 6,
         }}
       >
         <Grid container>
@@ -129,7 +204,7 @@ const RecommendedPlaces = (props) => {
               {open ? <KeyboardArrowDownIcon /> : <KeyboardArrowRightIcon />}
             </IconButton>
           </Grid>
-          <Grid item xs={12} sm={11} pt={0.5}>
+          <Grid item xs={12} sm={5} pt={0.5} sx={{ fontWeight: 700 }}>
             Gợi ý địa điểm
           </Grid>
         </Grid>
@@ -143,7 +218,10 @@ const RecommendedPlaces = (props) => {
             <Grid container>
               <Grid item xs={12} sm={1}>
                 <IconButton
-                  onClick={() => setOpenRestaurants(!openRestaurants)}
+                  onClick={() => {
+                    setOpenRestaurants(!openRestaurants);
+                    handleGetRestaurants();
+                  }}
                   aria-label="expand"
                   size="small"
                 >
@@ -183,7 +261,10 @@ const RecommendedPlaces = (props) => {
             <Grid container>
               <Grid item xs={12} sm={1}>
                 <IconButton
-                  onClick={() => setOpenHotels(!openHotels)}
+                  onClick={() => {
+                    setOpenHotels(!openHotels);
+                    handleGetHotels();
+                  }}
                   aria-label="expand"
                   size="small"
                 >
@@ -223,7 +304,10 @@ const RecommendedPlaces = (props) => {
             <Grid container>
               <Grid item xs={12} sm={1}>
                 <IconButton
-                  onClick={() => setOpenAttractions(!openAttractions)}
+                  onClick={() => {
+                    setOpenAttractions(!openAttractions);
+                    handleGetAttractions();
+                  }}
                   aria-label="expand"
                   size="small"
                 >

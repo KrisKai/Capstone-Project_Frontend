@@ -195,6 +195,8 @@ const Plan = (props) => {
     setPlans(updatedPlans);
   };
 
+  console.log(props.item)
+
   return (
     <Grid container>
       <Grid item xs={12} sm={9}>
@@ -281,6 +283,7 @@ const Plan = (props) => {
                         onClickData={props.onClickData}
                         handleClick={handleClick}
                         handleClickData={handleClickData}
+                        trip={props.item}
                       />
                     );
                   })}
