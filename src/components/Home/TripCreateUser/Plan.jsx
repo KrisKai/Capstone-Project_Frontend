@@ -112,8 +112,10 @@ const Plan = (props) => {
     const coor = JSON.stringify(value.geometry.location);
     const updatedPlans = [...plans];
     updatedPlans[index].tripRoute[childIndex].locationName = value.name;
-    updatedPlans[index].tripRoute[childIndex].longitude = JSON.parse(coor).lng.toString();
-    updatedPlans[index].tripRoute[childIndex].latitude = JSON.parse(coor).lat.toString();
+    updatedPlans[index].tripRoute[childIndex].longitude =
+      JSON.parse(coor).lng.toString();
+    updatedPlans[index].tripRoute[childIndex].latitude =
+      JSON.parse(coor).lat.toString();
     const data = await tripRouteApi.createUser(
       updatedPlans[index].tripRoute[childIndex]
     );
@@ -171,7 +173,6 @@ const Plan = (props) => {
 
   const handleClick = async (index, childIndex) => {
     const updatedPlans = [...plans];
-
     if (childIndex + 1 === updatedPlans[index].tripRoute.length) {
       updatedPlans[index].tripRoute.splice(childIndex, 1);
       const newTripRoute = {
@@ -188,9 +189,11 @@ const Plan = (props) => {
 
       updatedPlans[index].tripRoute.push(newTripRoute);
     } else {
-      await tripRouteApi.deleteUser(
-        updatedPlans[index].tripRoute[childIndex].routeId
-      );
+      // await tripRouteApi
+      //   .deleteUser(updatedPlans[index].tripRoute[childIndex].routeId)
+      //   .then(() => {
+      //     updatedPlans[index].tripRoute.splice(childIndex, 1);
+      //   });
 
       updatedPlans[index].tripRoute.splice(childIndex, 1);
     }
