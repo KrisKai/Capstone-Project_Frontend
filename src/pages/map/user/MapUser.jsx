@@ -12,16 +12,20 @@ import "../admin/map.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faClock,
   faEarthAmericas,
   faMapMarkerAlt,
   faPhone,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
+
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 import { useRef, useState, useEffect } from "react";
 import Google from "assets/images/google_logo.png";
 import GoogleMaps from "assets/images/google_maps_logo.png";
 import TripAdvisor from "assets/images/tripadvisor_logo.png";
+
+import dayjs from "dayjs";
 
 const color = [
   "red",
@@ -36,11 +40,17 @@ const color = [
 ];
 
 export default function Map({
-  getReturnData,
   passToProps,
   selectedData,
   plans,
+  selectedIndex,
 }) {
+  let now = dayjs().locale("vi").format("d");
+  if (now === 0) {
+    now = 6;
+  } else {
+    now -= 1;
+  }
   const center = {
     lat: parseFloat(passToProps.endLatitude),
     lng: parseFloat(passToProps.endLongitude),
@@ -50,12 +60,12 @@ export default function Map({
     libraries: ["places"],
   });
 
-  const waypoints = [
-    { location: "Hue" },
-    { location: "Da Nang" },
-    { location: "Quang Nam" },
-    { location: "Binh Thuan" },
-  ];
+  // const waypoints = [
+  //   { location: "Hue" },
+  //   { location: "Da Nang" },
+  //   { location: "Quang Nam" },
+  //   { location: "Binh Thuan" },
+  // ];
 
   const { placesService } = usePlacesService({
     apiKey: GOOGLE_MAP_API,
@@ -64,6 +74,14 @@ export default function Map({
   const restrictions = {
     country: "vn",
   };
+
+  const [directionsOptions, setDirectionsOptions] = useState({
+    suppressMarkers: true,
+    optimizeWaypoints: true,
+    polylineOptions: {
+      strokeColor: "blue", // Initial color
+    },
+  });
 
   const data = selectedData;
 
@@ -76,53 +94,36 @@ export default function Map({
 
   const markers = useRef([]);
 
-  useEffect(() => {
-    // if (map && plans.length > 0) {
-    //   const waypoints = plans.flatMap((routes) =>
-    //     routes.tripRoute.map((route) => ({
-    //       location: {
-    //         lat: parseFloat(route.latitude),
-    //         lng: parseFloat(route.longitude),
-    //       },
-    //     }))
-    //   );
-    //   calculateRoute(waypoints);
-    // }
-  }, [map, plans]);
+  useEffect(() => {}, [map, plans]);
 
-  async function calculateRoute() {
-    // if (
-    //   locationRef1.current.value === "" ||
-    //   locationRef2.current.value === ""
-    // ) {
-    //   return;
-    // }
+  useEffect(() => {
+    setDirectionsOptions({
+      suppressMarkers: true,
+      optimizeWaypoints: true,
+      polylineOptions: {
+        strokeColor: color[selectedIndex], // Set the desired color here
+      },
+    });
+    if (map && plans.length > 0) {
+      const waypoints = plans[selectedIndex].tripRoute
+        .filter((route) => route.locationName !== "")
+        .map((route) => ({ location: route.locationName }));
+      calculateRoute(waypoints);
+    }
+  }, [selectedIndex]);
+
+  async function calculateRoute(waypoints) {
     const request = {
       origin: waypoints[0].location,
       destination: waypoints[waypoints.length - 1].location,
       waypoints: waypoints.slice(1, -1),
       travelMode: "DRIVING",
+      optimizeWaypoints: true,
     };
     // eslint-disable-next-line no-undef
     const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route(request);
     setDirectionsResponse(results);
-    // setDistance(results.routes[0].legs[0].distance.text);
-    // setDuration(results.routes[0].legs[0].duration.text);
-
-    ///đây là chỗ đưa dữ liệu ra ngoài component cha
-    // const returnData = {
-    //   origin: locationRef1.current.value,
-    //   originLat: results.routes[0].legs[0].start_location.lat(),
-    //   originLng: results.routes[0].legs[0].start_location.lng(),
-    //   destination: locationRef2.current.value,
-    //   destinationLat: results.routes[0].legs[0].end_location.lat(),
-    //   destinationLng: results.routes[0].legs[0].end_location.lng(),
-    //   distance: results.routes[0].legs[0].distance.text,
-    //   duration: results.routes[0].legs[0].duration.text,
-    // };
-    // getReturnData(returnData);
-    // console.log(placeRef.current.map((value) => value.value));
   }
 
   function clearRoute() {
@@ -238,27 +239,63 @@ export default function Map({
                       {data.formatted_address}
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} sm={12} display="flex" alignItems="center">
-                    <FontAwesomeIcon
-                      icon={faPhone}
-                      style={{ marginRight: 7, marginLeft: 2 }}
-                    />
-                    <a
-                      href={`tel:${data.formatted_phone_number}`}
-                      class="text-nowrap"
+                  {data.opening_hours && (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={12}
+                      display="flex"
+                      alignItems="center"
                     >
-                      {data.formatted_phone_number}
-                    </a>
-                  </Grid>
-                  <Grid item xs={12} sm={12} display="flex" alignItems="center">
-                    <FontAwesomeIcon
-                      icon={faEarthAmericas}
-                      style={{ marginRight: 7, marginLeft: 2 }}
-                    />
-                    <a href={`tel:${data.website}`} class="text-nowrap">
-                      {data.website}
-                    </a>
-                  </Grid>
+                      <FontAwesomeIcon
+                        icon={faClock}
+                        style={{ marginRight: 7, marginLeft: 2 }}
+                      />
+                      <Typography sx={{ color: "#6c757d" }}>
+                        {data.opening_hours.weekday_text[now]}
+                      </Typography>
+                    </Grid>
+                  )}
+
+                  {data.formatted_phone_number && (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={12}
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <FontAwesomeIcon
+                        icon={faPhone}
+                        style={{ marginRight: 7, marginLeft: 2 }}
+                      />
+                      <a
+                        href={`tel:${data.formatted_phone_number}`}
+                        class="text-nowrap"
+                      >
+                        {data.formatted_phone_number}
+                      </a>
+                    </Grid>
+                  )}
+
+                  {data.website && (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={12}
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <FontAwesomeIcon
+                        icon={faEarthAmericas}
+                        style={{ marginRight: 7, marginLeft: 2 }}
+                      />
+                      <a href={`tel:${data.website}`} class="text-nowrap">
+                        {data.website}
+                      </a>
+                    </Grid>
+                  )}
+
                   <Grid
                     item
                     xs={12}
@@ -274,7 +311,9 @@ export default function Map({
                   </Grid>
                   <Grid item xs={12} sm={12} display="flex" alignItems="center">
                     <Button
-                      href={`https://www.tripadvisor.com/search?q=${encodeURIComponent(data.name)}`}
+                      href={`https://www.tripadvisor.com/search?q=${encodeURIComponent(
+                        data.name
+                      )}`}
                       target="_blank"
                       variant="outlined"
                       color="secondary"
@@ -295,10 +334,13 @@ export default function Map({
                       TripAdvisor
                     </Button>
                     <Button
-                      href={`https://www.google.com/search?q=${encodeURIComponent(data.name)}`}
+                      href={`https://www.google.com/search?q=${encodeURIComponent(
+                        data.name
+                      )}`}
                       target="_blank"
                       variant="outlined"
-                      color="secondary"sx={{
+                      color="secondary"
+                      sx={{
                         borderRadius: 10,
                         fontWeight: 600,
                         height: "32px",
@@ -331,7 +373,7 @@ export default function Map({
                       Google Maps
                     </Button>
                   </Grid>
-                  <Button onClick={calculateRoute}>test</Button>
+                  <Button onClick={clearRoute}>test</Button>
                 </Grid>
               </Box>
             )}
@@ -374,7 +416,16 @@ export default function Map({
               })}
 
               {directionsResponse && (
-                <DirectionsRenderer directions={directionsResponse} />
+                <DirectionsRenderer
+                  key={
+                    directionsResponse
+                      ? directionsResponse.routes[0].overview_polyline
+                      : "default"
+                  }
+                  directions={directionsResponse}
+                  options={directionsOptions}
+                  map={map}
+                />
               )}
             </GoogleMap>
           </Box>

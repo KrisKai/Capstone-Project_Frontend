@@ -29,6 +29,7 @@ const Plan = (props) => {
           priority: 1,
           showNote: false,
           note: "",
+          placeId: "",
         },
       ],
     },
@@ -52,6 +53,7 @@ const Plan = (props) => {
               priority: 1,
               showNote: false,
               note: "",
+              placeId: "",
             },
           ],
         };
@@ -76,6 +78,7 @@ const Plan = (props) => {
                 priority: 1,
                 showNote: false,
                 note: "",
+                placeId: "",
               };
 
               newPlan.tripRoute.push(newTripRoute);
@@ -116,6 +119,7 @@ const Plan = (props) => {
       JSON.parse(coor).lng.toString();
     updatedPlans[index].tripRoute[childIndex].latitude =
       JSON.parse(coor).lat.toString();
+    updatedPlans[index].tripRoute[childIndex].placeId = value.place_id;
     const data = await tripRouteApi.createUser(
       updatedPlans[index].tripRoute[childIndex]
     );
@@ -130,6 +134,7 @@ const Plan = (props) => {
       priority: 1,
       showNote: false,
       note: "",
+      placeId: "",
     };
 
     updatedPlans[index].tripRoute.push(newTripRoute);
@@ -144,6 +149,7 @@ const Plan = (props) => {
       JSON.parse(coor).lng.toString();
     updatedPlans[index].tripRoute[childIndex].latitude =
       JSON.parse(coor).lat.toString();
+    updatedPlans[index].tripRoute[childIndex].placeId = value.place_id;
     const id = updatedPlans[index].tripRoute[childIndex].priority;
     const data = await tripRouteApi.createUser(
       updatedPlans[index].tripRoute[childIndex]
@@ -159,6 +165,7 @@ const Plan = (props) => {
       priority: id + 1,
       showNote: false,
       note: "",
+      placeId: "",
     };
 
     updatedPlans[index].tripRoute.push(newTripRoute);
@@ -173,29 +180,27 @@ const Plan = (props) => {
 
   const handleClick = async (index, childIndex) => {
     const updatedPlans = [...plans];
+    const newTripRoute = {
+      planDateTime: updatedPlans[index].tripRoute[0].planDateTime,
+      routeId: 0,
+      tripId: props.item.tripId,
+      longitude: "",
+      latitude: "",
+      locationName: "",
+      priority: 1,
+      showNote: false,
+      note: "",
+      placeId: "",
+    };
     if (childIndex + 1 === updatedPlans[index].tripRoute.length) {
       updatedPlans[index].tripRoute.splice(childIndex, 1);
-      const newTripRoute = {
-        planDateTime: updatedPlans[index].tripRoute[0].planDateTime,
-        routeId: 0,
-        tripId: props.item.tripId,
-        longitude: "",
-        latitude: "",
-        locationName: "",
-        priority: 1,
-        showNote: false,
-        note: "",
-      };
-
       updatedPlans[index].tripRoute.push(newTripRoute);
     } else {
-      // await tripRouteApi
-      //   .deleteUser(updatedPlans[index].tripRoute[childIndex].routeId)
-      //   .then(() => {
-      //     updatedPlans[index].tripRoute.splice(childIndex, 1);
-      //   });
-
-      updatedPlans[index].tripRoute.splice(childIndex, 1);
+      await tripRouteApi
+        .deleteUser(updatedPlans[index].tripRoute[childIndex].routeId)
+        .then(() => {
+          updatedPlans[index].tripRoute.splice(childIndex, 1);
+        });
     }
     setPlans(updatedPlans);
   };

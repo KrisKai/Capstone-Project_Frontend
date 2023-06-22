@@ -337,6 +337,7 @@ const RecommendedPlaces = (props) => {
                       childIndex={props.childIndex}
                       group={group}
                       onClickData={props.onClickData}
+                      handleClickData={props.handleClickData}
                     />
                   ))}
                 </Carousel>

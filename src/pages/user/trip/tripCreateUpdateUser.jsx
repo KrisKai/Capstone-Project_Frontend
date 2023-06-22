@@ -1,23 +1,19 @@
-import { Box, Button, Card, FormHelperText, Typography } from "@mui/material";
+import { Box, Button, Card, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
 import { tripApi, userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import MapUser from "pages/map/user/MapUser";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 // import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 import { GOOGLE_MAP_API, PLACE_API } from "config";
 import axios from "axios";
 
 import { styled, useTheme } from "@mui/material/styles";
-import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Preparation from "components/Home/TripCreateUser/Preparation";
 import ElementMaker from "components/Home/TripCreateUser/ElementMakerForTripName";
@@ -25,7 +21,6 @@ import ElementMakerForSDate from "components/Home/TripCreateUser/ElementMakerFor
 import ElementMakerForEDate from "components/Home/TripCreateUser/ElementMakerForEDate";
 import Plan from "components/Home/TripCreateUser/Plan";
 import { getPlacesData } from "api/user/travelAdvisorAPI";
-import { getPlacesDataByGoogleMap } from "api/user/googleMapAPI";
 
 import { useAppSelector } from "redux/hooks";
 import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
@@ -66,6 +61,7 @@ const AppBar = styled(MuiAppBar, {
 export default function TripCreate() {
   const [open, setOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState();
+  const [selectedIndex, setSelectedIndex] = useState();
 
   // show input
   const [showInputTripName, setShowInputTripName] = useState(false);
@@ -158,13 +154,23 @@ export default function TripCreate() {
   const onClickData = (data) => {
     const request = {
       placeId: data.place_id,
-      fields: ['name', 'formatted_address', 'opening_hours', 'website', 'rating', 'photos', 'types', 'user_ratings_total', 'formatted_phone_number', 'url'],
+      fields: [
+        "name",
+        "formatted_address",
+        "opening_hours",
+        "website",
+        "rating",
+        "photos",
+        "types",
+        "user_ratings_total",
+        "formatted_phone_number",
+        "url",
+      ],
     };
-  
+
     placesService.getDetails(request, (place, status) => {
       // eslint-disable-next-line no-undef
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        console.log(place);
         setSelectedPlace(place);
         // Access the detailed place information here
       } else {
@@ -173,21 +179,34 @@ export default function TripCreate() {
     });
   };
 
-  const getReturnData = (returnData) => {
-    setTrip({
-      ...trip,
-      distance: returnData.distance.toString(),
-      endLatitude: returnData.endLatitude.toString(),
-      endLocationName: returnData.endLocationName,
-      endLongitude: returnData.endLongitude.toString(),
-      startLatitude: returnData.startLatitude.toString(),
-      startLocationName: returnData.startLocationName,
-      startLongitude: returnData.startLongitude.toString(),
-    });
-  };
+  const onClickAutocomplete = (index, childIndex) => {
+    const request = {
+      placeId: plans[index].tripRoute[childIndex].placeId,
+      fields: [
+        "name",
+        "formatted_address",
+        "opening_hours",
+        "website",
+        "rating",
+        "photos",
+        "types",
+        "user_ratings_total",
+        "formatted_phone_number",
+        "url",
+      ],
+    };
 
-  const onClickAutocomplete = (index) => {
-    console.log(index);
+    placesService.getDetails(request, (place, status) => {
+      // eslint-disable-next-line no-undef
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        console.log(place);
+        setSelectedPlace(place);
+        setSelectedIndex(index);
+        // Access the detailed place information here
+      } else {
+        console.error("Error:", status);
+      }
+    });
   };
 
   return (
@@ -338,10 +357,10 @@ export default function TripCreate() {
             </Grid>
             <Grid item xs={12} sm={7} paddingLeft={1}>
               <MapUser
-                getReturnData={getReturnData}
                 passToProps={trip}
-                selectedData={selectedPlace}
                 plans={plans}
+                selectedData={selectedPlace}
+                selectedIndex={selectedIndex}
               />
             </Grid>
           </Grid>

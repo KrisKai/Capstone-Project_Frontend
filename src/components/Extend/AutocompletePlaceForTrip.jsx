@@ -84,12 +84,12 @@ const AutocompletePlaceForTrip = (props) => {
                 componentRestrictions: { country: "vn" },
                 types: ["restaurant", "lodging", "tourist_attraction"],
                 bounds: defaultBounds,
-                fields: ["address_components", "geometry", "icon", "name"],
+                fields: ["address_components", "geometry", "name"],
               }}
               defaultValue={props.place.locationName}
               placeholder="Thêm địa điểm"
               onPlaceSelected={handleSelectPlace}
-              onClick={() => props.onClickAutocomplete(props.index)}
+              onClick={() => props.onClickAutocomplete(props.index, props.childIndex)}
             />
           </Grid>
           {!props.place.locationName && (
@@ -211,11 +211,12 @@ const AutocompletePlaceForTrip = (props) => {
                 componentRestrictions: { country: "vn" },
                 types: ["restaurant", "lodging", "tourist_attraction"],
                 bounds: defaultBounds,
-                fields: ["address_components", "geometry", "icon", "name"],
+                fields: ["address_components", "geometry", "name"],
               }}
               defaultValue={props.place.locationName}
               placeholder="Thêm địa điểm"
               onPlaceSelected={handleSelectPlace}
+              onClick={() => props.onClickAutocomplete(props.index, props.childIndex)}
             />
           </Grid>
           <Grid item xs={12} sm={1}></Grid>
