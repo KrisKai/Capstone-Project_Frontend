@@ -11,10 +11,17 @@ import { GOOGLE_MAP_API } from "config";
 import "../admin/map.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt, faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEarthAmericas,
+  faMapMarkerAlt,
+  faPhone,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 import { useRef, useState, useEffect } from "react";
 import Google from "assets/images/google_logo.png";
+import GoogleMaps from "assets/images/google_maps_logo.png";
+import TripAdvisor from "assets/images/tripadvisor_logo.png";
 
 const color = [
   "red",
@@ -79,7 +86,6 @@ export default function Map({
     //       },
     //     }))
     //   );
-
     //   calculateRoute(waypoints);
     // }
   }, [map, plans]);
@@ -211,7 +217,7 @@ export default function Map({
                     >
                       {data.rating}
                     </Typography>
-                    <Typography marginTop={0.5}>
+                    <Typography marginTop={0.5} sx={{ color: "#6c757d" }}>
                       ({data.user_ratings_total})
                     </Typography>
 
@@ -228,9 +234,104 @@ export default function Map({
                       icon={faMapMarkerAlt}
                       style={{ marginRight: 9, marginLeft: 2 }}
                     />
-                    <Typography>{data.vicinity}</Typography>
-                    <Button onClick={calculateRoute}>test</Button>
+                    <Typography sx={{ color: "#6c757d" }}>
+                      {data.formatted_address}
+                    </Typography>
                   </Grid>
+                  <Grid item xs={12} sm={12} display="flex" alignItems="center">
+                    <FontAwesomeIcon
+                      icon={faPhone}
+                      style={{ marginRight: 7, marginLeft: 2 }}
+                    />
+                    <a
+                      href={`tel:${data.formatted_phone_number}`}
+                      class="text-nowrap"
+                    >
+                      {data.formatted_phone_number}
+                    </a>
+                  </Grid>
+                  <Grid item xs={12} sm={12} display="flex" alignItems="center">
+                    <FontAwesomeIcon
+                      icon={faEarthAmericas}
+                      style={{ marginRight: 7, marginLeft: 2 }}
+                    />
+                    <a href={`tel:${data.website}`} class="text-nowrap">
+                      {data.website}
+                    </a>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    display="flex"
+                    alignItems="center"
+                    marginTop={2}
+                    marginBottom={1}
+                  >
+                    <Typography sx={{ color: "#6c757d", fontWeight: 700 }}>
+                      Truy cập:
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={12} display="flex" alignItems="center">
+                    <Button
+                      href={`https://www.tripadvisor.com/search?q=${encodeURIComponent(data.name)}`}
+                      target="_blank"
+                      variant="outlined"
+                      color="secondary"
+                      sx={{
+                        borderRadius: 10,
+                        fontWeight: 600,
+                        height: "32px",
+                        marginRight: 2,
+                      }}
+                    >
+                      <img
+                        alt=""
+                        src={TripAdvisor}
+                        width="14"
+                        height="14"
+                        class="mx-1"
+                      ></img>{" "}
+                      TripAdvisor
+                    </Button>
+                    <Button
+                      href={`https://www.google.com/search?q=${encodeURIComponent(data.name)}`}
+                      target="_blank"
+                      variant="outlined"
+                      color="secondary"sx={{
+                        borderRadius: 10,
+                        fontWeight: 600,
+                        height: "32px",
+                        marginRight: 2,
+                      }}
+                    >
+                      <img
+                        alt=""
+                        src={Google}
+                        width="14"
+                        height="14"
+                        class="mx-1"
+                      ></img>{" "}
+                      Google
+                    </Button>
+                    <Button
+                      href={data.url}
+                      target="_blank"
+                      variant="outlined"
+                      color="secondary"
+                      sx={{ borderRadius: 10, fontWeight: 600, height: "32px" }}
+                    >
+                      <img
+                        alt=""
+                        src={GoogleMaps}
+                        width="14"
+                        height="14"
+                        class="mx-1"
+                      ></img>{" "}
+                      Google Maps
+                    </Button>
+                  </Grid>
+                  <Button onClick={calculateRoute}>test</Button>
                 </Grid>
               </Box>
             )}
@@ -248,23 +349,27 @@ export default function Map({
             >
               {plans.map((routes, index) => {
                 return routes.tripRoute.map((route, childIndex) => {
-                  return (
-                    <Marker
-                      position={{
-                        lat: parseFloat(route.latitude),
-                        lng: parseFloat(route.longitude),
-                      }}
-                      map={map}
-                      icon={
-                        "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_" +
-                        color[index] +
-                        (childIndex + 1) +
-                        ".png"
-                      }
-                      onClick={handleClickMarker}
-                      ref={(marker) => markers.current.push(marker)}
-                    />
-                  );
+                  if (route.locationName !== "") {
+                    return (
+                      <Marker
+                        position={{
+                          lat: parseFloat(route.latitude),
+                          lng: parseFloat(route.longitude),
+                        }}
+                        map={map}
+                        icon={
+                          "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_" +
+                          color[index] +
+                          (childIndex + 1) +
+                          ".png"
+                        }
+                        onClick={handleClickMarker}
+                        ref={(marker) => markers.current.push(marker)}
+                      />
+                    );
+                  } else {
+                    return null; // Render nothing if locationName is empty
+                  }
                 });
               })}
 

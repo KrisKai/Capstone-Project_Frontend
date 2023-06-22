@@ -30,7 +30,6 @@ import { getPlacesDataByGoogleMap } from "api/user/googleMapAPI";
 import { useAppSelector } from "redux/hooks";
 import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
 
-
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
 dayjs.extend(utc);
@@ -106,9 +105,6 @@ export default function TripCreate() {
     listOfDateTime: [],
   });
   const [plans, setPlans] = useState([]);
-  const [restaurantList, setRestaurantList] = useState([]);
-  const [hotelList, setHotelList] = useState([]);
-  const [attractionList, setAttractionList] = useState([]);
 
   useEffect(() => {
     // IFFE
@@ -155,39 +151,26 @@ export default function TripCreate() {
     })();
   }, []);
 
-  const getLocationData = (data) => {
-    const type = "restaurant";
-    var url =
-      "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
-      trip.endLatitude +
-      "%2C" +
-      trip.endLatitude +
-      "&radius=1500&type=" +
-      type +
-      "&key=" +
-      GOOGLE_MAP_API;
-    var config = {
-      method: "get",
-      url: url,
-      headers: {},
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
   const getPlanData = (plan) => {
     setPlans(plan);
   };
 
   const onClickData = (data) => {
-    console.log(data);
-    setSelectedPlace(data);
+    const request = {
+      placeId: data.place_id,
+      fields: ['name', 'formatted_address', 'opening_hours', 'website', 'rating', 'photos', 'types', 'user_ratings_total', 'formatted_phone_number', 'url'],
+    };
+  
+    placesService.getDetails(request, (place, status) => {
+      // eslint-disable-next-line no-undef
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        console.log(place);
+        setSelectedPlace(place);
+        // Access the detailed place information here
+      } else {
+        console.error("Error:", status);
+      }
+    });
   };
 
   const getReturnData = (returnData) => {
@@ -201,6 +184,10 @@ export default function TripCreate() {
       startLocationName: returnData.startLocationName,
       startLongitude: returnData.startLongitude.toString(),
     });
+  };
+
+  const onClickAutocomplete = (index) => {
+    console.log(index);
   };
 
   return (
@@ -341,11 +328,9 @@ export default function TripCreate() {
                   <Grid item xs={12}>
                     <Plan
                       item={trip}
-                      hotels={hotelList}
-                      restaurants={restaurantList}
-                      attractions={attractionList}
                       onClickData={onClickData}
                       getPlanData={getPlanData}
+                      onClickAutocomplete={onClickAutocomplete}
                     />
                   </Grid>
                 </Grid>

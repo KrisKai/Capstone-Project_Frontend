@@ -98,10 +98,6 @@ const RecommendedPlaces = (props) => {
     apiKey: GOOGLE_MAP_API,
   });
 
-  var restaurantsList = props.restaurants;
-  var hotelsList = props.hotels;
-  var attractionsList = props.attractions;
-
   const [groupedRestaurants, setGroupedRestaurants] = useState([]);
   const [groupedHotels, setGroupedHotels] = useState([]);
   const [groupedAttractions, setGroupedAttractions] = useState([]);
@@ -116,6 +112,7 @@ const RecommendedPlaces = (props) => {
         location: coor,
         radius: 5000,
         type: "restaurant",
+        fields: ["name", "formatted_address", "price_level"],
       },
       (results, status) => {
         console.log(results);

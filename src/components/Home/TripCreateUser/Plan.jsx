@@ -241,6 +241,7 @@ const Plan = (props) => {
         {plans.map((plan, index) => {
           return (
             <Box
+              key={index}
               sx={{
                 minWidth: 300,
                 marginBottom: 1,
@@ -279,16 +280,14 @@ const Plan = (props) => {
                         index={index}
                         childIndex={childIndex}
                         place={place}
+                        trip={props.item}
                         onSelect={onSelect}
                         handleShowNote={handleShowNote}
                         onChangeInput={onChangeInput}
-                        hotels={props.hotels}
-                        restaurants={props.restaurants}
-                        attractions={props.attractions}
-                        onClickData={props.onClickData}
                         handleClick={handleClick}
                         handleClickData={handleClickData}
-                        trip={props.item}
+                        onClickAutocomplete={props.onClickAutocomplete}
+                        onClickData={props.onClickData}
                       />
                     );
                   })}

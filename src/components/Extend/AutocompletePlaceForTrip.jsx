@@ -47,10 +47,8 @@ const AutocompletePlaceForTrip = (props) => {
 
   useEffect(() => {
     // Update component when props.place changes
-    // You can add additional logic here if needed
-    console.log(props.place);
     if (props.place.locationName) {
-      autocompleteRef.current.value = props.place.locationName; // Set an empty object to reset the value
+      autocompleteRef.current.value = props.place.locationName;
     } else {
       autocompleteRef.current.value = "";
     }
@@ -91,6 +89,7 @@ const AutocompletePlaceForTrip = (props) => {
               defaultValue={props.place.locationName}
               placeholder="Thêm địa điểm"
               onPlaceSelected={handleSelectPlace}
+              onClick={() => props.onClickAutocomplete(props.index)}
             />
           </Grid>
           {!props.place.locationName && (
@@ -129,10 +128,7 @@ const AutocompletePlaceForTrip = (props) => {
               <RecommendedPlaces
                 index={props.index}
                 childIndex={props.childIndex}
-                hotels={props.hotels}
-                restaurants={props.restaurants}
                 trip={props.trip}
-                attractions={props.attractions}
                 onClickData={props.onClickData}
                 handleClickData={handleClickData}
               />
@@ -228,9 +224,6 @@ const AutocompletePlaceForTrip = (props) => {
               <RecommendedPlaces
                 index={props.index}
                 childIndex={props.childIndex}
-                hotels={props.hotels}
-                restaurants={props.restaurants}
-                attractions={props.attractions}
                 trip={props.trip}
                 onClickData={props.onClickData}
                 handleClickData={handleClickData}
