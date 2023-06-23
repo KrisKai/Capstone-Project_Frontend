@@ -37,7 +37,7 @@ const Header = () => {
         padding: 10,
       }}
     >
-      <Container
+      {/* <Container
         sx={{
           filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
           height: "100%",
@@ -46,7 +46,7 @@ const Header = () => {
           backgroundSize: "cover",
           paddingY: 4,
         }}
-      >
+      > */}
         <Grid
           container
           sx={{ display: "flex", justifyContent: "space-between" }}
@@ -152,7 +152,7 @@ const Header = () => {
             </Button>
           </Box>
         </Container>
-      </Container>
+      {/* </Container> */}
     </Box>
   );
 };

@@ -108,6 +108,8 @@ const HistoryCard = (props) => {
             src="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
             style={{ width: "100%" }}
           />
+        </CardActionArea>
+        <CardActionArea>
           <CardContent>
             <Typography
               variant="h5"
@@ -116,6 +118,7 @@ const HistoryCard = (props) => {
             >
               Chuyến đi tới {props.item.endLocationName}
             </Typography>
+
             <Box display="flex" alignItems="center" gap={2} mt={2}>
               <Box
                 width="25px"
@@ -140,7 +143,7 @@ const HistoryCard = (props) => {
                 <Button
                   sx={{
                     right: 0,
-                    marginLeft: 4,
+                    marginLeft: 12,
                   }}
                   variant="outlined"
                   onClick={openFeedback}

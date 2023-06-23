@@ -3,11 +3,12 @@ import Image1 from "assets/images/unsplash_1.png";
 import Image2 from "assets/images/unsplash_2.png";
 import Image3 from "assets/images/unsplash_3.png";
 import Image4 from "assets/images/unsplash_4.png";
+import Image5 from "assets/images/TrangAn-unsplash.jpg";
 import { Carousel } from "components/Extend";
 
-const list = [Image1, Image2, Image3, Image4];
+const list = [Image1, Image2, Image3, Image4, Image5];
 
-const RateCard = (props) => {
+const ExploreCard = (props) => {
   return (
     <Card sx={{ minWidth: "295px", minHeight: "200px" }}>
       <CardMedia image={props.data} sx={{ height: "100%" }}></CardMedia>
@@ -28,7 +29,7 @@ const Explore = () => {
       </Box>
       <Carousel>
         {list.map((data, idx) => {
-          return <RateCard key={idx} data={data} />;
+          return <ExploreCard key={idx} data={data} />;
         })}
       </Carousel>
     </Container>
