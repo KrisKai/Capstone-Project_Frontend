@@ -51,7 +51,9 @@ const FormCreateTrip = () => {
           borderRadius="5px"
         >
           <Box display="flex" flexDirection="column" alignItems="center">
-            <Typography variant="h2">Tạo hành trình mới</Typography>
+            <Typography variant="h2" sx={{ fontSize: 36 }}>
+              Tạo hành trình mới
+            </Typography>
             <Box width="60%" border="1px solid black" mt={1}></Box>
           </Box>
           <Box mt={2}>
@@ -119,6 +121,7 @@ const FormCreateTrip = () => {
                     padding: "10px 30px",
                     fontSize: "20px",
                     backgroundColor: "#168843",
+                    borderRadius: 80,
                   }}
                   onClick={() => handleSubmit()}
                 >

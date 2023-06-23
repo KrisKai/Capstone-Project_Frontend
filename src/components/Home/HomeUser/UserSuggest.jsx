@@ -6,12 +6,10 @@ const UserSuggest = () => {
     <Box width="100%">
       <Box display="flex" alignItems="center" gap={5} width="100%">
         <Box width="30%">
-          <Typography variant="h2" textTransform="uppercase">
-            Gợi ý chuyến đi
+          <Typography variant="h2" marginLeft={10}>
+            Gợi ý địa điểm
           </Typography>
-          <Typography variant="h5" textTransform="uppercase">
-            Các địa điểm nổi tiếng
-          </Typography>
+          <Box width="50%" border="1px solid black" mt={1} marginLeft={10}></Box>
         </Box>
         <Box width="70%">
           <Box sx={{ backgroundColor: "#D1D1D1" }} width="100%">

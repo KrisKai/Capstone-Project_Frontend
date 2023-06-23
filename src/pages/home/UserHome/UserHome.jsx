@@ -11,7 +11,7 @@ const HomeUser = () => {
   return (
     <Box>
       <UserHeader />
-      <Container>
+      <Box sx={{ paddingLeft:"15%", paddingRight:"15%" }}>
         <Box mt={10}>
           <UserSuggest />
         </Box>
@@ -21,7 +21,7 @@ const HomeUser = () => {
         <Box mt={10}>
           <FormCreateTrip />
         </Box>
-      </Container>
+      </Box>
       <Box mt={10}>
         <Footer />
       </Box>

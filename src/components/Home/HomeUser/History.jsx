@@ -4,8 +4,7 @@ import {
   Card,
   CardActionArea,
   CardContent,
-  CardMedia,
-  Container,
+  Grid,
   Rating,
   Typography,
 } from "@mui/material";
@@ -23,6 +22,8 @@ import { useAppSelector } from "redux/hooks";
 import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
 import { toast } from "react-toastify";
 import userFeedbackApi from "api/user/feedback/userFeedbackApi";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 const HistoryCard = (props) => {
   const currentUser = useAppSelector(selectCurrentUser);
@@ -37,6 +38,7 @@ const HistoryCard = (props) => {
     tripId: props.item.tripId,
     userId: currentUser.userId,
   });
+
   const gotoTrip = (id) => {
     navigate(`/tripUpdate/${id}`);
   };
@@ -71,77 +73,85 @@ const HistoryCard = (props) => {
     }
   };
   return (
-    <Card sx={{ width: "370px", height: "400px" }}>
-      <CardActionArea onClick={() => gotoTrip(props.item.tripId)}>
-        <Button
-          sx={{
-            alignSelf: "flex-end",
-            marginTop: 0,
-            position: "absolute",
-            right: 0,
-            width: "15px",
-            minWidth: "140px",
-          }}
-          variant="contained"
-          disableElevation
-          color="error"
-        >
-          {props.item.tripStatus === "ACTIVE" && "Đang hoạt động"}
-          {props.item.tripStatus === "CLOSED" && "Hết hạn"}
-        </Button>
-        <Box
-          sx={{
-            backgroundImage: `url(https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60)`,
-          }}
-        ></Box>
-        <img
-          src="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
-          style={{ width: "100%" }}
-        />
-      </CardActionArea>
-      <CardActionArea>
-        <CardContent>
-          <Typography
-            variant="h5"
-            component="div"
-            onClick={() => gotoTrip(props.item.tripId)}
+    <>
+      <Card
+        sx={{
+          width: "400px",
+          height: "450px",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <CardActionArea onClick={() => gotoTrip(props.item.tripId)}>
+          <Button
+            sx={{
+              alignSelf: "flex-end",
+              marginTop: 0,
+              position: "absolute",
+              right: 0,
+              width: "15px",
+              minWidth: "140px",
+            }}
+            variant="contained"
+            disableElevation
+            color="error"
           >
-            Chuyến đi tới {props.item.endLocationName}
-          </Typography>
-          <Box display="flex" alignItems="center" gap={2} mt={2}>
-            <Box
-              width="25px"
-              sx={{
-                aspectRatio: "1/1",
-                backgroundColor: "black",
-                color: "white",
-              }}
-              display="flex"
-              alignItems=" center"
-              justifyContent="center"
-              border="1px solid black"
-              borderRadius="50%"
+            {props.item.tripStatus === "ACTIVE" && "Đang hoạt động"}
+            {props.item.tripStatus === "CLOSED" && "Hết hạn"}
+          </Button>
+          <Box
+            sx={{
+              backgroundImage: `url(https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60)`,
+            }}
+          ></Box>
+          <img
+            src="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
+            style={{ width: "100%" }}
+          />
+          <CardContent>
+            <Typography
+              variant="h5"
+              component="div"
+              onClick={() => gotoTrip(props.item.tripId)}
             >
-              <Typography>{char}</Typography>
-            </Box>
-            <Typography onClick={() => gotoTrip(props.item.tripId)}>
-              {props.item.estimateStartDateStr} -{" "}
-              {props.item.estimateEndDateStr}
+              Chuyến đi tới {props.item.endLocationName}
             </Typography>
-            {props.item.tripStatus === "CLOSED" && (
-              <Button
+            <Box display="flex" alignItems="center" gap={2} mt={2}>
+              <Box
+                width="25px"
                 sx={{
-                  right: 0,
+                  aspectRatio: "1/1",
+                  backgroundColor: "black",
+                  color: "white",
                 }}
-                variant="outlined"
-                onClick={openFeedback}
+                display="flex"
+                alignItems=" center"
+                justifyContent="center"
+                border="1px solid black"
+                borderRadius="50%"
               >
-                Đánh giá
-              </Button>
-            )}
-          </Box>
-        </CardContent>
-      </CardActionArea>
+                <Typography>{char}</Typography>
+              </Box>
+              <Typography onClick={() => gotoTrip(props.item.tripId)}>
+                {props.item.estimateStartDateStr} -{" "}
+                {props.item.estimateEndDateStr}
+              </Typography>
+              {props.item.tripStatus === "CLOSED" && (
+                <Button
+                  sx={{
+                    right: 0,
+                    marginLeft: 4,
+                  }}
+                  variant="outlined"
+                  onClick={openFeedback}
+                >
+                  Đánh giá
+                </Button>
+              )}
+            </Box>
+          </CardContent>
+        </CardActionArea>
+      </Card>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -191,7 +201,7 @@ const HistoryCard = (props) => {
           <Button onClick={handleSudmit}>Xác nhận</Button>
         </DialogActions>
       </Dialog>
-    </Card>
+    </>
   );
 };
 
@@ -213,7 +223,7 @@ const History = () => {
       },
     ],
   ]);
-  console.log(history);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     // IFFE
@@ -230,39 +240,81 @@ const History = () => {
           setHistory(groupedTrips);
         }
       } catch (error) {
-        console.log("Failed to fetch feedback", error);
+        console.log("Failed to fetch trip", error);
       }
     })();
   }, []);
+  const goToNextSlide = () => {
+    setActiveIndex((prevIndex) => (prevIndex + 1) % history.length);
+  };
+
+  const goToPrevSlide = () => {
+    setActiveIndex((prevIndex) =>
+      prevIndex === 0 ? history.length - 1 : prevIndex - 1
+    );
+  };
 
   return (
-    <Container>
+    <>
       <Box display="flex" justifyContent="center" marginBottom={2}>
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography variant="h2">Chuyến đi của bạn</Typography>
           <Box width="60%" border="1px solid black" mt={1}></Box>
         </Box>
       </Box>
-      <Carousel
-        sx={{
-          height: "450px",
-        }}
-      >
-        {history.map((slide, index) => {
-          console.log(slide);
-          return (
-            <>
-              <Box display="flex" justifyContent="space-between" key={index}>
-                {slide.map((item, childIndex) => {
-                  console.log(item);
-                  return <HistoryCard key={childIndex} item={item} />;
-                })}
-              </Box>
-            </>
-          );
-        })}
-      </Carousel>
-    </Container>
+      <Grid container>
+        <Grid item sx={12} sm={0.5} marginTop="220px">
+          <Button
+            onClick={goToPrevSlide}
+            sx={{
+              width: "45px",
+              minWidth: "45px",
+              padding: "0",
+            }}
+          >
+            <ArrowBackIosNewIcon sx={{ width: "100%" }} />
+          </Button>
+        </Grid>
+        <Grid item sx={12} sm={11}>
+          <Carousel
+            sx={{
+              height: "500px",
+            }}
+            index={activeIndex}
+            autoPlay={false}
+            navButtonsAlwaysInvisible={true}
+          >
+            {history.map((slide, index) => {
+              return (
+                <>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    key={index}
+                  >
+                    {slide.map((item, childIndex) => {
+                      return <HistoryCard key={childIndex} item={item} />;
+                    })}
+                  </Box>
+                </>
+              );
+            })}
+          </Carousel>
+        </Grid>
+        <Grid item sx={12} sm={0.5} marginTop="220px">
+          <Button
+            onClick={goToNextSlide}
+            sx={{
+              width: "45px",
+              minWidth: "45px",
+              padding: "0",
+            }}
+          >
+            <ArrowForwardIosIcon sx={{ width: "100%" }} />
+          </Button>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 
