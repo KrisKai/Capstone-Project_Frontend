@@ -52,7 +52,7 @@ const AutocompletePlaceForTrip = (props) => {
     } else {
       autocompleteRef.current.value = "";
     }
-  }, [props.place]);
+  }, [props.place.locationName]);
   return (
     <>
       {!props.place.showNote && (

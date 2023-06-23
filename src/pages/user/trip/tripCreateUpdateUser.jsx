@@ -63,6 +63,7 @@ export default function TripCreate() {
   const [selectedPlace, setSelectedPlace] = useState();
   const [selectedIndex, setSelectedIndex] = useState();
   const [placeStatus, setPlaceStatus] = useState();
+  const [placeData, setPlaceData] = useState();
 
   // show input
   const [showInputTripName, setShowInputTripName] = useState(false);
@@ -194,13 +195,15 @@ export default function TripCreate() {
         "user_ratings_total",
         "formatted_phone_number",
         "url",
+        "geometry",
+        "place_id",
       ],
     };
 
     placesService.getDetails(request, (place, status) => {
       // eslint-disable-next-line no-undef
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        console.log(place);
+        // console.log(place);
         setSelectedPlace(place);
         setSelectedIndex(index);
         setPlaceStatus(status);
@@ -225,13 +228,15 @@ export default function TripCreate() {
         "user_ratings_total",
         "formatted_phone_number",
         "url",
+        "geometry",
+        "place_id",
       ],
     };
 
     placesService.getDetails(request, (place, status) => {
       // eslint-disable-next-line no-undef
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        console.log(place);
+        // console.log(place);
         setSelectedPlace(place);
         setSelectedIndex(index);
         // Access the detailed place information here
@@ -242,6 +247,10 @@ export default function TripCreate() {
 
     setPlaceStatus(status);
   };
+
+  function handleAddPlaces(selectedIndex, data) {
+    setPlaceData(data);
+  }
 
   return (
     <>
@@ -381,10 +390,14 @@ export default function TripCreate() {
                   <Grid item xs={12}>
                     <Plan
                       item={trip}
+                      placeData={placeData}
+                      selectedIndex={selectedIndex}
+                      placeStatus={placeStatus}
                       onClickData={onClickData}
                       getPlanData={getPlanData}
                       onClickAutocomplete={onClickAutocomplete}
                       handleClickData={handleClickData}
+                      setPlaceStatus={setPlaceStatus}
                     />
                   </Grid>
                 </Grid>
@@ -397,6 +410,7 @@ export default function TripCreate() {
                 selectedData={selectedPlace}
                 selectedIndex={selectedIndex}
                 placeStatus={placeStatus}
+                handleAddPlaces={handleAddPlaces}
               />
             </Grid>
           </Grid>

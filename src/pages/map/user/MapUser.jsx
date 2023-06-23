@@ -46,6 +46,7 @@ export default function Map({
   plans,
   selectedIndex,
   placeStatus,
+  handleAddPlaces,
 }) {
   let now = dayjs().locale("vi").format("d");
   if (now === 0) {
@@ -134,6 +135,10 @@ export default function Map({
     setDuration("");
   }
 
+  function handleAddPlace(data) {
+    handleAddPlaces(selectedIndex, data);
+  }
+
   function handleClickMarker(data) {
     const coor = JSON.stringify(data.latLng);
     placesService.nearbySearch(
@@ -211,10 +216,6 @@ export default function Map({
                   <Grid item xs={12} sm={12} display="flex" alignItems="center">
                     {placeStatus ? (
                       <Button
-                        href={`https://www.tripadvisor.com/search?q=${encodeURIComponent(
-                          data.name
-                        )}`}
-                        target="_blank"
                         variant="outlined"
                         sx={{
                           borderRadius: 10,
@@ -237,10 +238,6 @@ export default function Map({
                       </Button>
                     ) : (
                       <Button
-                        href={`https://www.tripadvisor.com/search?q=${encodeURIComponent(
-                          data.name
-                        )}`}
-                        target="_blank"
                         variant="outlined"
                         sx={{
                           borderRadius: 10,
@@ -251,6 +248,7 @@ export default function Map({
                           color: "white",
                           border: "none",
                         }}
+                        onClick={() => handleAddPlace(data)}
                       >
                         <FontAwesomeIcon icon={faBookmark} />{" "}
                         <Typography
