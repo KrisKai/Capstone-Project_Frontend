@@ -59,18 +59,18 @@ const FirebaseSocial = () => {
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
         cookiePolicy={"single_host_origin"}
-        // render={(renderProps) => (
-        //   <Button
-        //     variant="outlined"
-        //     color="secondary"
-        //     fullWidth={!matchDownSM}
-        //     startIcon={<img src={Google} alt="Google" />}
-        //     // onClick={googleHandler}
-        //     onClick={renderProps.onClick}
-        //   >
-        //     {!matchDownSM && "Google"}
-        //   </Button>
-        // )}
+        render={(renderProps) => (
+          <Button
+            variant="outlined"
+            color="secondary"
+            fullWidth={!matchDownSM}
+            startIcon={<img src={Google} alt="Google" />}
+            // onClick={googleHandler}
+            onClick={renderProps.onClick}
+          >
+            {!matchDownSM && "Google"}
+          </Button>
+        )}
       />
 
       <Button
