@@ -167,7 +167,10 @@ export default function TripCreate() {
         "user_ratings_total",
         "formatted_phone_number",
         "url",
+        "geometry",
+        "place_id",
       ],
+      language: "vi",
     };
 
     placesService.getDetails(request, (place, status) => {
@@ -198,6 +201,7 @@ export default function TripCreate() {
         "geometry",
         "place_id",
       ],
+      language: "vi",
     };
 
     placesService.getDetails(request, (place, status) => {
@@ -231,6 +235,7 @@ export default function TripCreate() {
         "geometry",
         "place_id",
       ],
+      language: "vi",
     };
 
     placesService.getDetails(request, (place, status) => {

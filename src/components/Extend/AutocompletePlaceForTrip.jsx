@@ -25,6 +25,7 @@ const AutocompletePlaceForTrip = (props) => {
   };
 
   const handleSelectPlace = (place) => {
+    console.log(place);
     onSelect(props.index, props.childIndex, place);
   };
 
@@ -84,12 +85,15 @@ const AutocompletePlaceForTrip = (props) => {
                 componentRestrictions: { country: "vn" },
                 types: ["restaurant", "lodging", "tourist_attraction"],
                 bounds: defaultBounds,
-                fields: ["address_components", "geometry", "name"],
+                fields: ["address_components", "geometry", "name", "place_id"],
               }}
               defaultValue={props.place.locationName}
               placeholder="Thêm địa điểm"
               onPlaceSelected={handleSelectPlace}
-              onClick={() => props.onClickAutocomplete(props.index, props.childIndex)}
+              onClick={() =>
+                props.onClickAutocomplete(props.index, props.childIndex)
+              }
+              language="vi"
             />
           </Grid>
           {!props.place.locationName && (
@@ -211,12 +215,15 @@ const AutocompletePlaceForTrip = (props) => {
                 componentRestrictions: { country: "vn" },
                 types: ["restaurant", "lodging", "tourist_attraction"],
                 bounds: defaultBounds,
-                fields: ["address_components", "geometry", "name"],
+                fields: ["address_components", "geometry", "name", "place_id"],
               }}
               defaultValue={props.place.locationName}
               placeholder="Thêm địa điểm"
               onPlaceSelected={handleSelectPlace}
-              onClick={() => props.onClickAutocomplete(props.index, props.childIndex)}
+              onClick={() =>
+                props.onClickAutocomplete(props.index, props.childIndex)
+              }
+              language="vi"
             />
           </Grid>
           <Grid item xs={12} sm={1}></Grid>

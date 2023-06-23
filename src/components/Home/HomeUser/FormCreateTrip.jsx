@@ -70,6 +70,7 @@ const FormCreateTrip = () => {
                     types: ["geocode", "establishment"],
                     componentRestrictions: { country: "vn" },
                   }}
+                  language="vi"
                 />
               </Box>
               <Box display="flex" gap={2}>
