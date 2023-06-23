@@ -41,7 +41,7 @@ const AutocompletePlaceForTrip = (props) => {
   };
 
   const handleClickData = (index, childIndex, value) => {
-    autocompleteRef.current.value = value.name;
+    // autocompleteRef.current.value = value.name;
     props.handleClickData(index, childIndex, value);
   };
 

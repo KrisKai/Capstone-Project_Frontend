@@ -12,6 +12,7 @@ import "../admin/map.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faBookmark,
   faClock,
   faEarthAmericas,
   faMapMarkerAlt,
@@ -44,6 +45,7 @@ export default function Map({
   selectedData,
   plans,
   selectedIndex,
+  placeStatus,
 }) {
   let now = dayjs().locale("vi").format("d");
   if (now === 0) {
@@ -206,6 +208,62 @@ export default function Map({
                       }}
                     />
                   </Grid>
+                  <Grid item xs={12} sm={12} display="flex" alignItems="center">
+                    {placeStatus ? (
+                      <Button
+                        href={`https://www.tripadvisor.com/search?q=${encodeURIComponent(
+                          data.name
+                        )}`}
+                        target="_blank"
+                        variant="outlined"
+                        sx={{
+                          borderRadius: 10,
+                          fontWeight: 600,
+                          height: "32px",
+                          marginRight: 2,
+                          backgroundColor: "#f3f4f5",
+                          color: "#6c757d",
+                          border: "none",
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faBookmark} />{" "}
+                        <Typography
+                          marginTop={0.5}
+                          marginLeft={1}
+                          sx={{ fontWeight: 600 }}
+                        >
+                          Đã thêm
+                        </Typography>
+                      </Button>
+                    ) : (
+                      <Button
+                        href={`https://www.tripadvisor.com/search?q=${encodeURIComponent(
+                          data.name
+                        )}`}
+                        target="_blank"
+                        variant="outlined"
+                        sx={{
+                          borderRadius: 10,
+                          fontWeight: 600,
+                          height: "32px",
+                          marginRight: 2,
+                          backgroundColor: "#168843",
+                          color: "white",
+                          border: "none",
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faBookmark} />{" "}
+                        <Typography
+                          marginTop={0.5}
+                          marginLeft={1}
+                          sx={{ fontWeight: 600 }}
+                        >
+                          Thêm vào
+                        </Typography>
+                      </Button>
+                    )}
+                  </Grid>
+
                   <Grid item xs={12} sm={12} display="flex" alignItems="center">
                     <FontAwesomeIcon
                       icon={faStar}

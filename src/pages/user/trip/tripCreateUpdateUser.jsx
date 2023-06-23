@@ -62,6 +62,7 @@ export default function TripCreate() {
   const [open, setOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState();
   const [selectedIndex, setSelectedIndex] = useState();
+  const [placeStatus, setPlaceStatus] = useState();
 
   // show input
   const [showInputTripName, setShowInputTripName] = useState(false);
@@ -202,11 +203,44 @@ export default function TripCreate() {
         console.log(place);
         setSelectedPlace(place);
         setSelectedIndex(index);
+        setPlaceStatus(status);
         // Access the detailed place information here
       } else {
         console.error("Error:", status);
       }
     });
+  };
+
+  const handleClickData = (index, childIndex, place_id, status) => {
+    const request = {
+      placeId: place_id,
+      fields: [
+        "name",
+        "formatted_address",
+        "opening_hours",
+        "website",
+        "rating",
+        "photos",
+        "types",
+        "user_ratings_total",
+        "formatted_phone_number",
+        "url",
+      ],
+    };
+
+    placesService.getDetails(request, (place, status) => {
+      // eslint-disable-next-line no-undef
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        console.log(place);
+        setSelectedPlace(place);
+        setSelectedIndex(index);
+        // Access the detailed place information here
+      } else {
+        console.error("Error:", status);
+      }
+    });
+
+    setPlaceStatus(status);
   };
 
   return (
@@ -350,6 +384,7 @@ export default function TripCreate() {
                       onClickData={onClickData}
                       getPlanData={getPlanData}
                       onClickAutocomplete={onClickAutocomplete}
+                      handleClickData={handleClickData}
                     />
                   </Grid>
                 </Grid>
@@ -361,6 +396,7 @@ export default function TripCreate() {
                 plans={plans}
                 selectedData={selectedPlace}
                 selectedIndex={selectedIndex}
+                placeStatus={placeStatus}
               />
             </Grid>
           </Grid>
