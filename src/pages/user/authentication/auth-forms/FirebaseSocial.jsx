@@ -4,11 +4,12 @@ import { useTheme } from "@mui/material/styles";
 import { useMediaQuery, Button, Stack } from "@mui/material";
 
 // assets
-import Google from "../../../../assets/images/icons/google.svg";
-import Twitter from "../../../../assets/images/icons/twitter.svg";
-import Facebook from "../../../../assets/images/icons/facebook.svg";
+import Google from "assets/images/icons/google.svg";
+import Twitter from "assets/images/icons/twitter.svg";
+import Facebook from "assets/images/icons/facebook.svg";
+import { auth, google, facebook, twitter } from "utils/firebase";
+import { signInWithPopup, signOut } from "firebase/auth";
 
-import { GoogleLogin } from "react-google-login";
 import { GOOGLE_CLIENT_ID } from "config";
 
 // ==============================|| FIREBASE - SOCIAL BUTTON ||============================== //
@@ -17,16 +18,8 @@ const FirebaseSocial = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const googleHandler = async () => {
-    // login || singup
-  };
-
-  const twitterHandler = async () => {
-    // login || singup
-  };
-
-  const facebookHandler = async () => {
-    // login || singup
+  const loginHandler = async (provider) => {
+    const result = await signInWithPopup(auth, provider);
   };
 
   const responseGoogle = async (response) => {
@@ -53,32 +46,22 @@ const FirebaseSocial = () => {
         },
       }}
     >
-      <GoogleLogin
-        clientId={GOOGLE_CLIENT_ID}
-        buttonText="Login with Google"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={"single_host_origin"}
-        render={(renderProps) => (
-          <Button
-            variant="outlined"
-            color="secondary"
-            fullWidth={!matchDownSM}
-            startIcon={<img src={Google} alt="Google" />}
-            // onClick={googleHandler}
-            onClick={renderProps.onClick}
-          >
-            {!matchDownSM && "Google"}
-          </Button>
-        )}
-      />
+      <Button
+        variant="outlined"
+        color="secondary"
+        fullWidth={!matchDownSM}
+        startIcon={<img src={Google} alt="Google" />}
+        onClick={() => loginHandler(google)}
+      >
+        {!matchDownSM && "Google"}
+      </Button>
 
       <Button
         variant="outlined"
         color="secondary"
         fullWidth={!matchDownSM}
         startIcon={<img src={Twitter} alt="Twitter" />}
-        onClick={twitterHandler}
+        onClick={() => loginHandler(twitter)}
       >
         {!matchDownSM && "Twitter"}
       </Button>
@@ -87,7 +70,7 @@ const FirebaseSocial = () => {
         color="secondary"
         fullWidth={!matchDownSM}
         startIcon={<img src={Facebook} alt="Facebook" />}
-        onClick={facebookHandler}
+        onClick={() => loginHandler(facebook)}
       >
         {!matchDownSM && "Facebook"}
       </Button>
