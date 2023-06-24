@@ -424,7 +424,6 @@ export default function Map({
                       Google Maps
                     </Button>
                   </Grid>
-                  <Button onClick={clearRoute}>test</Button>
                 </Grid>
               </Box>
             )}

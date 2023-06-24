@@ -85,7 +85,6 @@ const FormCreateTrip = () => {
               >
                 <TextField
                   fullWidth
-                  color="secondary"
                   variant="outlined"
                   InputProps={{
                     startAdornment: (
@@ -94,6 +93,8 @@ const FormCreateTrip = () => {
                       </InputAdornment>
                     ),
                   }}
+                  sx={{backgroundColor:"white"}}
+                  placeholder="Nhập địa điểm"
                   inputRef={materialRef}
                 />
               </Box>

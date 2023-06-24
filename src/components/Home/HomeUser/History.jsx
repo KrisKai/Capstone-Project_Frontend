@@ -25,7 +25,7 @@ import { toast } from "react-toastify";
 import userFeedbackApi from "api/user/feedback/userFeedbackApi";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const HistoryCard = (props) => {
@@ -47,6 +47,35 @@ const HistoryCard = (props) => {
   };
   const openFeedback = () => {
     setOpen(true);
+  };
+  const handleDelete = async () => {
+    // try {
+    //   // Remove trip API
+    //   const data = await tripApi.deleteUser(props.item.tripId || "");
+    //   switch (data.Code) {
+    //     case "G001":
+    //       return toast.error(data.Message);
+    //     case "D001":
+    //       return toast.error(data.Message);
+    //     default:
+    //       toast.success("Bạn đã xóa chuyến đi thành công!");
+
+    //     // Trigger to re-fetch student list with current filter
+    //     // const newFilter = { ...filter };
+    //     // setFilter(newFilter);
+    //     // setOpen(false);
+    //     // setDeleteId(null);
+    //   }
+    //   props.handleAfterDelete(props.index, props.childIndex);
+    // } catch (error) {
+    //   // Toast error
+    //   console.log("Failed to fetch trip", error);
+    //   if (error.response.status == 401) {
+    //     localStorage.removeItem("access_token");
+    //     navigate("/auth/login");
+    //   }
+    // }
+    props.handleAfterDelete(props.index, props.childIndex);
   };
   const handleClose = () => {
     setOpen(false);
@@ -79,7 +108,7 @@ const HistoryCard = (props) => {
     <>
       <Card
         sx={{
-          width: "340px",
+          width: "360px",
           height: "400px",
           display: "flex",
           flexDirection: "column",
@@ -94,16 +123,16 @@ const HistoryCard = (props) => {
               left: 0,
               width: "15px",
               minWidth: "140px",
+              backgroundColor: "#168843",
             }}
             variant="contained"
             disableElevation
-            color="error"
           >
             {props.item.tripStatus === "ACTIVE" && "Đang hoạt động"}
             {props.item.tripStatus === "CLOSED" && "Quá hạn"}
           </Button>
           <IconButton
-            // onClick={handleClick}
+            onClick={handleDelete}
             sx={{
               alignSelf: "flex-end",
               marginTop: 0,
@@ -122,57 +151,56 @@ const HistoryCard = (props) => {
           >
             <FontAwesomeIcon icon={faTrash} />
           </IconButton>
-          
+
           <img
             src="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
             style={{ width: "100%", borderRadius: 10 }}
+            onClick={() => gotoTrip(props.item.tripId)}
           />
         </CardActionArea>
-        <CardActionArea>
-          <CardContent>
-            <Typography
-              variant="h5"
-              component="div"
-              onClick={() => gotoTrip(props.item.tripId)}
-            >
-              Chuyến đi tới {props.item.endLocationName}
-            </Typography>
+        <CardContent>
+          <Typography
+            variant="h5"
+            component="div"
+            onClick={() => gotoTrip(props.item.tripId)}
+          >
+            Chuyến đi tới {props.item.endLocationName}
+          </Typography>
 
-            <Box display="flex" alignItems="center" gap={2} mt={2}>
-              <Box
-                width="25px"
-                sx={{
-                  aspectRatio: "1/1",
-                  backgroundColor: "black",
-                  color: "white",
-                }}
-                display="flex"
-                alignItems=" center"
-                justifyContent="center"
-                border="1px solid black"
-                borderRadius="50%"
-              >
-                <Typography>{char}</Typography>
-              </Box>
-              <Typography onClick={() => gotoTrip(props.item.tripId)}>
-                {props.item.estimateStartDateStr} -{" "}
-                {props.item.estimateEndDateStr}
-              </Typography>
-              {props.item.tripStatus === "CLOSED" && (
-                <Button
-                  sx={{
-                    right: 0,
-                    marginLeft: 5,
-                  }}
-                  variant="outlined"
-                  onClick={openFeedback}
-                >
-                  Đánh giá
-                </Button>
-              )}
+          <Box display="flex" alignItems="center" gap={2} mt={2}>
+            <Box
+              width="25px"
+              sx={{
+                aspectRatio: "1/1",
+                backgroundColor: "black",
+                color: "white",
+              }}
+              display="flex"
+              alignItems=" center"
+              justifyContent="center"
+              border="1px solid black"
+              borderRadius="50%"
+            >
+              <Typography>{char}</Typography>
             </Box>
-          </CardContent>
-        </CardActionArea>
+            <Typography onClick={() => gotoTrip(props.item.tripId)}>
+              {props.item.estimateStartDateStr} -{" "}
+              {props.item.estimateEndDateStr}
+            </Typography>
+            {props.item.tripStatus === "CLOSED" && (
+              <Button
+                sx={{
+                  right: 0,
+                  marginLeft: 5,
+                }}
+                variant="outlined"
+                onClick={openFeedback}
+              >
+                Đánh giá
+              </Button>
+            )}
+          </Box>
+        </CardContent>
       </Card>
       <Dialog
         open={open}
@@ -247,6 +275,23 @@ const History = () => {
       },
     ],
   ]);
+  const [groupedHistory, setGroupedHistory] = useState([
+    [
+      {
+        estimateStartDate: "",
+        estimateEndDate: "",
+        estimateStartDateStr: "May 1",
+        estimateEndDateStr: "May 5",
+        tripId: "0",
+        tripName: "",
+        endLocationName: "",
+        tripStatus: "",
+        feedbackId: 0,
+        feedbackDescription: "",
+        rate: 5,
+      },
+    ],
+  ]);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -260,8 +305,8 @@ const History = () => {
             const group = response.slice(i, i + 3);
             groupedTrips.push(group);
           }
-
-          setHistory(groupedTrips);
+          setHistory(response);
+          setGroupedHistory(groupedTrips);
         }
       } catch (error) {
         console.log("Failed to fetch trip", error);
@@ -276,6 +321,17 @@ const History = () => {
     setActiveIndex((prevIndex) =>
       prevIndex === 0 ? history.length - 1 : prevIndex - 1
     );
+  };
+
+  const handleAfterDelete = (index, childIndex) => {
+    history.splice(index * 3 + childIndex, 1);
+    setHistory(history);
+    const groupedTrips = [];
+    for (let i = 0; i < history.length; i += 3) {
+      const group = history.slice(i, i + 3);
+      groupedTrips.push(group);
+    }
+    setGroupedHistory(groupedTrips);
   };
 
   return (
@@ -308,16 +364,24 @@ const History = () => {
             autoPlay={false}
             navButtonsAlwaysInvisible={true}
           >
-            {history.map((slide, index) => {
+            {groupedHistory.map((slide, index) => {
               return (
                 <>
                   <Box
                     display="flex"
-                    justifyContent="space-between"
                     key={index}
+                    gap={3}
                   >
                     {slide.map((item, childIndex) => {
-                      return <HistoryCard key={childIndex} item={item} />;
+                      return (
+                        <HistoryCard
+                          key={childIndex}
+                          item={item}
+                          index={index}
+                          childIndex={childIndex}
+                          handleAfterDelete={handleAfterDelete}
+                        />
+                      );
                     })}
                   </Box>
                 </>

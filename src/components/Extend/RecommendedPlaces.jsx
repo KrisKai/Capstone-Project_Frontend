@@ -8,6 +8,7 @@ import {
   CardMedia,
   CardActions,
   CardActionArea,
+  Button,
 } from "@mui/material";
 import { useState } from "react";
 
@@ -20,17 +21,17 @@ import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocomplet
 const PlaceCard = (props) => {
   return (
     <>
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" gap={1}>
         {props.group.map((item, i) => (
           <Card
             key={i}
             sx={{
               display: "flex",
               width: "250px",
-              height: "70px",
+              height: "80px",
               marginRight: "8px",
-              borderStyle: "dashed",
-              border: "1px",
+              border: "1px dashed #dee2e6",
+              boxShadow: 'none',
             }}
             onClick={() => {
               props.onClickData(item);
@@ -60,20 +61,18 @@ const PlaceCard = (props) => {
               </Box>
             </CardActionArea>
             <CardActions>
-              <IconButton>
-                <Box
-                  width="30px"
-                  sx={{
-                    aspectRatio: "1/1",
-                    backgroundColor: "#f3f4f5",
-                  }}
-                  display="flex"
-                  alignItems=" center"
-                  justifyContent="center"
-                  borderRadius="50%"
-                >
-                  <Typography>+</Typography>
-                </Box>
+              <IconButton
+                sx={{
+                  height: "35px",
+                  width: "35px",
+                  aspectRatio: "1/1",
+                  backgroundColor: "#f3f4f5",
+                  borderRadius: "50%",
+                  alignItems: " center",
+                  justifyContent: "center",
+                }}
+              >
+                +
               </IconButton>
             </CardActions>
           </Card>
@@ -112,8 +111,8 @@ const RecommendedPlaces = (props) => {
         // eslint-disable-next-line no-undef
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           const groups = [];
-          for (let i = 0; i < results.length; i += 3) {
-            const group = results.slice(i, i + 3);
+          for (let i = 0; i < results.length; i += 2) {
+            const group = results.slice(i, i + 2);
             groups.push(group);
           }
           setGroupedRestaurants(groups);
@@ -135,8 +134,8 @@ const RecommendedPlaces = (props) => {
         // eslint-disable-next-line no-undef
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           const groups = [];
-          for (let i = 0; i < results.length; i += 3) {
-            const group = results.slice(i, i + 3);
+          for (let i = 0; i < results.length; i += 2) {
+            const group = results.slice(i, i + 2);
             groups.push(group);
           }
           setGroupedHotels(groups);
@@ -159,8 +158,8 @@ const RecommendedPlaces = (props) => {
         // eslint-disable-next-line no-undef
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           const groups = [];
-          for (let i = 0; i < results.length; i += 3) {
-            const group = results.slice(i, i + 3);
+          for (let i = 0; i < results.length; i += 2) {
+            const group = results.slice(i, i + 2);
             groups.push(group);
           }
           setGroupedAttractions(groups);
@@ -179,7 +178,7 @@ const RecommendedPlaces = (props) => {
           marginLeft: 6,
         }}
       >
-        <Grid container>
+        <Grid container pl={2}>
           <Grid item xs={12} sm={1}>
             <IconButton
               onClick={() => setOpen(!open)}
@@ -198,7 +197,7 @@ const RecommendedPlaces = (props) => {
             in={open}
             timeout="auto"
             unmountOnExit
-            sx={{ pl: 2, pr: 2 }}
+            sx={{ pl: 4, pr: 2 }}
           >
             <Grid container>
               <Grid item xs={12} sm={1}>
@@ -225,7 +224,8 @@ const RecommendedPlaces = (props) => {
               <Collapse in={openRestaurants} timeout="auto" unmountOnExit>
                 <Carousel
                   sx={{
-                    height: "80px",
+                    height: "90px",
+                    pl: 7
                   }}
                   indicators={false}
                   autoPlay={false}
@@ -270,7 +270,8 @@ const RecommendedPlaces = (props) => {
               <Collapse in={openHotels} timeout="auto" unmountOnExit>
                 <Carousel
                   sx={{
-                    height: "80px",
+                    height: "90px",
+                    pl: 7
                   }}
                   indicators={false}
                   autoPlay={false}
@@ -315,7 +316,8 @@ const RecommendedPlaces = (props) => {
               <Collapse in={openAttractions} timeout="auto" unmountOnExit>
                 <Carousel
                   sx={{
-                    height: "80px",
+                    height: "90px",
+                    pl: 7
                   }}
                   indicators={false}
                   autoPlay={false}

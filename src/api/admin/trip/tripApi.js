@@ -34,6 +34,10 @@ const tripApi = {
     const url = "/trips";
     return axiosInstanceUser.put(url, data);
   },
+  deleteUser(id) {
+    const url = `/trips/${id}`;
+    return axiosInstanceUser.delete(url);
+  },
   tripHistory() {
     const url = `/trips/trip-history`;
     return axiosInstanceUser.get(url);

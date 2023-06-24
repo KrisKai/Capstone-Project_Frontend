@@ -104,7 +104,8 @@ const Plan = (props) => {
         const value = props.placeData;
         const coor = JSON.stringify(value.geometry.location);
         let updatedPlans = [...plans];
-        const childIndex = updatedPlans[props.selectedIndex].tripRoute.length - 1;
+        const childIndex =
+          updatedPlans[props.selectedIndex].tripRoute.length - 1;
         updatedPlans[props.selectedIndex].tripRoute[childIndex].locationName =
           value.name;
         updatedPlans[props.selectedIndex].tripRoute[childIndex].longitude =
@@ -133,10 +134,9 @@ const Plan = (props) => {
           placeId: "",
         };
 
-
         updatedPlans[props.selectedIndex].tripRoute.push(newTripRoute);
         setPlans(updatedPlans);
-        props.setPlaceStatus(true)
+        props.setPlaceStatus(true);
       }
     }
     addTripRoute();
@@ -199,7 +199,6 @@ const Plan = (props) => {
       status = false;
     }
     props.handleClickData(index, childIndex, value.place_id, status);
-
   };
 
   const onChangeInput = (index, childIndex, value) => {
