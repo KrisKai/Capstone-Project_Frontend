@@ -11,7 +11,7 @@ const HomeUser = () => {
   return (
     <Box>
       <UserHeader />
-      <Box sx={{ paddingLeft:"15%", paddingRight:"15%" }}>
+      <Box sx={{ paddingLeft:"20%", paddingRight:"20%" }}>
         <Box mt={10}>
           <UserSuggest />
         </Box>

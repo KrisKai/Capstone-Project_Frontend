@@ -5,18 +5,19 @@ import {
   CardActionArea,
   CardContent,
   Grid,
+  IconButton,
   Rating,
   Typography,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import { tripApi } from "api";
 import Carousel from "react-material-ui-carousel";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "redux/hooks";
 import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
@@ -24,6 +25,8 @@ import { toast } from "react-toastify";
 import userFeedbackApi from "api/user/feedback/userFeedbackApi";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const HistoryCard = (props) => {
   const currentUser = useAppSelector(selectCurrentUser);
@@ -76,19 +79,19 @@ const HistoryCard = (props) => {
     <>
       <Card
         sx={{
-          width: "400px",
-          height: "450px",
+          width: "340px",
+          height: "400px",
           display: "flex",
           flexDirection: "column",
         }}
       >
-        <CardActionArea onClick={() => gotoTrip(props.item.tripId)}>
+        <CardActionArea>
           <Button
             sx={{
               alignSelf: "flex-end",
               marginTop: 0,
               position: "absolute",
-              right: 0,
+              left: 0,
               width: "15px",
               minWidth: "140px",
             }}
@@ -99,14 +102,30 @@ const HistoryCard = (props) => {
             {props.item.tripStatus === "ACTIVE" && "Đang hoạt động"}
             {props.item.tripStatus === "CLOSED" && "Hết hạn"}
           </Button>
-          <Box
+          <IconButton
+            // onClick={handleClick}
             sx={{
-              backgroundImage: `url(https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60)`,
+              alignSelf: "flex-end",
+              marginTop: 0,
+              position: "absolute",
+              right: 0,
+              height: "30px",
+              width: "30px",
+              margin: 1,
+              aspectRatio: "1/1",
+              backgroundColor: "rgba(33,37,41,.502)",
+              color: "white",
+              borderRadius: "50%",
+              alignItems: " center",
+              justifyContent: "center",
             }}
-          ></Box>
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </IconButton>
+          
           <img
             src="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
-            style={{ width: "100%" }}
+            style={{ width: "100%", borderRadius: 10 }}
           />
         </CardActionArea>
         <CardActionArea>
@@ -143,7 +162,7 @@ const HistoryCard = (props) => {
                 <Button
                   sx={{
                     right: 0,
-                    marginLeft: 12,
+                    marginLeft: 5,
                   }}
                   variant="outlined"
                   onClick={openFeedback}
@@ -160,7 +179,9 @@ const HistoryCard = (props) => {
         onClose={handleClose}
         sx={{ "& .MuiDialog-paper": { width: "450px" } }}
       >
-        <DialogTitle>Đánh giá</DialogTitle>
+        <DialogTitle sx={{ fontSize: "30px", fontWeight: 700 }}>
+          Đánh giá
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             Cảm ơn bạn đã trải nghiệm chuyến đi cùng chúng tôi. Liệu bạn có thể

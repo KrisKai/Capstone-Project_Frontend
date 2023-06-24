@@ -149,11 +149,11 @@ const Profile = () => {
               <Paper
                 sx={{
                   boxShadow: theme.customShadows.z1,
-                  width: 290,
-                  minWidth: 240,
-                  maxWidth: 290,
+                  width: 150,
+                  minWidth: 200,
+                  maxWidth: 200,
                   [theme.breakpoints.down("md")]: {
-                    maxWidth: 250,
+                    maxWidth: 200,
                   },
                 }}
               >

@@ -80,7 +80,7 @@ const UserSuggest = () => {
         <Box width="70%">
           <Box sx={{ backgroundColor: "#D1D1D1" }} width="100%">
             <Carousel>
-              <Carousel.Item onClick={handleClick}>
+              <Carousel.Item onClick={openCreateForm}>
                 <div style={{ position: "relative" }}>
                   <img
                     src={HaLong}
@@ -104,7 +104,7 @@ const UserSuggest = () => {
                   </Typography>
                 </div>
               </Carousel.Item>
-              <Carousel.Item>
+              <Carousel.Item onClick={openCreateForm}>
                 <div style={{ position: "relative" }}>
                   <img
                     src={TrangAn}
@@ -128,7 +128,7 @@ const UserSuggest = () => {
                   </Typography>
                 </div>
               </Carousel.Item>
-              <Carousel.Item>
+              <Carousel.Item onClick={openCreateForm}>
                 <div style={{ position: "relative" }}>
                   <img src={HoiAn} style={{ width: "100%" }} />
                   <Typography
@@ -148,7 +148,7 @@ const UserSuggest = () => {
                   </Typography>
                 </div>
               </Carousel.Item>
-              <Carousel.Item>
+              <Carousel.Item onClick={openCreateForm}>
                 <div style={{ position: "relative" }}>
                   <img src={BaNa} style={{ width: "100%" }} />
                   <Typography
@@ -168,7 +168,7 @@ const UserSuggest = () => {
                   </Typography>
                 </div>
               </Carousel.Item>
-              <Carousel.Item>
+              <Carousel.Item onClick={openCreateForm}>
                 <div style={{ position: "relative" }}>
                   <img src={KhauPha} style={{ width: "100%" }} />
                   <Typography
@@ -188,7 +188,7 @@ const UserSuggest = () => {
                   </Typography>
                 </div>
               </Carousel.Item>
-              <Carousel.Item>
+              <Carousel.Item onClick={openCreateForm}>
                 <div style={{ position: "relative" }}>
                   <img src={PhuQuoc} style={{ width: "100%" }} />
                   <Typography
@@ -208,7 +208,7 @@ const UserSuggest = () => {
                   </Typography>
                 </div>
               </Carousel.Item>
-              <Carousel.Item>
+              <Carousel.Item onClick={openCreateForm}>
                 <div style={{ position: "relative" }}>
                   <img src={PhongNha} style={{ width: "100%" }} />
                   <Typography
@@ -228,7 +228,7 @@ const UserSuggest = () => {
                   </Typography>
                 </div>
               </Carousel.Item>
-              <Carousel.Item>
+              <Carousel.Item onClick={openCreateForm}>
                 <div style={{ position: "relative" }}>
                   <img src={DaLat} style={{ width: "100%" }} />
                   <Typography
