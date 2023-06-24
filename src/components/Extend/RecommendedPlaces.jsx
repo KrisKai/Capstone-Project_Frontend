@@ -1,19 +1,15 @@
-import { PLACE_API } from "config";
 import {
-  TextField,
-  Button,
   Card,
   Typography,
   IconButton,
   Grid,
   Collapse,
-  CardHeader,
   Box,
   CardMedia,
   CardActions,
   CardActionArea,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -60,13 +56,11 @@ const PlaceCard = (props) => {
                 alignItems="center"
                 marginLeft={1}
               >
-                <Typography>
-                  {item.name}
-                </Typography>
+                <Typography>{item.name}</Typography>
               </Box>
             </CardActionArea>
             <CardActions>
-              <IconButton >
+              <IconButton>
                 <Box
                   width="30px"
                   sx={{
@@ -115,7 +109,6 @@ const RecommendedPlaces = (props) => {
         fields: ["name", "formatted_address", "price_level"],
       },
       (results, status) => {
-        console.log(results);
         // eslint-disable-next-line no-undef
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           const groups = [];
@@ -139,7 +132,6 @@ const RecommendedPlaces = (props) => {
         type: "lodging",
       },
       (results, status) => {
-        console.log(results);
         // eslint-disable-next-line no-undef
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           const groups = [];
@@ -164,7 +156,6 @@ const RecommendedPlaces = (props) => {
         type: "tourist_attraction",
       },
       (results, status) => {
-        console.log(results);
         // eslint-disable-next-line no-undef
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           const groups = [];

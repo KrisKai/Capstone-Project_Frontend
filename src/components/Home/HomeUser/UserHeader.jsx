@@ -3,12 +3,8 @@ import {
   Container,
   Grid,
   List,
-  ListItem,
   Typography,
-  TextField,
-  InputAdornment,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 
 import HomeImage from "assets/images/index_img.png";

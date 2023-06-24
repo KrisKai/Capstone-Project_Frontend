@@ -1,5 +1,11 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, Button, Typography, TextField, InputAdornment } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { tripApi } from "api";
@@ -87,6 +93,7 @@ const FormCreateTrip = () => {
                       </InputAdornment>
                     ),
                   }}
+                  sx={{ backgroundColor: "#f3f4f5" }}
                   inputRef={materialRef}
                 />
               </Box>
@@ -99,6 +106,7 @@ const FormCreateTrip = () => {
                     sx={{
                       background: "white",
                       borderRadius: "8px",
+                      backgroundColor: "#f3f4f5",
                     }}
                     name="startDate"
                     label="Ngày đi"
@@ -117,6 +125,7 @@ const FormCreateTrip = () => {
                     sx={{
                       background: "white",
                       borderRadius: "8px",
+                      backgroundColor: "#f3f4f5",
                     }}
                     name="endDate"
                     label="Ngày đến"

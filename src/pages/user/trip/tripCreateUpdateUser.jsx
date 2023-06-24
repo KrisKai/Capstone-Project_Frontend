@@ -7,11 +7,9 @@ import MapUser from "pages/map/user/MapUser";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-// import { FaLocationArrow, FaTimes } from 'react-icons/fa'
-import { GOOGLE_MAP_API, PLACE_API } from "config";
-import axios from "axios";
+import { GOOGLE_MAP_API } from "config";
 
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -115,30 +113,6 @@ export default function TripCreate() {
         } else {
           navigate("/tripList");
         }
-
-        //call api
-        // getPlacesData("hotels", data.endLatitude, data.endLongitude).then(
-        //   (data) => {
-        //     setHotelList(data);
-        //   }
-        // );
-        // getPlacesData("restaurants", data.endLatitude, data.endLongitude).then(
-        //   (data) => {
-        //     setRestaurantList(data);
-        //   }
-        // );
-        // getPlacesData("attractions", data.endLatitude, data.endLongitude).then(
-        //   (data) => {
-        //     setAttractionList(data);
-        //   }
-        // );
-        // getPlacesDataByGoogleMap(
-        //   "restaurant",
-        //   data.endLatitude,
-        //   data.endLongitude
-        // ).then((data) => {
-        //   console.log(data);
-        // });
       } catch (error) {
         console.log("Failed to fetch trip details", error);
         if (error.response.status == 401) {

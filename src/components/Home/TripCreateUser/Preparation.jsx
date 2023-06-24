@@ -1,11 +1,15 @@
-import { Box, Button, Card, FormHelperText, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
+import {
+  IconButton,
+  Button,
+  Card,
+  Collapse,
+  Typography,
+  CardHeader,
+  Grid,
+  TextField,
+} from "@mui/material";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import IconButton from "@mui/material/IconButton";
-import Collapse from "@mui/material/Collapse";
-import CardHeader from "@mui/material/CardHeader";
+import { useParams } from "react-router-dom";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
@@ -312,11 +316,15 @@ const Preparation = (props) => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography variant="h3" marginBottom={2} sx={{ fontSize: "1.5 rem", fontWeight:700 }}>
+        <Typography
+          variant="h3"
+          marginBottom={2}
+          sx={{ fontSize: "1.5 rem", fontWeight: 700 }}
+        >
           <PlaylistAddCheckOutlinedIcon /> Phần chuẩn bị cho chuyến đi
         </Typography>
       </Grid>
-      <Grid item xs={12} sx={{p:2}}>
+      <Grid item xs={12} sx={{ p: 2 }}>
         <Card
           sx={{
             minWidth: 300,
@@ -403,7 +411,7 @@ const Preparation = (props) => {
           </div>
         </Card>
       </Grid>
-      <Grid item xs={12} sx={{p:2}}>
+      <Grid item xs={12} sx={{ p: 2 }}>
         <Card
           sx={{
             minWidth: 300,
@@ -493,7 +501,7 @@ const Preparation = (props) => {
         </Card>
       </Grid>
 
-      <Grid item xs={12} sx={{p:2}}>
+      <Grid item xs={12} sx={{ p: 2 }}>
         <Card
           sx={{
             minWidth: 300,

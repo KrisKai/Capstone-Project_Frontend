@@ -4,7 +4,7 @@ import {
   FormCreateTrip,
   Footer,
 } from "components/Home/HomeUser";
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import History from "components/Home/HomeUser/History";
 
 const HomeUser = () => {

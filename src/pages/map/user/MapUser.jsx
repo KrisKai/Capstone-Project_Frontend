@@ -1,7 +1,5 @@
-import AddIcon from "@mui/icons-material/Add";
 import { Box, Button, Card, Typography, Grid } from "@mui/material";
 import {
-  Autocomplete,
   DirectionsRenderer,
   GoogleMap,
   Marker,
@@ -93,7 +91,7 @@ export default function Map({
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
 
-  console.log(plans);
+  // console.log(plans);
 
   const markers = useRef([]);
 
@@ -148,18 +146,15 @@ export default function Map({
         type: "tourist_attraction",
       },
       (results, status) => {
-        console.log(results);
         // eslint-disable-next-line no-undef
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           for (let i = 0; i < results.length; i++) {
             const place = results[i];
-            console.log("Place:", place);
             // Access other properties of the place here
 
             if (place.photos && place.photos.length > 0) {
               const photo = place.photos[0];
               const photoUrl = photo.getUrl({ maxWidth: 500, maxHeight: 500 });
-              console.log("Photo URL:", photoUrl);
               // Use the photo URL here
             }
           }
