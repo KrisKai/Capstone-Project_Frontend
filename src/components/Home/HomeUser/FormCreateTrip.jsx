@@ -67,6 +67,7 @@ const FormCreateTrip = () => {
           flexDirection="column"
           paddingY={5}
           borderRadius="5px"
+          sx={{backgroundColor:"#f3f4f5", borderRadius:8}}
         >
           <Box display="flex" flexDirection="column" alignItems="center">
             <Typography variant="h2" sx={{ fontSize: 36 }}>
@@ -93,7 +94,6 @@ const FormCreateTrip = () => {
                       </InputAdornment>
                     ),
                   }}
-                  sx={{ backgroundColor: "#f3f4f5" }}
                   inputRef={materialRef}
                 />
               </Box>
@@ -106,7 +106,6 @@ const FormCreateTrip = () => {
                     sx={{
                       background: "white",
                       borderRadius: "8px",
-                      backgroundColor: "#f3f4f5",
                     }}
                     name="startDate"
                     label="Ngày đi"
@@ -125,7 +124,6 @@ const FormCreateTrip = () => {
                     sx={{
                       background: "white",
                       borderRadius: "8px",
-                      backgroundColor: "#f3f4f5",
                     }}
                     name="endDate"
                     label="Ngày đến"

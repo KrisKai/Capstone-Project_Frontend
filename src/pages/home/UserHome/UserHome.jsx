@@ -15,10 +15,10 @@ const HomeUser = () => {
         <Box mt={10}>
           <UserSuggest />
         </Box>
-        <Box mt={10}>
+        <Box mt={15}>
           <History />
         </Box>
-        <Box mt={10}>
+        <Box mt={5}>
           <FormCreateTrip />
         </Box>
       </Box>
