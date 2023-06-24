@@ -1,15 +1,14 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, TextField, InputAdornment } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { tripApi } from "api";
-import { getPlacesProps } from "api/user/placesAPI";
 import { GOOGLE_MAP_API } from "config";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Autocomplete from "react-google-autocomplete";
+import { usePlacesWidget } from "react-google-autocomplete";
 
 dayjs.extend(utc);
 
@@ -21,19 +20,32 @@ const FormCreateTrip = () => {
     endLongitude: "",
     endLatitude: "",
     endLocationName: "",
+    placeId: "",
+  });
+  const { ref: materialRef } = usePlacesWidget({
+    apiKey: GOOGLE_MAP_API,
+    onPlaceSelected: (place) => {
+      const coor = JSON.stringify(place.geometry.location);
+      let updatedTrip = trip;
+      updatedTrip.endLocationName = place.formatted_address;
+      updatedTrip.endLongitude = JSON.parse(coor).lng.toString();
+      updatedTrip.endLatitude = JSON.parse(coor).lat.toString();
+      updatedTrip.placeId = place?.place_id ? place?.place_id : "";
+      setTrip(updatedTrip);
+    },
+    inputAutocompleteValue: "country",
+    options: {
+      types: ["geocode", "establishment"],
+      componentRestrictions: { country: "vn" },
+    },
   });
 
   const locationRef1 = useRef();
 
   async function handleSubmit() {
-    if (locationRef1.current.value !== "") {
-      const data = await getPlacesProps(locationRef1.current.value);
-      const id = await tripApi.createUser({
-        ...trip,
-        endLocationName: data.name,
-        endLongitude: data.lon.toString(),
-        endLatitude: data.lat.toString(),
-      });
+    if (trip.endLocationName !== "") {
+      // const data = await getPlacesProps(locationRef1.current.value);
+      const id = await tripApi.createUser(trip);
       if (id !== null) {
         navigate(`/tripUpdate/` + id);
       }
@@ -64,15 +76,18 @@ const FormCreateTrip = () => {
                   borderRadius: "8px",
                 }}
               >
-                <Autocomplete
-                  apiKey={GOOGLE_MAP_API}
-                  ref={locationRef1}
-                  className="custom-input"
-                  options={{
-                    types: ["geocode", "establishment"],
-                    componentRestrictions: { country: "vn" },
+                <TextField
+                  fullWidth
+                  color="secondary"
+                  variant="outlined"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
                   }}
-                  language="vi"
+                  inputRef={materialRef}
                 />
               </Box>
               <Box display="flex" gap={2}>
@@ -129,9 +144,6 @@ const FormCreateTrip = () => {
                 </Button>
               </Box>
             </Box>
-            {/* </form>
-              )}
-            </Formik> */}
           </Box>
         </Box>
       </Box>
