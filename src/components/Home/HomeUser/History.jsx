@@ -100,7 +100,7 @@ const HistoryCard = (props) => {
             color="error"
           >
             {props.item.tripStatus === "ACTIVE" && "Đang hoạt động"}
-            {props.item.tripStatus === "CLOSED" && "Hết hạn"}
+            {props.item.tripStatus === "CLOSED" && "Quá hạn"}
           </Button>
           <IconButton
             // onClick={handleClick}
