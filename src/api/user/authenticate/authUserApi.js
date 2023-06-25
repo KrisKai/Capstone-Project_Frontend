@@ -28,6 +28,10 @@ const authUserApi = {
   checkUserHavingInterest() {
     const url = `/users/check-interest`;
     return axiosInstanceUser.get(url);
+  },
+  createUserInterest(params) {
+    const url = `/users/create-user-interest`;
+    return axiosInstanceUser.post(JSON.stringify(params));
   }
 };
 
