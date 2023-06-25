@@ -31,8 +31,8 @@ const authUserApi = {
   },
   createUserInterest(params) {
     const url = `/users/create-user-interest`;
-    return axiosInstanceUser.post(JSON.stringify(params));
-  }
+    return axiosInstanceUser.post(url, JSON.stringify(params));
+  },
 };
 
 export default authUserApi;
