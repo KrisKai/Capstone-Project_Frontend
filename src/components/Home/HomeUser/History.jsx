@@ -15,7 +15,6 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { tripApi } from "api";
 import Carousel from "react-material-ui-carousel";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +26,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import userTripApi from "api/user/trip/userTripApi";
 
 const HistoryCard = (props) => {
   const currentUser = useAppSelector(selectCurrentUser);
@@ -51,7 +51,7 @@ const HistoryCard = (props) => {
   const handleDelete = async () => {
     try {
       // Remove trip API
-      const data = await tripApi.deleteUser(props.item.tripId || "");
+      const data = await userTripApi.delete(props.item.tripId || "");
       switch (data.Code) {
         case "G001":
           return toast.error(data.Message);
@@ -292,7 +292,7 @@ const History = () => {
     // IFFE
     (async () => {
       try {
-        const response = await tripApi.tripHistory();
+        const response = await userTripApi.tripHistory();
         if (response !== "" && response !== null) {
           const groupedTrips = [];
           for (let i = 0; i < response.length; i += 3) {

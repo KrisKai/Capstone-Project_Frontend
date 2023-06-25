@@ -26,8 +26,8 @@ import KhauPha from "assets/images/KhauPha-unsplash.jpg";
 import PhuQuoc from "assets/images/PhuQuoc-unsplash.jpg";
 import PhongNha from "assets/images/PhongNha-unsplash.jpg";
 import DaLat from "assets/images/DaLat-unsplash.jpg";
-import { tripApi } from "api";
 import { useNavigate } from "react-router-dom";
+import userTripApi from "api/user/trip/userTripApi";
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -104,7 +104,7 @@ const UserSuggest = () => {
   };
   const handleSudmit = async () => {
     if (trip.endLocationName !== "") {
-      const id = await tripApi.createUser(trip);
+      const id = await userTripApi.create(trip);
       if (id !== null) {
         navigate(`/tripUpdate/` + id);
       }

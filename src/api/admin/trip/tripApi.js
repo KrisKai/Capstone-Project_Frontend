@@ -1,4 +1,5 @@
 import axiosInstance from "utils/axios";
+import axiosInstanceImage from "utils/axiosForImage";
 
 const tripApi = {
   getAll(params) {
@@ -15,7 +16,7 @@ const tripApi = {
   },
   update(data) {
     const url = "/trips";
-    return axiosInstance.put(url, data);
+    return axiosInstanceImage.put(url, data);
   },
   delete(id) {
     const url = `/trips/${id}`;

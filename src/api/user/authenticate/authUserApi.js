@@ -25,6 +25,10 @@ const authUserApi = {
     const url = "/users/confirm-user";
     return axiosInstanceUser.put(url);
   },
+  checkUserHavingInterest() {
+    const url = `/users/check-interest`;
+    return axiosInstanceUser.get(url);
+  }
 };
 
 export default authUserApi;

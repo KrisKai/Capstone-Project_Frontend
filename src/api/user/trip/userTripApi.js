@@ -24,7 +24,7 @@ const userTripApi = {
   tripHistory() {
     const url = `/trips/trip-history`;
     return axiosInstanceUser.get(url);
-  }
+  },
 };
 
 export default userTripApi;

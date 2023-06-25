@@ -8,13 +8,13 @@ import {
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { tripApi } from "api";
 import { GOOGLE_MAP_API } from "config";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePlacesWidget } from "react-google-autocomplete";
+import userTripApi from "api/user/trip/userTripApi";
 
 dayjs.extend(utc);
 
@@ -51,7 +51,7 @@ const FormCreateTrip = () => {
   async function handleSubmit() {
     if (trip.endLocationName !== "") {
       // const data = await getPlacesProps(locationRef1.current.value);
-      const id = await tripApi.createUser(trip);
+      const id = await userTripApi.createUser(trip);
       if (id !== null) {
         navigate(`/tripUpdate/` + id);
       }

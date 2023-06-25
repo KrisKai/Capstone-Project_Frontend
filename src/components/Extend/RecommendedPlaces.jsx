@@ -103,11 +103,12 @@ const RecommendedPlaces = (props) => {
     placesService.nearbySearch(
       {
         location: coor,
-        radius: 5000,
-        type: "restaurant",
+        radius: 10000,
+        type: ["restaurant", "lodging"],
         fields: ["name", "formatted_address", "price_level"],
       },
       (results, status) => {
+        console.log(results)
         // eslint-disable-next-line no-undef
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           const groups = [];

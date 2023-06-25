@@ -1,10 +1,16 @@
-import { Box, Button, Card, FormHelperText, Typography } from "@mui/material";
-import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
+import {
+  Box,
+  Button,
+  Card,
+  FormHelperText,
+  Typography,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -19,6 +25,7 @@ import { toast } from "react-toastify";
 import { usePlacesWidget } from "react-google-autocomplete";
 import * as yup from "yup";
 import { GOOGLE_MAP_API } from "config";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 dayjs.extend(utc);
 
@@ -26,7 +33,7 @@ export default function TripCreate() {
   const { ref: materialRef } = usePlacesWidget({
     apiKey: GOOGLE_MAP_API,
     onPlaceSelected: (place) => {
-      console.log()
+      console.log();
       const coor = JSON.stringify(place.geometry.location);
       let updatedTrip = trip;
       updatedTrip.endLocationName = place.formatted_address;
@@ -58,6 +65,7 @@ export default function TripCreate() {
     distance: "",
     tripStatus: "ACTIVE",
     tripId: "",
+    tripThumbnail: "",
   });
   const [user, setUser] = useState([
     {
@@ -387,11 +395,53 @@ export default function TripCreate() {
                         inputRef={materialRef}
                       />
                     </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="h6" gutterBottom>
+                        Image Upload
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl
+                        error={touched.tripThumbnail && errors.tripThumbnail}
+                        fullWidth
+                      >
+                        <input
+                          id="tripThumbnail"
+                          name="tripThumbnail"
+                          type="file"
+                          accept="image/*"
+                          onChange={(event) => {
+                            console.log(event.currentTarget.files[0]);
+                            setFieldValue(
+                              "tripThumbnail",
+                              event.currentTarget.files[0]
+                            );
+                          }}
+                          style={{ display: "none" }}
+                        />
+                        <label htmlFor="tripThumbnail">
+                          <Button
+                            variant="contained"
+                            component="span"
+                            startIcon={<CloudUploadIcon />}
+                            onClick={(event) => {
+                              const input = document.getElementById("tripThumbnail");
+                              // input.click();
+                            }}
+                          >
+                            Upload Image
+                          </Button>
+                        </label>
+                        <FormHelperText>
+                          {touched.image && errors.image}
+                        </FormHelperText>
+                      </FormControl>
+                    </Grid>
                   </Grid>
                 </Card>
               </Grid>
               <Grid item xs={12} sm={9} paddingLeft={1}>
-                <MapForTrip getReturnData={getReturnData} passToProps={trip} />
+                {/* <MapForTrip getReturnData={getReturnData} passToProps={trip} /> */}
               </Grid>
             </Grid>
             <Grid container marginTop={2}>

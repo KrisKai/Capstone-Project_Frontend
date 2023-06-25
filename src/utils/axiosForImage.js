@@ -4,7 +4,7 @@ import { REACT_APP_API_URL } from "../config";
 const axiosInstanceImage = axios.create({
   baseURL: REACT_APP_API_URL,
   headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
+    "Content-Type": "multipart/form-data",
   },
 });
 
