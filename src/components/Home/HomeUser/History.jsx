@@ -49,33 +49,27 @@ const HistoryCard = (props) => {
     setOpen(true);
   };
   const handleDelete = async () => {
-    // try {
-    //   // Remove trip API
-    //   const data = await tripApi.deleteUser(props.item.tripId || "");
-    //   switch (data.Code) {
-    //     case "G001":
-    //       return toast.error(data.Message);
-    //     case "D001":
-    //       return toast.error(data.Message);
-    //     default:
-    //       toast.success("Bạn đã xóa chuyến đi thành công!");
+    try {
+      // Remove trip API
+      const data = await tripApi.deleteUser(props.item.tripId || "");
+      switch (data.Code) {
+        case "G001":
+          return toast.error(data.Message);
+        case "D001":
+          return toast.error(data.Message);
+        default:
+          toast.success("Bạn đã xóa chuyến đi thành công!");
 
-    //     // Trigger to re-fetch student list with current filter
-    //     // const newFilter = { ...filter };
-    //     // setFilter(newFilter);
-    //     // setOpen(false);
-    //     // setDeleteId(null);
-    //   }
-    //   props.handleAfterDelete(props.index, props.childIndex);
-    // } catch (error) {
-    //   // Toast error
-    //   console.log("Failed to fetch trip", error);
-    //   if (error.response.status == 401) {
-    //     localStorage.removeItem("access_token");
-    //     navigate("/auth/login");
-    //   }
-    // }
-    props.handleAfterDelete(props.index, props.childIndex);
+          props.handleAfterDelete(props.index, props.childIndex);
+      }
+    } catch (error) {
+      // Toast error
+      console.log("Failed to fetch trip", error);
+      if (error.response.status == 401) {
+        localStorage.removeItem("access_token");
+        navigate("/auth/login");
+      }
+    }
   };
   const handleClose = () => {
     setOpen(false);
@@ -367,11 +361,7 @@ const History = () => {
             {groupedHistory.map((slide, index) => {
               return (
                 <>
-                  <Box
-                    display="flex"
-                    key={index}
-                    gap={3}
-                  >
+                  <Box display="flex" key={index} gap={3}>
                     {slide.map((item, childIndex) => {
                       return (
                         <HistoryCard
