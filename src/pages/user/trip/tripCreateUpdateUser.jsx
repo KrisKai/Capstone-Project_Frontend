@@ -124,6 +124,10 @@ export default function TripCreate() {
   ]);
 
   useEffect(() => {
+    getPlanData(plans);
+  }, [plans]);
+
+  useEffect(() => {
     // IFFE
     (async () => {
       if (!tripId) return;

@@ -15,10 +15,6 @@ import userTripRouteApi from "api/user/trip/route/userTripRouteApi";
 const Plan = (props) => {
 
   useEffect(() => {
-    props.getPlanData(props.plans);
-  }, [props.plans]);
-
-  useEffect(() => {
     async function addTripRoute() {
       if (props.placeData !== null && props.placeStatus === false) {
         const value = props.placeData;
