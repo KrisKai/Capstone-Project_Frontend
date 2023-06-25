@@ -6,93 +6,13 @@ import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import AutocompletePlaceForTrip from "components/Extend/AutocompletePlaceForTrip";
-import { tripRouteApi } from "api";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
+import userTripRouteApi from "api/user/route/userTripRouteApi";
 
 const Plan = (props) => {
-  // const [props.plans, props.setPlans] = useState([
-  //   {
-  //     planDate: props.item.listOfDate[0],
-  //     routeId: 0,
-  //     open: false,
-  //     tripRoute: [
-  //       {
-  //         planDateTime: props.item.listOfDateTime[0],
-  //         routeId: 0,
-  //         tripId: props.item.tripId,
-  //         longitude: "",
-  //         latitude: "",
-  //         locationName: "",
-  //         priority: 1,
-  //         showNote: false,
-  //         note: "",
-  //         placeId: "",
-  //       },
-  //     ],
-  //   },
-  // ]);
-
-  // useEffect(() => {
-  //   if (props.item.listOfDateTime) {
-  //     const tmp = props.item.listOfDateTime.map((date, index) => {
-  //       const newPlan = {
-  //         planDate: props.item.listOfDate[index],
-  //         routeId: 0,
-  //         open: false,
-  //         tripRoute: [
-  //           {
-  //             planDateTime: date,
-  //             routeId: 0,
-  //             tripId: props.item.tripId,
-  //             longitude: "",
-  //             latitude: "",
-  //             locationName: "",
-  //             priority: 1,
-  //             showNote: false,
-  //             note: "",
-  //             placeId: "",
-  //           },
-  //         ],
-  //       };
-  //       tripRouteApi
-  //         .getAllUser({
-  //           pageIndex: 0,
-  //           pageSize: 9999,
-  //           planName: "",
-  //           tripId: props.item.tripId,
-  //           planDateTime: date,
-  //         })
-  //         .then((data) => {
-  //           if (data.numOfRoute !== 0) {
-  //             newPlan.tripRoute = data.listOfRoute;
-  //             const newTripRoute = {
-  //               planDateTime: date,
-  //               routeId: 0,
-  //               tripId: props.item.tripId,
-  //               longitude: "",
-  //               latitude: "",
-  //               locationName: "",
-  //               priority: 1,
-  //               showNote: false,
-  //               note: "",
-  //               placeId: "",
-  //             };
-
-  //             newPlan.tripRoute.push(newTripRoute);
-  //           }
-  //         })
-  //         .catch((error) => {
-  //           // Handle the error here if needed
-  //         });
-
-  //       return newPlan;
-  //     });
-  //     props.setPlans(tmp);
-  //   }
-  // }, [props.item.trip, props.item.listOfDate]);
 
   useEffect(() => {
     props.getPlanData(props.plans);
@@ -116,7 +36,7 @@ const Plan = (props) => {
           value.place_id;
         const id =
           updatedPlans[props.selectedIndex].tripRoute[childIndex].priority;
-        const data = await tripRouteApi.createUser(
+        const data = await userTripRouteApi.create(
           updatedPlans[props.selectedIndex].tripRoute[childIndex]
         );
         updatedPlans[props.selectedIndex].tripRoute[childIndex].routeId = data;
@@ -164,7 +84,7 @@ const Plan = (props) => {
     updatedPlans[index].tripRoute[childIndex].latitude =
       JSON.parse(coor).lat.toString();
     updatedPlans[index].tripRoute[childIndex].placeId = value.place_id;
-    const data = await tripRouteApi.createUser(
+    const data = await userTripRouteApi.create(
       updatedPlans[index].tripRoute[childIndex]
     );
     updatedPlans[index].tripRoute[childIndex].routeId = data;
@@ -225,8 +145,8 @@ const Plan = (props) => {
       updatedPlans[index].tripRoute.splice(childIndex, 1);
       updatedPlans[index].tripRoute.push(newTripRoute);
     } else {
-      await tripRouteApi
-        .deleteUser(updatedPlans[index].tripRoute[childIndex].routeId)
+      await userTripRouteApi
+        .delete(updatedPlans[index].tripRoute[childIndex].routeId)
         .then(() => {
           updatedPlans[index].tripRoute.splice(childIndex, 1);
         });

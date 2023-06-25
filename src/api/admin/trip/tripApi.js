@@ -1,5 +1,4 @@
 import axiosInstance from "utils/axios";
-import axiosInstanceUser from "utils/axiosForUser";
 
 const tripApi = {
   getAll(params) {
@@ -25,26 +24,6 @@ const tripApi = {
   tripStatistic() {
     const url = `/trips/trip-statistic`;
     return axiosInstance.get(url);
-  },
-  createUser(data) {
-    const url = "/trips/create-trip-user";
-    return axiosInstanceUser.post(url, data);
-  },
-  updateUser(data) {
-    const url = "/trips";
-    return axiosInstanceUser.put(url, data);
-  },
-  deleteUser(id) {
-    const url = `/trips/${id}`;
-    return axiosInstanceUser.delete(url);
-  },
-  tripHistory() {
-    const url = `/trips/trip-history`;
-    return axiosInstanceUser.get(url);
-  },
-  getByIdUser(id) {
-    const url = `/trips/${id}`;
-    return axiosInstanceUser.get(url);
   },
 };
 

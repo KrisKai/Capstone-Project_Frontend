@@ -1,6 +1,5 @@
 import { Box, Button, Card, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { tripApi, tripRouteApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import MapUser from "pages/map/user/MapUser";
@@ -30,6 +29,8 @@ import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
 import Logo from "assets/images/logo.png";
+import userTripRouteApi from "api/user/route/userTripRouteApi";
+import userTripApi from "api/user/trip/userTripApi";
 
 dayjs.extend(utc);
 
@@ -63,7 +64,6 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default function TripCreate() {
-  const [open, setOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState();
   const [selectedIndex, setSelectedIndex] = useState();
   const [placeStatus, setPlaceStatus] = useState();
@@ -128,7 +128,7 @@ export default function TripCreate() {
     (async () => {
       if (!tripId) return;
       try {
-        const data = await tripApi.getByIdUser(tripId);
+        const data = await userTripApi.getById(tripId);
         if (data != null && data != "") {
           setTrip(data);
         } else {
@@ -166,8 +166,8 @@ export default function TripCreate() {
             },
           ],
         };
-        tripRouteApi
-          .getAllUser({
+        userTripRouteApi
+          .getAll({
             pageIndex: 0,
             pageSize: 9999,
             planName: "",
@@ -399,7 +399,7 @@ export default function TripCreate() {
                       };
                       setTrip(newTrip);
                       setShowInputTripName(false);
-                      await tripApi.updateUser(trip);
+                      await userTripApi.update(trip);
                     }}
                     showInputTripName={showInputTripName}
                   />
@@ -427,7 +427,7 @@ export default function TripCreate() {
                         };
                         setTrip(newTrip);
                         setShowInputSDate(false);
-                        await tripApi.updateUser(trip);
+                        await userTripApi.update(trip);
                       }}
                       showInputSDate={showInputSDate}
                     />{" "}
@@ -450,7 +450,7 @@ export default function TripCreate() {
                         };
                         setTrip(newTrip);
                         setShowInputEDate(false);
-                        await tripApi.updateUser(trip);
+                        await userTripApi.update(trip);
                       }}
                       showInputEDate={showInputEDate}
                     />
