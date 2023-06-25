@@ -10,7 +10,7 @@ import AutocompletePlaceForTrip from "components/Extend/AutocompletePlaceForTrip
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
-import userTripRouteApi from "api/user/route/userTripRouteApi";
+import userTripRouteApi from "api/user/trip/route/userTripRouteApi";
 
 const Plan = (props) => {
 

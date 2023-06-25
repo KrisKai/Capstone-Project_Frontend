@@ -15,8 +15,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
-import { tripItemApi } from "api";
 import { toast } from "react-toastify";
+import userTripItemApi from "api/user/trip/item/userTripItemApi";
 
 const Preparation = (props) => {
   const { tripId } = useParams();
@@ -45,7 +45,7 @@ const Preparation = (props) => {
 
   const handleItemRemove = async (itemId, index) => {
     if (itemId !== 0) {
-      const reponse = await tripItemApi.delete(itemId || "");
+      const reponse = await userTripItemApi.delete(itemId || "");
       if (reponse > 0) {
         toast.success("Xoá thành công!");
       }
@@ -59,7 +59,7 @@ const Preparation = (props) => {
 
   const handleItemAdd = async (itemId, index) => {
     if (itemId === 0) {
-      const reponse = await tripItemApi.createUser(itemList[index]);
+      const reponse = await userTripItemApi.create(itemList[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -83,7 +83,7 @@ const Preparation = (props) => {
           return toast.success("Tạo thành công!");
       }
     } else {
-      const reponse = await tripItemApi.updateUser(itemList[index]);
+      const reponse = await userTripItemApi.update(itemList[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -106,7 +106,7 @@ const Preparation = (props) => {
 
   const handleItemRemove1 = async (itemId, index) => {
     if (itemId !== 0) {
-      const reponse = await tripItemApi.delete(itemId || "");
+      const reponse = await userTripItemApi.delete(itemId || "");
       if (reponse > 0) {
         toast.success("Xoá thành công!");
       }
@@ -120,7 +120,7 @@ const Preparation = (props) => {
 
   const handleItemAdd1 = async (itemId, index) => {
     if (itemId === 0) {
-      const reponse = await tripItemApi.createUser(itemList1[index]);
+      const reponse = await userTripItemApi.create(itemList1[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -144,7 +144,7 @@ const Preparation = (props) => {
           return toast.success("Tạo thành công!");
       }
     } else {
-      const reponse = await tripItemApi.updateUser(itemList1[index]);
+      const reponse = await userTripItemApi.update(itemList1[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -167,7 +167,7 @@ const Preparation = (props) => {
 
   const handleItemRemove2 = async (itemId, index) => {
     if (itemId !== 0) {
-      const reponse = await tripItemApi.delete(itemId || "");
+      const reponse = await userTripItemApi.delete(itemId || "");
       if (reponse > 0) {
         toast.success("Xoá thành công!");
       }
@@ -181,7 +181,7 @@ const Preparation = (props) => {
 
   const handleItemAdd2 = async (itemId, index) => {
     if (itemId === 0) {
-      const reponse = await tripItemApi.createUser(itemList2[index]);
+      const reponse = await userTripItemApi.create(itemList2[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -205,7 +205,7 @@ const Preparation = (props) => {
           return toast.success("Tạo thành công!");
       }
     } else {
-      const reponse = await tripItemApi.updateUser(itemList2[index]);
+      const reponse = await userTripItemApi.update(itemList2[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -248,7 +248,7 @@ const Preparation = (props) => {
     (async () => {
       if (!tripId) return;
       try {
-        const data = await tripItemApi.getAllUser({
+        const data = await userTripItemApi.getAll({
           pageIndex: 0,
           pageSize: 99999,
           categoryId: 2,
@@ -268,7 +268,7 @@ const Preparation = (props) => {
             },
           ]);
         }
-        const data1 = await tripItemApi.getAllUser({
+        const data1 = await userTripItemApi.getAll({
           pageIndex: 0,
           pageSize: 99999,
           categoryId: 3,
@@ -288,7 +288,7 @@ const Preparation = (props) => {
             },
           ]);
         }
-        const data2 = await tripItemApi.getAllUser({
+        const data2 = await userTripItemApi.getAll({
           pageIndex: 0,
           pageSize: 99999,
           categoryId: 4,

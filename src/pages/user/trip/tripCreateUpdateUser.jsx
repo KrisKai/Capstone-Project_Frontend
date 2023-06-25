@@ -29,7 +29,7 @@ import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
 import Logo from "assets/images/logo.png";
-import userTripRouteApi from "api/user/route/userTripRouteApi";
+import userTripRouteApi from "api/user/trip/route/userTripRouteApi";
 import userTripApi from "api/user/trip/userTripApi";
 
 dayjs.extend(utc);
