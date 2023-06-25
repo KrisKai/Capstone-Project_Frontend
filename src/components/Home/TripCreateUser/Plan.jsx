@@ -13,97 +13,97 @@ import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
 
 const Plan = (props) => {
-  const [plans, setPlans] = useState([
-    {
-      planDate: props.item.listOfDate[0],
-      routeId: 0,
-      open: false,
-      tripRoute: [
-        {
-          planDateTime: props.item.listOfDateTime[0],
-          routeId: 0,
-          tripId: props.item.tripId,
-          longitude: "",
-          latitude: "",
-          locationName: "",
-          priority: 1,
-          showNote: false,
-          note: "",
-          placeId: "",
-        },
-      ],
-    },
-  ]);
+  // const [props.plans, props.setPlans] = useState([
+  //   {
+  //     planDate: props.item.listOfDate[0],
+  //     routeId: 0,
+  //     open: false,
+  //     tripRoute: [
+  //       {
+  //         planDateTime: props.item.listOfDateTime[0],
+  //         routeId: 0,
+  //         tripId: props.item.tripId,
+  //         longitude: "",
+  //         latitude: "",
+  //         locationName: "",
+  //         priority: 1,
+  //         showNote: false,
+  //         note: "",
+  //         placeId: "",
+  //       },
+  //     ],
+  //   },
+  // ]);
+
+  // useEffect(() => {
+  //   if (props.item.listOfDateTime) {
+  //     const tmp = props.item.listOfDateTime.map((date, index) => {
+  //       const newPlan = {
+  //         planDate: props.item.listOfDate[index],
+  //         routeId: 0,
+  //         open: false,
+  //         tripRoute: [
+  //           {
+  //             planDateTime: date,
+  //             routeId: 0,
+  //             tripId: props.item.tripId,
+  //             longitude: "",
+  //             latitude: "",
+  //             locationName: "",
+  //             priority: 1,
+  //             showNote: false,
+  //             note: "",
+  //             placeId: "",
+  //           },
+  //         ],
+  //       };
+  //       tripRouteApi
+  //         .getAllUser({
+  //           pageIndex: 0,
+  //           pageSize: 9999,
+  //           planName: "",
+  //           tripId: props.item.tripId,
+  //           planDateTime: date,
+  //         })
+  //         .then((data) => {
+  //           if (data.numOfRoute !== 0) {
+  //             newPlan.tripRoute = data.listOfRoute;
+  //             const newTripRoute = {
+  //               planDateTime: date,
+  //               routeId: 0,
+  //               tripId: props.item.tripId,
+  //               longitude: "",
+  //               latitude: "",
+  //               locationName: "",
+  //               priority: 1,
+  //               showNote: false,
+  //               note: "",
+  //               placeId: "",
+  //             };
+
+  //             newPlan.tripRoute.push(newTripRoute);
+  //           }
+  //         })
+  //         .catch((error) => {
+  //           // Handle the error here if needed
+  //         });
+
+  //       return newPlan;
+  //     });
+  //     props.setPlans(tmp);
+  //   }
+  // }, [props.item.trip, props.item.listOfDate]);
 
   useEffect(() => {
-    if (props.item.listOfDateTime) {
-      const tmp = props.item.listOfDateTime.map((date, index) => {
-        const newPlan = {
-          planDate: props.item.listOfDate[index],
-          routeId: 0,
-          open: false,
-          tripRoute: [
-            {
-              planDateTime: date,
-              routeId: 0,
-              tripId: props.item.tripId,
-              longitude: "",
-              latitude: "",
-              locationName: "",
-              priority: 1,
-              showNote: false,
-              note: "",
-              placeId: "",
-            },
-          ],
-        };
-        tripRouteApi
-          .getAllUser({
-            pageIndex: 0,
-            pageSize: 9999,
-            planName: "",
-            tripId: props.item.tripId,
-            planDateTime: date,
-          })
-          .then((data) => {
-            if (data.numOfRoute !== 0) {
-              newPlan.tripRoute = data.listOfRoute;
-              const newTripRoute = {
-                planDateTime: date,
-                routeId: 0,
-                tripId: props.item.tripId,
-                longitude: "",
-                latitude: "",
-                locationName: "",
-                priority: 1,
-                showNote: false,
-                note: "",
-                placeId: "",
-              };
-
-              newPlan.tripRoute.push(newTripRoute);
-            }
-          })
-          .catch((error) => {
-            // Handle the error here if needed
-          });
-
-        return newPlan;
-      });
-      setPlans(tmp);
-    }
-  }, [props.item.trip, props.item.listOfDate]);
-
-  useEffect(() => {
-    props.getPlanData(plans);
-  }, [plans]);
+    props.getPlanData(props.plans);
+  }, [props.plans]);
 
   useEffect(() => {
     async function addTripRoute() {
       if (props.placeData !== null && props.placeStatus === false) {
         const value = props.placeData;
         const coor = JSON.stringify(value.geometry.location);
-        let updatedPlans = [...plans];
+        let updatedPlans = [...props.plans];
         const childIndex =
           updatedPlans[props.selectedIndex].tripRoute.length - 1;
         updatedPlans[props.selectedIndex].tripRoute[childIndex].locationName =
@@ -135,7 +135,7 @@ const Plan = (props) => {
         };
 
         updatedPlans[props.selectedIndex].tripRoute.push(newTripRoute);
-        setPlans(updatedPlans);
+        props.setPlans(updatedPlans);
         props.setPlaceStatus(true);
       }
     }
@@ -143,21 +143,21 @@ const Plan = (props) => {
   }, [props.placeData]);
 
   const handleToggleOpen = (index) => {
-    const updatedPlans = [...plans];
+    const updatedPlans = [...props.plans];
     updatedPlans[index].open = !updatedPlans[index].open;
-    setPlans(updatedPlans);
+    props.setPlans(updatedPlans);
   };
 
   const handleShowNote = (index, childIndex) => {
-    const updatedPlans = [...plans];
+    const updatedPlans = [...props.plans];
     updatedPlans[index].tripRoute[childIndex].showNote =
       !updatedPlans[index].tripRoute[childIndex].showNote;
-    setPlans(updatedPlans);
+    props.setPlans(updatedPlans);
   };
 
   const onSelect = async (index, childIndex, value) => {
     const coor = JSON.stringify(value.geometry.location);
-    const updatedPlans = [...plans];
+    const updatedPlans = [...props.plans];
     updatedPlans[index].tripRoute[childIndex].locationName = value.name;
     updatedPlans[index].tripRoute[childIndex].longitude =
       JSON.parse(coor).lng.toString();
@@ -182,13 +182,13 @@ const Plan = (props) => {
     };
 
     updatedPlans[index].tripRoute.push(newTripRoute);
-    setPlans(updatedPlans);
+    props.setPlans(updatedPlans);
   };
 
   const handleClickData = async (index, childIndex, value) => {
     const placeIdToCheck = value.place_id; // Replace "your-place-id" with the actual placeId you want to check
 
-    const test = plans[index].tripRoute.findIndex(
+    const test = props.plans[index].tripRoute.findIndex(
       (route) => route.placeId === placeIdToCheck
     );
 
@@ -202,13 +202,13 @@ const Plan = (props) => {
   };
 
   const onChangeInput = (index, childIndex, value) => {
-    const updatedPlans = [...plans];
+    const updatedPlans = [...props.plans];
     updatedPlans[index].tripRoute[childIndex].note = value;
-    setPlans(updatedPlans);
+    props.setPlans(updatedPlans);
   };
 
   const handleClick = async (index, childIndex) => {
-    const updatedPlans = [...plans];
+    const updatedPlans = [...props.plans];
     const newTripRoute = {
       planDateTime: updatedPlans[index].tripRoute[0].planDateTime,
       routeId: 0,
@@ -231,10 +231,10 @@ const Plan = (props) => {
           updatedPlans[index].tripRoute.splice(childIndex, 1);
         });
     }
-    setPlans(updatedPlans);
+    props.setPlans(updatedPlans);
   };
 
-  // console.log(plans);
+  // console.log(props.plans);
 
   return (
     <Grid container>
@@ -273,7 +273,7 @@ const Plan = (props) => {
         </Box>
       </Grid>
       <Grid item xs={12} sx={{ pt: 3 }}>
-        {plans.map((plan, index) => {
+        {props.plans.map((plan, index) => {
           return (
             <Box
               key={index}

@@ -1,11 +1,16 @@
 import { Box, Button, Card, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { tripApi, userApi } from "api";
+import { tripApi, tripRouteApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import MapUser from "pages/map/user/MapUser";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  Link as RouterLink,
+} from "react-router-dom";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { GOOGLE_MAP_API } from "config";
 
@@ -18,12 +23,13 @@ import ElementMaker from "components/Home/TripCreateUser/ElementMakerForTripName
 import ElementMakerForSDate from "components/Home/TripCreateUser/ElementMakerForSDate";
 import ElementMakerForEDate from "components/Home/TripCreateUser/ElementMakerForEDate";
 import Plan from "components/Home/TripCreateUser/Plan";
-import { getPlacesData } from "api/user/travelAdvisorAPI";
 
 import { useAppSelector } from "redux/hooks";
 import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
 
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
+
+import Logo from "assets/images/logo.png";
 
 dayjs.extend(utc);
 
@@ -89,13 +95,33 @@ export default function TripCreate() {
     endLongitude: "",
     distance: "",
     tripStatus: "ACTIVE",
-    tripId: "",
+    tripId: tripId,
     estimateEndDateStr: "",
     estimateStartDateStr: "",
     listOfDate: [],
     listOfDateTime: [],
   });
-  const [plans, setPlans] = useState([]);
+  const [plans, setPlans] = useState([
+    {
+      planDate: trip.listOfDate[0] ? trip.listOfDate[0] : "",
+      routeId: 0,
+      open: false,
+      tripRoute: [
+        {
+          planDateTime: trip.listOfDate[0] ? trip.listOfDate[0] : "",
+          routeId: 0,
+          tripId: tripId,
+          longitude: "",
+          latitude: "",
+          locationName: "",
+          priority: 1,
+          showNote: false,
+          note: "",
+          placeId: "",
+        },
+      ],
+    },
+  ]);
 
   useEffect(() => {
     // IFFE
@@ -117,6 +143,65 @@ export default function TripCreate() {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    if (trip.listOfDateTime) {
+      const tmp = trip.listOfDateTime.map((date, index) => {
+        const newPlan = {
+          planDate: trip.listOfDate[index],
+          routeId: 0,
+          open: false,
+          tripRoute: [
+            {
+              planDateTime: date,
+              routeId: 0,
+              tripId: trip.tripId,
+              longitude: "",
+              latitude: "",
+              locationName: "",
+              priority: 1,
+              showNote: false,
+              note: "",
+              placeId: "",
+            },
+          ],
+        };
+        tripRouteApi
+          .getAllUser({
+            pageIndex: 0,
+            pageSize: 9999,
+            planName: "",
+            tripId: tripId,
+            planDateTime: date,
+          })
+          .then((data) => {
+            if (data.numOfRoute !== 0) {
+              newPlan.tripRoute = data.listOfRoute;
+              const newTripRoute = {
+                planDateTime: date,
+                routeId: 0,
+                tripId: tripId,
+                longitude: "",
+                latitude: "",
+                locationName: "",
+                priority: 1,
+                showNote: false,
+                note: "",
+                placeId: "",
+              };
+
+              newPlan.tripRoute.push(newTripRoute);
+            }
+          })
+          .catch((error) => {
+            // Handle the error here if needed
+          });
+
+        return newPlan;
+      });
+      setPlans(tmp);
+    }
+  }, [trip, trip.listOfDate]);
 
   const getPlanData = (plan) => {
     setPlans(plan);
@@ -230,18 +315,56 @@ export default function TripCreate() {
     <>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="fixed" open={open} color="default">
+        <AppBar position="fixed" color="default">
           <Toolbar>
-            <Button
-              variant="h6"
+            <img
+              src={Logo}
+              alt="Logo"
+              style={{ marginRight: "10px", height: "30px" }}
+            />
+            <Typography
+              variant="h4"
               noWrap
-              component="div"
               onClick={() => {
                 navigate("/");
               }}
             >
               Journey Sick
-            </Button>
+            </Typography>
+            <div style={{ marginRight: "auto" }}>
+              <Button
+                color="inherit"
+                component={RouterLink}
+                to="/"
+                sx={{ fontWeight: 600 }}
+              >
+                Trang chủ
+              </Button>
+              <Button
+                color="inherit"
+                component={RouterLink}
+                to="/maintenance"
+                sx={{ fontWeight: 600 }}
+              >
+                Điểm dừng chân
+              </Button>
+              <Button
+                color="inherit"
+                component={RouterLink}
+                to="/maintenance"
+                sx={{ fontWeight: 600 }}
+              >
+                Cẩm nang đi phượt
+              </Button>
+              <Button
+                color="inherit"
+                component={RouterLink}
+                to="/tripManagement"
+                sx={{ fontWeight: 600 }}
+              >
+                Quản lí chuyến đi
+              </Button>
+            </div>
           </Toolbar>
         </AppBar>
 
@@ -363,6 +486,8 @@ export default function TripCreate() {
                   </Grid>
                   <Grid item xs={12}>
                     <Plan
+                      plans={plans}
+                      setPlans={setPlans}
                       item={trip}
                       placeData={placeData}
                       selectedIndex={selectedIndex}
