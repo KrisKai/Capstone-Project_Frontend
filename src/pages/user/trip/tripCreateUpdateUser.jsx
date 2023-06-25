@@ -123,9 +123,9 @@ export default function TripCreate() {
     },
   ]);
 
-  useEffect(() => {
-    getPlanData(plans);
-  }, [plans]);
+  // useEffect(() => {
+  //   getPlanData(plans);
+  // }, [plans]);
 
   useEffect(() => {
     // IFFE
@@ -265,7 +265,6 @@ export default function TripCreate() {
     placesService.getDetails(request, (place, status) => {
       // eslint-disable-next-line no-undef
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        // console.log(place);
         setSelectedPlace(place);
         setSelectedIndex(index);
         setPlaceStatus(status);
@@ -299,7 +298,6 @@ export default function TripCreate() {
     placesService.getDetails(request, (place, status) => {
       // eslint-disable-next-line no-undef
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        // console.log(place);
         setSelectedPlace(place);
         setSelectedIndex(index);
         // Access the detailed place information here
