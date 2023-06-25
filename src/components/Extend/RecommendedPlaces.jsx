@@ -31,7 +31,7 @@ const PlaceCard = (props) => {
               height: "80px",
               marginRight: "8px",
               border: "1px dashed #dee2e6",
-              boxShadow: 'none',
+              boxShadow: "none",
             }}
             onClick={() => {
               props.onClickData(item);
@@ -178,7 +178,7 @@ const RecommendedPlaces = (props) => {
           marginLeft: 6,
         }}
       >
-        <Grid container pl={2}>
+        <Grid container>
           <Grid item xs={12} sm={1}>
             <IconButton
               onClick={() => setOpen(!open)}
@@ -197,7 +197,7 @@ const RecommendedPlaces = (props) => {
             in={open}
             timeout="auto"
             unmountOnExit
-            sx={{ pl: 4, pr: 2 }}
+            sx={{ pl: 2, pr: 2 }}
           >
             <Grid container>
               <Grid item xs={12} sm={1}>
@@ -225,11 +225,21 @@ const RecommendedPlaces = (props) => {
                 <Carousel
                   sx={{
                     height: "90px",
-                    pl: 7
+                    pl: 6,
+                    pr: 6,
                   }}
                   indicators={false}
                   autoPlay={false}
                   cycleNavigation={false}
+                  navButtonsAlwaysVisible={true}
+                  navButtonsProps={{
+                    // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
+                    style: {
+                      backgroundColor: "#f3f4f5",
+                      borderRadius: "50%",
+                      color: "black",
+                    },
+                  }}
                 >
                   {groupedRestaurants.map((group, index) => (
                     <PlaceCard
@@ -271,11 +281,21 @@ const RecommendedPlaces = (props) => {
                 <Carousel
                   sx={{
                     height: "90px",
-                    pl: 7
+                    pl: 6,
+                    pr: 6,
                   }}
                   indicators={false}
                   autoPlay={false}
                   cycleNavigation={false}
+                  navButtonsAlwaysVisible={true}
+                  navButtonsProps={{
+                    // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
+                    style: {
+                      backgroundColor: "#f3f4f5",
+                      borderRadius: "50%",
+                      color: "black",
+                    },
+                  }}
                 >
                   {groupedHotels.map((group, index) => (
                     <PlaceCard
@@ -317,11 +337,21 @@ const RecommendedPlaces = (props) => {
                 <Carousel
                   sx={{
                     height: "90px",
-                    pl: 7
+                    pl: 6,
+                    pr: 6,
                   }}
                   indicators={false}
                   autoPlay={false}
                   cycleNavigation={false}
+                  navButtonsAlwaysVisible={true}
+                  navButtonsProps={{
+                    // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
+                    style: {
+                      backgroundColor: "#f3f4f5",
+                      borderRadius: "50%",
+                      color: "black",
+                    },
+                  }}
                 >
                   {groupedAttractions.map((group, index) => (
                     <PlaceCard
