@@ -12,6 +12,8 @@ import AccessTimeFilledRoundedIcon from "@mui/icons-material/AccessTimeFilledRou
 import avatar1 from "assets/images/users/avatar-1.png";
 import authUserApi from "api/user/authenticate/authUserApi";
 import typeForConverting from "assets/data/typeForConverting";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import userApi from "api/user/user/userApi";
 
 // ==============================|| PROFILE - VIEW ||============================== //
 
@@ -27,7 +29,6 @@ const ProfileViewUser = (props) => {
     createDate: "",
     userInterestList: [],
   });
-  console.log(currentInfo)
 
   useEffect(() => {
     async function getInfo() {
@@ -51,6 +52,16 @@ const ProfileViewUser = (props) => {
     }
     getInfo();
   }, []);
+
+  const handleDeleteInterest = async (index) => {
+    const updatedInterests = [...currentInfo.userInterestList];
+    await userApi.deleteInterestByInterestId(
+      currentInfo.userInterestList[index].interestId
+    );
+    updatedInterests.splice(index, 1); // Remove the element at the specified index
+    setCurrentInfo({ ...currentInfo, userInterestList: updatedInterests });
+  };
+
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -95,22 +106,29 @@ const ProfileViewUser = (props) => {
           <AccessTimeFilledRoundedIcon /> {currentInfo.createDate}
         </Typography>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <AccessTimeFilledRoundedIcon />{" "}
+          {currentInfo.userInterestList.length > 0 && (
+            <FavoriteIcon sx={{ width: "24px", height: "24px" }} />
+          )}{" "}
           {currentInfo.userInterestList.map((item, index) => (
             <Box
               key={index}
               sx={{
+                mt: 0.5,
                 p: 0.5,
                 pl: "12px",
-                pr: "12px",
                 backgroundColor: "#f3f4f5",
                 borderRadius: 10,
-                mt: 1,
                 mr: 0.5,
                 mb: 1,
               }}
             >
-              {item.interest}
+              {item.interest}{" "}
+              <button
+                style={{ border: "none", paddingRight: "12px" }}
+                onClick={() => handleDeleteInterest(index)}
+              >
+                x
+              </button>
             </Box>
           ))}
         </Typography>
