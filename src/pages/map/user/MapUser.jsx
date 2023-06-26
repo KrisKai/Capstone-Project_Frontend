@@ -43,6 +43,7 @@ export default function Map({
   selectedData,
   plans,
   selectedIndex,
+  selectedChildIndex,
   placeStatus,
   handleAddPlaces,
 }) {
@@ -91,8 +92,6 @@ export default function Map({
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
 
-  // console.log(plans);
-
   const markers = useRef([]);
 
   useEffect(() => {}, [map, plans]);
@@ -105,13 +104,13 @@ export default function Map({
         strokeColor: color[selectedIndex], // Set the desired color here
       },
     });
-    if (map && plans.length > 0) {
+    if (map && plans.length > 1 && plans[selectedIndex].tripRoute.length > 2) {
       const waypoints = plans[selectedIndex].tripRoute
         .filter((route) => route.locationName !== "")
         .map((route) => ({ location: route.locationName }));
       calculateRoute(waypoints);
     }
-  }, [selectedIndex]);
+  }, [selectedIndex, selectedChildIndex]);
 
   async function calculateRoute(waypoints) {
     const request = {
@@ -195,7 +194,9 @@ export default function Map({
                       size="lg"
                       style={{ marginRight: "8px" }}
                     />
-                    <Typography variant="h4" sx={{mt:1}}>{data.name}</Typography>
+                    <Typography variant="h4" sx={{ mt: 1 }}>
+                      {data.name}
+                    </Typography>
                   </Grid>
                   <Grid item xs={12} sm={2}>
                     <img
@@ -416,12 +417,7 @@ export default function Map({
                         marginRight: 1,
                       }}
                     >
-                      <img
-                        alt=""
-                        src={Google}
-                        width="14"
-                        height="14"
-                      ></img>{" "}
+                      <img alt="" src={Google} width="14" height="14"></img>{" "}
                       Google
                     </Button>
                     <Button
@@ -431,12 +427,7 @@ export default function Map({
                       color="secondary"
                       sx={{ borderRadius: 10, fontWeight: 600, height: "32px" }}
                     >
-                      <img
-                        alt=""
-                        src={GoogleMaps}
-                        width="14"
-                        height="14"
-                      ></img>{" "}
+                      <img alt="" src={GoogleMaps} width="14" height="14"></img>{" "}
                       Google Maps
                     </Button>
                   </Grid>

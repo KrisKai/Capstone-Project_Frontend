@@ -67,9 +67,9 @@ const AppBar = styled(MuiAppBar, {
 export default function TripCreate() {
   const [selectedPlace, setSelectedPlace] = useState();
   const [selectedIndex, setSelectedIndex] = useState();
+  const [selectedChildIndex, setSelectedChildIndex] = useState();
   const [placeStatus, setPlaceStatus] = useState();
   const [placeData, setPlaceData] = useState();
-
   // show input
   const [showInputTripName, setShowInputTripName] = useState(false);
   const [showInputSDate, setShowInputSDate] = useState(false);
@@ -213,135 +213,142 @@ export default function TripCreate() {
   };
 
   const onClickData = (data) => {
-    const request = {
-      placeId: data.place_id,
-      fields: [
-        "name",
-        "formatted_address",
-        "opening_hours",
-        "website",
-        "rating",
-        "photos",
-        "types",
-        "user_ratings_total",
-        "formatted_phone_number",
-        "url",
-        "geometry",
-        "place_id",
-      ],
-      language: "vi",
-    };
+    if (data.place_id !== "") {
+      const request = {
+        placeId: data.place_id,
+        fields: [
+          "name",
+          "formatted_address",
+          "opening_hours",
+          "website",
+          "rating",
+          "photos",
+          "types",
+          "user_ratings_total",
+          "formatted_phone_number",
+          "url",
+          "geometry",
+          "place_id",
+        ],
+        language: "vi",
+      };
 
-    placesService.getDetails(request, (place, status) => {
-      // eslint-disable-next-line no-undef
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        let data = place;
+      placesService.getDetails(request, (place, status) => {
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          let data = place;
 
-        const convertedTypes = data.types.map((type) => {
-          const matchingType = typeForConverting.find(
-            (data) => data.name === type
-          );
-          return matchingType ? matchingType.code : type;
-        });
+          const convertedTypes = data.types.map((type) => {
+            const matchingType = typeForConverting.find(
+              (data) => data.name === type
+            );
+            return matchingType ? matchingType.code : type;
+          });
 
-        data.types = convertedTypes;
+          data.types = convertedTypes;
 
-        setSelectedPlace(data);
-        // Access the detailed place information here
-      } else {
-        console.error("Error:", status);
-      }
-    });
+          setSelectedPlace(data);
+          // Access the detailed place information here
+        } else {
+          console.error("Error:", status);
+        }
+      });
+    }
   };
 
   const onClickAutocomplete = (index, childIndex) => {
-    const request = {
-      placeId: plans[index].tripRoute[childIndex].placeId,
-      fields: [
-        "name",
-        "formatted_address",
-        "opening_hours",
-        "website",
-        "rating",
-        "photos",
-        "types",
-        "user_ratings_total",
-        "formatted_phone_number",
-        "url",
-        "geometry",
-        "place_id",
-      ],
-      language: "vi",
-    };
+    if (plans[index].tripRoute[childIndex].placeId !== "") {
+      const request = {
+        placeId: plans[index].tripRoute[childIndex].placeId,
+        fields: [
+          "name",
+          "formatted_address",
+          "opening_hours",
+          "website",
+          "rating",
+          "photos",
+          "types",
+          "user_ratings_total",
+          "formatted_phone_number",
+          "url",
+          "geometry",
+          "place_id",
+        ],
+        language: "vi",
+      };
 
-    placesService.getDetails(request, (place, status) => {
-      console.log(place);
-      // eslint-disable-next-line no-undef
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        let data = place;
+      placesService.getDetails(request, (place, status) => {
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          let data = place;
 
-        const convertedTypes = data.types.map((type) => {
-          const matchingType = typeForConverting.find(
-            (data) => data.name === type
-          );
-          return matchingType ? matchingType.code : type;
-        });
+          const convertedTypes = data.types.map((type) => {
+            const matchingType = typeForConverting.find(
+              (data) => data.name === type
+            );
+            return matchingType ? matchingType.code : type;
+          });
 
-        data.types = convertedTypes;
+          data.types = convertedTypes;
 
-        setSelectedPlace(data);
-        setSelectedIndex(index);
-        setPlaceStatus(status);
-        // Access the detailed place information here
-      } else {
-        console.error("Error:", status);
-      }
-    });
+          setSelectedPlace(data);
+          setSelectedIndex(index);
+          setSelectedChildIndex(childIndex);
+          setPlaceStatus(status);
+          // Access the detailed place information here
+        } else {
+          console.error("Error:", status);
+        }
+      });
+    }
   };
 
   const handleClickData = (index, childIndex, place_id, status) => {
-    const request = {
-      placeId: place_id,
-      fields: [
-        "name",
-        "formatted_address",
-        "opening_hours",
-        "website",
-        "rating",
-        "photos",
-        "types",
-        "user_ratings_total",
-        "formatted_phone_number",
-        "url",
-        "geometry",
-        "place_id",
-      ],
-      language: "vi",
-    };
+    if (place_id !== "") {
+      const request = {
+        placeId: place_id,
+        fields: [
+          "name",
+          "formatted_address",
+          "opening_hours",
+          "website",
+          "rating",
+          "photos",
+          "types",
+          "user_ratings_total",
+          "formatted_phone_number",
+          "url",
+          "geometry",
+          "place_id",
+        ],
+        language: "vi",
+      };
 
-    placesService.getDetails(request, (place, status) => {
-      // eslint-disable-next-line no-undef
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        let data = place;
+      placesService.getDetails(request, (place, status) => {
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          let data = place;
 
-        const convertedTypes = data.types.map((type) => {
-          const matchingType = typeForConverting.find(
-            (data) => data.name === type
-          );
-          return matchingType ? matchingType.code : type;
-        });
+          const convertedTypes = data.types.map((type) => {
+            const matchingType = typeForConverting.find(
+              (data) => data.name === type
+            );
+            return matchingType ? matchingType.code : type;
+          });
 
-        data.types = convertedTypes;
+          data.types = convertedTypes;
 
-        setSelectedPlace(data);
-        setSelectedIndex(index);
-        // Access the detailed place information here
-      } else {
-        console.error("Error:", status);
-      }
-    });
+          setSelectedPlace(data);
+          setSelectedIndex(index);
+          setSelectedChildIndex(childIndex);
+          // Access the detailed place information here
+        } else {
+          console.error("Error:", status);
+        }
+      });
 
-    setPlaceStatus(status);
+      setPlaceStatus(status);
+    }
   };
 
   function handleAddPlaces(selectedIndex, data) {
@@ -545,6 +552,7 @@ export default function TripCreate() {
                 plans={plans}
                 selectedData={selectedPlace}
                 selectedIndex={selectedIndex}
+                selectedChildIndex={selectedChildIndex}
                 placeStatus={placeStatus}
                 handleAddPlaces={handleAddPlaces}
               />
