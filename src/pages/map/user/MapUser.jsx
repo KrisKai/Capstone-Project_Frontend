@@ -256,6 +256,25 @@ export default function Map({
                       </Button>
                     )}
                   </Grid>
+                  <Grid item xs={12} sm={12} display="flex" alignItems="center">
+                    {data.types.map((item, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          p: 0.5,
+                          pl: "12px",
+                          pr: "12px",
+                          backgroundColor: "#f3f4f5",
+                          borderRadius: 10,
+                          mt: 1,
+                          mr: 0.5,
+                          mb: 1,
+                        }}
+                      >
+                        {item}
+                      </Box>
+                    ))}
+                  </Grid>
 
                   <Grid item xs={12} sm={12} display="flex" alignItems="center">
                     <FontAwesomeIcon

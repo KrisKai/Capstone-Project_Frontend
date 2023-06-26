@@ -31,6 +31,7 @@ import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocomplet
 import Logo from "assets/images/logo.png";
 import userTripRouteApi from "api/user/trip/route/userTripRouteApi";
 import userTripApi from "api/user/trip/userTripApi";
+import typeForConverting from "assets/data/typeForConverting";
 
 dayjs.extend(utc);
 
@@ -234,7 +235,18 @@ export default function TripCreate() {
     placesService.getDetails(request, (place, status) => {
       // eslint-disable-next-line no-undef
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        setSelectedPlace(place);
+        let data = place;
+
+        const convertedTypes = data.types.map((type) => {
+          const matchingType = typeForConverting.find(
+            (data) => data.name === type
+          );
+          return matchingType ? matchingType.code : type;
+        });
+
+        data.types = convertedTypes;
+
+        setSelectedPlace(data);
         // Access the detailed place information here
       } else {
         console.error("Error:", status);
@@ -263,9 +275,21 @@ export default function TripCreate() {
     };
 
     placesService.getDetails(request, (place, status) => {
+      console.log(place);
       // eslint-disable-next-line no-undef
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        setSelectedPlace(place);
+        let data = place;
+
+        const convertedTypes = data.types.map((type) => {
+          const matchingType = typeForConverting.find(
+            (data) => data.name === type
+          );
+          return matchingType ? matchingType.code : type;
+        });
+
+        data.types = convertedTypes;
+
+        setSelectedPlace(data);
         setSelectedIndex(index);
         setPlaceStatus(status);
         // Access the detailed place information here
@@ -298,7 +322,18 @@ export default function TripCreate() {
     placesService.getDetails(request, (place, status) => {
       // eslint-disable-next-line no-undef
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        setSelectedPlace(place);
+        let data = place;
+
+        const convertedTypes = data.types.map((type) => {
+          const matchingType = typeForConverting.find(
+            (data) => data.name === type
+          );
+          return matchingType ? matchingType.code : type;
+        });
+
+        data.types = convertedTypes;
+
+        setSelectedPlace(data);
         setSelectedIndex(index);
         // Access the detailed place information here
       } else {
