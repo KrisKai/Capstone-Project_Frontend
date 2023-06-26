@@ -399,7 +399,6 @@ export default function Map({
                         src={TripAdvisor}
                         width="14"
                         height="14"
-                        class="mx-1"
                       ></img>{" "}
                       TripAdvisor
                     </Button>
@@ -422,7 +421,6 @@ export default function Map({
                         src={Google}
                         width="14"
                         height="14"
-                        class="mx-1"
                       ></img>{" "}
                       Google
                     </Button>
@@ -438,7 +436,6 @@ export default function Map({
                         src={GoogleMaps}
                         width="14"
                         height="14"
-                        class="mx-1"
                       ></img>{" "}
                       Google Maps
                     </Button>
