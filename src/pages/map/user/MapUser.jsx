@@ -195,7 +195,7 @@ export default function Map({
                       size="lg"
                       style={{ marginRight: "8px" }}
                     />
-                    <Typography variant="h5">{data.name}</Typography>
+                    <Typography variant="h4" sx={{mt:1}}>{data.name}</Typography>
                   </Grid>
                   <Grid item xs={12} sm={2}>
                     <img
@@ -203,7 +203,7 @@ export default function Map({
                       alt="Image"
                       style={{
                         width: "100%",
-                        height: "100px",
+                        height: "120px",
                         borderRadius: 5,
                       }}
                     />
@@ -391,7 +391,7 @@ export default function Map({
                         borderRadius: 10,
                         fontWeight: 600,
                         height: "32px",
-                        marginRight: 2,
+                        marginRight: 1,
                       }}
                     >
                       <img
@@ -413,7 +413,7 @@ export default function Map({
                         borderRadius: 10,
                         fontWeight: 600,
                         height: "32px",
-                        marginRight: 2,
+                        marginRight: 1,
                       }}
                     >
                       <img
