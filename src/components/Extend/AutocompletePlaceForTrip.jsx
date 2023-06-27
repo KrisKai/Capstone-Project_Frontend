@@ -133,6 +133,7 @@ const AutocompletePlaceForTrip = (props) => {
                 index={props.index}
                 childIndex={props.childIndex}
                 trip={props.trip}
+                currentInfo={props.currentInfo}
                 onClickData={props.onClickData}
                 handleClickData={handleClickData}
               />
@@ -233,6 +234,7 @@ const AutocompletePlaceForTrip = (props) => {
                 index={props.index}
                 childIndex={props.childIndex}
                 trip={props.trip}
+                currentInfo={props.currentInfo}
                 onClickData={props.onClickData}
                 handleClickData={handleClickData}
               />

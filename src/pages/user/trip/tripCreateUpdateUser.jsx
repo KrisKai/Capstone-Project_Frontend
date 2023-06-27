@@ -32,6 +32,7 @@ import Logo from "assets/images/logo.png";
 import userTripRouteApi from "api/user/trip/route/userTripRouteApi";
 import userTripApi from "api/user/trip/userTripApi";
 import typeForConverting from "assets/data/typeForConverting";
+import authUserApi from "api/user/authenticate/authUserApi";
 
 dayjs.extend(utc);
 
@@ -123,6 +124,17 @@ export default function TripCreate() {
       ],
     },
   ]);
+  const [currentInfo, setCurrentInfo] = useState({
+    username: "",
+    role: "",
+    birthday: "",
+    email: "",
+    fullname: "",
+    phone: "",
+    address: "",
+    createDate: "",
+    userInterestList: [],
+  });
 
   // useEffect(() => {
   //   getPlanData(plans);
@@ -139,6 +151,8 @@ export default function TripCreate() {
         } else {
           navigate("/tripList");
         }
+        const response = await authUserApi.getCurrentInfo();
+        setCurrentInfo(response);
       } catch (error) {
         console.log("Failed to fetch trip details", error);
         if (error.response.status == 401) {
@@ -536,6 +550,7 @@ export default function TripCreate() {
                       placeData={placeData}
                       selectedIndex={selectedIndex}
                       placeStatus={placeStatus}
+                      currentInfo={currentInfo}
                       onClickData={onClickData}
                       getPlanData={getPlanData}
                       onClickAutocomplete={onClickAutocomplete}

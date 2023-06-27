@@ -21,6 +21,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { authApi } from "api";
 import * as yup from "yup";
+import authUserApi from "api/user/authenticate/authUserApi";
 dayjs.extend(utc);
 
 // ==============================|| PROFILE - EDIT ||============================== //
@@ -36,11 +37,12 @@ const ProfileEditUser = (props) => {
     phone: "",
     address: "",
     createDate: "",
+    userInterestList: [],
   });
 
   useEffect(() => {
     async function getInfo() {
-      const response = await authApi.getCurrentInfo();
+      const response = await authUserApi.getCurrentInfo();
       if (response.birthday) {
         response.birthday = dayjs.utc(response.birthday);
         response.createDate = response.createDate.substring(0, 10);

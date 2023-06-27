@@ -13,7 +13,6 @@ import dayjs from "dayjs";
 import userTripRouteApi from "api/user/trip/route/userTripRouteApi";
 
 const Plan = (props) => {
-
   useEffect(() => {
     async function addTripRoute() {
       if (props.placeData !== null && props.placeStatus === false) {
@@ -232,6 +231,7 @@ const Plan = (props) => {
                         childIndex={childIndex}
                         place={place}
                         trip={props.item}
+                        currentInfo={props.currentInfo}
                         onSelect={onSelect}
                         handleShowNote={handleShowNote}
                         onChangeInput={onChangeInput}

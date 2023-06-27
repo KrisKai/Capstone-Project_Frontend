@@ -62,13 +62,6 @@ export default function Map({
     libraries: ["places"],
   });
 
-  // const waypoints = [
-  //   { location: "Hue" },
-  //   { location: "Da Nang" },
-  //   { location: "Quang Nam" },
-  //   { location: "Binh Thuan" },
-  // ];
-
   const { placesService } = usePlacesService({
     apiKey: GOOGLE_MAP_API,
   });
