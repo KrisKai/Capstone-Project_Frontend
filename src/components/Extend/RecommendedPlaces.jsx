@@ -86,9 +86,6 @@ const PlaceCard = (props) => {
 
 const RecommendedPlaces = (props) => {
   const [open, setOpen] = useState(false);
-  const [openRestaurants, setOpenRestaurants] = useState(false);
-  const [openHotels, setOpenHotels] = useState(false);
-  const [openAttractions, setOpenAttractions] = useState(false);
   const { placesService } = usePlacesService({
     apiKey: GOOGLE_MAP_API,
   });
@@ -98,8 +95,6 @@ const RecommendedPlaces = (props) => {
   const [attractions, setAttractions] = useState([]);
 
   const [groupedRestaurants, setGroupedRestaurants] = useState([]);
-  const [groupedHotels, setGroupedHotels] = useState([]);
-  const [groupedAttractions, setGroupedAttractions] = useState([]);
 
   const coor = {
     lat: parseFloat(props.trip.endLatitude),
@@ -109,7 +104,7 @@ const RecommendedPlaces = (props) => {
     placesService.nearbySearch(
       {
         location: coor,
-        radius: 5000,
+        radius: 3000,
         type: ["restaurant"],
         fields: ["name", "formatted_address"],
       },
@@ -126,7 +121,7 @@ const RecommendedPlaces = (props) => {
     placesService.nearbySearch(
       {
         location: coor,
-        radius: 5000,
+        radius: 3000,
         type: "lodging",
       },
       (results, status) => {
@@ -141,7 +136,7 @@ const RecommendedPlaces = (props) => {
     placesService.nearbySearch(
       {
         location: coor,
-        radius: 5000,
+        radius: 3000,
         type: "tourist_attraction",
       },
       (results, status) => {
@@ -158,7 +153,6 @@ const RecommendedPlaces = (props) => {
   useEffect(() => {
     async function getAllPlaces() {
       const place = [...restaurants, ...hotels, ...attractions];
-      console.log(place);
       if (place.length > 0) {
         const groups = [];
         const queryParams = {

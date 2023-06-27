@@ -294,6 +294,7 @@ export default function TripCreate() {
       placesService.getDetails(request, (place, status) => {
         // eslint-disable-next-line no-undef
         if (status === google.maps.places.PlacesServiceStatus.OK) {
+          // console.log(place);
           let data = place;
 
           const convertedTypes = data.types.map((type) => {

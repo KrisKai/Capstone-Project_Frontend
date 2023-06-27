@@ -106,13 +106,24 @@ export default function Map({
   }, [selectedIndex, selectedChildIndex]);
 
   async function calculateRoute(waypoints) {
-    const request = {
-      origin: waypoints[0].location,
-      destination: waypoints[waypoints.length - 1].location,
-      waypoints: waypoints.slice(1, -1),
-      travelMode: "DRIVING",
-      optimizeWaypoints: true,
-    };
+    let request;
+    if (waypoints.length === 2) {
+      request = {
+        origin: waypoints[0].location,
+        destination: waypoints[waypoints.length - 1].location,
+        travelMode: "DRIVING",
+        optimizeWaypoints: true,
+      };
+    } else if (waypoints.length > 2) {
+      request = {
+        origin: waypoints[0].location,
+        destination: waypoints[waypoints.length - 1].location,
+        waypoints: waypoints.slice(1, -1),
+        travelMode: "DRIVING",
+        optimizeWaypoints: true,
+      };
+    }
+
     // eslint-disable-next-line no-undef
     const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route(request);
