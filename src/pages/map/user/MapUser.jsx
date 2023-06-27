@@ -82,8 +82,6 @@ export default function Map({
 
   const [map, setMap] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
-  const [distance, setDistance] = useState("");
-  const [duration, setDuration] = useState("");
 
   const markers = useRef([]);
 
@@ -128,12 +126,6 @@ export default function Map({
     const directionsService = new google.maps.DirectionsService();
     const results = await directionsService.route(request);
     setDirectionsResponse(results);
-  }
-
-  function clearRoute() {
-    setDirectionsResponse(null);
-    setDistance("");
-    setDuration("");
   }
 
   function handleAddPlace(data) {
