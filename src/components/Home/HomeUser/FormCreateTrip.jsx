@@ -67,13 +67,13 @@ const FormCreateTrip = () => {
           flexDirection="column"
           paddingY={5}
           borderRadius="5px"
-          sx={{ backgroundColor: "#f3f4f5", borderRadius: 8 }}
+          sx={{backgroundColor:"#f3f4f5", borderRadius:8}}
         >
           <Box display="flex" flexDirection="column" alignItems="center">
             <Typography variant="h2" sx={{ fontSize: 36 }}>
               Tạo hành trình mới
             </Typography>
-            <Box width="60%" border="1px solid #168843" mt={1}></Box>
+            <Box width="60%" border="1px solid black" mt={1}></Box>
           </Box>
           <Box mt={2}>
             <Box display="flex" flexDirection="column" gap={2}>
@@ -93,7 +93,7 @@ const FormCreateTrip = () => {
                       </InputAdornment>
                     ),
                   }}
-                  sx={{ backgroundColor: "white" }}
+                  sx={{backgroundColor:"white"}}
                   placeholder="Nhập địa điểm"
                   inputRef={materialRef}
                 />

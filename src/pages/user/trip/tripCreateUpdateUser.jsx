@@ -33,6 +33,7 @@ import userTripRouteApi from "api/user/trip/route/userTripRouteApi";
 import userTripApi from "api/user/trip/userTripApi";
 import typeForConverting from "assets/data/typeForConverting";
 import authUserApi from "api/user/authenticate/authUserApi";
+import { toast } from "react-toastify";
 
 dayjs.extend(utc);
 
@@ -147,7 +148,16 @@ export default function TripCreate() {
       try {
         const data = await userTripApi.getById(tripId);
         if (data != null && data != "") {
-          setTrip(data);
+          switch (data.Code) {
+            case "G001":
+              navigate("/");
+              return toast.error(data.Message);
+            case "U001":
+              navigate("/");
+              return toast.error(data.Message);
+            default:
+              setTrip(data);
+          }
         } else {
           navigate("/tripList");
         }
