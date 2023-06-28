@@ -121,7 +121,7 @@ const UserSuggest = () => {
             width="40%"
             border="1px solid black"
             mt={1}
-            marginLeft={13}
+            marginLeft={15}
           ></Box>
         </Box>
         <Box width="70%">

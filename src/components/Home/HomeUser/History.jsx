@@ -122,6 +122,7 @@ const HistoryCard = (props) => {
       }
     }
   };
+  console.log(props.item.tripThumbnail);
   return (
     <>
       <Card
@@ -130,6 +131,7 @@ const HistoryCard = (props) => {
           height: "400px",
           display: "flex",
           flexDirection: "column",
+          borderRadius: 4
         }}
       >
         <CardActionArea>
@@ -171,8 +173,12 @@ const HistoryCard = (props) => {
           </IconButton>
 
           <img
-            src="https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
-            style={{ width: "100%", borderRadius: 10, height:"250px" }}
+            src={
+              props.item.tripThumbnail === null
+                ? "https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
+                : props.item.tripThumbnail
+            }
+            style={{ width: "100%", borderRadius: 10, height: "250px" }}
             onClick={() => gotoTrip(props.item.tripId)}
           />
         </CardActionArea>
@@ -205,32 +211,32 @@ const HistoryCard = (props) => {
               {props.item.estimateStartDateStr} -{" "}
               {props.item.estimateEndDateStr}
             </Typography>
-            {props.item.tripStatus === "CLOSED" && props.item.feedbackDescription === null && (
-              <Button
-                sx={{
-                  right: 0,
-                  marginLeft: 2,
-                }}
-                variant="outlined"
-                onClick={openFeedback}
-              >
-                
-                Đánh giá
-              </Button>
-            )}
-            {props.item.tripStatus === "CLOSED" && props.item.feedbackDescription !== null && (
-              <Button
-                sx={{
-                  right: 0,
-                  marginLeft: 2,
-                }}
-                variant="outlined"
-                onClick={openFeedback}
-              >
-                
-                Đã đánh giá
-              </Button>
-            )}
+            {props.item.tripStatus === "CLOSED" &&
+              props.item.feedbackDescription === null && (
+                <Button
+                  sx={{
+                    right: 0,
+                    marginLeft: 2,
+                  }}
+                  variant="outlined"
+                  onClick={openFeedback}
+                >
+                  Đánh giá
+                </Button>
+              )}
+            {props.item.tripStatus === "CLOSED" &&
+              props.item.feedbackDescription !== null && (
+                <Button
+                  sx={{
+                    right: 0,
+                    marginLeft: 2,
+                  }}
+                  variant="outlined"
+                  onClick={openFeedback}
+                >
+                  Đã đánh giá
+                </Button>
+              )}
           </Box>
         </CardContent>
       </Card>
@@ -370,7 +376,7 @@ const History = () => {
     <>
       <Box display="flex" justifyContent="center" marginBottom={2}>
         <Box display="flex" flexDirection="column" alignItems="center">
-          <Typography variant="h2">Chuyến đi của bạn</Typography>
+          <Typography variant="h2" >Chuyến đi của bạn</Typography>
           <Box width="60%" border="1px solid black" mt={1}></Box>
         </Box>
       </Box>

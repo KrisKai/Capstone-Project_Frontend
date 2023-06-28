@@ -1,10 +1,4 @@
-import {
-  Box,
-  Container,
-  Grid,
-  List,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid, List, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import HomeImage from "assets/images/index_img.png";
@@ -47,7 +41,7 @@ const UserHeader = () => {
       }}
     >
       <Grid container sx={{ display: "flex" }}>
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} sm={2.5}>
           <Container
             className="d-flex"
             sx={{
@@ -69,7 +63,7 @@ const UserHeader = () => {
               display: "flex",
               justifyContent: "flex-start",
               p: 1,
-              m: 1,
+              m: 1.5,
               borderRadius: 1,
             }}
           >
@@ -79,7 +73,7 @@ const UserHeader = () => {
                   <Link
                     style={{
                       fontWeight: 600,
-                      fontSize: "20px",
+                      fontSize: "18px",
                       textDecoration: "none",
                       color: "black",
                     }}
@@ -100,7 +94,7 @@ const UserHeader = () => {
             }}
           ></List>
         </Grid>
-        <Grid item xs={12} sm={1} marginTop={2}>
+        <Grid item xs={12} sm={0.5} marginTop={2}>
           <ProfileUser />
         </Grid>
         <Grid
@@ -117,9 +111,16 @@ const UserHeader = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        <Typography component="h1" fontSize="60px" fontWeight={900}>
+        <Typography
+          component="h1"
+          fontSize="60px"
+          fontWeight={900}
+          color="#168843"
+          marginTop={7}
+        >
           Journey Sick
         </Typography>
         <Typography component="h3" fontSize="20px" fontWeight={400}>

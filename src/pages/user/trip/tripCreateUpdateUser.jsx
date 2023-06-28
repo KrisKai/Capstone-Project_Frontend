@@ -427,7 +427,7 @@ export default function TripCreate() {
           </Toolbar>
         </AppBar>
 
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Box component="main" sx={{ flexGrow: 1, p: 1 }}>
           <DrawerHeader />
           <Grid container>
             <Grid
@@ -435,11 +435,15 @@ export default function TripCreate() {
               xs={12}
               sm={5}
               sx={{
-                backgroundImage: `url(https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60)`,
+                backgroundImage: `url(${
+                  trip.tripThumbnail !== null
+                    ? trip.tripThumbnail
+                    : "https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
+                })`,
               }}
             >
-              <Card sx={{ padding: 4, gap: 2, margin: 7, borderRadius: 5 }}>
-                <Typography variant="h4">
+              <Card sx={{ padding: 4, gap: 2, margin: 7, borderRadius: 3 }}>
+                <Typography sx={{ fontSize: "2.25rem", fontWeight: 700 }}>
                   <ElementMaker
                     value={trip.tripName}
                     handleChange={(e) => {
@@ -467,7 +471,9 @@ export default function TripCreate() {
                 <br />
                 <Grid container>
                   <Grid item xs={12} sm={11}>
-                    <CalendarMonthIcon />
+                    <CalendarMonthIcon
+                      sx={{ marginRight: 1, marginBottom: 0.75 }}
+                    />
                     <ElementMakerForSDate
                       value={trip.estimateStartDate}
                       handleChange={(e) => {
