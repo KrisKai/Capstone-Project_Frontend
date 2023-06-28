@@ -34,6 +34,7 @@ import userTripApi from "api/user/trip/userTripApi";
 import typeForConverting from "assets/data/typeForConverting";
 import authUserApi from "api/user/authenticate/authUserApi";
 import { toast } from "react-toastify";
+import { useRef } from "react";
 
 dayjs.extend(utc);
 
@@ -101,6 +102,7 @@ export default function TripCreate() {
     tripId: tripId,
     estimateEndDateStr: "",
     estimateStartDateStr: "",
+    tripThumbnail: "",
     listOfDate: [],
     listOfDateTime: [],
   });
@@ -136,6 +138,8 @@ export default function TripCreate() {
     createDate: "",
     userInterestList: [],
   });
+
+  const fileInputRef = useRef(null);
 
   // useEffect(() => {
   //   getPlanData(plans);
@@ -380,6 +384,19 @@ export default function TripCreate() {
     setPlaceData(data);
   }
 
+  function handleGridClick() {
+    fileInputRef.current.click();
+  }
+
+  async function handleFileUpload(event) {
+    const file = event.target.files[0];
+    let updatedTrip = trip;
+    updatedTrip.tripThumbnail = file;
+    const response = await userTripApi.update(trip);
+    updatedTrip.tripThumbnail = response;
+    setTrip(updatedTrip);
+  }
+
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -440,6 +457,12 @@ export default function TripCreate() {
         <Box component="main" sx={{ flexGrow: 1, p: 1 }}>
           <DrawerHeader />
           <Grid container>
+            <input
+              type="file"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileUpload}
+            />
             <Grid
               item
               xs={12}
@@ -451,6 +474,7 @@ export default function TripCreate() {
                     : "https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
                 })`,
               }}
+              onClick={handleGridClick}
             >
               <Card sx={{ padding: 4, gap: 2, margin: 7, borderRadius: 3 }}>
                 <Typography sx={{ fontSize: "2.25rem", fontWeight: 700 }}>
