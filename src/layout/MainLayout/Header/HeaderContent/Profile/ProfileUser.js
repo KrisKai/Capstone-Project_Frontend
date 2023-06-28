@@ -26,7 +26,10 @@ import avatar1 from "assets/images/users/avatar-1.png";
 
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { getCurrentUser, selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
+import {
+  getCurrentUser,
+  selectCurrentUser,
+} from "redux/modules/user/authenticate/authUserSlice";
 import ProfileTabUser from "./ProfileTabUser";
 
 // tab panel wrapper
@@ -112,7 +115,7 @@ const ProfileUser = () => {
         <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
           <Avatar
             alt="profile user"
-            src={avatar1}
+            src={currentUser.avatar === null ? avatar1 : currentUser.avatar}
             sx={{ width: 32, height: 32 }}
           />
         </Stack>
@@ -163,7 +166,11 @@ const ProfileUser = () => {
                           >
                             <Avatar
                               alt="profile user"
-                              src={avatar1}
+                              src={
+                                currentUser.avatar === null
+                                  ? avatar1
+                                  : currentUser.avatar
+                              }
                               sx={{ width: 32, height: 32 }}
                             />
                             <Stack>

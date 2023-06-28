@@ -119,7 +119,7 @@ const Profile = () => {
         <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
           <Avatar
             alt="profile user"
-            src={avatar1}
+            src={currentUser.avatar === null ? avatar1 : currentUser.avatar}
             sx={{ width: 32, height: 32 }}
           />
           <Typography variant="subtitle1">{currentUser.name}</Typography>
@@ -173,7 +173,7 @@ const Profile = () => {
                           >
                             <Avatar
                               alt="profile user"
-                              src={avatar1}
+                              src={currentUser.avatar === null ? avatar1 : currentUser.avatar}
                               sx={{ width: 32, height: 32 }}
                             />
                             <Stack>

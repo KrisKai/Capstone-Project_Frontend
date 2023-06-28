@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // material-ui
 import { Box, Typography, useMediaQuery, Avatar, Button } from "@mui/material";
@@ -28,7 +28,10 @@ const ProfileViewUser = (props) => {
     address: "",
     createDate: "",
     userInterestList: [],
+    avatar: "",
+    avatarFile: "",
   });
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     async function getInfo() {
@@ -62,16 +65,37 @@ const ProfileViewUser = (props) => {
     setCurrentInfo({ ...currentInfo, userInterestList: updatedInterests });
   };
 
+  function handleAvavtarClick() {
+    fileInputRef.current.click();
+  }
+
+  async function handleFileUpload(event) {
+    const file = event.target.files[0];
+    let updatedInfo = currentInfo;
+    updatedInfo.avatarFile = file;
+    const response = await userApi.updateAvatar(updatedInfo);
+    updatedInfo.avatar = response;
+    setCurrentInfo(updatedInfo);
+  }
+
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h5">Ảnh đại diện</Typography>
-        <Button variant="outlined">Upload Avatar</Button>
+        <Button variant="outlined" onClick={handleAvavtarClick}>
+          Đổi ảnh đại diện
+        </Button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          style={{ display: "none" }}
+          onChange={handleFileUpload}
+        />
       </Box>
 
       <Avatar
         alt="profile user"
-        src={avatar1}
+        src={currentInfo.avatar === null ? avatar1 : currentInfo.avatar}
         sx={{
           height: "200px",
           width: "200px",

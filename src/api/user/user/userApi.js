@@ -1,3 +1,4 @@
+import axiosInstanceImageUser from "utils/axiosForImageUser";
 import axiosInstanceUser from "utils/axiosForUser";
 
 const userApi = {
@@ -40,6 +41,10 @@ const userApi = {
   deleteInterestByInterestId(id) {
     const url = `/users/delete-interest-by-interest-id?id=${id}`;
     return axiosInstanceUser.delete(url);
+  },
+  updateAvatar(data) {
+    const url = "/users/update-avatar";
+    return axiosInstanceImageUser.put(url, data);
   },
 };
 

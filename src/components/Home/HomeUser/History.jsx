@@ -122,7 +122,6 @@ const HistoryCard = (props) => {
       }
     }
   };
-  console.log(props.item.tripThumbnail);
   return (
     <>
       <Card

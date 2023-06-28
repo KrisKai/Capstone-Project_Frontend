@@ -194,6 +194,47 @@ export default function TripCreate() {
               <Grid item xs={12} sm={3}>
                 <Card sx={{ padding: 2, gap: 2 }}>
                   <Box paddingBottom={2}>
+                    <Typography variant="h5">Trip Thumbnail</Typography>
+                  </Box>
+                  <Grid item xs={12}>
+                    <FormControl
+                      error={touched.tripThumbnail && errors.tripThumbnail}
+                      fullWidth
+                    >
+                      <input
+                        id="tripThumbnail"
+                        name="tripThumbnail"
+                        type="file"
+                        accept="image/*"
+                        onChange={(event) => {
+                          console.log(event.currentTarget.files[0]);
+                          setFieldValue(
+                            "tripThumbnail",
+                            event.currentTarget.files[0]
+                          );
+                        }}
+                        style={{ display: "none" }}
+                      />
+                      <label htmlFor="tripThumbnail">
+                        <Button
+                          variant="contained"
+                          component="span"
+                          startIcon={<CloudUploadIcon />}
+                          onClick={(event) => {
+                            const input =
+                              document.getElementById("tripThumbnail");
+                            // input.click();
+                          }}
+                        >
+                          Upload Image
+                        </Button>
+                      </label>
+                      <FormHelperText>
+                        {touched.image && errors.image}
+                      </FormHelperText>
+                    </FormControl>
+                  </Grid>
+                  <Box paddingBottom={2}>
                     <Typography variant="h5">Basic Information</Typography>
                   </Box>
                   <Grid container spacing={3}>
@@ -399,43 +440,6 @@ export default function TripCreate() {
                       <Typography variant="h6" gutterBottom>
                         Image Upload
                       </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControl
-                        error={touched.tripThumbnail && errors.tripThumbnail}
-                        fullWidth
-                      >
-                        <input
-                          id="tripThumbnail"
-                          name="tripThumbnail"
-                          type="file"
-                          accept="image/*"
-                          onChange={(event) => {
-                            console.log(event.currentTarget.files[0]);
-                            setFieldValue(
-                              "tripThumbnail",
-                              event.currentTarget.files[0]
-                            );
-                          }}
-                          style={{ display: "none" }}
-                        />
-                        <label htmlFor="tripThumbnail">
-                          <Button
-                            variant="contained"
-                            component="span"
-                            startIcon={<CloudUploadIcon />}
-                            onClick={(event) => {
-                              const input = document.getElementById("tripThumbnail");
-                              // input.click();
-                            }}
-                          >
-                            Upload Image
-                          </Button>
-                        </label>
-                        <FormHelperText>
-                          {touched.image && errors.image}
-                        </FormHelperText>
-                      </FormControl>
                     </Grid>
                   </Grid>
                 </Card>
