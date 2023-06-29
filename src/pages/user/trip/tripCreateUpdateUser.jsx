@@ -474,9 +474,10 @@ export default function TripCreate() {
                     : "https://plus.unsplash.com/premium_photo-1684338795288-097525d127f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
                 })`,
               }}
-              onClick={handleGridClick}
             >
-              <Card sx={{ padding: 4, gap: 2, margin: 7, borderRadius: 3 }}>
+              <Card
+                sx={{ padding: 4, gap: 2, margin: 7, borderRadius: 3 }}
+              >
                 <Typography sx={{ fontSize: "2.25rem", fontWeight: 700 }}>
                   <ElementMaker
                     value={trip.tripName}
@@ -504,7 +505,7 @@ export default function TripCreate() {
                 <br />
                 <br />
                 <Grid container>
-                  <Grid item xs={12} sm={11}>
+                  <Grid item xs={12} sm={5}>
                     <CalendarMonthIcon
                       sx={{ marginRight: 1, marginBottom: 0.75 }}
                     />
@@ -553,6 +554,11 @@ export default function TripCreate() {
                       }}
                       showInputEDate={showInputEDate}
                     />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Button onClick={handleGridClick}>
+                      Change trip thumbnail
+                    </Button>
                   </Grid>
                   <Grid item xs={12} sm={1}>
                     <Box

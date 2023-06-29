@@ -51,14 +51,14 @@ const Schedule = () => {
             >
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Box
+                  component="img"
                   sx={{
                     width: "200px",
-
                     aspectRatio: "1 / 1",
-                    backgroundImage: `url(${data.image})`,
                     backgroundSize: "contain",
                     backgroundRepeat: "no-repeat",
                   }}
+                  src={data.image}
                 ></Box>
                 <Box ml={1}>
                   <Typography variant="h4">{data.title}</Typography>
