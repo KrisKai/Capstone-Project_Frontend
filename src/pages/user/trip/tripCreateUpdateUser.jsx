@@ -1,4 +1,4 @@
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Avatar, Box, Button, Card, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -35,6 +35,7 @@ import typeForConverting from "assets/data/typeForConverting";
 import authUserApi from "api/user/authenticate/authUserApi";
 import { toast } from "react-toastify";
 import { useRef } from "react";
+import ProfileUser from "layout/MainLayout/Header/HeaderContent/Profile/ProfileUser";
 
 dayjs.extend(utc);
 
@@ -84,6 +85,7 @@ export default function TripCreate() {
 
   const currentUser = useAppSelector(selectCurrentUser);
   const char = currentUser.name.toString().substring(0, 1).toUpperCase();
+  console.log(currentUser);
 
   const { placesService } = usePlacesService({
     apiKey: GOOGLE_MAP_API,
@@ -451,6 +453,7 @@ export default function TripCreate() {
                 Quản lí chuyến đi
               </Button>
             </div>
+            <ProfileUser />
           </Toolbar>
         </AppBar>
 
@@ -555,21 +558,13 @@ export default function TripCreate() {
                   </Grid>
                   <Grid item xs={12} sm={6}></Grid>
                   <Grid item xs={12} sm={1}>
-                    <Box
-                      width="25px"
-                      sx={{
-                        aspectRatio: "1/1",
-                        backgroundColor: "black",
-                        color: "white",
-                      }}
-                      display="flex"
-                      alignItems=" center"
-                      justifyContent="center"
-                      border="1px solid black"
-                      borderRadius="50%"
-                    >
-                      <Typography>{char}</Typography>
-                    </Box>
+                    <Avatar
+                      alt="profile user"
+                      src={
+                        currentUser.avatar === null ? "" : currentUser.avatar
+                      }
+                      sx={{ width: 32, height: 32 }}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <Button
