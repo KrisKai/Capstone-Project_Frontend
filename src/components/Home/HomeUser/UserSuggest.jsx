@@ -112,19 +112,14 @@ const UserSuggest = () => {
   };
   return (
     <Box width="100%">
-      <Box display="flex" alignItems="center" gap={5} width="100%">
-        <Box width="30%">
-          <Typography variant="h2" marginLeft={10}>
-            Gợi ý địa điểm
-          </Typography>
-          <Box
-            width="40%"
-            border="1px solid black"
-            mt={1}
-            marginLeft={15}
-          ></Box>
+      <Box alignItems="center" gap={5} width="100%">
+        <Box display="flex" justifyContent="center" marginBottom={2}>
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography variant="h2" sx={{ fontSize: 36 }}>Gợi ý địa điểm</Typography>
+            <Box width="60%" border="1px solid black" mt={1}></Box>
+          </Box>
         </Box>
-        <Box width="70%">
+        <Box width="100%" pl="10%" pr="10%">
           <Box
             sx={{ backgroundColor: "#D1D1D1", borderRadius: 10 }}
             width="100%"

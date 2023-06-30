@@ -130,7 +130,7 @@ const HistoryCard = (props) => {
           height: "400px",
           display: "flex",
           flexDirection: "column",
-          borderRadius: 4
+          borderRadius: 4,
         }}
       >
         <CardActionArea>
@@ -351,12 +351,12 @@ const History = () => {
     })();
   }, []);
   const goToNextSlide = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % history.length);
+    setActiveIndex((prevIndex) => (prevIndex + 1) % groupedHistory.length);
   };
 
   const goToPrevSlide = () => {
     setActiveIndex((prevIndex) =>
-      prevIndex === 0 ? history.length - 1 : prevIndex - 1
+      prevIndex === 0 ? groupedHistory.length - 1 : prevIndex - 1
     );
   };
 
@@ -375,7 +375,9 @@ const History = () => {
     <>
       <Box display="flex" justifyContent="center" marginBottom={2}>
         <Box display="flex" flexDirection="column" alignItems="center">
-          <Typography variant="h2" >Chuyến đi của bạn</Typography>
+          <Typography variant="h2" sx={{ fontSize: 36 }}>
+            Chuyến đi của bạn
+          </Typography>
           <Box width="60%" border="1px solid black" mt={1}></Box>
         </Box>
       </Box>

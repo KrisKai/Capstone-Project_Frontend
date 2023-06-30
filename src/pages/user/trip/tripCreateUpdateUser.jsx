@@ -475,9 +475,7 @@ export default function TripCreate() {
                 })`,
               }}
             >
-              <Card
-                sx={{ padding: 4, gap: 2, margin: 7, borderRadius: 3 }}
-              >
+              <Card sx={{ padding: 4, gap: 2, margin: 7, borderRadius: 3 }}>
                 <Typography sx={{ fontSize: "2.25rem", fontWeight: 700 }}>
                   <ElementMaker
                     value={trip.tripName}
@@ -555,11 +553,7 @@ export default function TripCreate() {
                       showInputEDate={showInputEDate}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Button onClick={handleGridClick}>
-                      Change trip thumbnail
-                    </Button>
-                  </Grid>
+                  <Grid item xs={12} sm={6}></Grid>
                   <Grid item xs={12} sm={1}>
                     <Box
                       width="25px"
@@ -576,6 +570,15 @@ export default function TripCreate() {
                     >
                       <Typography>{char}</Typography>
                     </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Button
+                      onClick={handleGridClick}
+                      variant="outlined"
+                      sx={{ marginTop: 2 }}
+                    >
+                      Đổi ảnh bìa
+                    </Button>
                   </Grid>
                 </Grid>
               </Card>
