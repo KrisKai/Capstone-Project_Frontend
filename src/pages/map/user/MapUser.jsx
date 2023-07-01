@@ -23,6 +23,7 @@ import { useRef, useState, useEffect } from "react";
 import Google from "assets/images/google_logo.png";
 import GoogleMaps from "assets/images/google_maps_logo.png";
 import TripAdvisor from "assets/images/tripadvisor_logo.png";
+import typeForConverting from "assets/data/typeForConverting";
 
 import dayjs from "dayjs";
 
@@ -46,6 +47,8 @@ export default function Map({
   selectedChildIndex,
   placeStatus,
   handleAddPlaces,
+  setSelectedPlace,
+  setPlaceStatus,
 }) {
   let now = dayjs().locale("vi").format("d");
   if (now === 0) {
@@ -132,33 +135,48 @@ export default function Map({
     handleAddPlaces(selectedIndex, data);
   }
 
-  function handleClickMarker(data) {
-    const coor = JSON.stringify(data.latLng);
-    placesService.nearbySearch(
-      {
-        location: JSON.parse(coor),
-        radius: 500,
-        type: "tourist_attraction",
-      },
-      (results, status) => {
-        // eslint-disable-next-line no-undef
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          for (let i = 0; i < results.length; i++) {
-            const place = results[i];
-            // Access other properties of the place here
+  function handleClickMarker(index, childIndex) {
+    const placeId = plans[index].tripRoute[childIndex].placeId;
+    const request = {
+      placeId: placeId,
+      fields: [
+        "name",
+        "formatted_address",
+        "opening_hours",
+        "website",
+        "rating",
+        "photos",
+        "types",
+        "user_ratings_total",
+        "formatted_phone_number",
+        "url",
+        "geometry",
+        "place_id",
+      ],
+      language: "vi",
+    };
 
-            if (place.photos && place.photos.length > 0) {
-              const photo = place.photos[0];
-              const photoUrl = photo.getUrl({ maxWidth: 500, maxHeight: 500 });
-              // Use the photo URL here
-            }
-          }
-          // Access the details of the place here
-        } else {
-          console.error("Error:", status);
-        }
+    placesService.getDetails(request, (place, status) => {
+      // eslint-disable-next-line no-undef
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        let data = place;
+
+        const convertedTypes = data.types.map((type) => {
+          const matchingType = typeForConverting.find(
+            (data) => data.name === type
+          );
+          return matchingType ? matchingType.code : type;
+        });
+
+        data.types = convertedTypes;
+
+        setSelectedPlace(data);
+        setPlaceStatus(true);
+        // Access the detailed place information here
+      } else {
+        console.error("Error:", status);
       }
-    );
+    });
   }
 
   return (
@@ -168,7 +186,7 @@ export default function Map({
       ) : (
         <Box height="90vh" width="57%" display="flex" position="fixed">
           <Box height="100%" flex="1 1 0" position="relative">
-            {data && (
+            {selectedData && (
               <Box
                 bgcolor={"white"}
                 display="flex"
@@ -191,12 +209,14 @@ export default function Map({
                       style={{ marginRight: "8px" }}
                     />
                     <Typography variant="h4" sx={{ mt: 1 }}>
-                      {data.name}
+                      {selectedData.name}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={2}>
                     <img
-                      src={data.photos && data.photos[0].getUrl()}
+                      src={
+                        selectedData.photos && selectedData.photos[0].getUrl()
+                      }
                       alt="Image"
                       style={{
                         width: "100%",
@@ -240,7 +260,7 @@ export default function Map({
                           color: "white",
                           border: "none",
                         }}
-                        onClick={() => handleAddPlace(data)}
+                        onClick={() => handleAddPlace(selectedData)}
                       >
                         <FontAwesomeIcon icon={faBookmark} />{" "}
                         <Typography
@@ -254,7 +274,7 @@ export default function Map({
                     )}
                   </Grid>
                   <Grid item xs={12} sm={12} display="flex" alignItems="center">
-                    {data.types.map((item, index) => (
+                    {selectedData.types.map((item, index) => (
                       <Box
                         key={index}
                         sx={{
@@ -283,10 +303,10 @@ export default function Map({
                       marginTop={0.5}
                       marginRight={1}
                     >
-                      {data.rating}
+                      {selectedData.rating}
                     </Typography>
                     <Typography marginTop={0.5} sx={{ color: "#6c757d" }}>
-                      ({data.user_ratings_total})
+                      ({selectedData.user_ratings_total})
                     </Typography>
 
                     <img
@@ -303,10 +323,10 @@ export default function Map({
                       style={{ marginRight: 9, marginLeft: 2 }}
                     />
                     <Typography sx={{ color: "#6c757d" }}>
-                      {data.formatted_address}
+                      {selectedData.formatted_address}
                     </Typography>
                   </Grid>
-                  {data.opening_hours && (
+                  {selectedData.opening_hours && (
                     <Grid
                       item
                       xs={12}
@@ -319,12 +339,12 @@ export default function Map({
                         style={{ marginRight: 7, marginLeft: 2 }}
                       />
                       <Typography sx={{ color: "#6c757d" }}>
-                        {data.opening_hours.weekday_text[now]}
+                        {selectedData.opening_hours.weekday_text[now]}
                       </Typography>
                     </Grid>
                   )}
 
-                  {data.formatted_phone_number && (
+                  {selectedData.formatted_phone_number && (
                     <Grid
                       item
                       xs={12}
@@ -337,15 +357,15 @@ export default function Map({
                         style={{ marginRight: 7, marginLeft: 2 }}
                       />
                       <a
-                        href={`tel:${data.formatted_phone_number}`}
+                        href={`tel:${selectedData.formatted_phone_number}`}
                         class="text-nowrap"
                       >
-                        {data.formatted_phone_number}
+                        {selectedData.formatted_phone_number}
                       </a>
                     </Grid>
                   )}
 
-                  {data.website && (
+                  {selectedData.website && (
                     <Grid
                       item
                       xs={12}
@@ -357,8 +377,11 @@ export default function Map({
                         icon={faEarthAmericas}
                         style={{ marginRight: 7, marginLeft: 2 }}
                       />
-                      <a href={`tel:${data.website}`} class="text-nowrap">
-                        {data.website}
+                      <a
+                        href={`tel:${selectedData.website}`}
+                        class="text-nowrap"
+                      >
+                        {selectedData.website}
                       </a>
                     </Grid>
                   )}
@@ -379,7 +402,7 @@ export default function Map({
                   <Grid item xs={12} sm={12} display="flex" alignItems="center">
                     <Button
                       href={`https://www.tripadvisor.com/search?q=${encodeURIComponent(
-                        data.name
+                        selectedData.name
                       )}`}
                       target="_blank"
                       variant="outlined"
@@ -401,7 +424,7 @@ export default function Map({
                     </Button>
                     <Button
                       href={`https://www.google.com/search?q=${encodeURIComponent(
-                        data.name
+                        selectedData.name
                       )}`}
                       target="_blank"
                       variant="outlined"
@@ -417,7 +440,7 @@ export default function Map({
                       Google
                     </Button>
                     <Button
-                      href={data.url}
+                      href={selectedData.url}
                       target="_blank"
                       variant="outlined"
                       color="secondary"
@@ -458,7 +481,7 @@ export default function Map({
                           (childIndex + 1) +
                           ".png"
                         }
-                        onClick={handleClickMarker}
+                        onClick={() => handleClickMarker(index, childIndex)}
                         ref={(marker) => markers.current.push(marker)}
                       />
                     );

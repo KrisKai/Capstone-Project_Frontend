@@ -81,11 +81,8 @@ export default function TripCreate() {
 
   let navigate = useNavigate();
   const { tripId } = useParams();
-  const location = useLocation();
 
   const currentUser = useAppSelector(selectCurrentUser);
-  const char = currentUser.name.toString().substring(0, 1).toUpperCase();
-  console.log(currentUser);
 
   const { placesService } = usePlacesService({
     apiKey: GOOGLE_MAP_API,
@@ -615,6 +612,8 @@ export default function TripCreate() {
                 selectedChildIndex={selectedChildIndex}
                 placeStatus={placeStatus}
                 handleAddPlaces={handleAddPlaces}
+                setSelectedPlace={setSelectedPlace}
+                setPlaceStatus={setPlaceStatus}
               />
             </Grid>
           </Grid>
