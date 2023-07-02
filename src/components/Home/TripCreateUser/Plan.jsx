@@ -198,7 +198,7 @@ const Plan = (props) => {
               }}
             >
               <Grid container sx={{ pb: 1 }}>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={0.5}>
                   <IconButton
                     onClick={() => handleToggleOpen(index)}
                     aria-label="expand"

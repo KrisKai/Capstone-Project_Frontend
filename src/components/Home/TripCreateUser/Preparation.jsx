@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
@@ -331,22 +332,29 @@ const Preparation = (props) => {
             marginBottom: 1,
           }}
         >
-          <CardHeader
-            title="Đồ ăn vặt"
-            action={
+          <Grid container sx={{ pb: 1 }}>
+            <Grid item xs={12} sm={0.5}>
               <IconButton
                 onClick={() => setOpenOverview(!openOverview)}
                 aria-label="expand"
                 size="small"
               >
                 {openOverview ? (
-                  <KeyboardArrowUpIcon />
-                ) : (
                   <KeyboardArrowDownIcon />
+                ) : (
+                  <KeyboardArrowRightIcon />
                 )}
               </IconButton>
-            }
-          ></CardHeader>
+            </Grid>
+            <Grid item xs={12} sm={11} pt={0.5}>
+              <Typography
+                variant="h4"
+                sx={{ fontWeight: "700", fontSize: "15px", marginLeft: 1 }}
+              >
+                Đồ ăn vặt
+              </Typography>
+            </Grid>
+          </Grid>
           <div
             style={{
               backgroundColor: "rgba(211,211,211,0.4)",
@@ -381,7 +389,7 @@ const Preparation = (props) => {
                         <RemoveCircleOutlineOutlinedIcon />
                       </Button>
                     </Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                       <TextField
                         id="priceMin"
                         name="priceMin"
@@ -393,7 +401,7 @@ const Preparation = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12} sm={2}></Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                       <TextField
                         id="quantity"
                         name="quantity"
@@ -418,22 +426,29 @@ const Preparation = (props) => {
             marginBottom: 1,
           }}
         >
-          <CardHeader
-            title="Nguyên liệu nấu ăn"
-            action={
+          <Grid container sx={{ pb: 1 }}>
+            <Grid item xs={12} sm={0.5}>
               <IconButton
                 onClick={() => setOpenOverview2(!openOverview2)}
                 aria-label="expand"
                 size="small"
               >
                 {openOverview2 ? (
-                  <KeyboardArrowUpIcon />
-                ) : (
                   <KeyboardArrowDownIcon />
+                ) : (
+                  <KeyboardArrowRightIcon />
                 )}
               </IconButton>
-            }
-          ></CardHeader>
+            </Grid>
+            <Grid item xs={12} sm={11} pt={0.5}>
+              <Typography
+                variant="h4"
+                sx={{ fontWeight: "700", fontSize: "15px", marginLeft: 1 }}
+              >
+                Nguyên liệu nấu ăn
+              </Typography>
+            </Grid>
+          </Grid>
           <div
             style={{
               backgroundColor: "rgba(211,211,211,0.4)",
@@ -470,7 +485,7 @@ const Preparation = (props) => {
                         <RemoveCircleOutlineOutlinedIcon />
                       </Button>
                     </Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                       <TextField
                         id="priceMin"
                         name="priceMin"
@@ -482,7 +497,7 @@ const Preparation = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12} sm={2}></Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                       <TextField
                         id="quantity"
                         name="quantity"
@@ -507,22 +522,29 @@ const Preparation = (props) => {
             minWidth: 300,
           }}
         >
-          <CardHeader
-            title="Đồ dùng cá nhân"
-            action={
+          <Grid container sx={{ pb: 1 }}>
+            <Grid item xs={12} sm={0.5}>
               <IconButton
                 onClick={() => setOpenOverview3(!openOverview3)}
                 aria-label="expand"
                 size="small"
               >
                 {openOverview3 ? (
-                  <KeyboardArrowUpIcon />
-                ) : (
                   <KeyboardArrowDownIcon />
+                ) : (
+                  <KeyboardArrowRightIcon />
                 )}
               </IconButton>
-            }
-          ></CardHeader>
+            </Grid>
+            <Grid item xs={12} sm={11} pt={0.5}>
+              <Typography
+                variant="h4"
+                sx={{ fontWeight: "700", fontSize: "15px", marginLeft: 1 }}
+              >
+                Đồ dùng cá nhân
+              </Typography>
+            </Grid>
+          </Grid>
           <div
             style={{
               backgroundColor: "rgba(211,211,211,0.4)",
@@ -559,7 +581,7 @@ const Preparation = (props) => {
                         <RemoveCircleOutlineOutlinedIcon />
                       </Button>
                     </Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                       <TextField
                         id="priceMin"
                         name="priceMin"
@@ -571,7 +593,7 @@ const Preparation = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12} sm={2}></Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                       <TextField
                         id="quantity"
                         name="quantity"

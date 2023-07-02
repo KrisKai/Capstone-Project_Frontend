@@ -11,6 +11,7 @@ import {
   Link as RouterLink,
 } from "react-router-dom";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { CircularProgress } from "@mui/material";
 import { GOOGLE_MAP_API } from "config";
 
 import { styled } from "@mui/material/styles";
@@ -137,6 +138,7 @@ export default function TripCreate() {
     createDate: "",
     userInterestList: [],
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const fileInputRef = useRef(null);
 
@@ -160,6 +162,7 @@ export default function TripCreate() {
               return toast.error(data.Message);
             default:
               setTrip(data);
+              setIsLoading(true);
           }
         } else {
           navigate("/tripList");
@@ -604,17 +607,29 @@ export default function TripCreate() {
               </Card>
             </Grid>
             <Grid item xs={12} sm={7} paddingLeft={1}>
-              <MapUser
-                passToProps={trip}
-                plans={plans}
-                selectedData={selectedPlace}
-                selectedIndex={selectedIndex}
-                selectedChildIndex={selectedChildIndex}
-                placeStatus={placeStatus}
-                handleAddPlaces={handleAddPlaces}
-                setSelectedPlace={setSelectedPlace}
-                setPlaceStatus={setPlaceStatus}
-              />
+              {!isLoading ? (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <CircularProgress />
+                </div>
+              ) : (
+                <MapUser
+                  passToProps={trip}
+                  plans={plans}
+                  selectedData={selectedPlace}
+                  selectedIndex={selectedIndex}
+                  selectedChildIndex={selectedChildIndex}
+                  placeStatus={placeStatus}
+                  handleAddPlaces={handleAddPlaces}
+                  setSelectedPlace={setSelectedPlace}
+                  setPlaceStatus={setPlaceStatus}
+                />
+              )}
             </Grid>
           </Grid>
         </Box>
