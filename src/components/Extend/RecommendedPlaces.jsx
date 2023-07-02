@@ -14,6 +14,7 @@ import { useState } from "react";
 
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { CircularProgress } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import { GOOGLE_MAP_API } from "config";
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
@@ -211,36 +212,49 @@ const RecommendedPlaces = (props) => {
             unmountOnExit
             sx={{ pl: 2, pr: 2 }}
           >
-            <Carousel
-              sx={{
-                height: "90px",
-                pl: 6,
-                pr: 6,
-              }}
-              indicators={false}
-              autoPlay={false}
-              cycleNavigation={false}
-              navButtonsAlwaysVisible={true}
-              navButtonsProps={{
-                // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
-                style: {
-                  backgroundColor: "#f3f4f5",
-                  borderRadius: "50%",
-                  color: "black",
-                },
-              }}
-            >
-              {groupedRestaurants.map((group, index) => (
-                <PlaceCard
-                  key={index}
-                  index={props.index}
-                  childIndex={props.childIndex}
-                  group={group}
-                  onClickData={props.onClickData}
-                  handleClickData={props.handleClickData}
-                />
-              ))}
-            </Carousel>
+            {groupedRestaurants.length === 0 ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "90px",
+                }}
+              >
+                <CircularProgress />
+              </div>
+            ) : (
+              <Carousel
+                sx={{
+                  height: "90px",
+                  pl: 6,
+                  pr: 6,
+                }}
+                indicators={false}
+                autoPlay={false}
+                cycleNavigation={false}
+                navButtonsAlwaysVisible={true}
+                navButtonsProps={{
+                  // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
+                  style: {
+                    backgroundColor: "#f3f4f5",
+                    borderRadius: "50%",
+                    color: "black",
+                  },
+                }}
+              >
+                {groupedRestaurants.map((group, index) => (
+                  <PlaceCard
+                    key={index}
+                    index={props.index}
+                    childIndex={props.childIndex}
+                    group={group}
+                    onClickData={props.onClickData}
+                    handleClickData={props.handleClickData}
+                  />
+                ))}
+              </Carousel>
+            )}
             <hr />
           </Collapse>
         </div>
