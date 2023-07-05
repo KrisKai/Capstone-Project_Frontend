@@ -12,7 +12,7 @@ const userTripApi = {
   },
   create(data) {
     const url = "/trips/create-trip-user";
-    return axiosInstanceUser.post(url, data);
+    return axiosInstanceImageUser.post(url, data);
   },
   update(data) {
     const url = "/trips";

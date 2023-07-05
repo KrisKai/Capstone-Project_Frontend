@@ -436,11 +436,6 @@ export default function TripCreate() {
                         inputRef={materialRef}
                       />
                     </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="h6" gutterBottom>
-                        Image Upload
-                      </Typography>
-                    </Grid>
                   </Grid>
                 </Card>
               </Grid>

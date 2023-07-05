@@ -51,7 +51,7 @@ const FormCreateTrip = () => {
   async function handleSubmit() {
     if (trip.endLocationName !== "") {
       // const data = await getPlacesProps(locationRef1.current.value);
-      const id = await userTripApi.createUser(trip);
+      const id = await userTripApi.create(trip);
       if (id !== null) {
         navigate(`/tripUpdate/` + id);
       }
