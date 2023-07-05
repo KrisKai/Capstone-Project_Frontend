@@ -184,7 +184,7 @@ export default function Map({
       {!isLoaded ? (
         "a"
       ) : (
-        <Box height="90vh" width="57%" display="flex" position="fixed">
+        <Box height="92vh" width="57%" display="flex" position="fixed">
           <Box height="100%" flex="1 1 0" position="relative">
             {selectedData && (
               <Box
