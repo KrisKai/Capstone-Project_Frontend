@@ -171,7 +171,7 @@ const ProfileTabUser = ({ handleLogout }) => {
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleOpenChange}>
-            Change Password
+            Đổi mật khẩu
           </Button>
         </DialogActions>
       </BootstrapDialog>
@@ -187,7 +187,7 @@ const ProfileTabUser = ({ handleLogout }) => {
           id="customized-dialog-title"
           onClose={handleCloseEdit}
         >
-          <Typography variant="h4">Edit profile</Typography>
+          <Typography variant="h4">Chỉnh sửa thông tin</Typography>
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <ProfileEditUser handleCallback={handleEditModal} />
@@ -203,7 +203,7 @@ const ProfileTabUser = ({ handleLogout }) => {
           id="customized-dialog-title"
           onClose={handleCloseChange}
         >
-          <Typography variant="h4">Change Password</Typography>
+          <Typography variant="h4">Đổi mật khẩu</Typography>
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <ProfileChangePasswordUser handleCallback={handleChangeModal} />

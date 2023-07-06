@@ -13,15 +13,14 @@ import Grid from "@mui/material/Grid";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { userApi } from "api";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { authApi } from "api";
 import * as yup from "yup";
 import authUserApi from "api/user/authenticate/authUserApi";
+import userApi from "api/user/user/userApi";
 dayjs.extend(utc);
 
 // ==============================|| PROFILE - EDIT ||============================== //
@@ -62,18 +61,15 @@ const ProfileEditUser = (props) => {
       .required("Full Name is required"),
     email: yup
       .string()
-      .email("Enter Valid Email")
-      .required("Email is required"),
-    phone: yup.number().required("Phone is required"),
-    address: yup.string("Enter Address").required("Address is required"),
-    birthday: yup.string("Enter Birthday").required("Birthday is required"),
+      .email("Enter Valid email")
+      .required("email is required"),
+    phone: yup.number().required("phone is required"),
+    address: yup.string("Enter address").required("address is required"),
+    birthday: yup.string("Enter birthday").required("birthday is required"),
   });
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="h5">Customize your intro</Typography>
-      </Box>
       <Formik
         initialValues={currentInfo}
         validationSchema={validationSchema}
@@ -92,7 +88,7 @@ const ProfileEditUser = (props) => {
               case "V001":
                 return toast.error(reponse.Message);
               default: {
-                toast.success("Update Your Info Successed!");
+                toast.success("Cập nhập thông tin thành công!");
                 props.handleCallback(false)
               }
             }
@@ -115,85 +111,85 @@ const ProfileEditUser = (props) => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="Username"
-                  name="Username"
-                  label="Username"
+                  id="username"
+                  name="username"
+                  label="Tên đăng nhập"
                   fullWidth
-                  value={values.Username}
+                  value={values.username}
                   variant="standard"
                 />
-                {touched.Username && errors.Username && (
+                {touched.username && errors.username && (
                   <FormHelperText error id="standard-weight-helper-nickName">
-                    {errors.Username}
+                    {errors.username}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="Fullname"
-                  name="Fullname"
-                  label="Full name"
+                  id="fullname"
+                  name="fullname"
+                  label="Họ tên"
                   fullWidth
-                  value={values.Fullname}
+                  value={values.fullname}
                   variant="standard"
                   onChange={handleChange}
                 />
-                {touched.Fullname && errors.Fullname && (
+                {touched.fullname && errors.fullname && (
                   <FormHelperText error id="standard-weight-helper-name">
-                    {errors.Fullname}
+                    {errors.fullname}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="Address"
-                  name="Address"
-                  label="Address"
+                  id="address"
+                  name="address"
+                  label="Địa chỉ"
                   fullWidth
                   variant="standard"
-                  value={values.Address}
+                  value={values.address}
                   onChange={handleChange}
                 />
-                {touched.Address && errors.Address && (
+                {touched.address && errors.address && (
                   <FormHelperText error id="standard-weight-helper-address">
-                    {errors.Address}
+                    {errors.address}
                   </FormHelperText>
                 )}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="Phone"
-                  name="Phone"
-                  label="Phone Number"
+                  id="phone"
+                  name="phone"
+                  label="phone Number"
                   fullWidth
                   variant="standard"
-                  value={values.Phone}
+                  value={values.phone}
                   onChange={handleChange}
                 />
-                {touched.Phone && errors.Phone && (
+                {touched.phone && errors.phone && (
                   <FormHelperText error id="standard-weight-helper-phone">
-                    {errors.Phone}
+                    {errors.phone}
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12} sm={10}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="Email"
-                  name="Email"
+                  id="email"
+                  name="email"
                   label="Email"
                   fullWidth
                   variant="standard"
                   type="email"
-                  value={values.Email}
+                  value={values.email}
                   onChange={handleChange}
                 />
-                {touched.Email && errors.Email && (
+                {touched.email && errors.email && (
                   <FormHelperText error id="standard-weight-helper-email">
-                    {errors.Email}
+                    {errors.email}
                   </FormHelperText>
                 )}
               </Grid>
@@ -213,20 +209,20 @@ const ProfileEditUser = (props) => {
                         paddingY: 1,
                       },
                     }}
-                    label="Birthday"
-                    id="Birthday"
-                    name="Birthday"
+                    label="birthday"
+                    id="birthday"
+                    name="birthday"
                     fullWidth
-                    value={values.Birthday}
+                    value={values.birthday}
                     onChange={(value) => {
-                      setFieldValue("Birthday", value);
+                      setFieldValue("birthday", value);
                     }}
-                    error={Boolean(touched.Birthday && errors.Birthday)}
+                    error={Boolean(touched.birthday && errors.birthday)}
                   />
                 </LocalizationProvider>
-                {touched.Birthday && errors.Birthday && (
-                  <FormHelperText error id="standard-weight-helper-Birthday">
-                    {errors.Birthday}
+                {touched.birthday && errors.birthday && (
+                  <FormHelperText error id="standard-weight-helper-birthday">
+                    {errors.birthday}
                   </FormHelperText>
                 )}
               </Grid>
@@ -236,10 +232,10 @@ const ProfileEditUser = (props) => {
                   onClick={() => props.handleCallback(false)}
                   variant="outlined"
                 >
-                  Cancel
+                  Hủy
                 </Button>
                 <Button type="submit" variant="outlined">
-                  Save
+                  Lưu
                 </Button>
               </Grid>
             </Grid>

@@ -76,20 +76,20 @@ const AuthRegister = () => {
           birthday: "",
         }}
         validationSchema={Yup.object().shape({
-          firstname: Yup.string().max(255).required("First Name is required"),
-          lastname: Yup.string().max(255).required("Last Name is required"),
+          firstname: Yup.string().max(255).required("Hãy nhập họ của bạn"),
+          lastname: Yup.string().max(255).required("Hãy nhập tên của bạn"),
           email: Yup.string()
-            .email("Must be a valid email")
+            .email("Email không hợp lệ")
             .max(255)
-            .required("Email is required"),
-          userName: Yup.string().max(100).required(),
-          password: Yup.string().max(255).required("Password is required"),
+            .required("Hãy nhập email của bạn"),
+          userName: Yup.string().max(100).required("Hãy nhập Tên đăng nhập"),
+          password: Yup.string().max(255).required("Hãy nhập Mật khẩu"),
           rePassword: Yup.string()
-            .required("Is required")
-            .oneOf([Yup.ref("password")], "Repassword is not matched"),
-          phone: Yup.string().min(10).max(11).required("Is required"),
-          address: Yup.string().required("Is required"),
-          birthday: Yup.string().required("Is required"),
+            .required("Hãy nhập lại mật khẩu")
+            .oneOf([Yup.ref("password")], "Mật khẩu không giống nhau"),
+          phone: Yup.string().min(10).max(11).required("Bắt buộc"),
+          address: Yup.string().required("Bắt buộc"),
+          birthday: Yup.string().required("Bắt buộc"),
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
@@ -130,7 +130,7 @@ const AuthRegister = () => {
               <Grid item xs={12} md={6}>
                 <Stack spacing={1}>
                   <InputLabel htmlFor="firstname-signup">
-                    First Name*
+                    Họ *
                   </InputLabel>
                   <OutlinedInput
                     id="firstname-login"
@@ -152,7 +152,7 @@ const AuthRegister = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="lastname-signup">Last Name*</InputLabel>
+                  <InputLabel htmlFor="lastname-signup">Tên *</InputLabel>
                   <OutlinedInput
                     fullWidth
                     error={Boolean(touched.lastname && errors.lastname)}
@@ -174,7 +174,7 @@ const AuthRegister = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="email-signup">Email Address*</InputLabel>
+                  <InputLabel htmlFor="email-signup">Địa chỉ email *</InputLabel>
                   <OutlinedInput
                     fullWidth
                     error={Boolean(touched.email && errors.email)}
@@ -196,13 +196,13 @@ const AuthRegister = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="userName-signup">User Name*</InputLabel>
+                  <InputLabel htmlFor="userName-signup">Tên đăng nhập *</InputLabel>
                   <OutlinedInput
                     fullWidth
                     error={Boolean(touched.userName && errors.userName)}
                     id="email-login"
                     value={values.userName}
-                    name="userName"
+                    name="Tên đăng nhập"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     placeholder="User Name"
@@ -217,7 +217,7 @@ const AuthRegister = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="password-signup">Password</InputLabel>
+                  <InputLabel htmlFor="password-signup">Mật khẩu</InputLabel>
                   <OutlinedInput
                     fullWidth
                     error={Boolean(touched.password && errors.password)}
@@ -277,7 +277,7 @@ const AuthRegister = () => {
                 </FormControl>
                 <Stack spacing={1} mt={1}>
                   <InputLabel htmlFor="rePassword-signup">
-                    Re-password
+                    Nhập lại mật khẩu
                   </InputLabel>
                   <OutlinedInput
                     fullWidth
@@ -320,7 +320,7 @@ const AuthRegister = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="phone-signup">Phone*</InputLabel>
+                  <InputLabel htmlFor="phone-signup">Số điện thoại *</InputLabel>
                   <OutlinedInput
                     fullWidth
                     error={Boolean(touched.phone && errors.phone)}
@@ -329,7 +329,7 @@ const AuthRegister = () => {
                     name="phone"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Phone"
+                    placeholder="Số điện thoại"
                     inputProps={{}}
                   />
                   {touched.phone && errors.phone && (
@@ -341,7 +341,7 @@ const AuthRegister = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="address-signup">Address*</InputLabel>
+                  <InputLabel htmlFor="address-signup">Địa chỉ *</InputLabel>
                   <OutlinedInput
                     fullWidth
                     error={Boolean(touched.address && errors.address)}
@@ -350,7 +350,7 @@ const AuthRegister = () => {
                     name="address"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Address"
+                    placeholder="Địa chỉ"
                     inputProps={{}}
                   />
                   {touched.address && errors.address && (
@@ -362,7 +362,7 @@ const AuthRegister = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="birthday-signup">Birthday*</InputLabel>
+                  <InputLabel htmlFor="birthday-signup">Ngày sinh *</InputLabel>
                   <LocalizationProvider
                       dateAdapter={AdapterDayjs}
                       dateLibInstance={dayjs.utc}
@@ -409,19 +409,19 @@ const AuthRegister = () => {
                     variant="contained"
                     color="primary"
                   >
-                    Create Account
+                    Đăng kí
                   </Button>
                 </AnimateButton>
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body2">
-                  By Signing up, you agree to our &nbsp;
+                  Với việc đăng kí, bạn đã đồng ý với &nbsp;
                   <Link variant="subtitle2" component={RouterLink} to="#">
-                    Terms of Service
+                    Điều khoản dịch vụ
                   </Link>
-                  &nbsp; and &nbsp;
+                  &nbsp; và &nbsp;
                   <Link variant="subtitle2" component={RouterLink} to="#">
-                    Privacy Policy
+                    Chính sách bảo mật
                   </Link>
                 </Typography>
               </Grid>
@@ -432,7 +432,7 @@ const AuthRegister = () => {
               )}
               <Grid item xs={12}>
                 <Divider>
-                  <Typography variant="caption">Sign up with</Typography>
+                  <Typography variant="caption">Đăng kí với</Typography>
                 </Divider>
               </Grid>
               <Grid item xs={12}>
