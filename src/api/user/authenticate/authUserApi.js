@@ -9,6 +9,11 @@ const authUserApi = {
     const url = "/authenticate/login-user";
     return axiosInstanceUser.post(url, params);
   },
+  loginWithSocial(params) {
+    console.log(params)
+    const url = "/authenticate/login-with-social";
+    return axiosInstanceUser.post(url, params);
+  },
   register(params) {
     const url = "/authenticate/register-user";
     return axiosInstanceUser.post(url, params);

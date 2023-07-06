@@ -11,16 +11,31 @@ import { auth, google, facebook, twitter } from "utils/firebase";
 import { signInWithPopup, signOut } from "firebase/auth";
 
 import { GOOGLE_CLIENT_ID } from "config";
+import authUserApi from "api/user/authenticate/authUserApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 // ==============================|| FIREBASE - SOCIAL BUTTON ||============================== //
 
 const FirebaseSocial = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate();
 
   const loginHandler = async (provider) => {
     const result = await signInWithPopup(auth, provider);
-    console.log(result);
+    console.log(result.user.accessToken);
+    const response = await authUserApi.loginWithSocial(
+      result.user.accessToken.toString()
+    );
+    if (response.Code != "L001") {
+      localStorage.setItem("access_token_user", response.token);
+      navigate("/dashboard");
+    } else {
+      toast.error(response.Message, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
   };
 
   const responseGoogle = async (response) => {
