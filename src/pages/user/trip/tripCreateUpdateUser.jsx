@@ -1,28 +1,22 @@
-import { Avatar, Box, Button, Card, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  Typography,
+  Grid,
+  styled,
+  CircularProgress,
+} from "@mui/material";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import MapUser from "pages/map/user/MapUser";
-import { useEffect, useState } from "react";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  Link as RouterLink,
-} from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { useNavigate, useParams, Link as RouterLink } from "react-router-dom";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import { CircularProgress } from "@mui/material";
-import { GOOGLE_MAP_API } from "config";
-
-import { styled } from "@mui/material/styles";
+import { toast } from "react-toastify";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
-import Preparation from "components/Home/TripCreateUser/Preparation";
-import ElementMaker from "components/Home/TripCreateUser/ElementMakerForTripName";
-import ElementMakerForSDate from "components/Home/TripCreateUser/ElementMakerForSDate";
-import ElementMakerForEDate from "components/Home/TripCreateUser/ElementMakerForEDate";
-import Plan from "components/Home/TripCreateUser/Plan";
 
 import { useAppSelector } from "redux/hooks";
 import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
@@ -34,9 +28,14 @@ import userTripRouteApi from "api/user/trip/route/userTripRouteApi";
 import userTripApi from "api/user/trip/userTripApi";
 import typeForConverting from "assets/data/typeForConverting";
 import authUserApi from "api/user/authenticate/authUserApi";
-import { toast } from "react-toastify";
-import { useRef } from "react";
+import Preparation from "components/Home/TripCreateUser/Preparation";
+import ElementMaker from "components/Home/TripCreateUser/ElementMakerForTripName";
+import ElementMakerForSDate from "components/Home/TripCreateUser/ElementMakerForSDate";
+import ElementMakerForEDate from "components/Home/TripCreateUser/ElementMakerForEDate";
+import Plan from "components/Home/TripCreateUser/Plan";
 import ProfileUser from "layout/MainLayout/Header/HeaderContent/Profile/ProfileUser";
+import MapUser from "pages/map/user/MapUser";
+import { GOOGLE_MAP_API } from "config";
 
 dayjs.extend(utc);
 
@@ -152,7 +151,7 @@ export default function TripCreate() {
       if (!tripId) return;
       try {
         const data = await userTripApi.getById(tripId);
-        if (data != null && data != "") {
+        if (data !== null && data !== "") {
           switch (data.Code) {
             case "G001":
               navigate("/");
@@ -171,7 +170,7 @@ export default function TripCreate() {
         setCurrentInfo(response);
       } catch (error) {
         console.log("Failed to fetch trip details", error);
-        if (error.response.status == 401) {
+        if (error.response.status === 401) {
           localStorage.removeItem("access_token");
           navigate("/login");
         }

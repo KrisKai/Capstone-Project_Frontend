@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Typography,
@@ -6,7 +6,6 @@ import {
   TextField,
   InputAdornment,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
 } from "@mui/material";
@@ -115,7 +114,9 @@ const UserSuggest = () => {
       <Box alignItems="center" gap={5} width="100%">
         <Box display="flex" justifyContent="center" marginBottom={2}>
           <Box display="flex" flexDirection="column" alignItems="center">
-            <Typography variant="h2" sx={{ fontSize: 36 }}>Gợi ý địa điểm</Typography>
+            <Typography variant="h2" sx={{ fontSize: 36 }}>
+              Gợi ý địa điểm
+            </Typography>
             <Box width="60%" border="1px solid black" mt={1}></Box>
           </Box>
         </Box>
