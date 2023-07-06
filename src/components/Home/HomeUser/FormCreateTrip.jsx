@@ -21,8 +21,8 @@ dayjs.extend(utc);
 const FormCreateTrip = () => {
   const navigate = useNavigate();
   const [trip, setTrip] = useState({
-    estimateStartDate: dayjs(),
-    estimateEndDate: dayjs().add(1, "day"),
+    estimateStartDate: dayjs().add(1, "day"),
+    estimateEndDate: dayjs().add(2, "day"),
     endLongitude: "",
     endLatitude: "",
     endLocationName: "",

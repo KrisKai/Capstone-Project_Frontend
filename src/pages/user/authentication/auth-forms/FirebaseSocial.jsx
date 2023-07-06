@@ -20,6 +20,7 @@ const FirebaseSocial = () => {
 
   const loginHandler = async (provider) => {
     const result = await signInWithPopup(auth, provider);
+    console.log(result);
   };
 
   const responseGoogle = async (response) => {
