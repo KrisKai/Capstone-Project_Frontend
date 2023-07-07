@@ -3,13 +3,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyABB2jebWD-Pr1d4ZJyhx9BKTaTYg4nUFQ",
-  authDomain: "journey-sick-390710.firebaseapp.com",
-  projectId: "journey-sick-390710",
-  storageBucket: "journey-sick-390710.appspot.com",
-  messagingSenderId: "763140578495",
-  appId: "1:763140578495:web:3f079e38b6121c350dfa0a",
-  measurementId: "G-XS5BZHBGWT"
+  apiKey: "AIzaSyDwiE0hRd9bq6LwTxlpn-_phK04XngAKoM",
+  authDomain: "journeysick-56add.firebaseapp.com",
+  projectId: "journeysick-56add",
+  storageBucket: "journeysick-56add.appspot.com",
+  messagingSenderId: "71436326494",
+  appId: "1:71436326494:web:3546f1f91b2c2f170e46cf",
+  measurementId: "G-QVLQXKFFB5"
 };
 
 // Initialize Firebase
