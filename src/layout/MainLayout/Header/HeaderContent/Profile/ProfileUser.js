@@ -12,8 +12,6 @@ import {
   Paper,
   Popper,
   Stack,
-  Tab,
-  Tabs,
   Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -21,8 +19,6 @@ import { useTheme } from "@mui/material/styles";
 // project import
 import { Transitions } from "components/Extend";
 import { MainCard } from "components/Layout";
-import ProfileTab from "./ProfileTab";
-import SettingTab from "./SettingTab";
 
 // assets
 import { SettingOutlined, UserOutlined } from "@ant-design/icons";
@@ -30,7 +26,11 @@ import avatar1 from "assets/images/users/avatar-1.png";
 
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { getCurrentUser, selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
+import {
+  getCurrentUser,
+  selectCurrentUser,
+} from "redux/modules/user/authenticate/authUserSlice";
+import ProfileTabUser from "./ProfileTabUser";
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -95,10 +95,6 @@ const ProfileUser = () => {
 
   const [value, setValue] = useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   const iconBackColorOpen = "grey.300";
 
   return (
@@ -119,7 +115,7 @@ const ProfileUser = () => {
         <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
           <Avatar
             alt="profile user"
-            src={avatar1}
+            src={currentUser.avatar === null ? avatar1 : currentUser.avatar}
             sx={{ width: 32, height: 32 }}
           />
         </Stack>
@@ -148,11 +144,9 @@ const ProfileUser = () => {
               <Paper
                 sx={{
                   boxShadow: theme.customShadows.z1,
-                  width: 290,
-                  minWidth: 240,
-                  maxWidth: 290,
+                  width: 180,
                   [theme.breakpoints.down("md")]: {
-                    maxWidth: 250,
+                    maxWidth: 150,
                   },
                 }}
               >
@@ -172,7 +166,11 @@ const ProfileUser = () => {
                           >
                             <Avatar
                               alt="profile user"
-                              src={avatar1}
+                              src={
+                                currentUser.avatar === null
+                                  ? avatar1
+                                  : currentUser.avatar
+                              }
                               sx={{ width: 32, height: 32 }}
                             />
                             <Stack>
@@ -189,55 +187,8 @@ const ProfileUser = () => {
                     </CardContent>
                     {open && (
                       <>
-                        {/* <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                          <Tabs
-                            variant="fullWidth"
-                            value={value}
-                            onChange={handleChange}
-                            aria-label="profile tabs"
-                          >
-                            <Tab
-                              sx={{
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                textTransform: "capitalize",
-                              }}
-                              icon={
-                                <UserOutlined
-                                  style={{
-                                    marginBottom: 0,
-                                    marginRight: "10px",
-                                  }}
-                                />
-                              }
-                              label="Profile"
-                              {...a11yProps(0)}
-                            />
-                            <Tab
-                              sx={{
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                textTransform: "capitalize",
-                              }}
-                              icon={
-                                <SettingOutlined
-                                  style={{
-                                    marginBottom: 0,
-                                    marginRight: "10px",
-                                  }}
-                                />
-                              }
-                              label="Setting"
-                              {...a11yProps(1)}
-                            />
-                          </Tabs>
-                        </Box> */}
                         <TabPanel value={value} index={0} dir={theme.direction}>
-                          <ProfileTab handleLogout={handleLogout} />
+                          <ProfileTabUser handleLogout={handleLogout} />
                         </TabPanel>
                         {/* <TabPanel value={value} index={1} dir={theme.direction}>
                           <SettingTab />

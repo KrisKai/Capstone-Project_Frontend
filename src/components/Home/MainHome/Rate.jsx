@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const RateCard = (props) => {
   const char = props.item.fullname.toString().substring(0, 1).toUpperCase();
   return (
-    <Card sx={{ width: "300px" }}>
+    <Card sx={{ width: "300px", borderRadius: 3 }}>
       <Box display="flex" justifyContent="center" paddingTop={2}>
         <Rating value={props.item.rate} readOnly />
       </Box>
@@ -30,7 +30,9 @@ const RateCard = (props) => {
           >
             <Typography>{char}</Typography>
           </Box>
-          <Typography> {props.item.fullname}</Typography>
+          <Typography sx={{ fontWeight: 700 }}>
+            {props.item.fullname}
+          </Typography>
         </Box>
       </Box>
     </Card>

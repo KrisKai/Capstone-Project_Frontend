@@ -9,6 +9,11 @@ const authUserApi = {
     const url = "/authenticate/login-user";
     return axiosInstanceUser.post(url, params);
   },
+  loginWithSocial(params) {
+    console.log(params)
+    const url = "/authenticate/login-with-social";
+    return axiosInstanceUser.post(url, params);
+  },
   register(params) {
     const url = "/authenticate/register-user";
     return axiosInstanceUser.post(url, params);
@@ -24,6 +29,14 @@ const authUserApi = {
   confirm() {
     const url = "/users/confirm-user";
     return axiosInstanceUser.put(url);
+  },
+  checkUserHavingInterest() {
+    const url = `/users/check-interest`;
+    return axiosInstanceUser.get(url);
+  },
+  createUserInterest(params) {
+    const url = `/users/create-user-interest`;
+    return axiosInstanceUser.post(url, JSON.stringify(params));
   },
 };
 

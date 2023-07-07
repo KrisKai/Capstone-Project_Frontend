@@ -1,7 +1,6 @@
 import { Box, Grid, IconButton, TextField } from "@mui/material";
-import axios from "axios";
 import { PLACE_API, GOOGLE_MAP_API } from "config";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
@@ -11,9 +10,8 @@ import Autocomplete from "react-google-autocomplete";
 
 const AutocompletePlaceForTrip = (props) => {
   const { onSelect, label } = props;
-
-  const [options, setOptions] = useState([]);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
+  const autocompleteRef = useRef(null);
 
   const coor = {
     lat: parseFloat(props.trip.endLatitude),
@@ -27,6 +25,7 @@ const AutocompletePlaceForTrip = (props) => {
   };
 
   const handleSelectPlace = (place) => {
+    console.log(place);
     onSelect(props.index, props.childIndex, place);
   };
 
@@ -37,6 +36,24 @@ const AutocompletePlaceForTrip = (props) => {
   const handleMouseLeave = () => {
     setShowDeleteButton(false);
   };
+
+  const handleDeletePlace = () => {
+    props.handleClick(props.index, props.childIndex);
+  };
+
+  const handleClickData = (index, childIndex, value) => {
+    // autocompleteRef.current.value = value.name;
+    props.handleClickData(index, childIndex, value);
+  };
+
+  useEffect(() => {
+    // Update component when props.place changes
+    if (props.place.locationName) {
+      autocompleteRef.current.value = props.place.locationName;
+    } else {
+      autocompleteRef.current.value = "";
+    }
+  }, [props.place.locationName]);
   return (
     <>
       {!props.place.showNote && (
@@ -54,6 +71,7 @@ const AutocompletePlaceForTrip = (props) => {
             <Autocomplete
               apiKey={GOOGLE_MAP_API}
               className="custom-input"
+              ref={autocompleteRef}
               style={{
                 height: "48px",
                 backgroundColor: "#f3f4f5",
@@ -67,11 +85,15 @@ const AutocompletePlaceForTrip = (props) => {
                 componentRestrictions: { country: "vn" },
                 types: ["restaurant", "lodging", "tourist_attraction"],
                 bounds: defaultBounds,
-                fields: ["address_components", "geometry", "icon", "name"],
+                fields: ["address_components", "geometry", "name", "place_id"],
               }}
               defaultValue={props.place.locationName}
               placeholder="Thêm địa điểm"
               onPlaceSelected={handleSelectPlace}
+              onClick={() =>
+                props.onClickAutocomplete(props.index, props.childIndex)
+              }
+              language="vi"
             />
           </Grid>
           {!props.place.locationName && (
@@ -93,7 +115,7 @@ const AutocompletePlaceForTrip = (props) => {
           )}
           <Grid item xs={12} sm={1} marginBottom={1}>
             <IconButton
-              onClick={() => props.handleClick(props.index, props.childIndex)}
+              onClick={handleDeletePlace}
               sx={{
                 height: "48px",
                 width: "48px",
@@ -110,12 +132,10 @@ const AutocompletePlaceForTrip = (props) => {
               <RecommendedPlaces
                 index={props.index}
                 childIndex={props.childIndex}
-                hotels={props.hotels}
-                restaurants={props.restaurants}
                 trip={props.trip}
-                attractions={props.attractions}
+                currentInfo={props.currentInfo}
                 onClickData={props.onClickData}
-                handleClickData={props.handleClickData}
+                handleClickData={handleClickData}
               />
             </Grid>
           ) : (
@@ -165,7 +185,7 @@ const AutocompletePlaceForTrip = (props) => {
           <Grid item xs={12} sm={2}>
             {showDeleteButton && (
               <IconButton
-                onClick={() => props.handleClick(props.index, props.childIndex)}
+                onClick={handleDeletePlace}
                 sx={{
                   height: "48px",
                   width: "48px",
@@ -182,6 +202,7 @@ const AutocompletePlaceForTrip = (props) => {
             <Autocomplete
               apiKey={GOOGLE_MAP_API}
               className="custom-input"
+              ref={autocompleteRef}
               style={{
                 height: "48px",
                 backgroundColor: "#f3f4f5",
@@ -195,11 +216,15 @@ const AutocompletePlaceForTrip = (props) => {
                 componentRestrictions: { country: "vn" },
                 types: ["restaurant", "lodging", "tourist_attraction"],
                 bounds: defaultBounds,
-                fields: ["address_components", "geometry", "icon", "name"],
+                fields: ["address_components", "geometry", "name", "place_id"],
               }}
               defaultValue={props.place.locationName}
               placeholder="Thêm địa điểm"
               onPlaceSelected={handleSelectPlace}
+              onClick={() =>
+                props.onClickAutocomplete(props.index, props.childIndex)
+              }
+              language="vi"
             />
           </Grid>
           <Grid item xs={12} sm={1}></Grid>
@@ -208,12 +233,10 @@ const AutocompletePlaceForTrip = (props) => {
               <RecommendedPlaces
                 index={props.index}
                 childIndex={props.childIndex}
-                hotels={props.hotels}
-                restaurants={props.restaurants}
-                attractions={props.attractions}
                 trip={props.trip}
+                currentInfo={props.currentInfo}
                 onClickData={props.onClickData}
-                handleClickData={props.handleClickData}
+                handleClickData={handleClickData}
               />
             ) : (
               <hr />

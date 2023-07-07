@@ -8,6 +8,9 @@ export const PLACE_API = "a4f9fffa383040d581230c5d9fd096b2";
 
 export const REACT_APP_RAPID_API_TRAVEL_API_KEY = "229c00f068msh28734b3c30c4aacp115d1ejsn33650bd2adfa";
 
+export const GOOGLE_CLIENT_ID = "763140578495-s1eigojt3snpuk12fani0mb6h0f14r5h.apps.googleusercontent.com";
+
+
 // ==============================|| THEME CONFIG  ||============================== //
 
 const config = {

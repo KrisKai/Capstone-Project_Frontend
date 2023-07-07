@@ -104,14 +104,14 @@ const AuthLogin = () => {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="email-login">Email Address</InputLabel>
+                  <InputLabel htmlFor="email-login">Tài khoản</InputLabel>
                   <OutlinedInput
                     id="email-login"
                     value={values.email}
                     name="email"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Enter email address"
+                    placeholder="Nhập tài khoản"
                     fullWidth
                     error={Boolean(touched.email && errors.email)}
                   />
@@ -127,7 +127,7 @@ const AuthLogin = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="password-login">Password</InputLabel>
+                  <InputLabel htmlFor="password-login">Mật khẩu</InputLabel>
                   <OutlinedInput
                     fullWidth
                     error={Boolean(touched.password && errors.password)}
@@ -154,7 +154,7 @@ const AuthLogin = () => {
                         </IconButton>
                       </InputAdornment>
                     }
-                    placeholder="Enter password"
+                    placeholder="Nhập mật khẩu"
                   />
                   {touched.password && errors.password && (
                     <FormHelperText
@@ -167,7 +167,7 @@ const AuthLogin = () => {
                 </Stack>
               </Grid>
 
-              <Grid item xs={12} sx={{ mt: -1 }}>
+              {/* <Grid item xs={12} sx={{ mt: -1 }}>
                 <Stack
                   direction="row"
                   justifyContent="space-between"
@@ -197,7 +197,7 @@ const AuthLogin = () => {
                     Forgot Password?
                   </Link>
                 </Stack>
-              </Grid>
+              </Grid> */}
               {errors.submit && (
                 <Grid item xs={12}>
                   <FormHelperText error>{errors.submit}</FormHelperText>
@@ -214,13 +214,13 @@ const AuthLogin = () => {
                     variant="contained"
                     color="primary"
                   >
-                    Login
+                    Đăng nhập
                   </Button>
                 </AnimateButton>
               </Grid>
               <Grid item xs={12}>
                 <Divider>
-                  <Typography variant="caption"> Login with</Typography>
+                  <Typography variant="caption"> Đăng nhập với</Typography>
                 </Divider>
               </Grid>
               <Grid item xs={12}>

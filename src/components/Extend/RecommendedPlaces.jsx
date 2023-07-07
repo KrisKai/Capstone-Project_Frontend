@@ -1,40 +1,40 @@
-import { PLACE_API } from "config";
 import {
-  TextField,
-  Button,
   Card,
   Typography,
   IconButton,
   Grid,
   Collapse,
-  CardHeader,
   Box,
   CardMedia,
   CardActions,
   CardActionArea,
+  Button,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { CircularProgress } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import { GOOGLE_MAP_API } from "config";
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
+import { getPlacesProps } from "api/user/placesAPI";
+import { useEffect } from "react";
 
 const PlaceCard = (props) => {
   return (
     <>
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" gap={1}>
         {props.group.map((item, i) => (
           <Card
             key={i}
             sx={{
               display: "flex",
-              width: "250px",
-              height: "70px",
+              width: "50%",
+              height: "90px",
               marginRight: "8px",
-              borderStyle: "dashed",
-              border: "1px",
+              border: "1px dashed #dee2e6",
+              boxShadow: "none",
             }}
             onClick={() => {
               props.onClickData(item);
@@ -60,26 +60,22 @@ const PlaceCard = (props) => {
                 alignItems="center"
                 marginLeft={1}
               >
-                <Typography>
-                  {item.name}
-                </Typography>
+                <Typography>{item.name}</Typography>
               </Box>
             </CardActionArea>
             <CardActions>
-              <IconButton >
-                <Box
-                  width="30px"
-                  sx={{
-                    aspectRatio: "1/1",
-                    backgroundColor: "#f3f4f5",
-                  }}
-                  display="flex"
-                  alignItems=" center"
-                  justifyContent="center"
-                  borderRadius="50%"
-                >
-                  <Typography>+</Typography>
-                </Box>
+              <IconButton
+                sx={{
+                  height: "35px",
+                  width: "35px",
+                  aspectRatio: "1/1",
+                  backgroundColor: "#f3f4f5",
+                  borderRadius: "50%",
+                  alignItems: " center",
+                  justifyContent: "center",
+                }}
+              >
+                +
               </IconButton>
             </CardActions>
           </Card>
@@ -91,20 +87,15 @@ const PlaceCard = (props) => {
 
 const RecommendedPlaces = (props) => {
   const [open, setOpen] = useState(false);
-  const [openRestaurants, setOpenRestaurants] = useState(false);
-  const [openHotels, setOpenHotels] = useState(false);
-  const [openAttractions, setOpenAttractions] = useState(false);
   const { placesService } = usePlacesService({
     apiKey: GOOGLE_MAP_API,
   });
 
-  var restaurantsList = props.restaurants;
-  var hotelsList = props.hotels;
-  var attractionsList = props.attractions;
+  const [restaurants, setRestaurants] = useState([]);
+  const [hotels, setHotels] = useState([]);
+  const [attractions, setAttractions] = useState([]);
 
   const [groupedRestaurants, setGroupedRestaurants] = useState([]);
-  const [groupedHotels, setGroupedHotels] = useState([]);
-  const [groupedAttractions, setGroupedAttractions] = useState([]);
 
   const coor = {
     lat: parseFloat(props.trip.endLatitude),
@@ -114,44 +105,45 @@ const RecommendedPlaces = (props) => {
     placesService.nearbySearch(
       {
         location: coor,
-        radius: 5000,
-        type: "restaurant",
+        radius: 3000,
+        type: ["restaurant"],
+        fields: ["name", "formatted_address"],
       },
       (results, status) => {
-        console.log(results);
         // eslint-disable-next-line no-undef
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          const groups = [];
-          for (let i = 0; i < results.length; i += 3) {
-            const group = results.slice(i, i + 3);
-            groups.push(group);
-          }
-          setGroupedRestaurants(groups);
+          setRestaurants(results);
           // Access the details of the place here
         } else {
           console.error("Error:", status);
         }
       }
     );
-  }
-  function handleGetHotels() {
     placesService.nearbySearch(
       {
         location: coor,
-        radius: 5000,
+        radius: 3000,
         type: "lodging",
       },
       (results, status) => {
-        console.log(results);
         // eslint-disable-next-line no-undef
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          const groups = [];
-          for (let i = 0; i < results.length; i += 3) {
-            const group = results.slice(i, i + 3);
-            groups.push(group);
-          }
-          setGroupedHotels(groups);
-          // Access the details of the place here
+          setHotels(results);
+        } else {
+          console.error("Error:", status);
+        }
+      }
+    );
+    placesService.nearbySearch(
+      {
+        location: coor,
+        radius: 3000,
+        type: "tourist_attraction",
+      },
+      (results, status) => {
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          setAttractions(results);
         } else {
           console.error("Error:", status);
         }
@@ -159,30 +151,35 @@ const RecommendedPlaces = (props) => {
     );
   }
 
-  function handleGetAttractions() {
-    placesService.nearbySearch(
-      {
-        location: coor,
-        radius: 5000,
-        type: "tourist_attraction",
-      },
-      (results, status) => {
-        console.log(results);
-        // eslint-disable-next-line no-undef
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          const groups = [];
-          for (let i = 0; i < results.length; i += 3) {
-            const group = results.slice(i, i + 3);
-            groups.push(group);
-          }
-          setGroupedAttractions(groups);
-          // Access the details of the place here
-        } else {
-          console.error("Error:", status);
+  useEffect(() => {
+    async function getAllPlaces() {
+      const place = [...restaurants, ...hotels, ...attractions];
+      if (place.length > 0) {
+        const groups = [];
+        const queryParams = {
+          user_profiles: props.currentInfo.userInterestList,
+          place_data: place,
+        };
+        const data = await getPlacesProps(queryParams);
+
+        const finalList = data.map((item) => item.name);
+        place.sort((a, b) => {
+          const nameA = a.name;
+          const nameB = b.name;
+          return finalList.indexOf(nameA) - finalList.indexOf(nameB);
+        });
+
+        for (let i = 0; i < place.length; i += 2) {
+          const group = place.slice(i, i + 2);
+          groups.push(group);
         }
+
+        setGroupedRestaurants(groups);
       }
-    );
-  }
+    }
+    getAllPlaces();
+  }, [restaurants, hotels, attractions]);
+
   return (
     <>
       <Box
@@ -194,7 +191,10 @@ const RecommendedPlaces = (props) => {
         <Grid container>
           <Grid item xs={12} sm={1}>
             <IconButton
-              onClick={() => setOpen(!open)}
+              onClick={() => {
+                setOpen(!open);
+                handleGetRestaurants();
+              }}
               aria-label="expand"
               size="small"
             >
@@ -212,140 +212,50 @@ const RecommendedPlaces = (props) => {
             unmountOnExit
             sx={{ pl: 2, pr: 2 }}
           >
-            <Grid container>
-              <Grid item xs={12} sm={1}>
-                <IconButton
-                  onClick={() => {
-                    setOpenRestaurants(!openRestaurants);
-                    handleGetRestaurants();
-                  }}
-                  aria-label="expand"
-                  size="small"
-                >
-                  {openRestaurants ? (
-                    <KeyboardArrowDownIcon />
-                  ) : (
-                    <KeyboardArrowRightIcon />
-                  )}
-                </IconButton>
-              </Grid>
-              <Grid item xs={12} sm={11} pt={0.5}>
-                Nhà hàng
-              </Grid>
-            </Grid>
-            <div>
-              <Collapse in={openRestaurants} timeout="auto" unmountOnExit>
-                <Carousel
-                  sx={{
-                    height: "80px",
-                  }}
-                  indicators={false}
-                  autoPlay={false}
-                  cycleNavigation={false}
-                >
-                  {groupedRestaurants.map((group, index) => (
-                    <PlaceCard
-                      key={index}
-                      index={props.index}
-                      childIndex={props.childIndex}
-                      group={group}
-                      onClickData={props.onClickData}
-                      handleClickData={props.handleClickData}
-                    />
-                  ))}
-                </Carousel>
-                <hr />
-              </Collapse>
-            </div>
-            <Grid container>
-              <Grid item xs={12} sm={1}>
-                <IconButton
-                  onClick={() => {
-                    setOpenHotels(!openHotels);
-                    handleGetHotels();
-                  }}
-                  aria-label="expand"
-                  size="small"
-                >
-                  {openHotels ? (
-                    <KeyboardArrowDownIcon />
-                  ) : (
-                    <KeyboardArrowRightIcon />
-                  )}
-                </IconButton>
-              </Grid>
-              <Grid item xs={12} sm={11} pt={0.5}>
-                Khách sạn
-              </Grid>
-            </Grid>
-            <div>
-              <Collapse in={openHotels} timeout="auto" unmountOnExit>
-                <Carousel
-                  sx={{
-                    height: "80px",
-                  }}
-                  indicators={false}
-                  autoPlay={false}
-                  cycleNavigation={false}
-                >
-                  {groupedHotels.map((group, index) => (
-                    <PlaceCard
-                      key={index}
-                      index={props.index}
-                      childIndex={props.childIndex}
-                      group={group}
-                      onClickData={props.onClickData}
-                      handleClickData={props.handleClickData}
-                    />
-                  ))}
-                </Carousel>
-                <hr />
-              </Collapse>
-            </div>
-            <Grid container>
-              <Grid item xs={12} sm={1}>
-                <IconButton
-                  onClick={() => {
-                    setOpenAttractions(!openAttractions);
-                    handleGetAttractions();
-                  }}
-                  aria-label="expand"
-                  size="small"
-                >
-                  {openAttractions ? (
-                    <KeyboardArrowDownIcon />
-                  ) : (
-                    <KeyboardArrowRightIcon />
-                  )}
-                </IconButton>
-              </Grid>
-              <Grid item xs={12} sm={11} pt={0.5}>
-                Khu du lịch
-              </Grid>
-            </Grid>
-            <div>
-              <Collapse in={openAttractions} timeout="auto" unmountOnExit>
-                <Carousel
-                  sx={{
-                    height: "80px",
-                  }}
-                  indicators={false}
-                  autoPlay={false}
-                  cycleNavigation={false}
-                >
-                  {groupedAttractions.map((group, index) => (
-                    <PlaceCard
-                      key={index}
-                      index={props.index}
-                      childIndex={props.childIndex}
-                      group={group}
-                      onClickData={props.onClickData}
-                    />
-                  ))}
-                </Carousel>
-                <hr />
-              </Collapse>
-            </div>
+            {groupedRestaurants.length === 0 ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "90px",
+                }}
+              >
+                <CircularProgress />
+              </div>
+            ) : (
+              <Carousel
+                sx={{
+                  height: "90px",
+                  pl: 6,
+                  pr: 6,
+                }}
+                indicators={false}
+                autoPlay={false}
+                cycleNavigation={false}
+                navButtonsAlwaysVisible={true}
+                navButtonsProps={{
+                  // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
+                  style: {
+                    backgroundColor: "#f3f4f5",
+                    borderRadius: "50%",
+                    color: "black",
+                  },
+                }}
+              >
+                {groupedRestaurants.map((group, index) => (
+                  <PlaceCard
+                    key={index}
+                    index={props.index}
+                    childIndex={props.childIndex}
+                    group={group}
+                    onClickData={props.onClickData}
+                    handleClickData={props.handleClickData}
+                  />
+                ))}
+              </Carousel>
+            )}
+            <hr />
           </Collapse>
         </div>
       </Box>

@@ -6,115 +6,80 @@ import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import AutocompletePlaceForTrip from "components/Extend/AutocompletePlaceForTrip";
-import { tripRouteApi } from "api";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
+import userTripRouteApi from "api/user/trip/route/userTripRouteApi";
 
 const Plan = (props) => {
-  const [plans, setPlans] = useState([
-    {
-      planDate: props.item.listOfDate[0],
-      routeId: 0,
-      open: false,
-      tripRoute: [
-        {
-          planDateTime: props.item.listOfDateTime[0],
+  useEffect(() => {
+    async function addTripRoute() {
+      if (props.placeData !== null && props.placeStatus === false) {
+        const value = props.placeData;
+        const coor = JSON.stringify(value.geometry.location);
+        let updatedPlans = [...props.plans];
+        const childIndex =
+          updatedPlans[props.selectedIndex].tripRoute.length - 1;
+        updatedPlans[props.selectedIndex].tripRoute[childIndex].locationName =
+          value.name;
+        updatedPlans[props.selectedIndex].tripRoute[childIndex].longitude =
+          JSON.parse(coor).lng.toString();
+        updatedPlans[props.selectedIndex].tripRoute[childIndex].latitude =
+          JSON.parse(coor).lat.toString();
+        updatedPlans[props.selectedIndex].tripRoute[childIndex].placeId =
+          value.place_id;
+        const id =
+          updatedPlans[props.selectedIndex].tripRoute[childIndex].priority;
+        const data = await userTripRouteApi.create(
+          updatedPlans[props.selectedIndex].tripRoute[childIndex]
+        );
+        updatedPlans[props.selectedIndex].tripRoute[childIndex].routeId = data;
+        const newTripRoute = {
+          planDateTime:
+            updatedPlans[props.selectedIndex].tripRoute[0].planDateTime,
           routeId: 0,
           tripId: props.item.tripId,
           longitude: "",
           latitude: "",
           locationName: "",
-          priority: 1,
+          priority: id + 1,
           showNote: false,
           note: "",
-        },
-      ],
-    },
-  ]);
-
-  useEffect(() => {
-    if (props.item.listOfDateTime) {
-      const tmp = props.item.listOfDateTime.map((date, index) => {
-        const newPlan = {
-          planDate: props.item.listOfDate[index],
-          routeId: 0,
-          open: false,
-          tripRoute: [
-            {
-              planDateTime: date,
-              routeId: 0,
-              tripId: props.item.tripId,
-              longitude: "",
-              latitude: "",
-              locationName: "",
-              priority: 1,
-              showNote: false,
-              note: "",
-            },
-          ],
+          placeId: "",
         };
-        tripRouteApi
-          .getAllUser({
-            pageIndex: 0,
-            pageSize: 9999,
-            planName: "",
-            tripId: props.item.tripId,
-            planDateTime: date,
-          })
-          .then((data) => {
-            if (data.numOfRoute !== 0) {
-              newPlan.tripRoute = data.listOfRoute;
-              const newTripRoute = {
-                planDateTime: date,
-                routeId: 0,
-                tripId: props.item.tripId,
-                longitude: "",
-                latitude: "",
-                locationName: "",
-                priority: 1,
-                showNote: false,
-                note: "",
-              };
 
-              newPlan.tripRoute.push(newTripRoute);
-            }
-          })
-          .catch((error) => {
-            // Handle the error here if needed
-          });
-
-        return newPlan;
-      });
-      setPlans(tmp);
+        updatedPlans[props.selectedIndex].tripRoute.push(newTripRoute);
+        props.setPlans(updatedPlans);
+        props.setPlaceStatus(true);
+      }
     }
-  }, [props.item.trip, props.item.listOfDate]);
-
-  useEffect(() => {
-    props.getPlanData(plans);
-  }, [plans]);
+    addTripRoute();
+  }, [props.placeData]);
 
   const handleToggleOpen = (index) => {
-    const updatedPlans = [...plans];
+    const updatedPlans = [...props.plans];
     updatedPlans[index].open = !updatedPlans[index].open;
-    setPlans(updatedPlans);
+    props.setPlans(updatedPlans);
   };
 
   const handleShowNote = (index, childIndex) => {
-    const updatedPlans = [...plans];
+    const updatedPlans = [...props.plans];
     updatedPlans[index].tripRoute[childIndex].showNote =
       !updatedPlans[index].tripRoute[childIndex].showNote;
-    setPlans(updatedPlans);
+    props.setPlans(updatedPlans);
   };
 
   const onSelect = async (index, childIndex, value) => {
     const coor = JSON.stringify(value.geometry.location);
-    const updatedPlans = [...plans];
+    const updatedPlans = [...props.plans];
     updatedPlans[index].tripRoute[childIndex].locationName = value.name;
-    updatedPlans[index].tripRoute[childIndex].longitude = JSON.parse(coor).lng.toString();
-    updatedPlans[index].tripRoute[childIndex].latitude = JSON.parse(coor).lat.toString();
-    const data = await tripRouteApi.createUser(
+    updatedPlans[index].tripRoute[childIndex].longitude =
+      JSON.parse(coor).lng.toString();
+    updatedPlans[index].tripRoute[childIndex].latitude =
+      JSON.parse(coor).lat.toString();
+    updatedPlans[index].tripRoute[childIndex].placeId = value.place_id;
+    const data = await userTripRouteApi.create(
       updatedPlans[index].tripRoute[childIndex]
     );
     updatedPlans[index].tripRoute[childIndex].routeId = data;
@@ -128,76 +93,63 @@ const Plan = (props) => {
       priority: 1,
       showNote: false,
       note: "",
+      placeId: "",
     };
 
     updatedPlans[index].tripRoute.push(newTripRoute);
-    setPlans(updatedPlans);
+    props.setPlans(updatedPlans);
   };
 
   const handleClickData = async (index, childIndex, value) => {
-    const coor = JSON.stringify(value.geometry.location);
-    const updatedPlans = [...plans];
-    updatedPlans[index].tripRoute[childIndex].locationName = value.name;
-    updatedPlans[index].tripRoute[childIndex].longitude =
-      JSON.parse(coor).lng.toString();
-    updatedPlans[index].tripRoute[childIndex].latitude =
-      JSON.parse(coor).lat.toString();
-    const id = updatedPlans[index].tripRoute[childIndex].priority;
-    const data = await tripRouteApi.createUser(
-      updatedPlans[index].tripRoute[childIndex]
+    const placeIdToCheck = value.place_id; // Replace "your-place-id" with the actual placeId you want to check
+
+    const test = props.plans[index].tripRoute.findIndex(
+      (route) => route.placeId === placeIdToCheck
     );
-    updatedPlans[index].tripRoute[childIndex].routeId = data;
+
+    let status;
+    if (test !== -1) {
+      status = true;
+    } else {
+      status = false;
+    }
+    props.handleClickData(index, childIndex, value.place_id, status);
+  };
+
+  const onChangeInput = (index, childIndex, value) => {
+    const updatedPlans = [...props.plans];
+    updatedPlans[index].tripRoute[childIndex].note = value;
+    props.setPlans(updatedPlans);
+  };
+
+  const handleClick = async (index, childIndex) => {
+    const updatedPlans = [...props.plans];
     const newTripRoute = {
-      planDateTime: updatedPlans[index].tripRoute[childIndex].planDateTime,
+      planDateTime: updatedPlans[index].tripRoute[0].planDateTime,
       routeId: 0,
       tripId: props.item.tripId,
       longitude: "",
       latitude: "",
       locationName: "",
-      priority: id + 1,
+      priority: 1,
       showNote: false,
       note: "",
+      placeId: "",
     };
-
-    updatedPlans[index].tripRoute.push(newTripRoute);
-    setPlans(updatedPlans);
-  };
-
-  const onChangeInput = (index, childIndex, value) => {
-    const updatedPlans = [...plans];
-    updatedPlans[index].tripRoute[childIndex].note = value;
-    setPlans(updatedPlans);
-  };
-
-  const handleClick = async (index, childIndex) => {
-    const updatedPlans = [...plans];
-
     if (childIndex + 1 === updatedPlans[index].tripRoute.length) {
       updatedPlans[index].tripRoute.splice(childIndex, 1);
-      const newTripRoute = {
-        planDateTime: updatedPlans[index].tripRoute[0].planDateTime,
-        routeId: 0,
-        tripId: props.item.tripId,
-        longitude: "",
-        latitude: "",
-        locationName: "",
-        priority: 1,
-        showNote: false,
-        note: "",
-      };
-
       updatedPlans[index].tripRoute.push(newTripRoute);
     } else {
-      await tripRouteApi.deleteUser(
-        updatedPlans[index].tripRoute[childIndex].routeId
-      );
-
-      updatedPlans[index].tripRoute.splice(childIndex, 1);
+      await userTripRouteApi
+        .delete(updatedPlans[index].tripRoute[childIndex].routeId)
+        .then(() => {
+          updatedPlans[index].tripRoute.splice(childIndex, 1);
+        });
     }
-    setPlans(updatedPlans);
+    props.setPlans(updatedPlans);
   };
 
-  // console.log(props.item);
+  // console.log(props.plans);
 
   return (
     <Grid container>
@@ -207,7 +159,8 @@ const Plan = (props) => {
           marginBottom={2}
           sx={{ fontSize: "1.5 rem", fontWeight: 700 }}
         >
-          <CalendarMonthOutlinedIcon /> Kế hoạch cho chuyến đi
+          <CalendarMonthOutlinedIcon sx={{ marginBottom: "1px" }} /> Kế hoạch
+          cho chuyến đi
         </Typography>
       </Grid>
       <Grid item xs={12} sm={3}>
@@ -235,16 +188,17 @@ const Plan = (props) => {
         </Box>
       </Grid>
       <Grid item xs={12} sx={{ pt: 3 }}>
-        {plans.map((plan, index) => {
+        {props.plans.map((plan, index) => {
           return (
             <Box
+              key={index}
               sx={{
                 minWidth: 300,
                 marginBottom: 1,
               }}
             >
               <Grid container sx={{ pb: 1 }}>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={0.5}>
                   <IconButton
                     onClick={() => handleToggleOpen(index)}
                     aria-label="expand"
@@ -276,16 +230,15 @@ const Plan = (props) => {
                         index={index}
                         childIndex={childIndex}
                         place={place}
+                        trip={props.item}
+                        currentInfo={props.currentInfo}
                         onSelect={onSelect}
                         handleShowNote={handleShowNote}
                         onChangeInput={onChangeInput}
-                        hotels={props.hotels}
-                        restaurants={props.restaurants}
-                        attractions={props.attractions}
-                        onClickData={props.onClickData}
                         handleClick={handleClick}
                         handleClickData={handleClickData}
-                        trip={props.item}
+                        onClickAutocomplete={props.onClickAutocomplete}
+                        onClickData={props.onClickData}
                       />
                     );
                   })}

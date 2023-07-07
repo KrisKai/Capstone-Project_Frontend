@@ -1,4 +1,5 @@
 import axiosInstance from "utils/axios";
+import axiosInstanceImage from "utils/axiosForImage";
 
 const userApi = {
   getAll(params) {
@@ -36,6 +37,10 @@ const userApi = {
   confirm(data) {
     const url = "/users/confirm-user";
     return axiosInstance.put(url, data);
+  },
+  updateAvatar(data) {
+    const url = "/users/update-avatar";
+    return axiosInstanceImage.put(url, data);
   },
 };
 

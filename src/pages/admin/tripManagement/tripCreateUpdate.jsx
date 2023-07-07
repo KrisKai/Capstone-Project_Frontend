@@ -1,10 +1,16 @@
-import { Box, Button, Card, FormHelperText, Typography } from "@mui/material";
-import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
+import {
+  Box,
+  Button,
+  Card,
+  FormHelperText,
+  Typography,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -16,12 +22,33 @@ import MapForTrip from "pages/map/admin/MapForTrip";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { FaLocationArrow, FaTimes } from 'react-icons/fa'
+import { usePlacesWidget } from "react-google-autocomplete";
 import * as yup from "yup";
+import { GOOGLE_MAP_API } from "config";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 dayjs.extend(utc);
 
 export default function TripCreate() {
+  const { ref: materialRef } = usePlacesWidget({
+    apiKey: GOOGLE_MAP_API,
+    onPlaceSelected: (place) => {
+      console.log();
+      const coor = JSON.stringify(place.geometry.location);
+      let updatedTrip = trip;
+      updatedTrip.endLocationName = place.formatted_address;
+      updatedTrip.endLongitude = JSON.parse(coor).lng.toString();
+      updatedTrip.endLatitude = JSON.parse(coor).lat.toString();
+      updatedTrip.placeId = place?.place_id ? place?.place_id : "";
+      setTrip(updatedTrip);
+    },
+    inputAutocompleteValue: "country",
+    options: {
+      types: ["geocode", "establishment"],
+      componentRestrictions: { country: "vn" },
+    },
+  });
+
   let navigate = useNavigate();
   const { tripId } = useParams();
   const isEdit = Boolean(tripId);
@@ -31,20 +58,14 @@ export default function TripCreate() {
     tripDescription: "",
     estimateStartDate: "",
     estimateEndDate: "",
-    estimateStartTime: "",
-    estimateEndTime: "",
     tripPresenter: "",
-    startLocationName: "",
-    endLocationName: "",
-    startLocationName: "",
-    startLatitude: "",
-    startLongitude: "",
     endLocationName: "",
     endLatitude: "",
     endLongitude: "",
     distance: "",
     tripStatus: "ACTIVE",
     tripId: "",
+    tripThumbnail: "",
   });
   const [user, setUser] = useState([
     {
@@ -94,9 +115,6 @@ export default function TripCreate() {
       endLatitude: returnData.endLatitude.toString(),
       endLocationName: returnData.endLocationName,
       endLongitude: returnData.endLongitude.toString(),
-      startLatitude: returnData.startLatitude.toString(),
-      startLocationName: returnData.startLocationName,
-      startLongitude: returnData.startLongitude.toString(),
     });
   };
 
@@ -115,18 +133,6 @@ export default function TripCreate() {
     tripPresenter: yup
       .string("Enter Trip Presenter")
       .required("Trip Presenter is required"),
-    // startLocationName: yup
-    //   .string("Enter Trip Start Location Name")
-    //   .required("Trip Start Location Name is required"),
-    // tripStartLocationAddress: yup
-    //   .string("Enter Trip Start Location Address")
-    //   .required("Trip Start Location Address is required"),
-    // endLocationName: yup
-    //   .string("Enter Trip Destination Location Name")
-    //   .required("Trip Destination Location Name is required"),
-    // tripDestinationLocationAddress: yup
-    //   .string("Enter Trip Destination Location Address")
-    //   .required("Trip Destination Location Address is required"),
   });
 
   let hours = [];
@@ -187,6 +193,47 @@ export default function TripCreate() {
             <Grid container>
               <Grid item xs={12} sm={3}>
                 <Card sx={{ padding: 2, gap: 2 }}>
+                  <Box paddingBottom={2}>
+                    <Typography variant="h5">Trip Thumbnail</Typography>
+                  </Box>
+                  <Grid item xs={12}>
+                    <FormControl
+                      error={touched.tripThumbnail && errors.tripThumbnail}
+                      fullWidth
+                    >
+                      <input
+                        id="tripThumbnail"
+                        name="tripThumbnail"
+                        type="file"
+                        accept="image/*"
+                        onChange={(event) => {
+                          console.log(event.currentTarget.files[0]);
+                          setFieldValue(
+                            "tripThumbnail",
+                            event.currentTarget.files[0]
+                          );
+                        }}
+                        style={{ display: "none" }}
+                      />
+                      <label htmlFor="tripThumbnail">
+                        <Button
+                          variant="contained"
+                          component="span"
+                          startIcon={<CloudUploadIcon />}
+                          onClick={(event) => {
+                            const input =
+                              document.getElementById("tripThumbnail");
+                            // input.click();
+                          }}
+                        >
+                          Upload Image
+                        </Button>
+                      </label>
+                      <FormHelperText>
+                        {touched.image && errors.image}
+                      </FormHelperText>
+                    </FormControl>
+                  </Grid>
                   <Box paddingBottom={2}>
                     <Typography variant="h5">Basic Information</Typography>
                   </Box>
@@ -304,35 +351,7 @@ export default function TripCreate() {
                           </FormHelperText>
                         )}
                     </Grid>
-                    <Grid item xs={12}>
-                      <FormControl sx={{ minWidth: 250 }}>
-                        <InputLabel id="EstimateStartTime">
-                          Estimate Start Time
-                        </InputLabel>
-                        <Select
-                          labelId="EstimateStartTime"
-                          id="estimateStartTime"
-                          value={values.estimateStartTime}
-                          label="EstimateStartTime"
-                          onChange={handleChange}
-                          name="estimateStartTime"
-                        >
-                          {hours.map((item) => (
-                            <MenuItem value={item}>{item}</MenuItem>
-                          ))}
-                        </Select>
 
-                        {touched.estimateStartTime &&
-                          errors.estimateStartTime && (
-                            <FormHelperText
-                              error
-                              id="standard-weight-helper-EstimateStartTime"
-                            >
-                              {errors.estimateStartTime}
-                            </FormHelperText>
-                          )}
-                      </FormControl>
-                    </Grid>
                     <Grid item xs={12}>
                       <LocalizationProvider
                         dateAdapter={AdapterDayjs}
@@ -371,34 +390,7 @@ export default function TripCreate() {
                         )}
                       </LocalizationProvider>
                     </Grid>
-                    <Grid item xs={12}>
-                      <FormControl sx={{ minWidth: 250 }}>
-                        <InputLabel id="EstimateEndTime">
-                          Estimate End Time
-                        </InputLabel>
-                        <Select
-                          labelId="EstimateEndTime"
-                          id="estimateEndTime"
-                          value={values.estimateEndTime}
-                          label="estimateEndTime"
-                          onChange={handleChange}
-                          name="estimateEndTime"
-                        >
-                          {hours.map((item) => (
-                            <MenuItem value={item}>{item}</MenuItem>
-                          ))}
-                        </Select>
 
-                        {touched.estimateEndTime && errors.estimateEndTime && (
-                          <FormHelperText
-                            error
-                            id="standard-weight-helper-EstimateEndTime"
-                          >
-                            {errors.estimateEndTime}
-                          </FormHelperText>
-                        )}
-                      </FormControl>
-                    </Grid>
                     {isEdit ? (
                       <Grid item xs={12}>
                         <FormControl sx={{ mt: 1, minWidth: 200 }}>
@@ -434,32 +426,6 @@ export default function TripCreate() {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        id="startLocationName"
-                        name="startLocationName"
-                        label="Trip Start Location Name"
-                        fullWidth
-                        variant="outlined"
-                        value={values.startLocationName}
-                        onChange={handleChange}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        error={Boolean(
-                          touched.startLocationName && errors.startLocationName
-                        )}
-                      />
-                      {touched.startLocationName &&
-                        errors.startLocationName && (
-                          <FormHelperText
-                            error
-                            id="standard-weight-helper-StartLocationName"
-                          >
-                            {errors.startLocationName}
-                          </FormHelperText>
-                        )}
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
                         id="endLocationName"
                         name="endLocationName"
                         label="Trip Destination Location Name"
@@ -467,21 +433,8 @@ export default function TripCreate() {
                         variant="outlined"
                         value={values.endLocationName}
                         onChange={handleChange}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        error={Boolean(
-                          touched.endLocationName && errors.endLocationName
-                        )}
+                        inputRef={materialRef}
                       />
-                      {touched.endLocationName && errors.endLocationName && (
-                        <FormHelperText
-                          error
-                          id="standard-weight-helper-EndLocationName"
-                        >
-                          {errors.endLocationName}
-                        </FormHelperText>
-                      )}
                     </Grid>
                   </Grid>
                 </Card>

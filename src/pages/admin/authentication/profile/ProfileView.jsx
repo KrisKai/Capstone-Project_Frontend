@@ -10,7 +10,8 @@ import CakeIcon from "@mui/icons-material/Cake";
 import AccessTimeFilledRoundedIcon from "@mui/icons-material/AccessTimeFilledRounded";
 
 import avatar1 from "assets/images/users/avatar-1.png";
-import { authApi } from "api";
+import { authApi, userApi } from "api";
+import { useRef } from "react";
 
 // ==============================|| PROFILE - VIEW ||============================== //
 
@@ -24,8 +25,11 @@ const ProfileView = (props) => {
     phone: "",
     address: "",
     createDate: "",
+    avatar: "",
+    avatarFile: "",
   });
 
+  const fileInputRef = useRef(null);
   useEffect(() => {
     async function getInfo() {
       const response = await authApi.getCurrentInfo();
@@ -40,16 +44,37 @@ const ProfileView = (props) => {
     }
     getInfo();
   }, []);
+
+  function handleAvavtarClick() {
+    fileInputRef.current.click();
+  }
+
+  async function handleFileUpload(event) {
+    const file = event.target.files[0];
+    let updatedInfo = currentInfo;
+    updatedInfo.avatarFile = file;
+    const response = await userApi.updateAvatar(updatedInfo);
+    updatedInfo.avatar = response;
+    setCurrentInfo(updatedInfo);
+  }
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h5">Profile picture</Typography>
-        <Button variant="outlined">Upload Avatar</Button>
+        <Button variant="outlined" onClick={handleAvavtarClick}>
+          Upload Avatar
+        </Button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          style={{ display: "none" }}
+          onChange={handleFileUpload}
+        />
       </Box>
 
       <Avatar
         alt="profile user"
-        src={avatar1}
+        src={currentInfo.avatar === null ? avatar1 : currentInfo.avatar}
         sx={{
           height: "200px",
           width: "200px",

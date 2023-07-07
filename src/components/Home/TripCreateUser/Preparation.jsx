@@ -1,18 +1,23 @@
-import { Box, Button, Card, FormHelperText, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
+import {
+  IconButton,
+  Button,
+  Card,
+  Collapse,
+  Typography,
+  CardHeader,
+  Grid,
+  TextField,
+} from "@mui/material";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import IconButton from "@mui/material/IconButton";
-import Collapse from "@mui/material/Collapse";
-import CardHeader from "@mui/material/CardHeader";
+import { useParams } from "react-router-dom";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
-import { tripItemApi } from "api";
 import { toast } from "react-toastify";
+import userTripItemApi from "api/user/trip/item/userTripItemApi";
 
 const Preparation = (props) => {
   const { tripId } = useParams();
@@ -41,7 +46,7 @@ const Preparation = (props) => {
 
   const handleItemRemove = async (itemId, index) => {
     if (itemId !== 0) {
-      const reponse = await tripItemApi.delete(itemId || "");
+      const reponse = await userTripItemApi.delete(itemId || "");
       if (reponse > 0) {
         toast.success("Xoá thành công!");
       }
@@ -55,7 +60,7 @@ const Preparation = (props) => {
 
   const handleItemAdd = async (itemId, index) => {
     if (itemId === 0) {
-      const reponse = await tripItemApi.createUser(itemList[index]);
+      const reponse = await userTripItemApi.create(itemList[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -79,7 +84,7 @@ const Preparation = (props) => {
           return toast.success("Tạo thành công!");
       }
     } else {
-      const reponse = await tripItemApi.updateUser(itemList[index]);
+      const reponse = await userTripItemApi.update(itemList[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -102,7 +107,7 @@ const Preparation = (props) => {
 
   const handleItemRemove1 = async (itemId, index) => {
     if (itemId !== 0) {
-      const reponse = await tripItemApi.delete(itemId || "");
+      const reponse = await userTripItemApi.delete(itemId || "");
       if (reponse > 0) {
         toast.success("Xoá thành công!");
       }
@@ -116,7 +121,7 @@ const Preparation = (props) => {
 
   const handleItemAdd1 = async (itemId, index) => {
     if (itemId === 0) {
-      const reponse = await tripItemApi.createUser(itemList1[index]);
+      const reponse = await userTripItemApi.create(itemList1[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -140,7 +145,7 @@ const Preparation = (props) => {
           return toast.success("Tạo thành công!");
       }
     } else {
-      const reponse = await tripItemApi.updateUser(itemList1[index]);
+      const reponse = await userTripItemApi.update(itemList1[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -163,7 +168,7 @@ const Preparation = (props) => {
 
   const handleItemRemove2 = async (itemId, index) => {
     if (itemId !== 0) {
-      const reponse = await tripItemApi.delete(itemId || "");
+      const reponse = await userTripItemApi.delete(itemId || "");
       if (reponse > 0) {
         toast.success("Xoá thành công!");
       }
@@ -177,7 +182,7 @@ const Preparation = (props) => {
 
   const handleItemAdd2 = async (itemId, index) => {
     if (itemId === 0) {
-      const reponse = await tripItemApi.createUser(itemList2[index]);
+      const reponse = await userTripItemApi.create(itemList2[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -201,7 +206,7 @@ const Preparation = (props) => {
           return toast.success("Tạo thành công!");
       }
     } else {
-      const reponse = await tripItemApi.updateUser(itemList2[index]);
+      const reponse = await userTripItemApi.update(itemList2[index]);
       switch (reponse.Code) {
         case "G001":
           return toast.error(reponse.Message);
@@ -244,7 +249,7 @@ const Preparation = (props) => {
     (async () => {
       if (!tripId) return;
       try {
-        const data = await tripItemApi.getAllUser({
+        const data = await userTripItemApi.getAll({
           pageIndex: 0,
           pageSize: 99999,
           categoryId: 2,
@@ -264,7 +269,7 @@ const Preparation = (props) => {
             },
           ]);
         }
-        const data1 = await tripItemApi.getAllUser({
+        const data1 = await userTripItemApi.getAll({
           pageIndex: 0,
           pageSize: 99999,
           categoryId: 3,
@@ -284,7 +289,7 @@ const Preparation = (props) => {
             },
           ]);
         }
-        const data2 = await tripItemApi.getAllUser({
+        const data2 = await userTripItemApi.getAll({
           pageIndex: 0,
           pageSize: 99999,
           categoryId: 4,
@@ -312,33 +317,44 @@ const Preparation = (props) => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography variant="h3" marginBottom={2} sx={{ fontSize: "1.5 rem", fontWeight:700 }}>
+        <Typography
+          variant="h3"
+          marginBottom={2}
+          sx={{ fontSize: "1.5 rem", fontWeight: 700 }}
+        >
           <PlaylistAddCheckOutlinedIcon /> Phần chuẩn bị cho chuyến đi
         </Typography>
       </Grid>
-      <Grid item xs={12} sx={{p:2}}>
+      <Grid item xs={12} sx={{ p: 2 }}>
         <Card
           sx={{
             minWidth: 300,
             marginBottom: 1,
           }}
         >
-          <CardHeader
-            title="Đồ ăn vặt"
-            action={
+          <Grid container sx={{ pb: 1 }}>
+            <Grid item xs={12} sm={0.5}>
               <IconButton
                 onClick={() => setOpenOverview(!openOverview)}
                 aria-label="expand"
                 size="small"
               >
                 {openOverview ? (
-                  <KeyboardArrowUpIcon />
-                ) : (
                   <KeyboardArrowDownIcon />
+                ) : (
+                  <KeyboardArrowRightIcon />
                 )}
               </IconButton>
-            }
-          ></CardHeader>
+            </Grid>
+            <Grid item xs={12} sm={11} pt={0.5}>
+              <Typography
+                variant="h4"
+                sx={{ fontWeight: "700", fontSize: "15px", marginLeft: 1 }}
+              >
+                Đồ ăn vặt
+              </Typography>
+            </Grid>
+          </Grid>
           <div
             style={{
               backgroundColor: "rgba(211,211,211,0.4)",
@@ -373,7 +389,7 @@ const Preparation = (props) => {
                         <RemoveCircleOutlineOutlinedIcon />
                       </Button>
                     </Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                       <TextField
                         id="priceMin"
                         name="priceMin"
@@ -385,7 +401,7 @@ const Preparation = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12} sm={2}></Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                       <TextField
                         id="quantity"
                         name="quantity"
@@ -403,29 +419,36 @@ const Preparation = (props) => {
           </div>
         </Card>
       </Grid>
-      <Grid item xs={12} sx={{p:2}}>
+      <Grid item xs={12} sx={{ p: 2 }}>
         <Card
           sx={{
             minWidth: 300,
             marginBottom: 1,
           }}
         >
-          <CardHeader
-            title="Nguyên liệu nấu ăn"
-            action={
+          <Grid container sx={{ pb: 1 }}>
+            <Grid item xs={12} sm={0.5}>
               <IconButton
                 onClick={() => setOpenOverview2(!openOverview2)}
                 aria-label="expand"
                 size="small"
               >
                 {openOverview2 ? (
-                  <KeyboardArrowUpIcon />
-                ) : (
                   <KeyboardArrowDownIcon />
+                ) : (
+                  <KeyboardArrowRightIcon />
                 )}
               </IconButton>
-            }
-          ></CardHeader>
+            </Grid>
+            <Grid item xs={12} sm={11} pt={0.5}>
+              <Typography
+                variant="h4"
+                sx={{ fontWeight: "700", fontSize: "15px", marginLeft: 1 }}
+              >
+                Nguyên liệu nấu ăn
+              </Typography>
+            </Grid>
+          </Grid>
           <div
             style={{
               backgroundColor: "rgba(211,211,211,0.4)",
@@ -462,7 +485,7 @@ const Preparation = (props) => {
                         <RemoveCircleOutlineOutlinedIcon />
                       </Button>
                     </Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                       <TextField
                         id="priceMin"
                         name="priceMin"
@@ -474,7 +497,7 @@ const Preparation = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12} sm={2}></Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                       <TextField
                         id="quantity"
                         name="quantity"
@@ -493,28 +516,35 @@ const Preparation = (props) => {
         </Card>
       </Grid>
 
-      <Grid item xs={12} sx={{p:2}}>
+      <Grid item xs={12} sx={{ p: 2 }}>
         <Card
           sx={{
             minWidth: 300,
           }}
         >
-          <CardHeader
-            title="Đồ dùng cá nhân"
-            action={
+          <Grid container sx={{ pb: 1 }}>
+            <Grid item xs={12} sm={0.5}>
               <IconButton
                 onClick={() => setOpenOverview3(!openOverview3)}
                 aria-label="expand"
                 size="small"
               >
                 {openOverview3 ? (
-                  <KeyboardArrowUpIcon />
-                ) : (
                   <KeyboardArrowDownIcon />
+                ) : (
+                  <KeyboardArrowRightIcon />
                 )}
               </IconButton>
-            }
-          ></CardHeader>
+            </Grid>
+            <Grid item xs={12} sm={11} pt={0.5}>
+              <Typography
+                variant="h4"
+                sx={{ fontWeight: "700", fontSize: "15px", marginLeft: 1 }}
+              >
+                Đồ dùng cá nhân
+              </Typography>
+            </Grid>
+          </Grid>
           <div
             style={{
               backgroundColor: "rgba(211,211,211,0.4)",
@@ -551,7 +581,7 @@ const Preparation = (props) => {
                         <RemoveCircleOutlineOutlinedIcon />
                       </Button>
                     </Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                       <TextField
                         id="priceMin"
                         name="priceMin"
@@ -563,7 +593,7 @@ const Preparation = (props) => {
                       />
                     </Grid>
                     <Grid item xs={12} sm={2}></Grid>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={3}>
                       <TextField
                         id="quantity"
                         name="quantity"

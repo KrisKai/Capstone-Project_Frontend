@@ -98,9 +98,6 @@ export default function UserTripCreate() {
       endLatitude: returnData.endLatitude.toString(),
       endLocationName: returnData.endLocationName,
       endLongitude: returnData.endLongitude.toString(),
-      startLatitude: returnData.startLatitude.toString(),
-      startLocationName: returnData.startLocationName,
-      startLongitude: returnData.startLongitude.toString(),
     });
   };
 

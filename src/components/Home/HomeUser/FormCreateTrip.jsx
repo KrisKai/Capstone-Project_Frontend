@@ -1,39 +1,57 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, Button, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { tripApi } from "api";
-import { getPlacesProps } from "api/user/placesAPI";
 import { GOOGLE_MAP_API } from "config";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Autocomplete from "react-google-autocomplete";
+import { usePlacesWidget } from "react-google-autocomplete";
+import userTripApi from "api/user/trip/userTripApi";
 
 dayjs.extend(utc);
 
 const FormCreateTrip = () => {
   const navigate = useNavigate();
   const [trip, setTrip] = useState({
-    estimateStartDate: dayjs(),
-    estimateEndDate: dayjs().add(1, "day"),
+    estimateStartDate: dayjs().add(1, "day"),
+    estimateEndDate: dayjs().add(2, "day"),
     endLongitude: "",
     endLatitude: "",
     endLocationName: "",
+    placeId: "",
+  });
+  const { ref: materialRef } = usePlacesWidget({
+    apiKey: GOOGLE_MAP_API,
+    onPlaceSelected: (place) => {
+      const coor = JSON.stringify(place.geometry.location);
+      let updatedTrip = trip;
+      updatedTrip.endLocationName = place.formatted_address;
+      updatedTrip.endLongitude = JSON.parse(coor).lng.toString();
+      updatedTrip.endLatitude = JSON.parse(coor).lat.toString();
+      updatedTrip.placeId = place?.place_id ? place?.place_id : "";
+      setTrip(updatedTrip);
+    },
+    inputAutocompleteValue: "country",
+    options: {
+      types: ["geocode", "establishment"],
+      componentRestrictions: { country: "vn" },
+    },
   });
 
   const locationRef1 = useRef();
 
   async function handleSubmit() {
-    if (locationRef1.current.value !== "") {
-      const data = await getPlacesProps(locationRef1.current.value);
-      const id = await tripApi.createUser({
-        ...trip,
-        endLocationName: data.name,
-        endLongitude: data.lon.toString(),
-        endLatitude: data.lat.toString(),
-      });
+    if (trip.endLocationName !== "") {
+      // const data = await getPlacesProps(locationRef1.current.value);
+      const id = await userTripApi.create(trip);
       if (id !== null) {
         navigate(`/tripUpdate/` + id);
       }
@@ -49,9 +67,12 @@ const FormCreateTrip = () => {
           flexDirection="column"
           paddingY={5}
           borderRadius="5px"
+          sx={{backgroundColor:"#f3f4f5", borderRadius:8}}
         >
           <Box display="flex" flexDirection="column" alignItems="center">
-            <Typography variant="h2">Tạo hành trình mới</Typography>
+            <Typography variant="h2" sx={{ fontSize: 36 }}>
+              Tạo hành trình mới
+            </Typography>
             <Box width="60%" border="1px solid black" mt={1}></Box>
           </Box>
           <Box mt={2}>
@@ -62,14 +83,19 @@ const FormCreateTrip = () => {
                   borderRadius: "8px",
                 }}
               >
-                <Autocomplete
-                  apiKey={GOOGLE_MAP_API}
-                  ref={locationRef1}
-                  className="custom-input"
-                  options={{
-                    types: ["geocode", "establishment"],
-                    componentRestrictions: { country: "vn" },
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
                   }}
+                  sx={{backgroundColor:"white"}}
+                  placeholder="Nhập địa điểm"
+                  inputRef={materialRef}
                 />
               </Box>
               <Box display="flex" gap={2}>
@@ -118,6 +144,7 @@ const FormCreateTrip = () => {
                     padding: "10px 30px",
                     fontSize: "20px",
                     backgroundColor: "#168843",
+                    borderRadius: 80,
                   }}
                   onClick={() => handleSubmit()}
                 >
@@ -125,9 +152,6 @@ const FormCreateTrip = () => {
                 </Button>
               </Box>
             </Box>
-            {/* </form>
-              )}
-            </Formik> */}
           </Box>
         </Box>
       </Box>

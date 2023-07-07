@@ -1,3 +1,4 @@
+import axiosInstanceImageUser from "utils/axiosForImageUser";
 import axiosInstanceUser from "utils/axiosForUser";
 
 const userTripApi = {
@@ -11,11 +12,11 @@ const userTripApi = {
   },
   create(data) {
     const url = "/trips/create-trip-user";
-    return axiosInstanceUser.post(url, data);
+    return axiosInstanceImageUser.post(url, data);
   },
   update(data) {
     const url = "/trips";
-    return axiosInstanceUser.put(url, data);
+    return axiosInstanceImageUser.put(url, data);
   },
   delete(id) {
     const url = `/trips/${id}`;
@@ -24,7 +25,11 @@ const userTripApi = {
   tripHistory() {
     const url = `/trips/trip-history`;
     return axiosInstanceUser.get(url);
-  }
+  },
+  updateTripThumbnail(data) {
+    const url = "/trips/update-trip-thumbnail";
+    return axiosInstanceUser.put(url, data);
+  },
 };
 
 export default userTripApi;
