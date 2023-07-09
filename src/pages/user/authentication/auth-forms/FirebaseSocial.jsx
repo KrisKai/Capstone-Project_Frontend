@@ -24,7 +24,6 @@ const FirebaseSocial = () => {
 
   const loginHandler = async (provider) => {
     const result = await signInWithPopup(auth, provider);
-    console.log(result.user.accessToken);
     const response = await authUserApi.loginWithSocial(
       result.user.accessToken.toString()
     );

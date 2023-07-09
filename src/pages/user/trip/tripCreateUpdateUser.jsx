@@ -7,6 +7,13 @@ import {
   Grid,
   styled,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  Autocomplete,
 } from "@mui/material";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -24,6 +31,7 @@ import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
 import Logo from "assets/images/logo.png";
+import MapImage from "assets/images/map_image.png";
 import userTripRouteApi from "api/user/trip/route/userTripRouteApi";
 import userTripApi from "api/user/trip/userTripApi";
 import typeForConverting from "assets/data/typeForConverting";
@@ -36,6 +44,13 @@ import Plan from "components/Home/TripCreateUser/Plan";
 import ProfileUser from "layout/MainLayout/Header/HeaderContent/Profile/ProfileUser";
 import MapUser from "pages/map/user/MapUser";
 import { GOOGLE_MAP_API } from "config";
+import {
+  faArrowLeft,
+  faUserGear,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import userTripMemberApi from "api/user/trip/member/userTripMemberApi";
 
 dayjs.extend(utc);
 
@@ -78,6 +93,10 @@ export default function TripCreate() {
   const [showInputTripName, setShowInputTripName] = useState(false);
   const [showInputSDate, setShowInputSDate] = useState(false);
   const [showInputEDate, setShowInputEDate] = useState(false);
+  const [openInvite, setOpenInvite] = useState(false);
+  const [openManagement, setOpenManagement] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [selectReceiver, setSelectedReceiver] = useState();
 
   let navigate = useNavigate();
   const { tripId } = useParams();
@@ -137,6 +156,7 @@ export default function TripCreate() {
     createDate: "",
     userInterestList: [],
   });
+  const [memberList, setMemberList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const fileInputRef = useRef(null);
@@ -236,6 +256,26 @@ export default function TripCreate() {
       setPlans(tmp);
     }
   }, [trip, trip.listOfDate]);
+
+  const handleClose = () => {
+    setOpenInvite(false);
+  };
+  const handleCloseManagement = () => {
+    setOpenManagement(false);
+  };
+
+  const handleMemberManagement = () => {
+    setOpenInvite(false);
+    setOpenManagement(true);
+  };
+
+  const handleInputChange = async (event, value) => {
+    // Perform logic to update options based on user input
+    const filteredOptions = await userTripMemberApi.getAllByEmailOrUsername({
+      value,
+    });
+    setOptions(filteredOptions);
+  };
 
   const getPlanData = (plan) => {
     setPlans(plan);
@@ -569,9 +609,16 @@ export default function TripCreate() {
                     <Button
                       onClick={handleGridClick}
                       variant="outlined"
-                      sx={{ marginTop: 2 }}
+                      sx={{ marginTop: 2, marginRight: 2 }}
                     >
                       Đổi ảnh bìa
+                    </Button>
+                    <Button
+                      onClick={() => setOpenInvite(true)}
+                      variant="outlined"
+                      sx={{ marginTop: 2 }}
+                    >
+                      Mời bạn bè
                     </Button>
                   </Grid>
                 </Grid>
@@ -633,6 +680,200 @@ export default function TripCreate() {
           </Grid>
         </Box>
       </Box>
+      <Dialog
+        open={openInvite}
+        onClose={handleClose}
+        sx={{
+          "& .MuiDialog-paper": {
+            width: "450px",
+            borderRadius: "24px",
+            maxHeight: "612px",
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "30px",
+            fontWeight: 700,
+          }}
+        >
+          <Grid container>
+            <Grid item xs={12} sm={2}></Grid>
+            <Grid item xs={12} sm={8}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  mt: 1,
+                  fontFamily: "Noto Sans,Arial,sans-serif",
+                  fontSize: "24px",
+                }}
+              >
+                Mời bạn bè
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={2}>
+              <Button
+                onClick={handleClose}
+                color="inherit"
+                sx={{
+                  fontSize: "14px",
+                  fontWeight: 600,
+                }}
+              >
+                <FontAwesomeIcon icon={faXmark} />
+              </Button>
+            </Grid>
+            <Grid item xs={12}></Grid>
+          </Grid>
+        </DialogTitle>
+        <DialogContent>
+          <Box
+            sx={{
+              height: "150px",
+              borderRadius: 4,
+              backgroundImage: `url(${MapImage})`,
+            }}
+          >
+            <Typography
+              sx={{ color: "black", pt: "90px", pl: 2, fontWeight: 600 }}
+            >
+              {trip.tripName}
+            </Typography>
+          </Box>
+          <Autocomplete
+            options={options}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                sx={{
+                  backgroundColor: "#f3f4f5",
+                  borderRadius: 3,
+                  "& fieldset": {
+                    border: "none",
+                  },
+                  marginTop: 2,
+                }}
+                fullWidth
+                placeholder="Nhập tên hoặc email"
+              />
+            )}
+            onChange={(event, value) => {
+              // Handle selected value if needed
+              setSelectedReceiver(value);
+            }}
+            onInputChange={handleInputChange}
+          />
+          {selectReceiver && (
+            <Button
+              type="button"
+              variant="outlined"
+              sx={{
+                borderRadius: 10,
+                color: "black",
+                mt: 2,
+              }}
+              // onClick={handleSubmit}
+            >
+              Xác nhận
+            </Button>
+          )}
+          <hr />
+          <Button
+            type="button"
+            sx={{
+              borderRadius: 80,
+              color: "black",
+            }}
+            onClick={handleMemberManagement}
+          >
+            <FontAwesomeIcon
+              icon={faUserGear}
+              style={{ marginRight: 4, marginBottom: 2 }}
+            />{" "}
+            Quản lí thành viên
+          </Button>
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={openManagement}
+        onClose={handleCloseManagement}
+        sx={{
+          "& .MuiDialog-paper": {
+            width: "450px",
+            borderRadius: "24px",
+            maxHeight: "612px",
+          },
+        }}
+      >
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "30px",
+            fontWeight: 700,
+          }}
+        >
+          <Grid container>
+            <Grid item xs={12} sm={2}>
+              <Button
+                onClick={() => {
+                  setOpenInvite(true);
+                  setOpenManagement(false);
+                }}
+                color="inherit"
+                sx={{
+                  fontSize: "14px",
+                  fontWeight: 600,
+                }}
+              >
+                <FontAwesomeIcon icon={faArrowLeft} />
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  mt: 1,
+                  fontFamily: "Noto Sans,Arial,sans-serif",
+                  fontSize: "24px",
+                }}
+              >
+                Quản lí thành viên
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={2}>
+              <Button
+                onClick={handleCloseManagement}
+                color="inherit"
+                sx={{
+                  fontSize: "14px",
+                  fontWeight: 600,
+                }}
+              >
+                <FontAwesomeIcon icon={faXmark} />
+              </Button>
+            </Grid>
+            <Grid item xs={12}></Grid>
+          </Grid>
+        </DialogTitle>
+        <DialogContent>
+          {memberList.length === 0 ? (
+            <Typography sx={{ ml: 3, mb: 5 }}>
+              Chưa có thành viên trong chuyến đi
+            </Typography>
+          ) : (
+            <></>
+          )}
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
