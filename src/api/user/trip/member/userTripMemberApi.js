@@ -25,6 +25,10 @@ const userTripMemberApi = {
     const url = "/tripMembers/send-mail";
     return axiosInstanceUser.put(url, data);
   },
+  sendMailUser(params) {
+    const url = "/tripMembers/send-mail-user";
+    return axiosInstanceUser.put(url, params);
+  },
   delete(id) {
     const url = `/tripMembers/${id}`;
     return axiosInstanceUser.delete(url);

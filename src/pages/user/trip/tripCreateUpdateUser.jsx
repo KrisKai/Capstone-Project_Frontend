@@ -188,8 +188,6 @@ export default function TripCreate() {
         }
         const response = await authUserApi.getCurrentInfo();
         setCurrentInfo(response);
-        const memberList = await userTripMemberApi.getAllUser({ tripId });
-        setMemberList(memberList);
       } catch (error) {
         console.log("Failed to fetch trip details", error);
         if (error.response.status === 401) {
@@ -262,11 +260,21 @@ export default function TripCreate() {
   const handleClose = () => {
     setOpenInvite(false);
   };
+
   const handleCloseManagement = () => {
     setOpenManagement(false);
   };
 
-  const handleMemberManagement = () => {
+  const handleSendMail = async () => {
+    const response = await userTripMemberApi.sendMailUser({
+      email: selectReceiver,
+      tripId,
+    });
+  };
+
+  const handleMemberManagement = async () => {
+    const memberList = await userTripMemberApi.getAllUser({ tripId });
+    setMemberList(memberList);
     setOpenInvite(false);
     setOpenManagement(true);
   };
@@ -779,7 +787,7 @@ export default function TripCreate() {
                 color: "black",
                 mt: 2,
               }}
-              // onClick={handleSubmit}
+              onClick={handleSendMail}
             >
               Xác nhận
             </Button>
@@ -872,7 +880,22 @@ export default function TripCreate() {
               Chưa có thành viên trong chuyến đi
             </Typography>
           ) : (
-            <></>
+            <>
+              {memberList.map((item) => {
+                return (
+                  <Grid container>
+                    <Grid item xs={12} sm={2}>
+                      <Avatar src={item.avatar === null ? "" : item.avatar} />
+                    </Grid>
+                    <Grid item xs={12} sm={10}>
+                      <Typography>
+                        {item.fullname} ({item.email})
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                );
+              })}
+            </>
           )}
         </DialogContent>
       </Dialog>
