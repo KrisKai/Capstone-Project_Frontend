@@ -188,6 +188,8 @@ export default function TripCreate() {
         }
         const response = await authUserApi.getCurrentInfo();
         setCurrentInfo(response);
+        const memberList = await userTripMemberApi.getAllUser({ tripId });
+        setMemberList(memberList);
       } catch (error) {
         console.log("Failed to fetch trip details", error);
         if (error.response.status === 401) {

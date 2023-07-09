@@ -33,6 +33,10 @@ const userTripMemberApi = {
     const url = "/tripMembers/get-all-by-email-or-username";
     return axiosInstanceUser.get(url, { params });
   },
+  getAllUser(params) {
+    const url = "/tripMembers/get-all-user";
+    return axiosInstanceUser.get(url, { params });
+  },
 };
 
 export default userTripMemberApi;
