@@ -47,6 +47,7 @@ import { GOOGLE_MAP_API } from "config";
 import {
   faArrowLeft,
   faUserGear,
+  faUserPlus,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -605,15 +606,27 @@ export default function TripCreate() {
                       showInputEDate={showInputEDate}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}></Grid>
+                  <Grid item xs={12} sm={5}></Grid>
                   <Grid item xs={12} sm={1}>
                     <Avatar
                       alt="profile user"
                       src={
                         currentUser.avatar === null ? "" : currentUser.avatar
                       }
-                      sx={{ width: 32, height: 32 }}
+                      sx={{ width: 32, height: 32, marginLeft: 1 }}
                     />
+                  </Grid>
+                  <Grid item xs={12} sm={1}>
+                    <Button
+                      style={{ width: "32px", height: 32 }}
+                      onClick={() => setOpenInvite(true)}
+                    >
+                      <FontAwesomeIcon
+                        icon={faUserPlus}
+                        style={{ width: "32px", height: 20 }}
+                        color="grey"
+                      />
+                    </Button>
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <Button
@@ -622,13 +635,6 @@ export default function TripCreate() {
                       sx={{ marginTop: 2, marginRight: 2 }}
                     >
                       Đổi ảnh bìa
-                    </Button>
-                    <Button
-                      onClick={() => setOpenInvite(true)}
-                      variant="outlined"
-                      sx={{ marginTop: 2 }}
-                    >
-                      Mời bạn bè
                     </Button>
                   </Grid>
                 </Grid>
