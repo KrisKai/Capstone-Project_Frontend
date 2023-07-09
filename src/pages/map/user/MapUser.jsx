@@ -51,7 +51,7 @@ export default function Map({
   setPlaceStatus,
 }) {
   let now = dayjs().locale("vi").format("d");
-  if (now === 0) {
+  if (now == 0) {
     now = 6;
   } else {
     now -= 1;
@@ -80,8 +80,6 @@ export default function Map({
       strokeColor: "blue", // Initial color
     },
   });
-
-  const data = selectedData;
 
   const [map, setMap] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
