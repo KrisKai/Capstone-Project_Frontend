@@ -202,8 +202,8 @@ export default function StickyHeadTableTrip() {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              onClick={() => gotoView(row.tripId)}
-                              style={{ textDecoration: "underline" }}
+                              // onClick={() => gotoView(row.tripId)}
+                              // style={{ textDecoration: "underline" }}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)

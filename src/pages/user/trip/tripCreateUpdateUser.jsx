@@ -271,6 +271,14 @@ export default function TripCreate() {
       email: selectReceiver,
       tripId,
     });
+    switch (response.Code) {
+      case "G001":
+        return toast.error(response.Message);
+      case "U001":
+        return toast.error(response.Message);
+      default:
+        toast.success("Đã gửi lời mời thành công!");
+    }
   };
 
   const handleMemberManagement = async () => {

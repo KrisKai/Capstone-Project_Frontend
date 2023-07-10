@@ -160,7 +160,8 @@ const RecommendedPlaces = (props) => {
           user_profiles: props.currentInfo.userInterestList,
           place_data: place,
         };
-        const data = await getPlacesProps(queryParams);
+        let data = await getPlacesProps(queryParams);
+        
 
         const finalList = data.map((item) => item.name);
         place.sort((a, b) => {
@@ -169,10 +170,15 @@ const RecommendedPlaces = (props) => {
           return finalList.indexOf(nameA) - finalList.indexOf(nameB);
         });
 
-        for (let i = 0; i < place.length; i += 2) {
-          const group = place.slice(i, i + 2);
+        const uniquePlace = place.filter((item, index, self) => {
+          return index === self.findIndex(i => i.place_id === item.place_id);
+        });
+
+        for (let i = 0; i < uniquePlace.length; i += 2) {
+          const group = uniquePlace.slice(i, i + 2);
           groups.push(group);
         }
+        
 
         setGroupedRestaurants(groups);
       }

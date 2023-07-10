@@ -80,25 +80,6 @@ export default function StickyHeadTableTrip() {
               color="text.secondary"
               gutterBottom
             >
-              Trip Route
-            </Typography>
-            <Typography variant="body2" sx={{ mt: 3 }}>
-              includes {routeList} location(s)
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small" onClick={gotoRoute}>
-              More Details
-            </Button>
-          </CardActions>
-        </Card>
-        <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
-          <CardContent>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
               Trip Member
             </Typography>
             <Typography variant="body2" sx={{ mt: 3 }}>
