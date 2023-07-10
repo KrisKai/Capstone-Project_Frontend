@@ -332,7 +332,7 @@ const Preparation = (props) => {
             marginBottom: 1,
           }}
         >
-          <Grid container sx={{ pb: 1 }}>
+          <Grid container sx={{ pb: 1, pt: 1 }}>
             <Grid item xs={12} sm={0.5}>
               <IconButton
                 onClick={() => setOpenOverview(!openOverview)}
@@ -426,7 +426,7 @@ const Preparation = (props) => {
             marginBottom: 1,
           }}
         >
-          <Grid container sx={{ pb: 1 }}>
+          <Grid container sx={{ pb: 1, pt: 1 }}>
             <Grid item xs={12} sm={0.5}>
               <IconButton
                 onClick={() => setOpenOverview2(!openOverview2)}
@@ -522,7 +522,7 @@ const Preparation = (props) => {
             minWidth: 300,
           }}
         >
-          <Grid container sx={{ pb: 1 }}>
+          <Grid container sx={{ pb: 1, pt: 1 }}>
             <Grid item xs={12} sm={0.5}>
               <IconButton
                 onClick={() => setOpenOverview3(!openOverview3)}
