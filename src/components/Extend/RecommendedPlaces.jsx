@@ -123,21 +123,21 @@ const RecommendedPlaces = (props) => {
         }
       }
     );
-    placesService.nearbySearch(
-      {
-        location: coor,
-        radius: 3000,
-        type: "lodging",
-      },
-      (results, status) => {
-        // eslint-disable-next-line no-undef
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          setHotels(results);
-        } else {
-          console.error("Error:", status);
-        }
-      }
-    );
+    // placesService.nearbySearch(
+    //   {
+    //     location: coor,
+    //     radius: 3000,
+    //     type: "lodging",
+    //   },
+    //   (results, status) => {
+    //     // eslint-disable-next-line no-undef
+    //     if (status === google.maps.places.PlacesServiceStatus.OK) {
+    //       setHotels(results);
+    //     } else {
+    //       console.error("Error:", status);
+    //     }
+    //   }
+    // );
     placesService.nearbySearch(
       {
         location: coor,
@@ -172,7 +172,7 @@ const RecommendedPlaces = (props) => {
 
   useEffect(() => {
     async function getAllPlaces() {
-      const place = [...restaurants, ...hotels, ...attractions, ...coffeeShop];
+      const place = [...restaurants, ...attractions, ...coffeeShop];
       if (place.length > 0) {
         const groups = [];
         const queryParams = {
@@ -212,7 +212,7 @@ const RecommendedPlaces = (props) => {
       }
     }
     getAllPlaces();
-  }, [restaurants, hotels, attractions]);
+  }, [restaurants, coffeeShop, attractions]);
 
   return (
     <>
