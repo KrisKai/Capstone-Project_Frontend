@@ -903,8 +903,11 @@ export default function TripCreate() {
                     </Grid>
                     <Grid item xs={12} sm={10}>
                       <Typography>
-                        {item.fullname} ({item.email}) 
-                        <p style={{ fontWeight: 600 }}>({item.memberRole})</p>
+                        {item.fullname} ({item.email})
+                        <p style={{ fontWeight: 600 }}>
+                          ({item.memberRole}
+                          {item.confirmation == "Y" ? " Chưa xác nhận" : ""})
+                        </p>
                       </Typography>
                     </Grid>
                   </Grid>

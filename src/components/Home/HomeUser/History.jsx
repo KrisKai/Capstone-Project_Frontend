@@ -126,7 +126,7 @@ const HistoryCard = (props) => {
     <>
       <Card
         sx={{
-          width: "360px",
+          width: "300px",
           height: "400px",
           display: "flex",
           flexDirection: "column",
