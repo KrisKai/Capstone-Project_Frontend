@@ -21,7 +21,7 @@ import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocomplet
 import { getPlacesProps } from "api/user/placesAPI";
 import { useEffect } from "react";
 
-import  DefaultImage  from "assets/images/default-img.jpg";
+import DefaultImage from "assets/images/default-img.jpg";
 
 const PlaceCard = (props) => {
   return (
@@ -33,6 +33,7 @@ const PlaceCard = (props) => {
             sx={{
               display: "flex",
               width: "50%",
+              maxWidth: "204px",
               height: "90px",
               marginRight: "8px",
               border: "1px dashed #dee2e6",
@@ -96,6 +97,7 @@ const RecommendedPlaces = (props) => {
   const [restaurants, setRestaurants] = useState([]);
   const [hotels, setHotels] = useState([]);
   const [attractions, setAttractions] = useState([]);
+  const [coffeeShop, setCoffeeShops] = useState([]);
 
   const [groupedRestaurants, setGroupedRestaurants] = useState([]);
 
@@ -151,11 +153,26 @@ const RecommendedPlaces = (props) => {
         }
       }
     );
+    placesService.nearbySearch(
+      {
+        location: coor,
+        radius: 3000,
+        type: "cafe",
+      },
+      (results, status) => {
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          setCoffeeShops(results);
+        } else {
+          console.error("Error:", status);
+        }
+      }
+    );
   }
 
   useEffect(() => {
     async function getAllPlaces() {
-      const place = [...restaurants, ...hotels, ...attractions];
+      const place = [...restaurants, ...hotels, ...attractions, ...coffeeShop];
       if (place.length > 0) {
         const groups = [];
         const queryParams = {
@@ -164,6 +181,7 @@ const RecommendedPlaces = (props) => {
         };
         let data = await getPlacesProps(queryParams);
 
+        // sort data after normalize
         const finalList = data.map((item) => item.name);
         place.sort((a, b) => {
           const nameA = a.name;
@@ -171,12 +189,22 @@ const RecommendedPlaces = (props) => {
           return finalList.indexOf(nameA) - finalList.indexOf(nameB);
         });
 
+        // filter duplicates
         const uniquePlace = place.filter((item, index, self) => {
           return index === self.findIndex((i) => i.place_id === item.place_id);
         });
 
-        for (let i = 0; i < uniquePlace.length; i += 2) {
-          const group = uniquePlace.slice(i, i + 2);
+        // filter rate > 3
+        const ratestPlace = uniquePlace.filter((item) => {
+          return item.rating > 3;
+        });
+
+        // console.log(ratestPlace);
+
+        // console.log(uniquePlace);
+
+        for (let i = 0; i < ratestPlace.length; i += 2) {
+          const group = ratestPlace.slice(i, i + 2);
           groups.push(group);
         }
 
