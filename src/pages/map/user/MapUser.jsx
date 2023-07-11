@@ -24,6 +24,7 @@ import Google from "assets/images/google_logo.png";
 import GoogleMaps from "assets/images/google_maps_logo.png";
 import TripAdvisor from "assets/images/tripadvisor_logo.png";
 import typeForConverting from "assets/data/typeForConverting";
+import  DefaultImage  from "assets/images/default-img.jpg";
 
 import dayjs from "dayjs";
 
@@ -213,7 +214,9 @@ export default function Map({
                   <Grid item xs={12} sm={2}>
                     <img
                       src={
-                        selectedData.photos && selectedData.photos[0].getUrl()
+                        selectedData.photos
+                          ? selectedData.photos[0].getUrl()
+                          : DefaultImage
                       }
                       alt="Image"
                       style={{
