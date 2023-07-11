@@ -18,10 +18,10 @@ const AutocompletePlaceForTrip = (props) => {
     lng: parseFloat(props.trip.endLongitude),
   };
   const defaultBounds = {
-    north: coor.lat + 0.1,
-    south: coor.lat - 0.1,
-    east: coor.lng + 0.1,
-    west: coor.lng - 0.1,
+    north: coor.lat + 0.01,
+    south: coor.lat - 0.01,
+    east: coor.lng + 0.01,
+    west: coor.lng - 0.01,
   };
 
   const handleSelectPlace = (place) => {
