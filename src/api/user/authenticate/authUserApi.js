@@ -10,7 +10,6 @@ const authUserApi = {
     return axiosInstanceUser.post(url, params);
   },
   loginWithSocial(params) {
-    console.log(params)
     const url = "/authenticate/login-with-social";
     return axiosInstanceUser.post(url, params);
   },

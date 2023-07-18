@@ -21,6 +21,8 @@ import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocomplet
 import { getPlacesProps } from "api/user/placesAPI";
 import { useEffect } from "react";
 
+import  DefaultImage  from "assets/images/default-img.jpg";
+
 const PlaceCard = (props) => {
   return (
     <>
@@ -46,7 +48,7 @@ const PlaceCard = (props) => {
               image={
                 item.photos
                   ? item.photos[0].getUrl({ maxWidth: 70, maxHeight: 70 })
-                  : "https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg"
+                  : DefaultImage
               }
               sx={{ width: "30%" }}
             />
@@ -160,7 +162,7 @@ const RecommendedPlaces = (props) => {
           user_profiles: props.currentInfo.userInterestList,
           place_data: place,
         };
-        const data = await getPlacesProps(queryParams);
+        let data = await getPlacesProps(queryParams);
 
         const finalList = data.map((item) => item.name);
         place.sort((a, b) => {
@@ -169,8 +171,12 @@ const RecommendedPlaces = (props) => {
           return finalList.indexOf(nameA) - finalList.indexOf(nameB);
         });
 
-        for (let i = 0; i < place.length; i += 2) {
-          const group = place.slice(i, i + 2);
+        const uniquePlace = place.filter((item, index, self) => {
+          return index === self.findIndex((i) => i.place_id === item.place_id);
+        });
+
+        for (let i = 0; i < uniquePlace.length; i += 2) {
+          const group = uniquePlace.slice(i, i + 2);
           groups.push(group);
         }
 
