@@ -18,11 +18,11 @@ const authUserApi = {
     return axiosInstanceUser.post(url, params);
   },
   getCurrentUser() {
-    const url = "/authenticate/getCurrentUser";
+    const url = "/authenticate/get-current-user";
     return axiosInstanceUser.get(url);
   },
   getCurrentInfo() {
-    const url = "/authenticate/getCurrentInfo";
+    const url = "/authenticate/get-current-info";
     return axiosInstanceUser.get(url);
   },
   confirm() {
