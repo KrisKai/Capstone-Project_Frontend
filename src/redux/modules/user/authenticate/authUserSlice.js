@@ -4,7 +4,7 @@ import authUserApi from "api/user/authenticate/authUserApi";
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
-  currentUser: {
+  currentUserDTO: {
     name: "",
     role: "",
     userId: "",
@@ -20,10 +20,10 @@ export const handleLogin = createAsyncThunk(
   }
 );
 
-export const getCurrentUser = createAsyncThunk(
-  "authUser/getCurrentUser",
+export const getcurrentUserDTO = createAsyncThunk(
+  "authUser/getcurrentUserDTO",
   async (payload, thunkApi) => {
-    const response = await authUserApi.getCurrentUser();
+    const response = await authUserApi.getcurrentUserDTO();
     return response;
   }
 );
@@ -47,7 +47,7 @@ const authUserSlice = createSlice({
     loginSuccess(state, action) {
       state.isAuthenticated = true;
       state.isInitialized = false;
-      state.currentUser = action.payload;
+      state.currentUserDTO = action.payload;
     },
     loginFailed(state) {
       state.isInitialized = false;
@@ -55,24 +55,24 @@ const authUserSlice = createSlice({
 
     logout(state) {
       state.isAuthenticated = false;
-      state.currentUser = undefined;
+      state.currentUserDTO = undefined;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(handleLogin.fulfilled, (state, action) => {
-      state.currentUser = action.payload.currentUserObj;
+      state.currentUserDTO = action.payload.currentUserDTO;
       state.isAuthenticated = true;
     });
-    builder.addCase(getCurrentUser.fulfilled, (state, action) => {
+    builder.addCase(getcurrentUserDTO.fulfilled, (state, action) => {
       if (action.payload === null || action.payload === "") {
         localStorage.removeItem("access_token_user");
         window.location.replace("/login");
       }
       state.isAuthenticated = true;
-      state.currentUser = action.payload;
+      state.currentUserDTO = action.payload;
     });
     builder.addCase(handleRegister.fulfilled, (state, action) => {
-      state.currentUser = action.payload.currentUserObj;
+      state.currentUserDTO = action.payload.currentUserDTO;
       state.isAuthenticated = true;
     });
   },
@@ -83,7 +83,7 @@ export const authUserActions = authUserSlice.actions;
 
 // Selectors
 export const selectIsInitialized = (state) => state.authUser.isInitialized;
-export const selectCurrentUser = (state) => state.authUser.currentUser;
+export const selectcurrentUserDTO = (state) => state.authUser.currentUserDTO;
 
 // Reducer
 export default authUserSlice.reducer;

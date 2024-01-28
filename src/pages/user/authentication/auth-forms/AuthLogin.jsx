@@ -53,8 +53,12 @@ const AuthLogin = () => {
     //AuthContext.login(data.get('email'),data.get('password'));
     dispatch(
       handleLogin({
-        Username: data.get("email"),
-        Password: data.get("password"),
+        // ----C#---
+        // Username: data.get("email"),
+        // Password: data.get("password"),
+        // ----Java---
+        username: data.get("email"),
+        password: data.get("password"),
       })
     )
       .unwrap()

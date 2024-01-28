@@ -19,7 +19,7 @@ import Carousel from "react-material-ui-carousel";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "redux/hooks";
-import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
+import { selectcurrentUserDTO } from "redux/modules/user/authenticate/authUserSlice";
 import { toast } from "react-toastify";
 import userFeedbackApi from "api/user/feedback/userFeedbackApi";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -29,8 +29,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import userTripApi from "api/user/trip/userTripApi";
 
 const HistoryCard = (props) => {
-  const currentUser = useAppSelector(selectCurrentUser);
-  const char = currentUser.name.toString().substring(0, 1).toUpperCase();
+  const currentUserDTO = useAppSelector(selectcurrentUserDTO);
+  const char = currentUserDTO.name.toString().substring(0, 1).toUpperCase();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [feedback, setFeedback] = useState({
@@ -39,7 +39,7 @@ const HistoryCard = (props) => {
     rate: props.item.rate,
     locationName: props.item.endLocationName,
     tripId: props.item.tripId,
-    userId: currentUser.userId,
+    userId: currentUserDTO.userId,
   });
   useEffect(() => {
     // IFFE

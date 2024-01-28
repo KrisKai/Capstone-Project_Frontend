@@ -1,5 +1,6 @@
 export const REACT_APP_API_URL =
-  'https://localhost:7184/api/v1.0';
+  // 'https://localhost:7184/api/v1.0';//C#
+  'http://localhost:8081/api/v1.0';//Java
 // export const GOOGLE_MAP_API = "";
 export const GOOGLE_MAP_API = "AIzaSyAkdlykrPV9MF6cMalT6Sq69OOnL1OW708";
 //AIzaSyDB6rnTq0A8u_ONW-1wcdNelu4fk3ZB3L4

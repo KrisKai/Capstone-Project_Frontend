@@ -8,14 +8,14 @@ import { Formik } from "formik";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
+import { selectcurrentUserDTO } from "redux/modules/admin/authenticate/authSlice";
 
 // ==============================|| PROFILE - EDIT ||============================== //
 
 const ProfileChangePassword = (props) => {
-  const currentUser = useAppSelector(selectCurrentUser);
+  const currentUserDTO = useAppSelector(selectcurrentUserDTO);
   const [currentInfo, setCurrentInfo] = useState({
-    UserId: currentUser.userId,
+    UserId: currentUserDTO.userId,
     OldPassword: null,
     Password: null,
     RetypePassword: null,

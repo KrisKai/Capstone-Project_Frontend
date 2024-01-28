@@ -30,7 +30,7 @@ import avatar1 from "assets/images/users/avatar-1.png";
 
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { getCurrentUser, selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
+import { getcurrentUserDTO, selectcurrentUserDTO } from "redux/modules/admin/authenticate/authSlice";
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -66,11 +66,11 @@ const Profile = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
-  const currentUser = useAppSelector(selectCurrentUser);
+  const currentUserDTO = useAppSelector(selectcurrentUserDTO);
 
   useEffect(() => {
     if (localStorage.getItem("access_token")) {
-      dispatch(getCurrentUser());
+      dispatch(getcurrentUserDTO());
     }
   }, []);
 
@@ -119,10 +119,10 @@ const Profile = () => {
         <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
           <Avatar
             alt="profile user"
-            src={currentUser.avatar === null ? avatar1 : currentUser.avatar}
+            src={currentUserDTO.avatar === null ? avatar1 : currentUserDTO.avatar}
             sx={{ width: 32, height: 32 }}
           />
-          <Typography variant="subtitle1">{currentUser.name}</Typography>
+          <Typography variant="subtitle1">{currentUserDTO.name}</Typography>
         </Stack>
       </ButtonBase>
       <Popper
@@ -173,15 +173,15 @@ const Profile = () => {
                           >
                             <Avatar
                               alt="profile user"
-                              src={currentUser.avatar === null ? avatar1 : currentUser.avatar}
+                              src={currentUserDTO.avatar === null ? avatar1 : currentUserDTO.avatar}
                               sx={{ width: 32, height: 32 }}
                             />
                             <Stack>
                               <Typography variant="h6">
-                                {currentUser.name}
+                                {currentUserDTO.name}
                               </Typography>
                               <Typography variant="body2" color="textSecondary">
-                                {currentUser.role}
+                                {currentUserDTO.role}
                               </Typography>
                             </Stack>
                           </Stack>

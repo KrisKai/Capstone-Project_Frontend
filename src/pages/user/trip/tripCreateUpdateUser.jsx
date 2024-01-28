@@ -26,7 +26,7 @@ import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import { useAppSelector } from "redux/hooks";
-import { selectCurrentUser } from "redux/modules/user/authenticate/authUserSlice";
+import { selectcurrentUserDTO } from "redux/modules/user/authenticate/authUserSlice";
 
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
@@ -102,7 +102,7 @@ export default function TripCreate() {
   let navigate = useNavigate();
   const { tripId } = useParams();
 
-  const currentUser = useAppSelector(selectCurrentUser);
+  const currentUserDTO = useAppSelector(selectcurrentUserDTO);
 
   const { placesService } = usePlacesService({
     apiKey: GOOGLE_MAP_API,
@@ -619,7 +619,7 @@ export default function TripCreate() {
                     <Avatar
                       alt="profile user"
                       src={
-                        currentUser.avatar === null ? "" : currentUser.avatar
+                        currentUserDTO.avatar === null ? "" : currentUserDTO.avatar
                       }
                       sx={{ width: 32, height: 32, marginLeft: 1 }}
                     />

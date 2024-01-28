@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAppSelector } from "redux/hooks";
-import { selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
+import { selectcurrentUserDTO } from "redux/modules/admin/authenticate/authSlice";
 import * as yup from "yup";
 
 dayjs.extend(utc);
@@ -38,7 +38,7 @@ export default function UserCreate() {
     address: "",
     activeStatus: "ACTIVE",
   });
-  const currentUser = useAppSelector(selectCurrentUser);
+  const currentUserDTO = useAppSelector(selectcurrentUserDTO);
 
   useEffect(() => {
     if (!userId) return;
@@ -278,7 +278,7 @@ export default function UserCreate() {
                         name="role"
                       >
                         <MenuItem value="USER">User</MenuItem>
-                        {currentUser.role === "Admin" && (
+                        {currentUserDTO.role === "Admin" && (
                           <MenuItem value="ADMIN">Admin</MenuItem>
                         )}
                         <MenuItem value="EMPL">Employee</MenuItem>

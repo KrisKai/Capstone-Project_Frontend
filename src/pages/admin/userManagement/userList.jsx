@@ -15,7 +15,7 @@ import { userApi } from "api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAppSelector } from "redux/hooks";
-import { selectCurrentUser } from "redux/modules/admin/authenticate/authSlice";
+import { selectcurrentUserDTO } from "redux/modules/admin/authenticate/authSlice";
 
 const columns = [
   { id: "username", label: "UserName", minWidth: 100, onclick: true },
@@ -60,8 +60,8 @@ export default function StickyHeadTableUser() {
   });
   const userList = allUsers.listOfUser;
   const numOfUser = allUsers.numOfUser;
-  const currentUser = useAppSelector(selectCurrentUser);
-  const isAdmin = Boolean(currentUser.role === "Admin");
+  const currentUserDTO = useAppSelector(selectcurrentUserDTO);
+  const isAdmin = Boolean(currentUserDTO.role === "Admin");
 
   const [search, setSearch] = useState("");
 

@@ -4,7 +4,14 @@ import authApi from "api/admin/authenticate/authApi";
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
-  currentUser: {
+  // ---C#---
+  // currentUser: {
+  //   name: "",
+  //   role: "",
+  //   userId: "",
+  // },
+  // ---Java#---
+  currentUserDTO: {
     name: "",
     role: "",
     userId: "",
@@ -20,10 +27,10 @@ export const handleLogin = createAsyncThunk(
   }
 );
 
-export const getCurrentUser = createAsyncThunk(
-  "auth/getCurrentUser",
+export const getcurrentUserDTO = createAsyncThunk(
+  "auth/getcurrentUserDTO",
   async (payload, thunkApi) => {
-    const response = await authApi.getCurrentUser();
+    const response = await authApi.getcurrentUserDTO();
     return response;
   }
 );
@@ -39,7 +46,7 @@ const authSlice = createSlice({
     loginSuccess(state, action) {
       state.isAuthenticated = true;
       state.isInitialized = false;
-      state.currentUser = action.payload;
+      state.currentUserDTO = action.payload;
     },
     loginFailed(state) {
       state.isInitialized = false;
@@ -47,21 +54,21 @@ const authSlice = createSlice({
 
     logout(state) {
       state.isAuthenticated = false;
-      state.currentUser = undefined;
+      state.currentUserDTO = undefined;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(handleLogin.fulfilled, (state, action) => {
-      state.currentUser = action.payload.currentUserObj;
+      state.currentUserDTO = action.payload.currentUserDTO;
       state.isAuthenticated = true;
     });
-    builder.addCase(getCurrentUser.fulfilled, (state, action) => {
+    builder.addCase(getcurrentUserDTO.fulfilled, (state, action) => {
       if (action.payload === null || action.payload === "") {
         localStorage.removeItem("access_token");
         window.location.replace("/auth/login");
       }
       state.isAuthenticated = true;
-      state.currentUser = action.payload;
+      state.currentUserDTO = action.payload;
     });
   },
 });
@@ -71,7 +78,7 @@ export const authActions = authSlice.actions;
 
 // Selectors
 export const selectIsInitialized = (state) => state.auth.isInitialized;
-export const selectCurrentUser = (state) => state.auth.currentUser;
+export const selectcurrentUserDTO = (state) => state.auth.currentUserDTO;
 
 // Reducer
 export default authSlice.reducer;

@@ -31,7 +31,7 @@ import countries from './countries';
 // ----------------------------------------------------------------------
 
 
-export default function UserNewForm({ isEdit, currentUser }) {
+export default function UserNewForm({ isEdit, currentUserDTO }) {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -51,19 +51,19 @@ export default function UserNewForm({ isEdit, currentUser }) {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: currentUser?.name || '',
-      email: currentUser?.email || '',
-      phoneNumber: currentUser?.phoneNumber || '',
-      address: currentUser?.address || '',
-      country: currentUser?.country || '',
-      state: currentUser?.state || '',
-      city: currentUser?.city || '',
-      zipCode: currentUser?.zipCode || '',
-      avatarUrl: currentUser?.avatarUrl || null,
-      isVerified: currentUser?.isVerified || true,
-      status: currentUser?.status,
-      company: currentUser?.company || '',
-      role: currentUser?.role || ''
+      name: currentUserDTO?.name || '',
+      email: currentUserDTO?.email || '',
+      phoneNumber: currentUserDTO?.phoneNumber || '',
+      address: currentUserDTO?.address || '',
+      country: currentUserDTO?.country || '',
+      state: currentUserDTO?.state || '',
+      city: currentUserDTO?.city || '',
+      zipCode: currentUserDTO?.zipCode || '',
+      avatarUrl: currentUserDTO?.avatarUrl || null,
+      isVerified: currentUserDTO?.isVerified || true,
+      status: currentUserDTO?.status,
+      company: currentUserDTO?.company || '',
+      role: currentUserDTO?.role || ''
     },
     validationSchema: NewUserSchema,
     onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
