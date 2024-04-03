@@ -35,7 +35,7 @@ const ProfileEditUser = (props) => {
     fullname: "",
     phone: "",
     address: "",
-    createDate: "",
+    createdDate: "",
     userInterestList: [],
   });
 
@@ -44,7 +44,7 @@ const ProfileEditUser = (props) => {
       const response = await authUserApi.getCurrentInfo();
       if (response.birthday) {
         response.birthday = dayjs.utc(response.birthday);
-        response.createDate = response.createDate.substring(0, 10);
+        response.createdDate = response.createdDate.substring(0, 10);
       }
       setCurrentInfo(response);
     }

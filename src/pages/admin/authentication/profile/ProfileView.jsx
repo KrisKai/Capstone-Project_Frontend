@@ -24,7 +24,7 @@ const ProfileView = (props) => {
     fullname: "",
     phone: "",
     address: "",
-    createDate: "",
+    createdDate: "",
     avatar: "",
     avatarFile: "",
   });
@@ -37,7 +37,7 @@ const ProfileView = (props) => {
         response.birthday = response.birthday.substring(0, 10);
 
         //temp
-        response.createDate = response.createDate.substring(0, 10);
+        response.createdDate = response.createdDate.substring(0, 10);
         // response.CreateDate = "2023-12-12";
       }
       setCurrentInfo(response);
@@ -106,7 +106,7 @@ const ProfileView = (props) => {
           <CakeIcon /> {currentInfo.birthday}
         </Typography>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <AccessTimeFilledRoundedIcon /> {currentInfo.createDate}
+          <AccessTimeFilledRoundedIcon /> {currentInfo.createdDate}
         </Typography>
       </Box>
     </>

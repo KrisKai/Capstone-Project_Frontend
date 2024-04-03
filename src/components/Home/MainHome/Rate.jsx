@@ -49,7 +49,7 @@ const Rate = () => {
       rate: 5,
       like: "",
       dislike: "",
-      createDate: "",
+      createdDate: "",
     },
   ]);
 

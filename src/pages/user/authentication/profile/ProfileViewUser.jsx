@@ -26,7 +26,7 @@ const ProfileViewUser = (props) => {
     fullname: "",
     phone: "",
     address: "",
-    createDate: "",
+    createdDate: "",
     userInterestList: [],
     avatar: "",
     avatarFile: "",
@@ -36,11 +36,12 @@ const ProfileViewUser = (props) => {
   useEffect(() => {
     async function getInfo() {
       const response = await authUserApi.getCurrentInfo();
+      console.log(response)
       if (response.birthday) {
         response.birthday = response.birthday.substring(0, 10);
-        response.createDate = response.createDate.substring(0, 10);
+        response.createdDate = response.createdDate.substring(0, 10);
       }
-
+      
       const convertedInterests = response.userInterestList.map((interest) => {
         const matchingConversion = typeForConverting.find(
           (conversion) => conversion.name === interest.interest
@@ -127,7 +128,7 @@ const ProfileViewUser = (props) => {
           <CakeIcon /> {currentInfo.birthday}
         </Typography>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <AccessTimeFilledRoundedIcon /> {currentInfo.createDate}
+          <AccessTimeFilledRoundedIcon /> {currentInfo.createdDate}
         </Typography>
         <Typography sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           {currentInfo.userInterestList.length > 0 && (

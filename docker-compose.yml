@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  app:
+    image: journey-sick/react:v1
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "5000:3000"
+    restart: unless-stopped

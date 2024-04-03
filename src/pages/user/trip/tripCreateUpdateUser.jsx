@@ -154,7 +154,7 @@ export default function TripCreate() {
     fullname: "",
     phone: "",
     address: "",
-    createDate: "",
+    createdDate: "",
     userInterestList: [],
   });
   const [memberList, setMemberList] = useState([]);

@@ -35,7 +35,7 @@ const ProfileEdit = (props) => {
     fullname: "",
     phone: "",
     address: "",
-    createDate: "",
+    createdDate: "",
   });
 
   useEffect(() => {
@@ -43,9 +43,10 @@ const ProfileEdit = (props) => {
       const response = await authApi.getCurrentInfo();
       if (response.birthday) {
         response.birthday = dayjs.utc(response.birthday);
-        response.createDate = response.createDate.substring(0, 10);
+        response.createdDate = response.createdDate.substring(0, 10);
       }
       setCurrentInfo(response);
+      console.log(response);
     }
     getInfo();
   }, []);

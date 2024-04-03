@@ -22,7 +22,7 @@ export default function UserCreate() {
     fullname: "",
     phone: "",
     address: "",
-    createDate: "",
+    createdDate: "",
     createBy: "",
     updateDate: "",
     updateBy: "",
@@ -175,7 +175,7 @@ export default function UserCreate() {
             label="Create Date"
             fullWidth
             variant="outlined"
-            value={user.createDate}
+            value={user.createdDate}
             InputProps={{
               readOnly: true,
             }}
