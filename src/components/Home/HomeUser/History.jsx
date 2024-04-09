@@ -340,8 +340,10 @@ const History = () => {
           const groupedTrips = [];
           for (let i = 0; i < response.length; i += 3) {
             const group = response.slice(i, i + 3);
+            // console.log(group);
             groupedTrips.push(group);
           }
+          console.log(response);
           setHistory(response);
           setGroupedHistory(groupedTrips);
         }

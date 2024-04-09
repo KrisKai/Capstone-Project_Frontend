@@ -1,5 +1,7 @@
+# build stage
 FROM node:16-alpine
 WORKDIR /app
-COPY . .
+COPY package*.json ./
 RUN npm install --force
+COPY . .
 CMD ["npm", "start"]

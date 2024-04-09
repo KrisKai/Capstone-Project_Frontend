@@ -12,8 +12,6 @@ import {
   Typography,
 } from "@mui/material";
 
-// project import
-import Highlighter from "../../temp/third-party/Highlighter";
 
 // header style
 const headerSX = {
@@ -99,14 +97,7 @@ const MainCard = forwardRef(
         {!content && children}
 
         {/* card footer - clipboard & highlighter  */}
-        {codeHighlight && (
-          <>
-            <Divider sx={{ borderStyle: "dashed" }} />
-            <Highlighter codeHighlight={codeHighlight} main>
-              {children}
-            </Highlighter>
-          </>
-        )}
+       
       </Card>
     );
   }
