@@ -24,9 +24,8 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 
-import { getCurrentUser } from "redux/modules/admin/authenticate/authSlice";
 import { tripApi } from "api";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // avatar style
 const avatarSX = {
@@ -76,11 +75,11 @@ const DashboardDefault = () => {
     (async () => {
       try {
         const tripStatistic = await tripApi.tripStatistic();
-        if (tripStatistic != null && tripStatistic != "") {
+        if (tripStatistic !== null && tripStatistic !== "") {
           setTripStatistic(tripStatistic);
         }
       } catch (error) {
-        if (error.response.status == 401) {
+        if (error.response?.status === 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
         }

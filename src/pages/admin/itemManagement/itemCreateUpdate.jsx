@@ -57,14 +57,14 @@ export default function ItemCreate() {
       if (!itemId) return;
       try {
         const data = await itemApi.getById(itemId);
-        if (data != null && data != "") {
+        if (data !== null && data !== "") {
           setItem(data);
         } else {
           navigate("/admin/itemList");
         }
       } catch (error) {
         console.log("Failed to fetch item details", error);
-        if (error.response.status == 401) {
+        if (error.response?.status === 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
         }

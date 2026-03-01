@@ -38,7 +38,7 @@ export default function UserTripCreate() {
       if (!tripId) return;
       try {
         const data = await tripApi.getById(tripId);
-        if (data != null && data != "") {
+        if (data !== null && data !== "") {
           data.estimateEndDate = dayjs.utc(data.estimateEndDate);
           data.estimateStartDate = dayjs.utc(data.estimateStartDate);
           setTrip(data);
@@ -46,7 +46,7 @@ export default function UserTripCreate() {
           navigate("/admin/tripList");
         }
       } catch (error) {
-        if (error.response.status == 401) {
+        if (error.response?.status === 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
         }

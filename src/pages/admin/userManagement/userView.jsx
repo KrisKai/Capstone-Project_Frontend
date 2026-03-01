@@ -1,4 +1,4 @@
-import { Button, FormHelperText } from "@mui/material";
+import { Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -181,7 +181,7 @@ export default function UserCreate() {
             }}
           />
         </Grid>
-        {user.UpdateBy !== null ? (
+        {user.updateBy !== null ? (
           <>
             <Grid item xs={12} sm={3}>
               <TextField

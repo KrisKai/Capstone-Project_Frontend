@@ -1,5 +1,4 @@
 import axiosInstance from "utils/axios";
-import axiosInstanceUser from "utils/axiosForUser";
 
 const feedbackApi = {
   getAll(params) {

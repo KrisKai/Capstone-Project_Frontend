@@ -1,4 +1,3 @@
-import axiosInstance from "utils/axios";
 import axiosInstanceUser from "utils/axiosForUser";
 
 const userFeedbackApi = {

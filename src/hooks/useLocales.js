@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 // material
-import { enUS, deDE, frFR } from '@mui/material/locale';
+import { enUS, viVN } from '@mui/material/locale';
 
 // ----------------------------------------------------------------------
 
@@ -13,10 +13,9 @@ const LANGS = [
   },
   {
     label: 'Vietnamese',
-    value: 'de',
-    systemValue: deDE,
-
-    icon: '/static/icons/ic_flag_de.svg'
+    value: 'vi',
+    systemValue: viVN,
+    icon: '/static/icons/ic_flag_vi.svg'
   }
 ];
 

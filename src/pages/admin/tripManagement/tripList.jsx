@@ -124,7 +124,7 @@ export default function StickyHeadTableTrip() {
     } catch (error) {
       // Toast error
       console.log("Failed to fetch trip", error);
-      if (error.response.status == 401) {
+      if (error.response?.status === 401) {
         localStorage.removeItem("access_token");
         navigate("/auth/login");
       }
@@ -275,7 +275,7 @@ export default function StickyHeadTableTrip() {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Do you want to delete this user?"}
+          {"Do you want to delete this trip?"}
         </DialogTitle>
         <DialogActions>
           <Button variant="contained" onClick={handleClose}>

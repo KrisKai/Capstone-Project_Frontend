@@ -52,7 +52,7 @@ const AuthLogin = () => {
     )
       .unwrap()
       .then((data) => {
-        if (data.Code != "L001") {
+        if (data.Code !== "L001") {
           dispatch(authActions.loginSuccess(data));
           localStorage.setItem("access_token", data.token);
           navigate("/admin/dashboard");

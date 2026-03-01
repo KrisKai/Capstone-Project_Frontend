@@ -1,5 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
-import Paper from "@mui/material/Paper";
+import { Box, Button, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -7,7 +6,6 @@ import Grid from "@mui/material/Grid";
 import { tripApi, tripMemberApi, tripRouteApi, tripItemApi } from "api";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 
 export default function StickyHeadTableTrip() {
   let navigate = useNavigate();
@@ -42,7 +40,7 @@ export default function StickyHeadTableTrip() {
     (async () => {
       try {
         const data = await tripApi.getById(tripId);
-        if (data != null && data != "") {
+        if (data !== null && data !== "") {
           const filter = {
             pageIndex: 0,
             pageSize: 10,
@@ -59,7 +57,7 @@ export default function StickyHeadTableTrip() {
         }
       } catch (error) {
         console.log("Failed to fetch trip details", error);
-        if (error.response.status == 401) {
+        if (error.response?.status === 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
         }
@@ -110,7 +108,7 @@ export default function StickyHeadTableTrip() {
           </CardActions>
         </Card>
         <Grid container sx={{ mt: 2 }}>
-          <Grid xs={6}>
+          <Grid item xs={6}>
             <Button variant="outlined" onClick={gotoList}>
               Return to List
             </Button>

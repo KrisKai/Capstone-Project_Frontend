@@ -87,7 +87,7 @@ export default function StickyHeadTableItem(props) {
     } catch (error) {
       // Toast error
       console.log("Failed to fetch item", error);
-      if (error.response.status == 401) {
+      if (error.response?.status === 401) {
         localStorage.removeItem("access_token");
         navigate("/auth/login");
       }

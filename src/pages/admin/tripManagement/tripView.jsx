@@ -12,14 +12,11 @@ import utc from "dayjs/plugin/utc";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch } from "redux/hooks";
-import { toast } from "react-toastify";
 
 dayjs.extend(utc);
 
 export default function UserCreate() {
   let navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { tripId } = useParams();
   const [trip, setTrip] = useState({
     tripName: "",
@@ -37,7 +34,7 @@ export default function UserCreate() {
     (async () => {
       try {
         const data = await tripApi.getById(tripId);
-        if (data != null && data != "") {
+        if (data !== null && data !== "") {
           data.estimateArrivalTime = dayjs.utc(data.estimateArrivalTime);
           data.estimateStartTime = dayjs.utc(data.estimateStartTime);
           setTrip(data);
@@ -46,7 +43,7 @@ export default function UserCreate() {
         }
       } catch (error) {
         console.log("Failed to fetch trip details", error);
-        if (error.response.status == 401) {
+        if (error.response?.status === 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
         }

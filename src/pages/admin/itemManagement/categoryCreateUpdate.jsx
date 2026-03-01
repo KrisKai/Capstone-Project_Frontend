@@ -38,14 +38,14 @@ export default function CategoryCreate() {
       if (!categoryId) return;
       try {
         const data = await itemCategoryApi.getById(categoryId);
-        if (data != null && data != "") {
+        if (data !== null && data !== "") {
           setCategory(data);
         } else {
           navigate("/admin/itemCategoryList");
         }
       } catch (error) {
         console.log("Failed to fetch category", error);
-        if (error.response.status == 401) {
+        if (error.response?.status === 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
         }

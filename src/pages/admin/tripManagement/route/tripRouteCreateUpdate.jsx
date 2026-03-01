@@ -43,14 +43,14 @@ export default function RouteCreate() {
       if (!tripId || !routeId) return;
       try {
         const data = await tripRouteApi.getById(routeId);
-        if (data != null && data != "") {
+        if (data !== null && data !== "") {
           setRoute(data);
         } else {
           navigate(`/admin/tripRouteList/${tripId}`);
         }
       } catch (error) {
         console.log("Failed to fetch trip route", error);
-        if (error.response.status == 401) {
+        if (error.response?.status === 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
         }

@@ -58,14 +58,14 @@ export default function TripItemCreate() {
       if (!tripId || !itemId) return;
       try {
         const data = await tripItemApi.getById(itemId);
-        if (data != null && data != "") {
+        if (data !== null && data !== "") {
           setItem(data);
         } else {
           navigate(`/admin/tripItemList/${tripId}`);
         }
       } catch (error) {
         console.log("Failed to fetch trip item", error);
-        if (error.response.status == 401) {
+        if (error.response?.status === 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
         }

@@ -103,7 +103,7 @@ export default function StickyHeadTableCategory() {
     } catch (error) {
       // Toast error
       console.log("Failed to fetch category", error);
-      if (error.response.status == 401) {
+      if (error.response?.status === 401) {
         localStorage.removeCategory("access_token");
         navigate("/auth/login");
       }

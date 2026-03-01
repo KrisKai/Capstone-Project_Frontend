@@ -51,7 +51,7 @@ export default function UserCreate() {
       if (!tripId || !memberId) return;
       try {
         const data = await tripMemberApi.getById(memberId);
-        if (data != null && data != "") {
+        if (data !== null && data !== "") {
           setMember(data);
           setName(data.fullname);
           setEmail(data.email);
@@ -60,7 +60,7 @@ export default function UserCreate() {
         }
       } catch (error) {
         console.log("Failed to fetch trip member", error);
-        if (error.response.status == 401) {
+        if (error.response?.status === 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
         }

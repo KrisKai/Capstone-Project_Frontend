@@ -8,9 +8,8 @@ import Google from "assets/images/icons/google.svg";
 import Twitter from "assets/images/icons/twitter.svg";
 import Facebook from "assets/images/icons/facebook.svg";
 import { auth, google, facebook, twitter } from "utils/firebase";
-import { signInWithPopup, signOut } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 
-import { GOOGLE_CLIENT_ID } from "config";
 import authUserApi from "api/user/authenticate/authUserApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +26,7 @@ const FirebaseSocial = () => {
     const response = await authUserApi.loginWithSocial(
       result.user.accessToken.toString()
     );
-    if (response.Code != "L001") {
+    if (response.Code !== "L001") {
       localStorage.setItem("access_token_user", response.token);
       navigate("/dashboard");
     } else {

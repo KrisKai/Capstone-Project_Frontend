@@ -59,7 +59,7 @@ const AuthLogin = () => {
     )
       .unwrap()
       .then((data) => {
-        if (data.Code != "L001") {
+        if (data.Code !== "L001") {
           localStorage.setItem("access_token_user", data.token);
           navigate("/dashboard");
         } else {

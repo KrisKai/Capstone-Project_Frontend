@@ -46,7 +46,7 @@ export default function UserCreate() {
     (async () => {
       try {
         const data = await userApi.getById(userId);
-        if (data != null && data != "") {
+        if (data !== null && data !== "") {
           data.birthday = dayjs.utc(data.birthday);
           setUser(data);
         } else {
@@ -54,7 +54,7 @@ export default function UserCreate() {
         }
       } catch (error) {
         console.log("Failed to fetch user details", error);
-        if (error.response.status == 401) {
+        if (error.response?.status === 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
         }
@@ -179,7 +179,7 @@ export default function UserCreate() {
                       name="fullname"
                       label="Full name"
                       fullWidth
-                      value={values.Fullname}
+                      value={values.fullname}
                       variant="outlined"
                       onChange={handleChange}
                     />

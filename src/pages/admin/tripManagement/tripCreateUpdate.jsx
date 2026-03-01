@@ -33,14 +33,14 @@ export default function TripCreate() {
   const { ref: materialRef } = usePlacesWidget({
     apiKey: GOOGLE_MAP_API,
     onPlaceSelected: (place) => {
-      console.log();
       const coor = JSON.stringify(place.geometry.location);
-      let updatedTrip = trip;
-      updatedTrip.endLocationName = place.formatted_address;
-      updatedTrip.endLongitude = JSON.parse(coor).lng.toString();
-      updatedTrip.endLatitude = JSON.parse(coor).lat.toString();
-      updatedTrip.placeId = place?.place_id ? place?.place_id : "";
-      setTrip(updatedTrip);
+      setTrip((prev) => ({
+        ...prev,
+        endLocationName: place.formatted_address,
+        endLongitude: JSON.parse(coor).lng.toString(),
+        endLatitude: JSON.parse(coor).lat.toString(),
+        placeId: place?.place_id ? place?.place_id : "",
+      }));
     },
     inputAutocompleteValue: "country",
     options: {
@@ -87,7 +87,7 @@ export default function TripCreate() {
       if (!tripId) return;
       try {
         const data = await tripApi.getById(tripId);
-        if (data != null && data != "") {
+        if (data !== null && data !== "") {
           data.estimateEndDate = dayjs.utc(data.estimateEndDate);
           data.estimateStartDate = dayjs.utc(data.estimateStartDate);
           setTrip(data);
@@ -96,7 +96,7 @@ export default function TripCreate() {
         }
       } catch (error) {
         console.log("Failed to fetch trip details", error);
-        if (error.response.status == 401) {
+        if (error.response?.status === 401) {
           localStorage.removeItem("access_token");
           navigate("/auth/login");
         }
@@ -401,7 +401,7 @@ export default function TripCreate() {
                             value={values.tripStatus}
                             label="TripStatus"
                             onChange={handleChange}
-                            name="TripStatus"
+                            name="tripStatus"
                           >
                             <MenuItem value="ACTIVE">Active</MenuItem>
                             <MenuItem value="INACTIVE">Inactive</MenuItem>
